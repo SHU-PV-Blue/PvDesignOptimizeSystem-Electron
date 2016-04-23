@@ -28,7 +28,7 @@ body{
 #mainContent{
 	position: absolute;
 	bottom: 50px;
-	height: 100%;
+	top: 0;
 	width: 100%;
 }
 #pre-back{

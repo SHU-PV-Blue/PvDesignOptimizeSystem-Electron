@@ -1,4 +1,3 @@
-var fs = require('fs');
 var pvModule = angular.module('PVModule',['ui.bootstrap']);
 pvModule.controller('cordionCtrl',function($scope){
 	 $scope.oneAtATime = true;
