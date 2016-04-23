@@ -1,0 +1,47 @@
+html,body{
+	height: 100%;
+}
+body{
+	padding: 0;
+	margin: 0;
+	position: relative;
+}
+#mainBody 
+{  
+    height: 100%;
+} 
+#ProcedureNav 
+{ 
+    width:120px; 
+    height:100%; 
+    background-color:#f0f0f0; 
+    position:absolute; 
+    border-right: 1px solid black;
+} 
+#mainContentWrap
+{ 
+    background-color:#f0ffff; 
+    height:100%; 
+    margin-left:121px;
+    position: relative;
+}
+#mainContent{
+	position: absolute;
+	bottom: 50px;
+	height: 100%;
+	width: 100%;
+}
+#pre-back{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	padding: 5px 10px;
+	border-top: 2px solid gray;
+}
+div#pre-back #backBtn{
+	float: left;
+}
+div#pre-back #preBtn{
+	float: right;
+}
