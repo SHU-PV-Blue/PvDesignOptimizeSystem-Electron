@@ -14,13 +14,13 @@ body{
 { 
     width:120px; 
     height:100%; 
-    background-color:#f0f0f0; 
+    /*background-color:#f0f0f0; */
     position:absolute; 
     border-right: 1px solid black;
 } 
 #mainContentWrap
 { 
-    background-color:#f0ffff; 
+    /*background-color:#f0ffff; */
     height:100%; 
     margin-left:121px;
     position: relative;
