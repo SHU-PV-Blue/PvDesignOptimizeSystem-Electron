@@ -7,10 +7,16 @@
     <link rel="stylesheet" href="static/stylesheet/index.css">
     <link rel="stylesheet" href="tpls/css/project.css">
     <link rel="stylesheet" href="tpls/css/buttons.css">
+    <link rel="stylesheet" href="tpls/css/blue.css">
+    <script src="tpls/javascript/jquery-1.8.3.min.js"></script>
     <script src="static/components/angular/angular.min.js"></script>
     <script src="static/components/ui-bootstrap-tpls-1.3.2.min.js"></script>
     <script src="static/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="static/javascript/index.js"></script>
+    <script src="tpls/javascript/Chart.js"></script>
+    <!--<script src="tpls/javascript/chart-line.js"></script>-->
+    <script src="tpls/javascript/radioButton.js"></script>
+    <script src="tpls/javascript/icheck.min.js"></script>
 </head>
 <body>
     <div id="mainBody">
@@ -23,8 +29,111 @@
         </div>
         <div id="mainContentWrap">
             <div class="container" id="mainContent">
-                <div id="component-angle-irradiancy">
+                <div id="design-type">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input type="radio" name="pCheck" class="iCheck" checked id="user-give-area">
+                            <label >给定面积</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="radio" name="pCheck" class="iCheck" id="user-define">
+                            <label >用户自定义</label>
+                        </div>
+                    </div>
+                        <!--<hr noshade color="#229FFD" id="blue-line">-->
 
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="radio" name="hCheck" class="iCheck" id="horizontal" checked>
+                                <label >横排</label>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="radio" name="hCheck" class="iCheck" id="verticality">
+                                <label> 竖排</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="give-area-component">
+                                <div class="col-md-2">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="component-length">区域长</label>
+                                            <input type="text" class="form-control" id="component-length">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="component-width">区域宽</label>
+                                            <input type="text" class="form-control" id="component-width">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="holder-component-number">单个支架所放的组件数</label>
+                                            <input type="text" class="form-control" id="holder-component-number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fore-and-aft">阵列前后间距</label>
+                                            <input type="text" class="form-control" id="fore-and-aft">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="each-line-component-number">每行组件数</label>
+                                            <input type="text" id="each-line-component-number" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pattern-line-number">阵列行数</label>
+                                            <input type="text" class="form-control" id="pattern-line-number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="area-component-number">区域组件总数</label>
+                                            <input type="text" id="area-component-number" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="area-all-capacity">区域总容量</label>
+                                            <input type="text" class="form-control" id="area-all-capacity">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="user-defined">
+                                <div class="col-md-2">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="define-install-capacity">安装容量</label>
+                                            <input type="text" class="form-control" id="define-install-capacity">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="define-holder-component-number">单个支架所放的组件数</label>
+                                            <input type="text" class="form-control" id="define-holder-component-number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="define-fore-and-aft">阵列前后间距</label>
+                                            <input type="text" class="form-control" id="define-fore-and-aft">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="define-area-component-number">区域组件总数</label>
+                                            <input type="text" class="form-control" id="define-area-component-number">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="define-each-line-component-number">每行组件数</label>
+                                            <input type="text" class="form-control" id="define-each-line-component-number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="define-pattern-line-number">阵列行数</label>
+                                            <input type="text" class="form-control" id="define-pattern-line-number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cover-total-area">占地总面积</label>
+                                            <input type="text" class="form-control" id="cover-total-area">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div id="pre-back">

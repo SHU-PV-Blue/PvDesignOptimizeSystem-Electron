@@ -26,11 +26,40 @@
     width: auto;
     height:429px;
 }
-.angel{
+#component-angle{
+    top:20px;
     position: relative;
-    left:-80px;
 }
-#component-angle-irradiancy{
-    top:50px;
+#table-information{
+    height:200px;
+}
+#line-chart{
+    height: 340px;
+
+}
+#line-chart-top-div{
     position: relative;
+    /*left: 30px;*/
+    top: 26px;
+}
+#table-top-div{
+    position: relative;
+    top:30px;
+}
+#blue-line{
+    position: relative;
+    left: -8px;;
+    /*top: 1px;*/
+    height: 2px;
+    margin: 8px;
+    width: 70%;
+}
+
+/*将两个标签隐藏起来*/
+#user-defined{
+    display: none;
+}
+#design-type{
+    position: relative;
+    left: 30%;
 }
