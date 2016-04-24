@@ -6,6 +6,9 @@ body{
 	margin: 0;
 	position: relative;
 }
+a{
+	text-decoration: none;
+}
 #mainBody 
 {  
     height: 100%;
@@ -17,7 +20,31 @@ body{
     /*background-color:#f0f0f0; */
     position:absolute; 
     border-right: 1px solid black;
-} 
+}
+#ProcedureNav ul{
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+#ProcedureNav ul li{
+	list-style: none;
+	width: 100%;
+	display: block;
+	color: #337ab7;
+    background-color: transparent;
+}
+#ProcedureNav li a{
+	position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+#ProcedureNav li a:hover{
+	background: #eee;
+}
+
+.panel-body{
+	padding: 0;
+}
 #mainContentWrap
 { 
     /*background-color:#f0ffff; */
@@ -31,7 +58,7 @@ body{
 	top: 0;
 	width: 100%;
 }
-#pre-back{
+#pre-next{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
@@ -39,9 +66,9 @@ body{
 	padding: 5px 10px;
 	border-top: 2px solid gray;
 }
-div#pre-back #backBtn{
+div#pre-next #preBtn{
 	float: left;
 }
-div#pre-back #preBtn{
+div#pre-next #nextBtn{
 	float: right;
 }
