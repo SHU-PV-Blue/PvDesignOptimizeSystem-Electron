@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="PVModule">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi"></script>
     <link rel="stylesheet" href="static/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/stylesheet/index.css">
     <link rel="stylesheet" href="tpls/css/project.css">
     <link rel="stylesheet" href="tpls/css/buttons.css">
-    <script src="static/components/angular/angular.min.js"></script>
-    <script src="static/components/angular-route/angular-route.min.js"></script>
-    <script src="static/components/ui-bootstrap-tpls-1.3.2.min.js"></script>
-    <script src="static/components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="static/javascript/index.js"></script>
 </head>
-<body>
+<body ng-app="PVModule">
     <div id="mainBody">
         <div id="ProcedureNav" ng-controller="cordionCtrl">
             <uib-accordion close-others="oneAtATime">
@@ -46,10 +42,15 @@
                 <ng-view></ng-view>
             </div>
             <div id="pre-next" ng-controller="prenextCtrl">
-                    <button id="preBtn" class="btn btn-primary" ng-click="preStep()">上一步</button>
-                    <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
+                <button id="preBtn" class="btn btn-primary" ng-click="preStep()">上一步</button>
+                <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
             </div>
         </div>
     </div>
 </body>
+    <script src="static/components/angular/angular.min.js"></script>
+    <script src="static/components/angular-route/angular-route.min.js"></script>
+    <script src="static/components/ui-bootstrap-tpls-1.3.2.min.js"></script>
+    <script src="static/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="static/javascript/index.js"></script>
 </html>

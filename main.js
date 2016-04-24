@@ -134,7 +134,13 @@ app.on('ready',function(){
 		width : 1200,
 		height : 800,
 		title : 'PvDesignOptimizeSystem',
-		icon : image
+		icon : image,
+    webPreferences : {
+      webSecurity : false,
+      plugins : true
+    },
+    minWidth : 1200,
+    minHeight : 600
 	});
 	mainWindow.loadURL('file://' + __dirname + '/index.html');
 
