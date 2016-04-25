@@ -74,18 +74,22 @@
 /*集中式逆变器*/
 #centralized-inverter{
     background: url("#");
+    margin: 0 0 0 10px;
 }
 /*直流汇流箱*/
 #cocurrent-combiner{
     background: url("#");
+    margin: 0 0 0 110px;
 }
 /*直流配电柜*/
 #DC-power-distribution{
     background: url("#");
+    margin: 0 0 0 110px;
 }
 /*电缆*/
 #cocurrent-cable{
     background: url("#");
+    margin: 0 0 0 110px;
 }
 /*三张图片位置*/
 .group{
@@ -97,16 +101,23 @@
 #group-instrument{
     display: none;
 }
+/*#centralism-instrument{*/
+    /*position: relative;*/
+    /*!*left: 20px;*!*/
+/*}*/
 /*添加三张交流图片*/
 /*组串式逆变器*/
 #groups-inverter{
     background: url("#");
+    margin: 0 0 0 10px;
 }
 /*交流汇电箱*/
 #AC-combiner{
     background: url("#");
+    margin: 0 0 0 110px;
 }
 /*电缆*/
 #group-cable{
     background: url("#");
+    margin: 0 0 0 110px;
 }
