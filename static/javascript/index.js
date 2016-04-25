@@ -167,9 +167,9 @@ pvModule.config(function($routeProvider){
     }).when('/2',{
     	templateUrl: 'tpls/html/displayMeteInfo.html'
     }).when('/3',{
-    	templateUrl: 'tpls/test3.html'
+    	templateUrl: 'tpls/html/userDesign.html'
     }).when('/4',{
-    	templateUrl: 'tpls/test4.html'
+    	templateUrl: 'tpls/html/confirmAngle.html'
     }).when('/5',{
     	templateUrl: 'tpls/test5.html'
     });
