@@ -2,6 +2,9 @@ var fs = require('fs');
 var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute']);
 
 //服务区
+/*
+保存和获取数据服务
+*/
 pvModule.service('processData',function($rootScope){
 	this.dataBasePath = 'data/';
 	this.getData = function(filename){
@@ -15,29 +18,51 @@ pvModule.service('processData',function($rootScope){
 	};
 });
 
+/*
+路由管理服务
+*/
+pvModule.service('manageRoute',function(){
+	this.routes = ['/','/2','/3','/4','/5'];
+	this.curIndex = 0;
+	this.getNextRoute = function(){
+		if(this.curIndex >= this.routes.length - 1)
+			return;
+		this.curIndex += 1;
+		return this.routes[this.curIndex];
+	};
+	this.getPreRoute = function(){
+		if(this.curIndex == 0)
+			return;
+		this.curIndex -= 1;
+		return this.routes[this.curIndex];
+	}
+});
+
 //控制器区
-pvModule.controller('cordionCtrl',function($scope){
+
+/*
+导航控制器
+*/
+pvModule.controller('cordionCtrl',function($scope){                  
 	 $scope.oneAtATime = true;
 });
 
-pvModule.controller('prenextCtrl',function($scope, $location, processData){
-	$scope.routes = ['/','/2','/3','/4','/5']
-	$scope.curIndex = 0;
+/*
+上一步下一步控制器
+*/
+pvModule.controller('prenextCtrl',function($scope, $location, processData, manageRoute){
 	$scope.nextStep = function(){
 		processData.noticeSaveData();
-		if($scope.curIndex >= $scope.routes.length - 1)
-			return;
-		$scope.curIndex +=1;
-		$location.path($scope.routes[$scope.curIndex]);
+		$location.path(manageRoute.getNextRoute());
 	};
-	$scope.preStep = function(target){
-		if($scope.curIndex == 0)
-			return;
-		$scope.curIndex -=1;
-		$location.path($scope.routes[$scope.curIndex]);
+	$scope.preStep = function(){
+		$location.path(manageRoute.getPreRoute());
 	};
 });
 
+/*
+项目信息控制器
+*/
 pvModule.controller('basicInfoCtrl',function($scope, $timeout, processData){
 	  $scope.projectInfo = {
 	  	projectName : '',
@@ -54,7 +79,7 @@ pvModule.controller('basicInfoCtrl',function($scope, $timeout, processData){
 
 	  $scope.$watch('$viewContentLoaded',function(){
 	  	$scope.projectInfo = processData.getData('projectInfo.json');
-	  	// console.log($scope.projectInfo);
+	  	$scope.projectInfo.projectDate = new Date($scope.projectInfo.projectDate);
 	  })
 
 	  $scope.today = function() {
@@ -139,11 +164,13 @@ pvModule.controller('basicInfoCtrl',function($scope, $timeout, processData){
 	        }
 	      }
 	    }
-
 	    return '';
 	  }
 })
 
+/*
+气象信息控制器
+*/
 
 //指令区
 pvModule.directive('script', function() {
