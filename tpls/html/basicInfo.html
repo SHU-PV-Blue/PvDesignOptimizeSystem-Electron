@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="lastmodifytime">最后修改时间</label>
                 <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup ng-model="projectInfo.projectDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" />
+                    <input type="text" id="lastmodifytime" class="form-control" uib-datepicker-popup ng-model="projectInfo.projectDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -35,7 +35,7 @@
             </div>
             <form class="form-inline" role="form" style="margin:15px 20px;">
                <div class="form-group" style="margin-right:30px">
-                  <label class="control-label" for="lag">经度</label>
+                  <label class="control-label" for="lng">经度</label>
                   <input type="text" class="form-control" id="lng" 
                      placeholder="经度" ng-model="projectInfo.lng">
                </div>
