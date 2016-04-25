@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="/static/components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/project.css">
-    <link rel="stylesheet" href="../css/blue.css">
-    <script src="../javascript/jquery-1.8.3.min.js"></script>
-    <script src="../javascript/radioButton.js"></script>
-    <script src="../javascript/icheck.min.js"></script>
-
-</head>
-<body>
 <div id="design-type">
     <div class="row">
         <div class="col-md-2">
@@ -118,5 +104,31 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+<script type="text/javascript-lazy">
+$(document).ready(function() {
+   //调用bootstrap自己的方法
+    $("#user-give-area").on('ifChecked', function(){
+        $("#give-area-component").css("display","block");
+            $("#user-defined").css("display","none");
+    });
+    $("#user-define").on('ifChecked', function(){
+        $("#user-defined").css("display","block");
+        $("#give-area-component").css("display","none");
+    });
+    //改变radio样式
+    $('.iCheck').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+    //显示集中式四张图
+    $("#centralism-inverter").on('ifChecked', function(){
+        $("#centralism-instrument").css("display","block");
+        $("#group-instrument").css("display","none");
+    });
+    //显示组串式三张图
+    $("#group-inverter").on('ifChecked', function(){
+        $("#group-instrument").css("display","block");
+        $("#centralism-instrument").css("display","none");
+    });
+});
+</script>

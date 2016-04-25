@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="row">
+<div class="row" ng-controller="meteorologyCtrl">
     <div class="col-md-9" id="data-table">
         <div class="panel panel-default">
             <div class="panel-body">
-
+                
             </div>
         </div>
     </div>
@@ -19,9 +12,9 @@
                 <div id="mete-data">
                     <form>
                         <div class="form-group">
-                            <input type="radio" name="mete-data" value="国际气象数据库"/>
+                            <input type="radio" name="mete-data" ng-model="meteorologyInfo.type" value="db"/>
                             <label>国际气象数据库</label> <br>
-                            <input type="radio" name="mete-data" value="用户自定义"/>
+                            <input type="radio" name="mete-data" ng-model="meteorologyInfo.type" value="user"/>
                             <label >用户自定义</label>
                         </div>
                     </form>
@@ -30,9 +23,9 @@
                     <form>
                         <div class="form-group">
                             <label for="longitude">经度</label>
-                            <input type="text" class=" form-control" id="longitude">
+                            <input type="text" ng-model="lng" class=" form-control" id="longitude">
                             <label for="latitude">纬度</label>
-                            <input type="text" class=" form-control" id="latitude">
+                            <input type="text" ng-model="lat" class=" form-control" id="latitude">
                         </div>
                     </form>
                 </div>
@@ -40,9 +33,9 @@
                     <form>
                         <div class="form-group">
                             <label for="max-temperature"> 最高温度</label>
-                            <input type="text" class="form-control" id="max-temperature">
+                            <input type="text" ng-model="meteorologyInfo.maxTem" class="form-control" id="max-temperature">
                             <label for="min-tempurature">最低温度</label>
-                            <input type="text" class="form-control" id="min-tempurature">
+                            <input type="text" ng-model="meteorologyInfo.minTem" class="form-control" id="min-tempurature">
                         </div>
                     </form>
                 </div>
@@ -50,5 +43,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

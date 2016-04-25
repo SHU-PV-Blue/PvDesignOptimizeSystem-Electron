@@ -21,6 +21,7 @@
 .panel-message{
     width: auto;
     height:429px;
+    padding: 10px 10px;
 }
 #component-angle{
     top:20px;
@@ -55,10 +56,10 @@
 #user-defined{
     display: none;
 }
-#design-type{
+/*#design-type{
     position: relative;
     left: 30%;
-}
+}*/
 /*四张图片*/
 .cocurrent{
     border: 1px solid black;
