@@ -233,7 +233,7 @@ pvModule.config(function($routeProvider){
     }).when('/4',{
     	templateUrl: 'tpls/html/confirmAngle.html'
     }).when('/5',{
-    	templateUrl: 'tpls/test5.html'
+    	templateUrl: 'tpls/html/chooseInverter.html'
     });
     $routeProvider.otherwise({ redirectTo: '/' });
 })
