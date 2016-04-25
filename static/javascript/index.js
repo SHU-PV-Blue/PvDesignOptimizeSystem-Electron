@@ -19,6 +19,21 @@ pvModule.service('processData',function($rootScope){
 });
 
 /*
+临时数据服务
+*/
+pvModule.service('tempData',function(){
+	this.tempdata = {};
+	this.setTempData = function(key, value){
+		this.tempdata[key] = value;
+	};
+	this.getTempData = function(key){
+		var res = this.tempdata[key];
+		//delete this.tempdata[key];
+		return res;
+	}
+});
+
+/*
 路由管理服务
 */
 pvModule.service('manageRoute',function(){
@@ -63,17 +78,19 @@ pvModule.controller('prenextCtrl',function($scope, $location, processData, manag
 /*
 项目信息控制器
 */
-pvModule.controller('basicInfoCtrl',function($scope, $timeout, processData){
+pvModule.controller('basicInfoCtrl',function($scope, processData, tempData){
 	  $scope.projectInfo = {
 	  	projectName : '',
 	  	projectAddress : '',
 	  	userName : '',
 	  	remark : '',
-	  	lng : 121.494966,
-	  	lat : 31.219456,
+	  	lng : '121.494966',
+	  	lat : '31.219456'
 	  }
 
 	  $scope.$on('processData.save',function(event){
+	  		tempData.setTempData('lng',$scope.projectInfo.lng);
+	  		tempData.setTempData('lat',$scope.projectInfo.lat);
 	  		processData.saveData($scope.projectInfo,'projectInfo.json');
 	  })
 
@@ -171,6 +188,24 @@ pvModule.controller('basicInfoCtrl',function($scope, $timeout, processData){
 /*
 气象信息控制器
 */
+pvModule.controller('meteorologyCtrl',function($scope, processData, tempData){
+	$scope.meteorologyInfo = {
+		type : 'db',
+		minTem : '',
+		maxTem : ''
+	}
+	$scope.lng = tempData.getTempData('lng');
+	$scope.lat = tempData.getTempData('lat');
+
+	$scope.$on('processData.save',function(event){
+	  		processData.saveData($scope.meteorologyInfo,'meteorologyInfo.json');
+	});
+
+	$scope.$watch('$viewContentLoaded',function(){
+	  	$scope.meteorologyInfo = processData.getData('meteorologyInfo.json');
+	});
+});
+
 
 //指令区
 pvModule.directive('script', function() {
