@@ -121,3 +121,31 @@
     background: url("#");
     margin: 0 0 0 110px;
 }
+
+#cen-inverter-pan-select-model{
+    height: 200px;
+}
+#cen-inverter-pan-parameter{
+    height: 200px;
+}
+#cen-inverter-select-model{
+    padding: 20px 0 0 40px;
+}
+#cen-inverter-parameter{
+    padding: 0 0 0 40px;
+}
+#cen-inverter-configuration{
+    margin: 0 100px 0 24px;
+}
+#cen-inverter-bottom-configuration{
+    height: 150px;
+}
+/*两个input标签位置向左移动*/
+#cen-inverter-serial-number{
+    position: relative;
+    left: -10px;
+}
+#cen-inverter-complexion{
+    position: relative;
+    left: -10px;
+}
