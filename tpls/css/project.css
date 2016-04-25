@@ -150,3 +150,21 @@
     position: relative;
     left: -10px;
 }
+#DC-show-type{
+   height: 500px;
+}
+#DC-show-paramenter{
+    height: 500px;
+}
+#direct-current{
+    margin: 40px 0 0 0;
+}
+#distribution-show-type{
+    height: 500px;
+}
+#distribution-show-paramenter{
+    height: 500px;
+}
+#direct-distribution{
+    margin: 40px 0 0 0;
+}
