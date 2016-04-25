@@ -1,4 +1,3 @@
-
 #left-information{
     top:50px;
     /*left: 60px;*/
@@ -60,4 +59,66 @@
 #design-type{
     position: relative;
     left: 30%;
+}
+/*四张图片*/
+.cocurrent{
+    border: 1px solid black;
+    height: 160px;
+    position: relative;
+    top: 210px;
+}
+#centralism-group-radio{
+    position: relative;
+    top: 70px;
+}
+/*添加直流四张图片*/
+/*集中式逆变器*/
+#centralized-inverter{
+    background: url("#");
+    margin: 0 0 0 10px;
+}
+/*直流汇流箱*/
+#cocurrent-combiner{
+    background: url("#");
+    margin: 0 0 0 110px;
+}
+/*直流配电柜*/
+#DC-power-distribution{
+    background: url("#");
+    margin: 0 0 0 110px;
+}
+/*电缆*/
+#cocurrent-cable{
+    background: url("#");
+    margin: 0 0 0 110px;
+}
+/*三张图片位置*/
+.group{
+    border: 1px solid black;
+    height: 160px;
+    position: relative;
+    top: 210px;
+}
+#group-instrument{
+    display: none;
+}
+/*#centralism-instrument{*/
+    /*position: relative;*/
+    /*!*left: 20px;*!*/
+/*}*/
+/*添加三张交流图片*/
+/*组串式逆变器*/
+#groups-inverter{
+    background: url("#");
+    margin: 0 0 0 10px;
+}
+/*交流汇电箱*/
+#AC-combiner{
+    background: url("#");
+    margin: 0 0 0 110px;
+}
+/*电缆*/
+#group-cable{
+    background: url("#");
+    margin: 0 0 0 110px;
 }
