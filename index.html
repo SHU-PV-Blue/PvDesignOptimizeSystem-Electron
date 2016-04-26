@@ -49,8 +49,54 @@
         </div>
         <div id="mainContentWrap">
             <div class="container" id="mainContent">
-               
-
+               <div>
+                   <div class="row">
+                       <div class="col-md-6" id="direct-cable-configurations">
+                           <div class="panel panel-default">
+                               <div class="panel-body" id="direct-pan-cable-configurations">
+                                   配置电缆过程，点击四根电缆
+                               </div>
+                           </div>
+                       </div>
+                       <div class="col-md-6" id="direct-cable-model-parameter">
+                           <div class="panel panel-default" >
+                               <div class="panel-body" id="pan-cable-model-parameter">
+                                   电缆选型和参数
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <br>
+                   <br>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div class="panel panel-default">
+                               <div class="panel-body" id="direct-pan-cable-data">
+                                   <div class="row" id="div-direct-current-message">
+                                       <div class="col-md-2 form-group" id="div-direct-current-cable-length">
+                                           <form>
+                                               <label for="direct-current-cable-length">直流电缆长度</label>
+                                               <input type="text" id="direct-current-cable-length" class="form-control">
+                                           </form>
+                                       </div>
+                                       <div class="col-md-2 form-group" id="div-direct-current-line-drop">
+                                           <form>
+                                               <label for="direct-current-line-drop">线路压降</label>
+                                               <input type="text" id="direct-current-line-drop" class="form-control">
+                                           </form>
+                                       </div>
+                                       <div class="col-md-2 form-group" id="div-direct-current-cable-loss">
+                                           <form>
+                                               <label for="direct-current-cable-loss">电缆损耗</label>
+                                               <input type="text" id="direct-current-cable-loss" class="form-control">
+                                           </form>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
                 <!--<ng-view></ng-view>-->
             </div>
             <div id="pre-next" ng-controller="prenextCtrl">

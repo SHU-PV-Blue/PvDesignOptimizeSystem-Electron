@@ -168,3 +168,23 @@
 #direct-distribution{
     margin: 40px 0 0 0;
 }
+#direct-pan-cable-configurations{
+    height: 400px;
+}
+#pan-cable-model-parameter{
+    height: 400px;
+}
+#direct-pan-cable-data{
+    height: 100px;
+}
+#direct-cable-configurations{
+    position: relative;
+    top: 40px;
+}
+#direct-cable-model-parameter{
+    position: relative;
+    top: 40px;
+}
+#div-direct-current-message{
+    margin: 10px 0 0 10px;
+}
