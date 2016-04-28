@@ -5,6 +5,7 @@ const BrowserWindow = require('browser-window');
 const ipcMain = require('electron').ipcMain;
 const nativeImage = require('electron').nativeImage;
 const Menu = require('electron').Menu;
+const dialog = require('electron').dialog;
 var image = nativeImage.createFromPath('res/images/tray.png');
 
 var mainWindow = null;
@@ -15,18 +16,42 @@ var template = [
   	submenu: [
   		{
   			label : '创建新项目',
-  			accelerator : 'Ctrl+N'
+  			accelerator : 'Ctrl+N',
+        click : function(item, focusedWindow){
+          if(focusedWindow){
+            focusedWindow.loadURL('file://' + __dirname + '/newProject.html')
+          }
+        }
   		},
   		{
   			label : '打开项目',
-  			accelerator : 'Ctrl+O'
+  			accelerator : 'Ctrl+O',
+        click : function(item, focusedWindow){
+          if(focusedWindow){
+            dialog.showOpenDialog(focusedWindow, {
+              title : '打开项目',
+              properties : ['openFile']
+            })
+          }
+        }
   		},
   		{
   			type: 'separator'
   		},
   		{
   			label : '退出',
-  			accelerator : 'Ctrl+E'
+  			accelerator : 'Ctrl+E',
+        click : function(item, focusedWindow){
+          dialog.showMessageBox(focusedWindow,{
+            type : 'info',
+            message :'确认退出？',
+            buttons : ['确定' ,'取消']
+          },function(res){
+            if(res == 0){
+              app.quit();
+            }
+          });
+        }
   		}
   	]
   },

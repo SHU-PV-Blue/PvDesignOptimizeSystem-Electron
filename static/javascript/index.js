@@ -222,6 +222,38 @@ pvModule.directive('script', function() {
     };
   });
 
+/*
+地图指令
+*/
+pvModule.directive('pvmap',function(){
+	return {
+		restrict : 'EA',
+		replace : true,
+		templateUrl : 'tpls/diretpls/pvmap.html',
+		link : function(scope, elem, attrs){
+			var map = new BMap.Map("mapContainer");          // 创建地图实例  
+	        map.enableScrollWheelZoom();
+	        var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标  
+	        map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别  
+	        map.addEventListener("click", function(e){
+	            var lngInput = document.getElementById('lng');
+	            var latInput = document.getElementById('lat');
+	            lngInput.value = e.point.lng;
+	            latInput.value = e.point.lat;
+	            var evt = document.createEvent('MouseEvents');
+	            evt.initEvent('change',true,true);
+	            lngInput.dispatchEvent(evt);
+	            latInput.dispatchEvent(evt);
+	        });
+	        document.getElementById('locatePoint').addEventListener('click',function(e){
+	            var lng = document.getElementById('lng').value;
+	            var lat = document.getElementById('lat').value;
+	            map.centerAndZoom(new BMap.Point(lng,lat), 13);
+	        })
+		}
+	}
+})
+
 //路由
 pvModule.config(function($routeProvider){
 	$routeProvider.when('/', {
