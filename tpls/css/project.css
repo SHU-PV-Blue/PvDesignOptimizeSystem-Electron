@@ -188,3 +188,33 @@
 #div-direct-current-message{
     margin: 10px 0 0 10px;
 }
+/*组串式逆变器*/
+#collection-inverter-parameter{
+    margin: 40px 0 0 0;
+}
+#panel-collection-inverter-selection{
+    height: 500px;
+}
+#panel-collection-inverter-parameter{
+    height: 500px;
+}
+/*#colection-filled-parameter{*/
+    /*height: 500px;*/
+/*}*/
+
+/*交流线缆*/
+#alternating-current-cable{
+    margin: 40px 0 0 0;
+}
+#div-alter-cable-message{
+    margin: 20px 0 0 0;
+}
+#alter-pan-cable-configurations{
+    height: 400px;
+}
+#alter-pan-model-parameter{
+    height: 400px;
+}
+#alter-pan-cable-data{
+    height: 150px;
+}
