@@ -26,4 +26,33 @@ $(document).ready(function() {
         $("#group-instrument").css("display","block");
         $("#centralism-instrument").css("display","none");
     });
+
+    //电压等级选择
+    $("#10-voltage").on('ifChecked', function(){
+        $("#low-voltage-switchgear").css("display","block");
+        $("#step-up-transformer").css("display","block");
+        $("#high-voltage-switchgear").css("display","block");
+    });
+
+    $("#35-voltage").on('ifChecked', function(){
+        $("#low-voltage-switchgear").css("display","block");
+        $("#step-up-transformer").css("display","block");
+        $("#high-voltage-switchgear").css("display","block");
+    });
+    
+    $("#380-voltage").on('ifChecked', function () {
+        $("#low-voltage-switchgear").css("display","block");
+        $("#step-up-transformer").css("display","none");
+        $("#high-voltage-switchgear").css("display","none");
+    });
+
+    //选择一次升压还是二次升压
+    $("#once-booting").on('ifChecked',function(){
+        $("#show-twice-booting").css("display","none");
+        $("#show-once-booting").css("display","block");
+    });
+    $("#twice-booting").on('ifChecked',function(){
+        $("#show-twice-booting").css("display","block");
+        $("#show-once-booting").css("display","none");
+    });
 });
