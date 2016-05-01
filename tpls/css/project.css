@@ -223,3 +223,120 @@ td,th{
 #alter-pan-cable-data{
     height: 150px;
 }
+
+/*电网等级设置页面*/
+#power-system-grade{
+    margin: 100px 0 0 0;
+}
+#select-switch-cabinet{
+    margin: 20px 0 0 0;
+}
+.switch-cabinet{
+    height: 100px;
+    border: 1px solid black;
+}
+#select-power{
+    margin: 40px 0 0 0;
+}
+
+/*低压开关柜界面*/
+#low-voltage-switchgear{
+    margin: 40px 0 0 0;
+}
+.panel-show-low-message {
+    padding: 15px;
+    height: 500px;
+}
+.panel-show-low-parameter{
+    height: 500px;
+}
+.panel-show-low-type{
+    height: 500px;
+}
+#show-low-type{
+    padding: 0 10px 0 0;
+}
+#show-low-parameter{
+    padding: 0 10px 0 10px;
+}
+#show-low-message{
+    padding: 0 10px 0 10px;
+}
+/*升压变压器页面*/
+#step-up-transformer{
+    margin: 30px 0 0 0;
+}
+.panel-show-step-up-message{
+    padding: 15px;
+    height: 500px;
+}
+.panel-show-step-up-parameter{
+    height: 500px;
+}
+.panel-show-step-up-type{
+    height: 500px;
+}
+#show-step-up-type{
+    padding: 0 10px 0 0;
+}
+#show-step-up-parameter{
+    padding: 0 10px 0 10px;
+}
+#show-step-up-message{
+    padding: 0 10px 0 10px;
+}
+/*将二次升压界面隐藏*/
+#show-twice-booting{
+    display: none;
+    margin: 30px 0 0 0;
+}
+/*选择升压界面*/
+#select-once-or-twice{
+    margin: 40px 0 0 0;
+}
+/*一次升压*/
+#show-first-step-up-type{
+    padding: 0 10px 0 10px;
+}
+#show-first-step-up-parameter{
+    padding: 0 10px 0 10px;
+}
+#show-first-step-up-message{
+    padding: 0 10px 0 10px;
+}
+.panel-show-first-step-up-type{
+    height: 100px;
+}
+.panel-show-first-step-up-parameter{
+    height: 300px;
+}
+.panel-show-first-step-up-message{
+    padding: 10px 10px;
+    height: 100px;
+}
+.panel-min-default{
+    margin: 0 0 10px 0;
+}
+/*二次升压*/
+#show-twice-step-up-type{
+    padding: 0 10px 0 10px;
+}
+#show-twice-step-up-parameter{
+    padding: 0 10px 0 10px;
+}
+#show-twice-step-up-message{
+    padding: 0 10px 0 10px;
+}
+.panel-show-twice-step-up-type{
+    height: 100px;
+}
+.panel-show-twice-step-up-parameter{
+    height: 300px;
+}
+.panel-show-twice-step-up-message{
+    padding: 10px 10px;
+    height: 100px;
+}
+/*.contain-panel{*/
+    /*padding: 5px 10px;*/
+/*}*/
