@@ -1,21 +1,35 @@
 <!--直流配电柜界面-->
-<div id="direct-distribution" class="row">
-    <div id="direct-distribution-type" class="col-md-5">
-        <div class="panel panel-default">
-            <div class="panel-body" id="distribution-show-type">
-                显示配电柜类型
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/project.css">
+    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../../static/components/angular/angular.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    <div id="direct-distribution" class="row">
+        <div id="direct-distribution-type" class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body" id="distribution-show-type">
+                    显示配电柜类型
+                </div>
             </div>
         </div>
-    </div>
-    <div id="direct-distribution-parameter" class="col-md-5">
-        <div class="panel panel-default">
-            <div class="panel-body" id="distribution-show-paramenter">
-                显示配电柜参数
+        <div id="direct-distribution-parameter" class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body" id="distribution-show-paramenter">
+                    显示配电柜参数
+                </div>
             </div>
         </div>
+        <div id="direct-distribution-numbers" class="col-md-2 form-group">
+            <label for="distribution-numbers">配电柜数</label>
+            <input type="text" class="form-control" id="distribution-numbers">
+        </div>
     </div>
-    <div id="direct-distribution-numbers" class="col-md-2 form-group">
-        <label for="distribution-numbers">配电柜数</label>
-        <input type="text" class="form-control" id="distribution-numbers">
     </div>
-</div>
+</body>
+</html>

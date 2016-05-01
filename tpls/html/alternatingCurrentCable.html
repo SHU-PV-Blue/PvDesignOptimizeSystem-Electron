@@ -1,44 +1,56 @@
 <!--交流电缆参数界面-->
-<div id="alternating-current-cable">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-body" id="alter-pan-cable-configurations">
-                    配置电缆过程，点击两根电缆
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel-default panel">
-                <div class="panel-body" id="alter-pan-model-parameter">
-                    电缆选型和参数
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel-default panel">
-                <div class="panel-body" id="alter-pan-cable-data">
-                    <div id="div-alter-cable-message">
-                        <form>
-                            <div class="col-md-2">
-                                <label for="alter-current-cable-length">交流线缆长度</label>
-                                <input type="text" class="form-control" id="alter-current-cable-length">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="alter-current-cable-drop">线路压降</label>
-                                <input type="text" class="form-control" id="alter-current-cable-drop">
-                            </div>
-                            <div class="col-md-2">
-                                <label for="alter-current-cable-loss">电缆损耗</label>
-                                <input type="text" class="form-control" id="alter-current-cable-loss">
-                            </div>
-                        </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/project.css">
+    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../../static/components/angular/angular.min.js"></script>
+</head>
+<body>
+    <div id="alternating-current-cable" class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body" id="alter-pan-cable-configurations">
+                        配置电缆过程，点击两根电缆
                     </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel-default panel">
+                    <div class="panel-body" id="alter-pan-model-parameter">
+                        电缆选型和参数
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-default panel">
+                    <div class="panel-body" id="alter-pan-cable-data">
+                        <div id="div-alter-cable-message">
+                            <form>
+                                <div class="col-md-2">
+                                    <label for="alter-current-cable-length">交流线缆长度</label>
+                                    <input type="text" class="form-control" id="alter-current-cable-length">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="alter-current-cable-drop">线路压降</label>
+                                    <input type="text" class="form-control" id="alter-current-cable-drop">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="alter-current-cable-loss">电缆损耗</label>
+                                    <input type="text" class="form-control" id="alter-current-cable-loss">
+                                </div>
+                            </form>
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>

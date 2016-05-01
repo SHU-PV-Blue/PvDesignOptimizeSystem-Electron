@@ -1,41 +1,55 @@
 <!--组串式逆变器参数填写页面-->
-<div class="row" id="collection-inverter-parameter">
-    <div class="col-md-3">
-        <div class="panel-default panel">
-            <div class="panel-body" id="panel-collection-inverter-selection">
-                显示组串式逆变器选型
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/project.css">
+    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="../../static/components/angular/angular.min.js"></script>
+</head>
+<body>
+    <div class="container">
+    <div class="row" id="collection-inverter-parameter">
+        <div class="col-md-3">
+            <div class="panel-default panel">
+                <div class="panel-body" id="panel-collection-inverter-selection">
+                    显示组串式逆变器选型
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-7">
-        <div class="panel panel-default">
-            <div class="panel-body" id="panel-collection-inverter-parameter">
-                显示组串式逆变器参数
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body" id="panel-collection-inverter-parameter">
+                    显示组串式逆变器参数
+                </div>
             </div>
         </div>
+        <div class="col-md-2">
+            <!--<div class="panel-default panel">-->
+            <!--<div class="panel-body" id="colection-filled-parameter">-->
+            <form>
+                <div class="form-group">
+                    <label for="collection-series-number">每支路串联数</label>
+                    <input type="text" class="form-control" id="collection-series-number">
+                </div>
+                <div class="form-group">
+                    <label for="collection-barch-number">每个逆变器分配的支路数</label>
+                    <input type="text" class="form-control" id="collection-barch-number">
+                </div>
+                <div class="form-group">
+                    <label for="collection-compatibility-rate">容配比</label>
+                    <input type="text" class="form-control" id="collection-compatibility-rate">
+                </div>
+                <div class="form-group">
+                    <label for="collection-need-number">所需逆变器数</label>
+                    <input type="text" class="form-control" id="collection-need-number">
+                </div>
+            </form>
+            <!--</div>-->
+            <!--</div>-->
+        </div>
     </div>
-    <div class="col-md-2">
-        <!--<div class="panel-default panel">-->
-        <!--<div class="panel-body" id="colection-filled-parameter">-->
-        <form>
-            <div class="form-group">
-                <label for="collection-series-number">每支路串联数</label>
-                <input type="text" class="form-control" id="collection-series-number">
-            </div>
-            <div class="form-group">
-                <label for="collection-barch-number">每个逆变器分配的支路数</label>
-                <input type="text" class="form-control" id="collection-barch-number">
-            </div>
-            <div class="form-group">
-                <label for="collection-compatibility-rate">容配比</label>
-                <input type="text" class="form-control" id="collection-compatibility-rate">
-            </div>
-            <div class="form-group">
-                <label for="collection-need-number">所需逆变器数</label>
-                <input type="text" class="form-control" id="collection-need-number">
-            </div>
-        </form>
-        <!--</div>-->
-        <!--</div>-->
     </div>
-</div>
+</body>
+</html>

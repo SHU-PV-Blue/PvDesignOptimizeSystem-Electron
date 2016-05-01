@@ -1,40 +1,39 @@
-    <div  id="choose-inverter">
-    <div id="centralism-group-radio" class="row">
-        <div class="col-md-2">
-            <input type="radio" name="inverterCheck" class="iCheck" checked id="centralism-inverter">
-            <label for="centralism-inverter">
+    <div  id="choose-inverter" ng-controller="chooseInververCtrl">
+        <div id="centralism-group-radio" class="row">
+            <div class="col-md-2">
+                <input type="radio" name="inverterCheck" class="iCheck" checked id="centralism-inverter" ng-model="type" value="centralized">
+                <label for="centralism-inverter">
+                    集中式逆变器
+                </label>
+            </div>
+            <div class="col-md-2">
+                <input type="radio" name="inverterCheck" class="iCheck" id="group-inverter" ng-model="type" value="group">
+                <label for="group-inverter">组串式逆变器</label>
+            </div>
+        </div>
+        <div id="centralism-instrument" class="row" ng-show="show">
+            <div id="centralized-inverter" class="col-md-2 cocurrent" ng-click="showForm('centralized-inverter')">
                 集中式逆变器
-            </label>
+            </div>
+            <div id="cocurrent-combiner" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('cocurrent-combiner')">
+                直流汇流箱图片
+            </div>
+            <div id="DC-power-distribution" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('DC-power-distribution')"> 
+                直流配电柜
+            </div>
+            <div id="cocurrent-cable" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('cocurrent-cable')">
+                电缆
+            </div>
         </div>
-        <div class="col-md-2">
-            <input type="radio" name="inverterCheck" class="iCheck" id="group-inverter">
-            <label for="group-inverter">组串式逆变器</label>
-        </div>
-    </div>
-    <div id="centralism-instrument" class="row">
-        <div id="centralized-inverter" class="col-md-2 cocurrent">
-            集中式逆变器
-        </div>
-        <div id="cocurrent-combiner" class="col-md-2 col-md-offset-1 cocurrent">
-            直流汇流箱图片
-        </div>
-        <div id="DC-power-distribution" class="col-md-2 col-md-offset-1 cocurrent">
-            直流配电柜
-        </div>
-        <div id="cocurrent-cable"class="col-md-2 col-md-offset-1 cocurrent">
-            电缆
-        </div>
-    </div>
-    <div id="group-instrument" class="row">
-        <div id="groups-inverter" class="col-md-2 group">
-            组串式逆变器
-        </div>
-        <div id="AC-combiner" class="col-md-2 col-md-offset-1 group">
-            交流汇流箱
-        </div>
-        <div id="group-cable" class="col-md-2 col-md-offset-1 group">
-            电缆
+        <div id="group-instrument" class="row" ng-show="!show">
+            <div id="groups-inverter" class="col-md-2 group" ng-click="showForm('groups-inverter')">
+                组串式逆变器
+            </div>
+            <div id="AC-combiner" class="col-md-2 col-md-offset-1 group" ng-click="showForm('AC-combiner')">
+                交流汇流箱
+            </div>
+            <div id="group-cable" class="col-md-2 col-md-offset-1 group" ng-click="showForm('group-cable')">
+                电缆
+            </div>
         </div>
     </div>
-
-</div>
