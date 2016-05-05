@@ -1,55 +1,83 @@
-<!--组串式逆变器参数填写页面-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/project.css">
-    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="../../static/components/angular/angular.min.js"></script>
-</head>
-<body>
-    <div class="container">
-    <div class="row" id="collection-inverter-parameter">
+<div class="modal-header">
+    <h3 class="modal-title">组串式逆变器</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
+            </div>
+            <div class="col-md-8">
+              <select ng-model="selected" class="form-control">
+                <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 30px">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <tr>
+                  <th>最大输入功率（W）</th>
+                  <th>最大输入电压（V）</th>
+                  <th>启动电压（V）</th>
+                  <th>额定输入电压（V）</th>
+                  <th>MPP电压下限（V）</th>
+                  <th>MPP电压上限（V）</th>
+                  <th>MPPT数量（个）</th>
+                </tr>
+                <tr>
+                  <td>{{show['最大输入功率']}} </td>
+                  <td>{{show['最大输入电压']}} </td>
+                  <td>{{show['启动电压']}} </td>
+                  <td>{{show['额定输入电压']}} </td>
+                  <td>{{show['MPP电压下限']}} </td>
+                  <td>{{show['MPP电压上限']}} </td>
+                  <td>{{show['MPPT数量']}} </td>
+                </tr>
+                <tr>
+                  <th>最大输入电流（A）</th>
+                  <th>输入端子最大允许电流（A）</th>
+                  <th>额定输出功率（W）</th>
+                  <th>最大输出功率（VA）</th>
+                  <th>最大输出电流（A）</th>
+                  <th>最大效率（%）</th>
+                </tr>
+                <tr>
+                  <td>{{show['最大输入电流']}} </td>
+                  <td>{{show['输入端子最大允许电流']}} </td>
+                  <td>{{show['额定输出功率']}} </td>
+                  <td>{{show['最大输出功率']}} </td>
+                  <td>{{show['最大输出电流']}} </td>
+                  <td>{{show['最大效率']}} </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
         <div class="col-md-3">
-            <div class="panel-default panel">
-                <div class="panel-body" id="panel-collection-inverter-selection">
-                    显示组串式逆变器选型
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="panel panel-default">
-                <div class="panel-body" id="panel-collection-inverter-parameter">
-                    显示组串式逆变器参数
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <!--<div class="panel-default panel">-->
-            <!--<div class="panel-body" id="colection-filled-parameter">-->
-            <form>
-                <div class="form-group">
-                    <label for="collection-series-number">每支路串联数</label>
-                    <input type="text" class="form-control" id="collection-series-number">
-                </div>
-                <div class="form-group">
-                    <label for="collection-barch-number">每个逆变器分配的支路数</label>
-                    <input type="text" class="form-control" id="collection-barch-number">
-                </div>
-                <div class="form-group">
-                    <label for="collection-compatibility-rate">容配比</label>
-                    <input type="text" class="form-control" id="collection-compatibility-rate">
-                </div>
-                <div class="form-group">
-                    <label for="collection-need-number">所需逆变器数</label>
-                    <input type="text" class="form-control" id="collection-need-number">
-                </div>
+            <form role="form">
+               <div class="form-group">
+                  <label for="every-group">每支路串联数</label>
+                  <input type="text" class="form-control" id="every-group">
+               </div>
+               <div class="2">
+                  <label for="2">每个逆变器分配的支路数</label>
+                  <input type="text" class="form-control" id="2">
+               </div>
+               <div class="form-group">
+                  <label for="3">容配比</label>
+                  <input type="text" class="form-control" id="3">
+               </div>
+               <div class="form-group">
+                  <label for="4">所需逆变器数量</label>
+                  <input type="text" class="form-control" id="4">
+               </div>
             </form>
-            <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
-    </div>
-</body>
-</html>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -1,5 +1,5 @@
 <!--变压器电压选择页面-->
-<div id="power-system-grade">
+<div class="col-md-12" id="power-system-grade" ng-controller="selectTransformerCtrl">
     <div class="row">
         <div class="col-md-offset-5 col-md-2">
             接入电网等级
@@ -7,25 +7,29 @@
     </div>
     <div class="row" id="select-power">
         <div class="col-md-2 col-md-offset-3">
-            <input type="radio" name="vCheck" checked class="iCheck" id="10-voltage">
+            <input type="radio" ng-model="obj.type" name="vCheck" value="10kv" checked class="iCheck" id="10-voltage">
             <label >10KV</label>
         </div>
         <div class="col-md-2">
-            <input type="radio" name="vCheck" class="iCheck" id="35-voltage">
+            <input type="radio" ng-model="obj.type" name="vCheck" value="35kv" class="iCheck" id="35-voltage">
             <label >35KV</label>
         </div>
         <div class="col-md-2">
-            <input type="radio" name="vCheck" class="iCheck" id="380-voltage">
+            <input type="radio" ng-model="obj.type" name="vCheck" value="380kv" class="iCheck" id="380-voltage">
             <label >380KV</label>
         </div>
     </div>
     <div class="row" id="select-switch-cabinet">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="row">
-                <div class="col-md-3 switch-cabinet" id="low-voltage-switchgear">低压开关柜</div>
-                <div class="col-md-3 col-md-offset-1 switch-cabinet" id="step-up-transformer">升压变压器</div>
-                <div class="col-md-3 col-md-offset-1 switch-cabinet" id="high-voltage-switchgear">高压开关柜</div>
-            </div>
+        <div class="col-md-3" id="low-voltage-switchgear">
+            <div class="switch-cabinet" ng-click="showForm('low_10_35')" ng-show="show_10 || show_35">低压开关柜</div>
+            <div class="switch-cabinet" ng-click="showForm('low_380')" ng-show="show_380">低压开关柜</div>
+        </div>
+        <div class="col-md-3 col-md-offset-1" id="step-up-transformer">
+            <div class="switch-cabinet" ng-click="showForm('up_10')" ng-show="show_10">升压变压器</div>
+            <div class="switch-cabinet" ng-click="showForm('up_35')" ng-show="show_35">升压变压器</div>
+        </div>
+        <div class="col-md-3 col-md-offset-1" id="high-voltage-switchgear">
+            <div class="switch-cabinet" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</div>
         </div>
     </div>
 </div>

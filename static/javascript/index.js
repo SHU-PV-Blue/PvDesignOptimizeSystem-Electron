@@ -1,19 +1,19 @@
 var fs = require('fs');
-var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute'],function($httpProvider){
+var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute','ngAnimate'],function($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
   $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
- 
+
   /**
    * The workhorse; converts an object to x-www-form-urlencoded serialization.
    * @param {Object} obj
    * @return {String}
    */ 
-  var param = function(obj) {
+   var param = function(obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
-       
+
     for(name in obj) {
       value = obj[name];
-         
+
       if(value instanceof Array) {
         for(i=0; i<value.length; ++i) {
           subValue = value[i];
@@ -21,33 +21,33 @@ var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute'],
           innerObj = {};
           innerObj[fullSubName] = subValue;
           query += param(innerObj) + '&';
-        }
       }
-      else if(value instanceof Object) {
-        for(subName in value) {
-          subValue = value[subName];
-          fullSubName = name + '[' + subName + ']';
-          innerObj = {};
-          innerObj[fullSubName] = subValue;
-          query += param(innerObj) + '&';
-        }
-      }
-      else if(value !== undefined && value !== null)
-        query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
-    }
-       
-    return query.length ? query.substr(0, query.length - 1) : query;
-  };
- 
+  }
+  else if(value instanceof Object) {
+    for(subName in value) {
+      subValue = value[subName];
+      fullSubName = name + '[' + subName + ']';
+      innerObj = {};
+      innerObj[fullSubName] = subValue;
+      query += param(innerObj) + '&';
+  }
+}
+else if(value !== undefined && value !== null)
+    query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+}
+
+return query.length ? query.substr(0, query.length - 1) : query;
+};
+
   // Override $http service's default transformRequest
   $httpProvider.defaults.transformRequest = [function(data) {
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
-  }];
+}];
 });
 
 //服务区
 /*
-  保存和获取数据服务
+  本地保存和获取数据服务
   */
   pvModule.service('processData',function($rootScope){
   	this.dataBasePath = 'data/';
@@ -65,6 +65,27 @@ var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute'],
   		$rootScope.$broadcast('processData.save');
   	};
   });
+
+/*
+从数据接口获取数据服务
+*/
+pvModule.service('gainData', function($http, $q){
+  this.getDataFromInterface = function(url, params){
+    var defered = $q.defer();
+    var httpOpt = {
+      method : 'GET',
+      url : url
+    };
+    if(params){
+      httpOpt.params = params;
+    }
+    $http(httpOpt).then(function(response){
+         defered.resolve(response.data);
+    });
+
+    return defered.promise;
+  }
+})
 
 /*
   临时数据服务
@@ -85,7 +106,7 @@ var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute'],
   路由管理服务
   */
   pvModule.service('manageRoute',function(){
-  	this.routes = ['/','/2','/3','/4','/5'];
+  	this.routes = ['/','/2','/3','/4','/5','/6','/7','/8','/9','/10','/11'];
   	this.curIndex = 0;
   	this.getNextRoute = function(){
   		if(this.curIndex >= this.routes.length - 1)
@@ -236,7 +257,7 @@ var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute'],
 /*
   气象信息控制器
   */
-pvModule.controller('meteorologyCtrl',function($scope,$http, processData, tempData){
+  pvModule.controller('meteorologyCtrl',function($scope, processData, tempData, gainData){
   	$scope.meteorologyInfo = {
   		type : 'db',
   		minTem : '',
@@ -293,98 +314,340 @@ pvModule.controller('meteorologyCtrl',function($scope,$http, processData, tempDa
   	}
 
   	function getDbData(){                          //从气象数据库获取气象信息
-  		$http({
-			method : 'GET',
-			params : {
-			    lon : Number($scope.lng),
-			    lat : Number($scope.lat)
-			},
-			url : 'http://cake.wolfogre.com:8080/pv-data/weather'
-		}).then(function(response){
-			$scope.meteorologyInfo.monthinfos = response.data.data;
-			computeAvg();
-			$scope.meteorologyInfo.lng = $scope.lng;
-			$scope.meteorologyInfo.lat = $scope.lat;
-		});
-  	}
+      gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/weather',{
+         lon : Number($scope.lng),
+         lat : Number($scope.lat)
+      }).then(function(data){
+         $scope.meteorologyInfo.monthinfos = data.data;
+         computeAvg();
+         $scope.meteorologyInfo.lng = $scope.lng;
+         $scope.meteorologyInfo.lat = $scope.lat;
+      });
+   }
 
-  	$scope.lng = tempData.getTempData('lng');
-  	$scope.lat = tempData.getTempData('lat');
+   $scope.lng = tempData.getTempData('lng');
+   $scope.lat = tempData.getTempData('lat');
 
-  	$scope.$on('processData.save',function(event){
-  		processData.saveData($scope.meteorologyInfo,'meteorologyInfo.json');
-  	});
+   $scope.$on('processData.save',function(event){
+    processData.saveData($scope.meteorologyInfo,'meteorologyInfo.json');
+});
 
-  	$scope.$watch('$viewContentLoaded',function(){
-  		var tempObj = processData.getData('meteorologyInfo.json');
+   $scope.$watch('$viewContentLoaded',function(){
+    var tempObj = processData.getData('meteorologyInfo.json');
 		if(tempObj !== null && $scope.lng == tempObj.lng && $scope.lat == tempObj.lat){                             //如果数据存在则赋值
 			$scope.meteorologyInfo = tempObj;
 		}else{                                            //如果数据不存在，取默认值
-		    getDbData();
-	    }
+          getDbData();
+      }
 
-	    $scope.flag = $scope.meteorologyInfo.type == 'db' ? 0 : 1;
-	});
+      $scope.flag = $scope.meteorologyInfo.type == 'db' ? 0 : 1;
+  });
 });
 
-pvModule.controller('chooseInververCtrl',function($scope){
+/*
+选择组件控制器
+*/
+pvModule.controller('chooseComponentCtrl',function($scope, gainData){
+  $scope.components = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+  $scope.$watch('$viewContentLoaded',function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/pv-module')
+    .then(function(data){
+      $scope.components = data.data;
+    })
+  });
+});
+
+/*
+选择逆变器控制器
+*/
+pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
 	$scope.show = true;
-	$scope.type = "centralized";
+  $scope.obj = {
+    type : "centralized"
+  };
 
 	$scope.showForm = function(name){
-		const BrowserWindow = require('electron').remote.BrowserWindow;
-
-		var win = new BrowserWindow({ 
-			width: 1100,
-			height: 700, 
-			show: false,
-			minWidth : 1100,
-			minHeight : 700
-		});
-		win.on('closed', function() {
-		  win = null;
-		});
-		win.setMenu(null);
-
-		var filename;
+		var templateUrl, controller;
 		switch(name){
 		case 'centralized-inverter':                //集中式逆变器
-			filename = 'centralizedInverter.html';
-			break;
+     templateUrl = 'tpls/html/centralizedInverter.html';
+     controller = 'centralizedInverter';
+     break;
 		case 'cocurrent-combiner':                  //直流汇流箱
-			filename = 'directCurrent.html';
-			break;
+     templateUrl = 'tpls/html/directCurrent.html';
+     controller = 'directCurrent';
+     break;
 		case 'DC-power-distribution':               //直流配电柜
-			filename = 'directDistribution.html';
-			break;
+     templateUrl = 'tpls/html/directDistribution.html';
+     controller = 'directDistribution';
+     break;
 		case 'cocurrent-cable':                     //直流电缆
-			filename = 'directCurrentCable.html';
-			break;
+     templateUrl = 'tpls/html/directCurrentCable.html';
+     controller = 'directCurrentCable';
+     break;
 		case 'groups-inverter':                     //组串式逆变器
-			filename = 'groupInverter.html';
-			break;
+     templateUrl = 'tpls/html/groupInverter.html';
+     controller = 'groupInverter';
+     break;
 		case 'AC-combiner':                         //交流汇流箱
-			filename = 'alternatingCurrent.html';
-			break;
+     templateUrl = 'tpls/html/alternatingCurrent.html';
+     controller = 'alternatingCurrent';
+     break;
 		case 'group-cable':                         //交流电缆
-			filename = 'alternatingCurrentCable.html';
-		break;
-		default:
-			alert("faile");
-			break;
-		}
-		win.loadURL('file://' + __dirname + '/tpls/html/' + filename);
-		win.show();
-	}
+     templateUrl = 'tpls/html/alternatingCurrentCable.html';
+     controller = 'alternatingCurrentCable';
+     break;
+     default:
+     alert("faile");
+     break;
+  }
+  var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: templateUrl,
+      controller: controller + 'Ctrl',
+      size: 'lg',
+      backdrop: false
+    });
+  modalInstance.result.then(function (data) {
+      $scope.obj[data.name] = data.selected;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+}
 
-	$scope.$watch('type',function(){
-		if($scope.type == "centralized"){
-			$scope.show = true;
-		}else{
-			$scope.show = false;
-		}
-	})
+  $scope.$watch('obj.type',function(newVal){
+    if(newVal == "centralized"){
+       $scope.show = true;
+   }else{
+       $scope.show = false;
+   }
+  })
+});
+
+/*
+集中式逆变器控制器
+*/
+pvModule.controller('centralizedInverterCtrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'centralizedInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
 })
+
+/*
+组串式逆变器控制器
+*/
+pvModule.controller('groupInverterCtrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'groupInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+选择电网等级控制器
+*/
+pvModule.controller('selectTransformerCtrl',function($scope, $uibModal){
+  $scope['show_10'] = true;
+  $scope['show_35'] = false;
+  $scope['show_380'] = false;
+  $scope.obj = {
+    type : "10kv"
+  };
+
+  $scope.$watch('obj.type',function(newVal){
+      if(newVal == "10kv"){
+        $scope['show_10'] = true;
+        $scope['show_35'] = false;
+        $scope['show_380'] = false;
+     }else if(newVal == "35kv"){
+         $scope['show_10'] = false;
+        $scope['show_35'] = true;
+        $scope['show_380'] = false;
+     }else{
+        $scope['show_10'] = false;
+        $scope['show_35'] = false;
+        $scope['show_380'] = true;
+     }
+  })
+
+  $scope.showForm = function(name){
+    var templateUrl, controller;
+    switch(name){
+    case 'low_10_35':                //10,35kv低压开关柜
+     templateUrl = 'tpls/html/lowVoltage.html';
+     controller = 'low_10_35';
+     break;
+    case 'low_380':                  //380kv低压开关柜
+     templateUrl = 'tpls/html/directCurrent.html';
+     controller = 'low_380';
+     break;
+    case 'up_10':               //10kv升压变压器
+     templateUrl = 'tpls/html/setupTransformer.html';
+     controller = 'up_10';
+     break;
+    case 'up_35':                     //35kv升压变压器
+     templateUrl = 'tpls/html/setupTimes.html';
+     controller = 'up_35';
+     break;
+    case 'high_10_35':                     //10,35kv高压开关柜
+     templateUrl = 'tpls/html/groupInverter.html';
+     controller = 'high_10_35';
+     break;
+     default:
+     alert("faile");
+     break;
+  }
+  var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: templateUrl,
+      controller: controller + 'Ctrl',
+      size: 'lg',
+      backdrop: false
+    });
+  modalInstance.result.then(function (data) {
+      $scope.obj[data.name] = data.selected;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+}
+});
+
+/*
+10,35kv低压开关柜控制器
+*/
+pvModule.controller('low_10_35Ctrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'groupInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+10kv升压变压器控制器
+*/
+pvModule.controller('up_10Ctrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'groupInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+35kv升压变压器控制器
+*/
+pvModule.controller('up_35Ctrl',function($scope, $uibModalInstance, $window, gainData){
+  $scope.items = [];
+  $scope.selected = '';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'groupInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
 
 //指令区
 pvModule.directive('script', function() {
@@ -429,7 +692,7 @@ pvModule.directive('script', function() {
 	    	var lat = document.getElementById('lat').value;
 	    	map.centerAndZoom(new BMap.Point(lng,lat), 13);
 	    });
-	}
+ }
 };
 });
 
@@ -440,12 +703,24 @@ pvModule.config(function($routeProvider){
 	}).when('/2',{
 		templateUrl: 'tpls/html/displayMeteInfo.html'
 	}).when('/3',{
-		templateUrl: 'tpls/html/confirmAngle.html'
-	}).when('/4',{
-		templateUrl: 'tpls/html/userDesign.html'
-	}).when('/5',{
-		templateUrl: 'tpls/html/chooseInverter.html'
-	});
+        templateUrl: 'tpls/html/chooseComponent.html'
+    }).when('/4',{
+        templateUrl: 'tpls/html/confirmAngle.html'
+    }).when('/5',{
+        templateUrl: 'tpls/html/userDesign.html'
+    }).when('/6',{
+        templateUrl: 'tpls/html/chooseInverter.html'
+    }).when('/7',{
+        templateUrl: 'tpls/html/selectTransformer.html'
+    }).when('/8',{
+        templateUrl: 'tpls/html/heighVoltage.html'
+    }).when('/9',{
+        templateUrl: 'tpls/html/lowVoltage.html'
+    }).when('/10',{
+        templateUrl: 'tpls/html/setupTimes.html'
+    }).when('/11',{
+        templateUrl: 'tpls/html/setupTransformer.html'
+    });
 
-	$routeProvider.otherwise({ redirectTo: '/' });
+    $routeProvider.otherwise({ redirectTo: '/' });
 });

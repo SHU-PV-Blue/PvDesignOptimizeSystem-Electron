@@ -1,13 +1,13 @@
     <div  id="choose-inverter" ng-controller="chooseInververCtrl">
         <div id="centralism-group-radio" class="row">
             <div class="col-md-2">
-                <input type="radio" name="inverterCheck" class="iCheck" checked id="centralism-inverter" ng-model="type" value="centralized">
+                <input type="radio" name="inverterCheck" class="iCheck" checked id="centralism-inverter" ng-model="obj.type" value="centralized">
                 <label for="centralism-inverter">
                     集中式逆变器
                 </label>
             </div>
             <div class="col-md-2">
-                <input type="radio" name="inverterCheck" class="iCheck" id="group-inverter" ng-model="type" value="group">
+                <input type="radio" name="inverterCheck" class="iCheck" id="group-inverter" ng-model="obj.type" value="group">
                 <label for="group-inverter">组串式逆变器</label>
             </div>
         </div>
