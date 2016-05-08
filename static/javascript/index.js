@@ -47,22 +47,26 @@ return query.length ? query.substr(0, query.length - 1) : query;
 
 //服务区
 /*
-  本地保存和获取数据服务
-  */
-  pvModule.service('processData',function($rootScope){
+  项目数据服务
+*/
+  pvModule.service('projectData',function($rootScope){
+    this.projectData = {};
   	this.dataBasePath = 'data/';
-  	this.getData = function(filename){
-  		if(fs.existsSync(this.dataBasePath + filename)){
-  			return JSON.parse(fs.readFileSync(this.dataBasePath + filename),'utf8');
-  		}else{
-  			return null;
-  		}
+  	this.getData = function(propName){
+  		if(this.projectData[propName]){
+        return this.projectData[propName];
+      }else{
+        return null;
+      }
   	};
-  	this.saveData = function(data,filename){
-  		fs.writeFileSync(this.dataBasePath + filename,JSON.stringify(data,null,"    "),'utf8');
+  	this.addOrUpdateData = function(data, propName){
+  		this.projectData[propName] = data;
   	};
+    this.saveToLocal = function(){
+      fs.writeFileSync(this.dataBasePath + 'projectdata',JSON.stringify(this.projectData, null,"    "),'utf8');
+    };
   	this.noticeSaveData = function(){
-  		$rootScope.$broadcast('processData.save');
+  		$rootScope.$broadcast('projectData.save');
   	};
   });
 
@@ -88,25 +92,10 @@ pvModule.service('gainData', function($http, $q){
 })
 
 /*
-  临时数据服务
-  */
-  pvModule.service('tempData',function(){
-  	this.tempdata = {};
-  	this.setTempData = function(key, value){
-  		this.tempdata[key] = value;
-  	};
-  	this.getTempData = function(key){
-  		var res = this.tempdata[key];
-		//delete this.tempdata[key];
-		return res;
-	};
-});
-
-/*
   路由管理服务
   */
   pvModule.service('manageRoute',function(){
-  	this.routes = ['/','/2','/3','/4','/5','/6','/7','/8','/9','/10','/11'];
+  	this.routes = ['/','/2','/3','/4','/5','/6','/7'];
   	this.curIndex = 0;
   	this.getNextRoute = function(){
   		if(this.curIndex >= this.routes.length - 1)
@@ -126,17 +115,17 @@ pvModule.service('gainData', function($http, $q){
 
 /*
   导航控制器
-  */
+*/
   pvModule.controller('cordionCtrl',function($scope){                  
   	$scope.oneAtATime = true;
   });
 
 /*
   上一步下一步控制器
-  */
-  pvModule.controller('prenextCtrl',function($scope, $location, processData, manageRoute){
+*/
+  pvModule.controller('prenextCtrl',function($scope, $location, projectData, manageRoute){
   	$scope.nextStep = function(){
-  		processData.noticeSaveData();
+  		projectData.noticeSaveData();
   		$location.path(manageRoute.getNextRoute());
   	};
   	$scope.preStep = function(){
@@ -147,7 +136,7 @@ pvModule.service('gainData', function($http, $q){
 /*
   项目信息控制器
   */
-  pvModule.controller('basicInfoCtrl',function($scope, processData, tempData){
+  pvModule.controller('basicInfoCtrl',function($scope, projectData){
   	$scope.projectInfo = {
   		projectName : '',
   		projectAddress : '',
@@ -157,15 +146,16 @@ pvModule.service('gainData', function($http, $q){
   		lat : '31.219456'
   	};
 
-  	$scope.$on('processData.save',function(event){
-  		tempData.setTempData('lng',$scope.projectInfo.lng);
-  		tempData.setTempData('lat',$scope.projectInfo.lat);
-  		processData.saveData($scope.projectInfo,'projectInfo.json');
+  	$scope.$on('projectData.save',function(event){
+  		projectData.addOrUpdateData($scope.projectInfo,'basicInfo');
   	});
 
   	$scope.$watch('$viewContentLoaded',function(){
-  		$scope.projectInfo = processData.getData('projectInfo.json');
-  		$scope.projectInfo.projectDate = new Date($scope.projectInfo.projectDate);
+      var temp = projectData.getData('basicInfo');
+      if(temp){
+        $scope.projectInfo = temp;
+        $scope.projectInfo.projectDate = new Date($scope.projectInfo.projectDate);
+      }
   	});
 
   	$scope.today = function() {
@@ -257,7 +247,7 @@ pvModule.service('gainData', function($http, $q){
 /*
   气象信息控制器
   */
-  pvModule.controller('meteorologyCtrl',function($scope, processData, tempData, gainData){
+  pvModule.controller('meteorologyCtrl',function($scope, projectData, gainData){
   	$scope.meteorologyInfo = {
   		type : 'db',
   		minTem : '',
@@ -325,22 +315,22 @@ pvModule.service('gainData', function($http, $q){
       });
    }
 
-   $scope.lng = tempData.getTempData('lng');
-   $scope.lat = tempData.getTempData('lat');
+   $scope.lng = projectData.getData('basicInfo').lng;
+   $scope.lat = projectData.getData('basicInfo').lat;
 
-   $scope.$on('processData.save',function(event){
-    processData.saveData($scope.meteorologyInfo,'meteorologyInfo.json');
-});
+   $scope.$on('projectData.save',function(event){
+      projectData.addOrUpdateData($scope.meteorologyInfo,'meteorologyInfo');
+   });
 
    $scope.$watch('$viewContentLoaded',function(){
-    var tempObj = processData.getData('meteorologyInfo.json');
+    var tempObj = projectData.getData('meteorologyInfo');
 		if(tempObj !== null && $scope.lng == tempObj.lng && $scope.lat == tempObj.lat){                             //如果数据存在则赋值
 			$scope.meteorologyInfo = tempObj;
 		}else{                                            //如果数据不存在，取默认值
           getDbData();
-      }
+    }
 
-      $scope.flag = $scope.meteorologyInfo.type == 'db' ? 0 : 1;
+    $scope.flag = $scope.meteorologyInfo.type == 'db' ? 0 : 1;
   });
 });
 
@@ -386,7 +376,7 @@ pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
      templateUrl = 'tpls/html/directDistribution.html';
      controller = 'directDistribution';
      break;
-		case 'cocurrent-cable':                     //直流电缆
+		case 'cocurrent-cable':                     //集中式直流电缆
      templateUrl = 'tpls/html/directCurrentCable.html';
      controller = 'directCurrentCable';
      break;
@@ -398,7 +388,7 @@ pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
      templateUrl = 'tpls/html/alternatingCurrent.html';
      controller = 'alternatingCurrent';
      break;
-		case 'group-cable':                         //交流电缆
+		case 'group-cable':                         //组串式直流电缆
      templateUrl = 'tpls/html/alternatingCurrentCable.html';
      controller = 'alternatingCurrentCable';
      break;
@@ -450,6 +440,126 @@ pvModule.controller('centralizedInverterCtrl',function($scope, $uibModalInstance
   $scope.ok = function() {
     $uibModalInstance.close({
       name : 'centralizedInverter',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+直流汇流箱控制器
+*/
+pvModule.controller('directCurrentCtrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-combiner')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'directCurrent',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+直流配电柜控制器
+*/
+pvModule.controller('directDistributionCtrl',function($scope, $uibModalInstance, gainData){
+  $scope.items = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-distribution')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'directDistribution',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+});
+
+/*
+集中式直流电缆控制器
+*/
+pvModule.controller('directCurrentCableCtrl',function($scope, $uibModalInstance, $window, gainData){
+  $scope.items = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'directDistribution',
+      selected : $scope.show
+    });
+  };
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+})
+
+/*
+组串式直流电缆控制器
+*/
+pvModule.controller('alternatingCurrentCableCtrl',function($scope, $uibModalInstance, $window, gainData){
+  $scope.items = [];
+  $scope.selected = '{}';
+  $scope.show = {};
+  $scope.$watch('selected',function(newVal){
+    $scope.show = JSON.parse(newVal);
+  })
+
+  $scope.getData = function(){
+    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
+      .then(function(data){
+        $scope.items = data.data;
+      })
+  }
+
+  $scope.ok = function() {
+    $uibModalInstance.close({
+      name : 'directDistribution',
       selected : $scope.show
     });
   };
@@ -712,14 +822,6 @@ pvModule.config(function($routeProvider){
         templateUrl: 'tpls/html/chooseInverter.html'
     }).when('/7',{
         templateUrl: 'tpls/html/selectTransformer.html'
-    }).when('/8',{
-        templateUrl: 'tpls/html/heighVoltage.html'
-    }).when('/9',{
-        templateUrl: 'tpls/html/lowVoltage.html'
-    }).when('/10',{
-        templateUrl: 'tpls/html/setupTimes.html'
-    }).when('/11',{
-        templateUrl: 'tpls/html/setupTransformer.html'
     });
 
     $routeProvider.otherwise({ redirectTo: '/' });

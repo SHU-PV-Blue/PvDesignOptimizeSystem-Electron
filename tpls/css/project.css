@@ -6,6 +6,37 @@ td input{
 td,th{
     text-align: center;
 }
+
+#pv-direct-cable .rect{
+    display: inline-block;
+    height: 100px;
+    width: 40px;
+    border: 2px solid black;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+#pv-direct-cable .arrows{
+    position: relative;
+}
+#pv-direct-cable img{
+    cursor: pointer;
+}
+
+#pv-alternating-cable .rect{
+    display: inline-block;
+    height: 100px;
+    width: 40px;
+    border: 2px solid black;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+#pv-alternating-cable .arrows{
+    position: relative;
+}
+#pv-alternating-cable img{
+    cursor: pointer;
+}
+
 #left-information{
     top:50px;
     /*left: 60px;*/

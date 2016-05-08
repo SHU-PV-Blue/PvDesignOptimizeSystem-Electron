@@ -11,10 +11,10 @@
 	</tr>
 	<tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
 	  <td>{{$index + 1}}月</td>
-	  <td><input ng-model="monthinfo.i" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.t" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.h" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.w" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+	  <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+	  <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+	  <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+	  <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
 	</tr>
 	<tr>
 	  <td>平均值</td>

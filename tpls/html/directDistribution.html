@@ -1,35 +1,49 @@
-<!--直流配电柜界面-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/project.css">
-    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="../../static/components/angular/angular.min.js"></script>
-</head>
-<body>
-    <div class="container">
-    <div id="direct-distribution" class="row">
-        <div id="direct-distribution-type" class="col-md-5">
-            <div class="panel panel-default">
-                <div class="panel-body" id="distribution-show-type">
-                    显示配电柜类型
-                </div>
+<div class="modal-header">
+    <h3 class="modal-title">直流配电柜</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
             </div>
-        </div>
-        <div id="direct-distribution-parameter" class="col-md-5">
-            <div class="panel panel-default">
-                <div class="panel-body" id="distribution-show-paramenter">
-                    显示配电柜参数
-                </div>
+            <div class="col-md-8">
+              <select ng-model="selected" class="form-control">
+                <option ng-repeat="item in items" value="{{item}}">{{item['公司'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+              </select>
             </div>
+          </div>
+          <div class="row" style="margin-top: 30px">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <tr>
+                  <th>接入直流路数（个）</th>
+                  <th>输入直流功率上限（W）</th>
+                  <th>输入输出总电流上限（A）</th>
+                  <th>接入开路电压上限（V）</th>
+                </tr>
+                <tr>
+                  <td>{{show['接入直流路数']}} </td>
+                  <td>{{show['输入直流功率上限']}} </td>
+                  <td>{{show['输入输出总电流上限']}} </td>
+                  <td>{{show['接入开路电压上限']}} </td>
+                </tr>
+              </table>
+            </div>
+          </div>
         </div>
-        <div id="direct-distribution-numbers" class="col-md-2 form-group">
-            <label for="distribution-numbers">配电柜数</label>
-            <input type="text" class="form-control" id="distribution-numbers">
+        <div class="col-md-3">
+            <form role="form">
+               <div class="form-group">
+                  <label for="every-group">配电柜数</label>
+                  <input type="text" class="form-control" id="every-group">
+               </div>
+            </form>
         </div>
     </div>
-    </div>
-</body>
-</html>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
