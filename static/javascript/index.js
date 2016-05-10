@@ -254,10 +254,10 @@ pvModule.service('gainData', function($http, $q){
   		maxTem : '',
   		monthinfos:[],
   		monthavgs : {
-  			i : '',
-  			t : '',
-  			h : '',
-  			w : ''
+  			H : '',
+  			temperature : '',
+  			humidity : '',
+  			wind : ''
   		},
   		lng : '',
   		lat : ''
@@ -291,16 +291,16 @@ pvModule.service('gainData', function($http, $q){
   	function computeAvg(){
   		var i = 0, t = 0, h = 0, w = 0;
   		$scope.meteorologyInfo.monthinfos.forEach(function(monthinfo){
-  			i += monthinfo.i;
-  			t += monthinfo.t;
-  			h += monthinfo.h;
-  			w += monthinfo.w;
+  			i += monthinfo.H;
+  			t += monthinfo.temperature;
+  			h += monthinfo.humidity;
+  			w += monthinfo.wind;
   		});
 
-  		$scope.meteorologyInfo.monthavgs.i = i / 12;
-  		$scope.meteorologyInfo.monthavgs.t = t / 12;
-  		$scope.meteorologyInfo.monthavgs.w = w / 12;
-  		$scope.meteorologyInfo.monthavgs.h = h / 12;
+  		$scope.meteorologyInfo.monthavgs.H = (i / 12).toFixed(2);
+  		$scope.meteorologyInfo.monthavgs.temperature = (t / 12).toFixed(2);
+  		$scope.meteorologyInfo.monthavgs.wind = (w / 12).toFixed(2);
+  		$scope.meteorologyInfo.monthavgs.humidity = (h / 12).toFixed(2);
   	}
 
   	function getDbData(){                          //从气象数据库获取气象信息
@@ -337,19 +337,129 @@ pvModule.service('gainData', function($http, $q){
 /*
 选择组件控制器
 */
-pvModule.controller('chooseComponentCtrl',function($scope, gainData){
+pvModule.controller('chooseComponentCtrl',function($scope, gainData, projectData){
   $scope.components = [];
   $scope.selected = '{}';
   $scope.show = {};
   $scope.$watch('selected',function(newVal){
     $scope.show = JSON.parse(newVal);
   })
+
+  $scope.confirmChoose = function(){
+    projectData.addOrUpdateData($scope.show,'componentInfo');
+  }
+
   $scope.$watch('$viewContentLoaded',function(){
     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/pv-module')
     .then(function(data){
       $scope.components = data.data;
+      if(projectData.getData("componentInfo")){
+        $scope.selected = JSON.stringify(projectData.getData("componentInfo"));
+      }
     })
   });
+});
+
+/*
+方位角倾角控制器
+*/
+pvModule.controller('confirmAngleCtrl',function($scope, projectData){
+    $scope.angleInfo = {
+        dip : 0,
+        az : 0
+    };
+
+    $scope.sums = [];
+
+    //var getChartData = require('algorithm');
+    var meteorologyInfo = projectData.getData('meteorologyInfo');
+    var H = [];
+
+    meteorologyInfo.monthinfos.forEach(function(monthinfo){
+        H.push(monthinfo.H);
+    });
+
+    function getHData(){
+        return getChartData(H,meteorologyInfo.lat,$scope.angleInfo.az);
+    };
+
+    $scope.$watch('$viewContentLoaded',function(){
+        var temp = getHData();
+        console.log(temp)
+        $scope.sums = temp.sums;
+        $scope.angleInfo.dip = temp.best;
+    })
+})
+
+/*
+用户自定义面积或安装容量控制器
+*/
+pvModule.controller('userDesignCtrl',function($scope, projectData){
+    $scope.userDesignInfo = {
+        componentDirection : 'horizontal',
+        designType : 'area',                     //capacity
+        numPerFixture : 1,
+        fbspace : 0,
+        area : {
+            length : 0,
+            width : 0,
+            numPerRow : '',
+            rowsNum : '',
+            componentsNum : '',
+            totalArea : '',
+            totalCapacity : ''
+        },
+        capacity : {
+            totalCapacity : ''
+        }
+    };
+
+    $scope.$watch('userDesignInfo.area.length',function(newVal){
+        $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.width;
+    });
+
+    $scope.$watch('userDesignInfo.area.width',function(newVal){
+        $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.length;
+    });
+
+    function toRadian(degree){
+        return degree * 0.017453293;
+    };
+
+    var sin = function(degree){
+        return Math.sin(toRadian(degree));
+    };
+    
+    var cos = function(degree){
+        return Math.cos(toRadian(degree));
+    };
+    var tan = function(degree){
+        return Math.tan(toRadian(degree));
+    };
+
+    function compute_fbspace(dip, lng){
+        var componentInfo = projectData.getData('componentInfo');
+        var W;
+        if($scope.userDesignInfo.componentDirection === 'horizontal'){
+            W = componentInfo['宽度'] / 1000;
+        }else{
+            W = componentInfo['长度'] / 1000;
+        }
+
+        var W1 = W * $scope.userDesignInfo.numPerFixture;
+        return W1*cos(dip) + W1*sin(dip)*(0.707*tan(lng) +0.4338)/(0.707 - 0.4338*tan(lng));
+    }
+
+    $scope.$on('projectData.save',function(event){
+        projectData.addOrUpdateData($scope.userDesignInfo,'userDesignInfo');
+    });
+
+    $scope.$watch('$viewContentLoaded',function(){
+        var temp = projectData.getData('userDesignInfo');
+        if(temp){
+            $scope.userDesignInfo = temp;
+        }
+    });
 });
 
 /*
@@ -776,34 +886,63 @@ pvModule.directive('script', function() {
 
 /*
   地图指令
-  */
-  pvModule.directive('pvmap',function(){
-  	return {
-  		restrict : 'EA',
-  		replace : true,
-  		templateUrl : 'tpls/diretpls/pvmap.html',
-  		link : function(scope, elem, attrs){
-	    var map = new BMap.Map("mapContainer");          // 创建地图实例  
-	    map.enableScrollWheelZoom();
-	    var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标  
-	    map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别  
-	    map.addEventListener("click", function(e){
-	    	var lngInput = document.getElementById('lng');
-	    	var latInput = document.getElementById('lat');
-	    	lngInput.value = e.point.lng;
-	    	latInput.value = e.point.lat;
-	    	var evt = document.createEvent('MouseEvents');
-	    	evt.initEvent('change',true,true);
-	    	lngInput.dispatchEvent(evt);
-	    	latInput.dispatchEvent(evt);
-	    });
-	    document.getElementById('locatePoint').addEventListener('click',function(e){
-	    	var lng = document.getElementById('lng').value;
-	    	var lat = document.getElementById('lat').value;
-	    	map.centerAndZoom(new BMap.Point(lng,lat), 13);
-	    });
- }
-};
+*/
+pvModule.directive('pvmap',function(){
+	return {
+		restrict : 'EA',
+		replace : true,
+		templateUrl : 'tpls/diretpls/pvmap.html',
+		link : function(scope, elem, attrs){
+            var map = new BMap.Map("mapContainer");          // 创建地图实例  
+            map.enableScrollWheelZoom();
+            var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标  
+            map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别  
+            map.addEventListener("click", function(e){
+            	var lngInput = document.getElementById('lng');
+            	var latInput = document.getElementById('lat');
+            	lngInput.value = e.point.lng;
+            	latInput.value = e.point.lat;
+            	var evt = document.createEvent('MouseEvents');
+            	evt.initEvent('change',true,true);
+            	lngInput.dispatchEvent(evt);
+            	latInput.dispatchEvent(evt);
+            });
+            document.getElementById('locatePoint').addEventListener('click',function(e){
+            	var lng = document.getElementById('lng').value;
+            	var lat = document.getElementById('lat').value;
+            	map.centerAndZoom(new BMap.Point(lng,lat), 13);
+            });
+         }
+    };
+});
+
+/*
+  折线图指令
+*/
+pvModule.directive('pvchart',function(){
+    return {
+        restrict : 'EA',
+        replace : true,
+        templateUrl : 'tpls/diretpls/pvchart.html',
+        link : function(scope, elem, attrs){
+            var ctx = document.getElementById("year-dip");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["0","","","","","5","","","","","10","","","","","15","","","","","20","","","","","25","","","","","30","","","","","35","","","","","40","","","","","45","","","","","50","","","","","55","","","","","60","","","","","65","","","","","70","","","","","75","","","","","80","","","","","85","","","","","90"],
+                    datasets: [{
+                        label : '年总辐照度',
+                        fill : false,
+                        lineTension: 0,
+                        borderWidth : 1,
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        borderColor: "rgba(75,192,192,1)",
+                        data: scope.sums
+                    }]
+                }
+            });
+        }
+    };
 });
 
 //路由

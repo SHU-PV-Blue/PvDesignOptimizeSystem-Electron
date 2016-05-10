@@ -15,39 +15,24 @@
     <script src="static/components/angular-animate/angular-animate.min.js"></script>
     <script src="static/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="static/javascript/index.js"></script>
-    <script src="static/javascript/Chart.js"></script>
-    <!--<script src="tpls/javascript/Chart.js"></script>-->
-    <!--<script src="tpls/javascript/chart-line.js"></script>-->
+    <script src="static/javascript/algorithm.js"></script>
+    <script src="static/components/Chart.js/dist/Chart.js"></script>
     <script src="tpls/javascript/radioButton.js"></script>
     <script src="tpls/javascript/icheck.min.js"></script>
 </head>
 <body ng-app="PVModule">
     <div id="mainBody">
         <div id="ProcedureNav" ng-controller="cordionCtrl">
-            <uib-accordion close-others="oneAtATime">
-                <uib-accordion-group heading="项目信息" is-disabled="true">
-                </uib-accordion-group>
-                <uib-accordion-group heading="地理气象" is-disabled="true">
-                </uib-accordion-group>
-                <uib-accordion-group heading="组件选型与布局">
-                    <ul>
-                        <li><a href="">选择组件</a></li>
-                        <li><a href="">选择型号</a></li>
-                    </ul>
-                </uib-accordion-group>
-                <uib-accordion-group heading="设备">
-                    <ul>
-                        <li><a href="">集中式</a></li>
-                        <li><a href="">组串式</a></li>
-                    </ul>
-                </uib-accordion-group>
-                <uib-accordion-group heading="效率分析" is-disabled="true">
-                </uib-accordion-group>
-                <uib-accordion-group heading="效益分析" is-disabled="true">
-                </uib-accordion-group>
-                <uib-accordion-group heading="报告" is-disabled="true">
-                </uib-accordion-group>
-            </uib-accordion>
+            <ul>
+                <li><a href=""><span class="glyphicon glyphicon-tree-deciduous"></span>&nbsp;&nbsp;快速导航</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;项目信息</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;地理气象</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;组件选型与布局</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;设备</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;效率分析</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;效益分析</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;报告</a></li>
+            </ul>
         </div>
         <div id="mainContentWrap">
             <div class="container" id="mainContent">

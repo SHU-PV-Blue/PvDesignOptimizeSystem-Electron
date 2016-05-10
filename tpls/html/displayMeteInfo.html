@@ -2,40 +2,40 @@
   <div class="col-md-9" id="data-table">
     <div class="panel panel-default">
       <table class="table table-bordered">
-	<tr>
-	  <th>月份</th>
-	  <th>辐照度(kWh/m2/day)</th>
-	  <th>温度(°C)</th>
-	  <th>湿度(%)</th>
-	  <th>风速(m/s)</th>
-	</tr>
-	<tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
-	  <td>{{$index + 1}}月</td>
-	  <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	  <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-	</tr>
-	<tr>
-	  <td>平均值</td>
-	  <td>{{meteorologyInfo.monthavgs.i}}</td>
-	  <td>{{meteorologyInfo.monthavgs.t}}</td>
-	  <td>{{meteorologyInfo.monthavgs.h}}</td>
-	  <td>{{meteorologyInfo.monthavgs.w}}</td>
-	</tr>
+      	<tr>
+      	  <th>月份</th>
+      	  <th>辐照度(kWh/m2/day)</th>
+      	  <th>温度(°C)</th>
+      	  <th>湿度(%)</th>
+      	  <th>风速(m/s)</th>
+      	</tr>
+      	<tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
+      	  <td>{{$index + 1}}月</td>
+      	  <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+      	  <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+      	  <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+      	  <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+      	</tr>
+      	<tr>
+      	  <td>平均值</td>
+      	  <td>{{meteorologyInfo.monthavgs.H}}</td>
+      	  <td>{{meteorologyInfo.monthavgs.temperature}}</td>
+      	  <td>{{meteorologyInfo.monthavgs.humidity}}</td>
+      	  <td>{{meteorologyInfo.monthavgs.wind}}</td>
+      	</tr>
       </table>
     </div>
   </div>
-  <div id="mete-basicinfo" class="col-md-2">
+  <div id="mete-basicinfo" class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-body panel-message">
+      <div class="panel-body panel-message" style="padding:30px 20px">
         <div id="mete-data">
           <form>
             <div class="form-group">
-              <input type="radio" name="mete-data" ng-model="meteorologyInfo.type" ng-click="selectDb($event)" value="db"/>
-              <label>国际气象数据库</label> <br>
-              <input type="radio" name="mete-data" ng-model="meteorologyInfo.type" ng-click="selectUser($e)" value="user"/>
-              <label >用户自定义</label>
+              <input type="radio" name="mete-data" id="pv-db" ng-model="meteorologyInfo.type" ng-click="selectDb($event)" value="db"/>
+              <label for="pv-db">国际气象数据库</label> <br>
+              <input type="radio" name="mete-data" id="pv-user" ng-model="meteorologyInfo.type" ng-click="selectUser($event)" value="user"/>
+              <label for="pv-user">用户自定义</label>
             </div>
           </form>
         </div>

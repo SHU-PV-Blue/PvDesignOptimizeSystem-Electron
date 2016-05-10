@@ -38,24 +38,20 @@ td,th{
 }
 
 #left-information{
-    top:50px;
-    /*left: 60px;*/
+    top: 30px;
     position: relative;
 }
 #map{
     position: relative;
-    top: 76px;
-    /*left: 10px;*/
+    top: 30px;
 }
 #data-table{
     position: relative;
-    top:70px;
-    left: 30px;
+    top:30px;
 }
 #mete-basicinfo{
     position: relative;
-    top:70px;
-    left: 20px;
+    top: 30px;
 }
 .panel-message{
     width: auto;

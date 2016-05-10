@@ -1,43 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div id="component-angle">
+<div id="component-angle" ng-controller="confirmAngleCtrl" style="color:white">
     <div class="row">
-        <div class="col-md-2">
-            <form>
+        <div class="col-md-12">
+            <form class="form-inline" role="form">
                 <div class="form-group">
                     <label for="azimuthal-angel">方位角</label>
-                    <input type="text" class="form-control" id="azimuthal-angel" >
+                    <input type="text" class="form-control" ng-model="angleInfo.az" id="azimuthal-angel" >
                 </div>
                 <div class="form-group">
                     <label for="incidence-angel">倾角</label>
-                    <input type="text"class="form-control" id="incidence-angel">
+                    <input type="text"class="form-control" ng-model="angleInfo.dip" id="incidence-angel">
                 </div>
             </form>
         </div>
-        <div class="chart-angel-irradiancy col-md-10"id="line-chart-top-div">
-            <div class="panel panel-default">
-                <div class="panel-body" id="line-chart">
-                    <canvas id="myChart" width="400" height="400">
-
-                    </canvas>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div>
     <div class="row">
-        <div class="table-irradiancy col-md-12" id="table-top-div">
-            <div class="panel panel-default">
-                <div class="panel-body" id="table-information">
-                    显示表格信息，四行，92列
-                </div>
-            </div>
+        <div class="col-md-12">
+            <pvchart></pvchart>
         </div>
     </div>
 </div>
-</body>
-</html>
