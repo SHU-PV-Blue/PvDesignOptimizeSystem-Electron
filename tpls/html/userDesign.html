@@ -18,11 +18,11 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="">每个支架上所放置组件数</label>
-                    <input type="text" class="form-control" ng-model="userDesignInfo.numPerFixture" size="4">
+                    <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" size="4" min="1" value="1">
                 </div>
                 <div class="form-group" style="margin-left: 40px">
                     <label for="">阵列前后间距</label>
-                    <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="4">
+                    <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
                 </div>
             </div>
         </form>
@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-md-12">
             <input type="radio" name="pv-c" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
-            <label for="pv-c1">用户自定义面积</label>
+            <label for="pv-c1">自定义面积</label>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label for="" class="col-md-4 control-label">区域长</label>
@@ -52,7 +52,7 @@
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
                     </div>
                     <div class="col-md-5">
-                        左右剩余间距：
+                        左右剩余间距：<span ng-bind="lrspace"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -61,7 +61,7 @@
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
                     </div>
                     <div class="col-md-5">
-                        前后剩余间距：
+                        前后剩余间距：<span ng-bind="fbspace"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -89,7 +89,7 @@
     <div class="row">
         <div class="col-md-4">
             <input type="radio" name="pv-c" id="pv-c2" value="capacity" ng-model="userDesignInfo.capacity"> 
-            <label for="pv-c2">用户自定义安装容量</label>
+            <label for="pv-c2">自定义安装容量</label>
         </div>
         <div class="col-md-3">
             <input type="text" class="form-control" ng-model="userDesignInfo.capacity.totalCapacity">

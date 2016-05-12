@@ -1,13 +1,12 @@
 <div class="row" ng-controller="meteorologyCtrl">
-  <div class="col-md-9" id="data-table">
-    <div class="panel panel-default">
+  <div class="col-md-9" id="meterTable">
       <table class="table table-bordered">
       	<tr>
-      	  <th>月份</th>
-      	  <th>辐照度(kWh/m2/day)</th>
-      	  <th>温度(°C)</th>
-      	  <th>湿度(%)</th>
-      	  <th>风速(m/s)</th>
+      	  <td>月份</td>
+      	  <td>辐照度(kWh/m2/day)</td>
+      	  <td>温度(°C)</td>
+      	  <td>湿度(%)</td>
+      	  <td>风速(m/s)</td>
       	</tr>
       	<tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
       	  <td>{{$index + 1}}月</td>
@@ -24,10 +23,8 @@
       	  <td>{{meteorologyInfo.monthavgs.wind}}</td>
       	</tr>
       </table>
-    </div>
   </div>
   <div id="mete-basicinfo" class="col-md-3">
-    <div class="panel panel-default">
       <div class="panel-body panel-message" style="padding:30px 20px">
         <div id="mete-data">
           <form>
@@ -59,7 +56,6 @@
             </div>
           </form>
         </div>
-      </div>
     </div>
   </div>
 </div>

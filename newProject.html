@@ -39,9 +39,17 @@
 
                 <ng-view></ng-view>
             </div>
-            <div id="pre-next" ng-controller="prenextCtrl">
-                <button id="preBtn" class="btn btn-primary" ng-click="preStep()">上一步</button>
-                <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
+            <div id="pre-next" ng-controller="prenextCtrl" class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="preBtn" class="btn btn-primary" ng-click="preStep()">上一步</button>
+                    </div>
+                    <div class="col-md-8" style="padding-top:10px">
+                        <uib-progressbar max="max" value="current"><span style="color:white; white-space:nowrap;">{{current}} / {{max}}</span></uib-progressbar>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
+                </div>
             </div>
         </div>
     </div>

@@ -38,6 +38,10 @@ var template = [
   		{
   			type: 'separator'
   		},
+      {
+        label : '保存项目',
+        accelerator : 'Ctrl+S',
+      },
   		{
   			label : '退出',
   			accelerator : 'Ctrl+E',
@@ -91,14 +95,6 @@ var template = [
   {
     label: '视图',
     submenu: [
-      {
-        label: '重新加载',
-        accelerator: 'CmdOrCtrl+R',
-        click: function(item, focusedWindow) {
-          if (focusedWindow)
-            focusedWindow.reload();
-        }
-      },
       {
         label: '切换全屏',
         accelerator: (function() {

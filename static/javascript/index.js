@@ -47,7 +47,7 @@ return query.length ? query.substr(0, query.length - 1) : query;
 
 //服务区
 /*
-  项目数据服务
+项目数据服务
 */
   pvModule.service('projectData',function($rootScope){
     this.projectData = {};
@@ -97,6 +97,12 @@ pvModule.service('gainData', function($http, $q){
   pvModule.service('manageRoute',function(){
   	this.routes = ['/','/2','/3','/4','/5','/6','/7'];
   	this.curIndex = 0;
+    this.getTotal = function(){
+      return this.routes.length;
+    };
+    this.getCurrent = function(){
+      return this.curIndex;
+    }
   	this.getNextRoute = function(){
   		if(this.curIndex >= this.routes.length - 1)
   			return;
@@ -123,15 +129,19 @@ pvModule.service('gainData', function($http, $q){
 /*
   上一步下一步控制器
 */
-  pvModule.controller('prenextCtrl',function($scope, $location, projectData, manageRoute){
-  	$scope.nextStep = function(){
+pvModule.controller('prenextCtrl',function($scope, $location, projectData, manageRoute){
+  	$scope.max = manageRoute.getTotal();
+    $scope.current = 1;
+    $scope.nextStep = function(){
   		projectData.noticeSaveData();
   		$location.path(manageRoute.getNextRoute());
+      $scope.current = manageRoute.getCurrent() + 1;
   	};
   	$scope.preStep = function(){
   		$location.path(manageRoute.getPreRoute());
+      $scope.current = manageRoute.getCurrent() + 1;
   	};
-  });
+});
 
 /*
   项目信息控制器
@@ -142,8 +152,8 @@ pvModule.service('gainData', function($http, $q){
   		projectAddress : '',
   		userName : '',
   		remark : '',
-  		lng : '121.494966',
-  		lat : '31.219456'
+  		lng : 121.494966,
+  		lat : 31.219456
   	};
 
   	$scope.$on('projectData.save',function(event){
@@ -371,7 +381,6 @@ pvModule.controller('confirmAngleCtrl',function($scope, projectData){
 
     $scope.sums = [];
 
-    //var getChartData = require('algorithm');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
     var H = [];
 
@@ -383,9 +392,12 @@ pvModule.controller('confirmAngleCtrl',function($scope, projectData){
         return getChartData(H,meteorologyInfo.lat,$scope.angleInfo.az);
     };
 
+    $scope.$on('projectData.save',function(event){
+        projectData.addOrUpdateData($scope.angleInfo,'angleInfo');
+    });
+
     $scope.$watch('$viewContentLoaded',function(){
         var temp = getHData();
-        console.log(temp)
         $scope.sums = temp.sums;
         $scope.angleInfo.dip = temp.best;
     })
@@ -403,26 +415,52 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
         area : {
             length : 0,
             width : 0,
-            numPerRow : '',
-            rowsNum : '',
-            componentsNum : '',
-            totalArea : '',
-            totalCapacity : ''
+            numPerRow : 0,
+            rowsNum : 0,
+            componentsNum : 0,
+            totalArea : 0,
+            totalCapacity : 0
         },
         capacity : {
             totalCapacity : ''
         }
     };
 
+    $scope.lrspace = 0;
+    $scope.fbspace = 0;
+
+    $scope.$watch('userDesignInfo.numPerFixture',function(newVal){
+        $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
+    });
+
+    $scope.$watch('userDesignInfo.componentDirection',function(newVal){
+        $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
+        $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
+    });
+
     $scope.$watch('userDesignInfo.area.length',function(newVal){
         $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.width;
+        $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
     $scope.$watch('userDesignInfo.area.width',function(newVal){
         $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.length;
+        $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
     });
 
-    function toRadian(degree){
+    $scope.$watch('userDesignInfo.fbspace',function(){
+        $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
+    });
+
+    $scope.$watch('userDesignInfo.area.numPerRow',function(newVal){
+        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.rowsNum;
+    });
+
+    $scope.$watch('userDesignInfo.area.rowsNum',function(newVal){
+        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.numPerRow;
+    });
+
+    function toRadian(degree){                           //角度转弧度
         return degree * 0.017453293;
     };
 
@@ -437,8 +475,10 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
         return Math.tan(toRadian(degree));
     };
 
-    function compute_fbspace(dip, lng){
+    function compute_fbspace(){                           //计算阵列前后间距
         var componentInfo = projectData.getData('componentInfo');
+        var dip = projectData.getData('angleInfo').dip;
+        var lng = projectData.getData('basicInfo').lng;
         var W;
         if($scope.userDesignInfo.componentDirection === 'horizontal'){
             W = componentInfo['宽度'] / 1000;
@@ -448,6 +488,25 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
 
         var W1 = W * $scope.userDesignInfo.numPerFixture;
         return W1*cos(dip) + W1*sin(dip)*(0.707*tan(lng) +0.4338)/(0.707 - 0.4338*tan(lng));
+    };
+
+    function compute_numPerRow(){                               //计算每行组件数
+        var componentInfo = projectData.getData('componentInfo');
+        var L;
+        if($scope.userDesignInfo.componentDirection === 'horizontal'){
+            L = componentInfo['宽度'] / 1000;
+        }else{
+            L = componentInfo['长度'] / 1000;
+        }
+        var res = Math.floor($scope.userDesignInfo.area.length / L);
+        $scope.lrspace = ($scope.userDesignInfo.area.length - res*L).toFixed(2);
+        return res;
+    }
+
+    function compute_rowsNum(){                                 //计算阵列行数
+        var res = Math.floor($scope.userDesignInfo.area.width/$scope.userDesignInfo.fbspace);
+        $scope.fbspace = ($scope.userDesignInfo.area.width - res * $scope.userDesignInfo.fbspace).toFixed(2);
+        return res;
     }
 
     $scope.$on('projectData.save',function(event){
@@ -458,6 +517,7 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
         var temp = projectData.getData('userDesignInfo');
         if(temp){
             $scope.userDesignInfo = temp;
+            $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
         }
     });
 });

@@ -13,27 +13,27 @@
         </div>
         <div id="centralism-instrument" class="row" ng-show="show">
             <div id="centralized-inverter" class="col-md-2 cocurrent" ng-click="showForm('centralized-inverter')">
-                集中式逆变器
+                <div class="pv-mask"><span>集中式逆变器</span></div>
             </div>
             <div id="cocurrent-combiner" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('cocurrent-combiner')">
-                直流汇流箱图片
+                <div class="pv-mask"><span>直流汇流箱</span></div>
             </div>
             <div id="DC-power-distribution" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('DC-power-distribution')"> 
-                直流配电柜
+                <div class="pv-mask"><span>直流配电柜</span></div>
             </div>
             <div id="cocurrent-cable" class="col-md-2 col-md-offset-1 cocurrent" ng-click="showForm('cocurrent-cable')">
-                电缆
+                <div class="pv-mask"><span>电缆</span></div>
             </div>
         </div>
         <div id="group-instrument" class="row" ng-show="!show">
             <div id="groups-inverter" class="col-md-2 group" ng-click="showForm('groups-inverter')">
-                组串式逆变器
+                <div class="pv-mask"><span>组串式逆变器</span></div>
             </div>
             <div id="AC-combiner" class="col-md-2 col-md-offset-1 group" ng-click="showForm('AC-combiner')">
-                交流汇流箱
+                <div class="pv-mask"><span>交流汇流箱</span></div>
             </div>
             <div id="group-cable" class="col-md-2 col-md-offset-1 group" ng-click="showForm('group-cable')">
-                电缆
+                <div class="pv-mask"><span>电缆</span></div>
             </div>
         </div>
     </div>

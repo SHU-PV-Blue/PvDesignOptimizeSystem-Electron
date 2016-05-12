@@ -1,4 +1,4 @@
-<div class="row" ng-controller="chooseComponentCtrl" style="color:white">
+<div class="row" ng-controller="chooseComponentCtrl" style="color:white" id="pv-component">
 	<div class="col-md-12">
 		<div class="row" style="margin-top:30px">
 			<div class="col-md-12">
@@ -28,13 +28,13 @@
 			<div class="col-md-12">
 				<table class="table table-bordered">
 					<tr>
-						<th>开路电压(V)</th>
-						<th>最大功率点电压(V)</th>
-						<th>最大功率点电流(A)</th>
-						<th>短路电流(A)</th>
-						<th>转换效率(%)</th>
-						<th>开路电压温度系数(%/℃)</th>
-						<th>最大功率温度系数(%/℃)</th>
+						<td>开路电压(V)</td>
+						<td>最大功率点电压(V)</td>
+						<td>最大功率点电流(A)</td>
+						<td>短路电流(A)</td>
+						<td>转换效率(%)</td>
+						<td>开路电压温度系数(%/℃)</td>
+						<td>最大功率温度系数(%/℃)</td>
 					</tr>
 					<tr>
 						<td>{{ show['开路电压'] }}</td>
@@ -52,12 +52,12 @@
 			<div class="col-md-12">
 				<table class="table table-bordered">
 					<tr>
-						<th>短路电流温度系数(%/℃)</th>
-						<th>长度(mm)</th>
-						<th>宽度(mm)</th>
-						<th>重量(kg)</th>
-						<th>工作温度下限(℃)</th>
-						<th>工作温度上限(℃)</th>
+						<td>短路电流温度系数(%/℃)</td>
+						<td>长度(mm)</td>
+						<td>宽度(mm)</td>
+						<td>重量(kg)</td>
+						<td>工作温度下限(℃)</td>
+						<td>工作温度上限(℃)</td>
 					</tr>
 					<tr>
 						<td>{{show['短路电流温度系数']}}</td>
