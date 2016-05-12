@@ -26,12 +26,12 @@
                   <th>最大直流输入电流（A）</th>
                 </tr>
                 <tr>
-                  <td>{{show['最大直流输入功率']}} </td>
-                  <td>{{show['最大输入电压']}} </td>
-                  <td>{{show['启动电压']}} </td>
-                  <td>{{show['MPP电压下限']}} </td>
-                  <td>{{show['MPP电压上限']}} </td>
-                  <td>{{show['最大直流输入电流']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大直流输入功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大输入电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['启动电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['MPP电压下限']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['MPP电压上限']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大直流输入电流']}} </td>
                 </tr>
                 <tr>
                   <th>额定交流输出功率（W）</th>
@@ -41,11 +41,11 @@
                   <th>最大效率（%）</th>
                 </tr>
                 <tr>
-                  <td>{{show['额定交流输出功率']}} </td>
-                  <td>{{show['最大输出功率']}} </td>
-                  <td>{{show['最大交流输出电流']}} </td>
-                  <td>{{show['额定电网电压']}} </td>
-                  <td>{{show['最大效率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['额定交流输出功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大输出功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大交流输出电流']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['额定电网电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大效率']}} </td>
                 </tr>
               </table>
             </div>
@@ -55,19 +55,23 @@
             <form role="form">
                <div class="form-group">
                   <label for="every-group">每支路串联数</label>
-                  <input type="text" class="form-control" id="every-group">
+                  <input type="text" class="form-control" id="every-group" ng-model="centralizedInverterInfo.serialNumPerBranch">
                </div>
                <div class="2">
                   <label for="2">每个逆变器分配的支路数</label>
-                  <input type="text" class="form-control" id="2">
+                  <input type="text" class="form-control" id="2" ng-model="centralizedInverterInfo.branchNumPerInverter">
                </div>
                <div class="form-group">
                   <label for="3">容配比</label>
-                  <input type="text" class="form-control" id="3">
+                  <input type="number" class="form-control" min="1" step="0.01" id="3" ng-model="centralizedInverterInfo.volumnRatio">
                </div>
                <div class="form-group">
                   <label for="4">所需逆变器数量</label>
-                  <input type="text" class="form-control" id="4">
+                  <input type="text" class="form-control" id="4" ng-model="centralizedInverterInfo.inverterNumNeeded">
+               </div>
+               <div class="form-group">
+                  <label for="5">总安装容量</label>
+                  <input type="text" class="form-control" id="5" ng-model="centralizedInverterInfo.totalOpacity">
                </div>
             </form>
         </div>

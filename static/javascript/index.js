@@ -7,7 +7,7 @@ var pvModule = angular.module('PVModule',['ui.bootstrap','ui.router','ngRoute','
    * The workhorse; converts an object to x-www-form-urlencoded serialization.
    * @param {Object} obj
    * @return {String}
-   */ 
+   */
    var param = function(obj) {
     var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
 
@@ -122,7 +122,7 @@ pvModule.service('gainData', function($http, $q){
 /*
   导航控制器
 */
-  pvModule.controller('cordionCtrl',function($scope){                  
+  pvModule.controller('cordionCtrl',function($scope){
   	$scope.oneAtATime = true;
   });
 
@@ -422,7 +422,7 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
             totalCapacity : 0
         },
         capacity : {
-            totalCapacity : ''
+            totalCapacity : 0
         }
     };
 
@@ -460,6 +460,11 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
         $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.numPerRow;
     });
 
+    $scope.$watch('userDesignInfo.area.componentsNum',function(newVal){
+        var componentInfo = projectData.getData('componentInfo');
+        $scope.userDesignInfo.area.totalCapacity = newVal * componentInfo['峰值功率'];
+    });
+
     function toRadian(degree){                           //角度转弧度
         return degree * 0.017453293;
     };
@@ -467,7 +472,7 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
     var sin = function(degree){
         return Math.sin(toRadian(degree));
     };
-    
+
     var cos = function(degree){
         return Math.cos(toRadian(degree));
     };
@@ -527,9 +532,9 @@ pvModule.controller('userDesignCtrl',function($scope, projectData){
 */
 pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
 	$scope.show = true;
-  $scope.obj = {
-    type : "centralized"
-  };
+    $scope.obj = {
+        type : "centralized"
+    };
 
 	$scope.showForm = function(name){
 		var templateUrl, controller;
@@ -574,7 +579,7 @@ pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
       backdrop: false
     });
   modalInstance.result.then(function (data) {
-      $scope.obj[data.name] = data.selected;
+      $scope.obj[data.name] = data.obj;
     }, function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
@@ -592,31 +597,38 @@ pvModule.controller('chooseInververCtrl',function($scope, $uibModal){
 /*
 集中式逆变器控制器
 */
-pvModule.controller('centralizedInverterCtrl',function($scope, $uibModalInstance, gainData){
-  $scope.items = [];
-  $scope.selected = '{}';
-  $scope.show = {};
-  $scope.$watch('selected',function(newVal){
-    $scope.show = JSON.parse(newVal);
-  })
-
-  $scope.getData = function(){
-    gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
-      .then(function(data){
-        $scope.items = data.data;
-      })
-  }
-
-  $scope.ok = function() {
-    $uibModalInstance.close({
-      name : 'centralizedInverter',
-      selected : $scope.show
+pvModule.controller('centralizedInverterCtrl',function($scope, $uibModalInstance, gainData, projectData){
+    $scope.centralizedInverterInfo = {
+        centralizedInverter : {},
+        serialNumPerBranch : 0,
+        branchNumPerInverter : 0,
+        volumnRatio : 1.05,
+        inverterNumNeeded : 0,
+        totalOpacity : 0
+    };
+    $scope.items = [];
+    $scope.selected = '{}';
+    $scope.$watch('selected',function(newVal){
+        $scope.centralizedInverterInfo.centralizedInverter = JSON.parse(newVal);
     });
-  };
 
-  $scope.cancel = function() {
-    $uibModalInstance.dismiss('cancel');
-  };
+    $scope.getData = function(){
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
+          .then(function(data){
+            $scope.items = data.data;
+        });
+    };
+
+    $scope.ok = function() {
+        $uibModalInstance.close({
+            name : 'centralizedInverterInfo',
+            obj : $scope.centralizedInverterInfo
+        });
+    };
+
+    $scope.cancel = function() {
+        $uibModalInstance.dismiss('cancel');
+    };
 })
 
 /*
@@ -694,7 +706,7 @@ pvModule.controller('directCurrentCableCtrl',function($scope, $uibModalInstance,
     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
       .then(function(data){
         $scope.items = data.data;
-      })
+      });
   }
 
   $scope.ok = function() {
@@ -953,10 +965,10 @@ pvModule.directive('pvmap',function(){
 		replace : true,
 		templateUrl : 'tpls/diretpls/pvmap.html',
 		link : function(scope, elem, attrs){
-            var map = new BMap.Map("mapContainer");          // 创建地图实例  
+            var map = new BMap.Map("mapContainer");          // 创建地图实例
             map.enableScrollWheelZoom();
-            var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标  
-            map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别  
+            var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标
+            map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别
             map.addEventListener("click", function(e){
             	var lngInput = document.getElementById('lng');
             	var latInput = document.getElementById('lat');
