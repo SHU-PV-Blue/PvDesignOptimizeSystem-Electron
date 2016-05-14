@@ -24,10 +24,10 @@
                   <th>接入开路电压上限（V）</th>
                 </tr>
                 <tr>
-                  <td>{{show['接入直流路数']}} </td>
-                  <td>{{show['输入直流功率上限']}} </td>
-                  <td>{{show['输入输出总电流上限']}} </td>
-                  <td>{{show['接入开路电压上限']}} </td>
+                  <td>{{directDistributionInfo.directDistribution['接入直流路数']}} </td>
+                  <td>{{directDistributionInfo.directDistribution['输入直流功率上限']}} </td>
+                  <td>{{directDistributionInfo.directDistribution['输入输出总电流上限']}} </td>
+                  <td>{{directDistributionInfo.directDistribution['接入开路电压上限']}} </td>
                 </tr>
               </table>
             </div>
@@ -37,7 +37,7 @@
             <form role="form">
                <div class="form-group">
                   <label for="every-group">配电柜数</label>
-                  <input type="text" class="form-control" id="every-group">
+                  <input type="text" class="form-control" id="every-group" ng-model="directDistributionInfo.num">
                </div>
             </form>
         </div>

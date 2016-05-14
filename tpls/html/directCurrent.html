@@ -25,11 +25,11 @@
                   <th>有监控单元（布尔）</th>
                 </tr>
                 <tr>
-                  <td>{{show['输入路数']}} </td>
-                  <td>{{show['输入电流上限']}} </td>
-                  <td>{{show['有直流断路器']}} </td>
-                  <td>{{show['有防雷失效监控']}} </td>
-                  <td>{{show['有监控单元']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['输入路数']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['输入电流上限']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有直流断路器']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有防雷失效监控']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有监控单元']}} </td>
                 </tr>
                 <tr>
                   <th>辅助电源</th>
@@ -37,9 +37,9 @@
                   <th>价格上限（￥）</th>
                 </tr>
                 <tr>
-                  <td>{{show['辅助电源']}} </td>
-                  <td>{{show['价格下限']}} </td>
-                  <td>{{show['价格上限']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['辅助电源']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['价格下限']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['价格上限']}} </td>
                 </tr>
               </table>
             </div>
@@ -49,7 +49,7 @@
             <form role="form">
                <div class="form-group">
                   <label for="every-group">汇流箱数</label>
-                  <input type="text" class="form-control" id="every-group">
+                  <input type="text" class="form-control" id="every-group" ng-model="directCurrentInfo.num">
                </div>
             </form>
         </div>
