@@ -1,5 +1,5 @@
 var fs = require('fs');
-var pvModule = angular.module('PVModule', ['ui.bootstrap', 'ui.router', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
+var pvModule = angular.module('PVModule', ['chart.js','ui.bootstrap', 'ui.router', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -380,6 +380,14 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     };
 
     $scope.sums_g = [];
+    $scope.sums = [];
+
+    $scope.labels = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
+    $scope.series = ['效率','年总辐照度'];
+    $scope.data = [
+        sums_g,
+        sums
+    ]
 
     var componentInfo = projectData.getData('componentInfo');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
@@ -404,6 +412,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     $scope.$watch('angleInfo.az',function(){
         var temp = getHData();
         $scope.sums_g = temp.sums_g;
+        $scope.sums = temp.sums;
         $scope.angleInfo.dip = temp.best;
     });
 
@@ -417,13 +426,14 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     $scope.$watch('$viewContentLoaded', function () {
         var temp = getHData();
         $scope.sums_g = temp.sums_g;
+        $scope.sums = temp.sums;
         $scope.angleInfo.dip = temp.best;
     });
 })
 
 /*
  用户自定义面积或安装容量控制器
- */
+*/
 pvModule.controller('userDesignCtrl', function ($scope, projectData) {
     $scope.userDesignInfo = {
         componentDirection: 'horizontal',
@@ -1082,40 +1092,6 @@ pvModule.directive('pvmap', function () {
                 var lat = document.getElementById('lat').value;
                 map.centerAndZoom(new BMap.Point(lng, lat), 13);
             });
-        }
-    };
-});
-
-/*
- 折线图指令
- */
-pvModule.directive('pvchart', function () {
-    return {
-        restrict: 'EA',
-        replace: true,
-        templateUrl: 'tpls/diretpls/pvchart.html',
-        link: function (scope, elem, attrs) {
-            var ctx = document.getElementById("year-dip");
-            scope.$watch('sums_g',function(){
-                drawChart();
-            })
-            function drawChart(){
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"],
-                        datasets: [{
-                            label: '年总辐照度',
-                            fill: false,
-                            lineTension: 0,
-                            borderWidth: 1,
-                            backgroundColor: "rgba(75,192,192,0.4)",
-                            borderColor: "rgba(75,192,192,1)",
-                            data: scope.sums_g
-                        }]
-                    }
-                });
-            }
         }
     };
 });
