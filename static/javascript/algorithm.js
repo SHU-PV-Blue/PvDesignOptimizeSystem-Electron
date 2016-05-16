@@ -107,7 +107,7 @@ function getChartData(H,lat,az,com_e,T,d){
             sum += H_t;
 		}
 		sums.push(sum.toFixed(2));
-        sums_g.push((sum_g/12));
+        sums_g.push((sum_g/12).toFixed(3));
 		if(max < sum_g / 12){
 			max = sum_g / 12;
 			res = i;
@@ -129,6 +129,7 @@ function getChartData(H,lat,az,com_e,T,d){
 function getDataByDip(H,lat,az,com_e,T,d,dip){
     var S,S_d,T_d,H_t,e, g;
     var H_ts = [],gs = [];
+
     for(var j = 1; j<=12; j++){
         H_t =  getH_t(j,H[j-1]*1000,lat,dip,az);
         S = H_t * 100;
@@ -140,13 +141,19 @@ function getDataByDip(H,lat,az,com_e,T,d,dip){
         H_ts.push(H_t);
         gs.push(g);
     }
-    //fs.writeFileSync('data.txt','倾角: '+dip + '\r\n',{encoding:'utf8',flag:'a'});
-    //fs.writeFileSync('data.txt','H_t:\r\n',{encoding:'utf8',flag:'a'});
-    //H_ts.forEach(function(H_t){
-    //    fs.writeFileSync('data.txt',H_t + '\r\n',{encoding:'utf8',flag:'a'});
-    //});
-    //fs.writeFileSync('data.txt','g:\r\n',{encoding:'utf8',flag:'a'});
-    //gs.forEach(function(g){
-    //    fs.writeFileSync('data.txt',g+'\r\n',{encoding:'utf8',flag:'a'});
-    //});
+
+    return {
+        H_ts : H_ts,
+        gs : gs
+    }
 }
+
+//fs.writeFileSync('data.txt','倾角: '+dip + '\r\n',{encoding:'utf8',flag:'a'});
+//fs.writeFileSync('data.txt','H_t:\r\n',{encoding:'utf8',flag:'a'});
+//H_ts.forEach(function(H_t){
+//    fs.writeFileSync('data.txt',H_t + '\r\n',{encoding:'utf8',flag:'a'});
+//});
+//fs.writeFileSync('data.txt','g:\r\n',{encoding:'utf8',flag:'a'});
+//gs.forEach(function(g){
+//    fs.writeFileSync('data.txt',g+'\r\n',{encoding:'utf8',flag:'a'});
+//});

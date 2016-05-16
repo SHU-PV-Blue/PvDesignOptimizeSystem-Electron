@@ -382,12 +382,45 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     $scope.sums_g = [];
     $scope.sums = [];
 
-    $scope.labels = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
-    $scope.series = ['效率','年总辐照度'];
+    $scope.options = {
+        pointDotRadius : 2
+    }
+    $scope.show = [true,false,false,false];
+
+    $scope.showChart = function(id){
+        for(var i = 0; i < $scope.show.length; i++){
+            $scope.show[i] = i == id ? true : false;
+        }
+    }
+
+    $scope.labelsAngle = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
+    $scope.labelsMonth = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','12月','12月'];
+    $scope.series = [
+        ['年总辐照度'],
+        ['效率'],
+        ['月平均辐照度'],
+        ['月效率']
+    ];
+
     $scope.data = [
-        sums_g,
-        sums
-    ]
+        [],
+        [],
+        [],
+        []
+    ];
+
+    $scope.$watch('angleInfo.az',function(){
+        var temp = getHData();
+        $scope.data[0][0] = temp.sums;
+        $scope.data[1][0] = temp.sums_g;
+        $scope.angleInfo.dip = temp.best;
+    });
+
+    $scope.$watch('angleInfo.dip',function(){
+        var temp = getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100,$scope.angleInfo.dip);
+        $scope.data[2][0] = temp.H_ts;
+        $scope.data[3][0] = temp.gs;
+    });
 
     var componentInfo = projectData.getData('componentInfo');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
@@ -409,26 +442,17 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
         projectData.addOrUpdateData($scope.angleInfo, 'angleInfo');
     });
 
-    $scope.$watch('angleInfo.az',function(){
-        var temp = getHData();
-        $scope.sums_g = temp.sums_g;
-        $scope.sums = temp.sums;
-        $scope.angleInfo.dip = temp.best;
-    });
 
-    //$scope.$watch('angleInfo.dip',function(){
-    //    getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100,$scope.angleInfo.dip);
-    //});
     //for(var i = 0; i <= 90; i++){
     //    getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100,i);
     //}
 
-    $scope.$watch('$viewContentLoaded', function () {
-        var temp = getHData();
-        $scope.sums_g = temp.sums_g;
-        $scope.sums = temp.sums;
-        $scope.angleInfo.dip = temp.best;
-    });
+    //$scope.$watch('$viewContentLoaded', function () {
+    //    var temp = getHData();
+    //    $scope.sums_g = temp.sums_g;
+    //    $scope.sums = temp.sums;
+    //    $scope.angleInfo.dip = temp.best;
+    //});
 })
 
 /*
