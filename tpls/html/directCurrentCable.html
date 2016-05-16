@@ -7,19 +7,19 @@
         <div class="col-md-12">
            <div class="row" id="pv-direct-cable">
                <div class="col-md-11 col-md-offset-1">
-                    <img src="res/images/arrow1.png" class="arrows" title="点击配置电缆" style="width:25px;height:50px">
+                    <img src="res/images/arrow1.png" class="arrows" title="点击配置电缆" style="width:25px;height:50px" ng-click="setActive(0)">
                     <div class="rect" id="zujan">
                         光伏组件
                     </div>
-                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px">
+                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px" ng-click="setActive(1)">
                     <div class="rect" id="huiliuxiang">
                         直流汇流箱
                     </div>
-                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px">
+                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px" ng-click="setActive(2)">
                     <div class="rect" id="peidiangui">
                         直流配电柜
                     </div>
-                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px">
+                    <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" style="width:64px;height:15px" ng-click="setActive(3)">
                     <div class="rect" id="nibianqi">
                         逆变器
                     </div>
@@ -43,14 +43,14 @@
                   <th>容量（W）</th>
                 </tr>
                 <tr>
-                  <td>{{show['允许载流量']}} </td>
-                  <td>{{show['容量']}} </td>
+                  <td>{{directCurrentCableInfo.directCurrentCable['允许载流量']}} </td>
+                  <td>{{directCurrentCableInfo.directCurrentCable['容量']}} </td>
                 </tr>
               </table>
             </div>
           </div>
           <div class="row">
-            <uib-tabset active="activeForm">
+            <uib-tabset active="active">
               <uib-tab index="0" heading="光伏组件">
                 <div class="row" style="margin-top:20px">
                   <div class="col-md-6">
@@ -58,30 +58,24 @@
                       <div class="form-group">
                         <label class="control-label col-md-4" for="">直流电缆长度</label>
                         <div class="col-md-4">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[0].length">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">电缆损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].loss}}</div>
                       </div>
                     </form>
                   </div>
                   <div class="col-md-6" >
                     <form role="form" class="form-horizontal">
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">线路压降</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">线路压降：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].lineDrop}}</div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">直流电缆总损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss}}</div>
                       </div>
                     </form>
                   </div>
@@ -94,30 +88,24 @@
                       <div class="form-group">
                         <label class="control-label col-md-4" for="">直流电缆长度</label>
                         <div class="col-md-4">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[1].length">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">电缆损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].loss}}</div>
                       </div>
                     </form>
                   </div>
                   <div class="col-md-6" >
                     <form role="form" class="form-horizontal">
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">线路压降</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">线路压降：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].lineDrop}}</div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">直流电缆总损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss}}</div>
                       </div>
                     </form>
                   </div>
@@ -130,30 +118,24 @@
                       <div class="form-group">
                         <label class="control-label col-md-4" for="">直流电缆长度</label>
                         <div class="col-md-4">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[2].length">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">电缆损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].loss}}</div>
                       </div>
                     </form>
                   </div>
                   <div class="col-md-6" >
                     <form role="form" class="form-horizontal">
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">线路压降</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">线路压降：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].lineDrop}}</div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">直流电缆总损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss}}</div>
                       </div>
                     </form>
                   </div>
@@ -166,30 +148,24 @@
                       <div class="form-group">
                         <label class="control-label col-md-4" for="">直流电缆长度</label>
                         <div class="col-md-4">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[3].length">
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">电缆损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[3].loss}}</div>
                       </div>
                     </form>
                   </div>
                   <div class="col-md-6" >
                     <form role="form" class="form-horizontal">
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">线路压降</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">线路压降：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[3].lineDrop}}</div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-4" for="">直流电缆总损耗</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control">
-                        </div>
+                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss}}</div>
                       </div>
                     </form>
                   </div>

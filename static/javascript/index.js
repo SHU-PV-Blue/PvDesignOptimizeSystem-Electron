@@ -89,7 +89,7 @@ pvModule.service('gainData', function ($http, $q) {
 
         return defered.promise;
     }
-})
+});
 
 /*
  路由管理服务
@@ -102,7 +102,7 @@ pvModule.service('manageRoute', function () {
     };
     this.getCurrent = function () {
         return this.curIndex;
-    }
+    };
     this.getNextRoute = function () {
         if (this.curIndex >= this.routes.length - 1)
             return;
@@ -156,7 +156,7 @@ pvModule.controller('basicInfoCtrl', function ($scope, projectData) {
         lat: 31.219456
     };
 
-    $scope.$on('projectData.save', function (event) {
+    $scope.$on('projectData.save', function () {
         projectData.addOrUpdateData($scope.projectInfo, 'basicInfo');
     });
 
@@ -328,7 +328,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, projectData, gainData) 
     $scope.lng = projectData.getData('basicInfo').lng;
     $scope.lat = projectData.getData('basicInfo').lat;
 
-    $scope.$on('projectData.save', function (event) {
+    $scope.$on('projectData.save', function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
     });
 
@@ -384,14 +384,14 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
 
     $scope.options = {
         pointDotRadius : 2
-    }
+    };
     $scope.show = [true,false,false,false];
 
     $scope.showChart = function(id){
         for(var i = 0; i < $scope.show.length; i++){
-            $scope.show[i] = i == id ? true : false;
+            $scope.show[i] = i == id;
         }
-    }
+    };
 
     $scope.labelsAngle = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
     $scope.labelsMonth = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','12月','12月'];
@@ -436,7 +436,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
         var res =  getChartData(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100);
         console.log(res);
         return res;
-    };
+    }
 
     $scope.$on('projectData.save', function () {
         projectData.addOrUpdateData($scope.angleInfo, 'angleInfo');
@@ -453,7 +453,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     //    $scope.sums = temp.sums;
     //    $scope.angleInfo.dip = temp.best;
     //});
-})
+});
 
 /*
  用户自定义面积或安装容量控制器
@@ -481,11 +481,11 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
     $scope.lrspace = 0;
     $scope.fbspace = 0;
 
-    $scope.$watch('userDesignInfo.numPerFixture', function (newVal) {
+    $scope.$watch('userDesignInfo.numPerFixture', function () {
         $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
     });
 
-    $scope.$watch('userDesignInfo.componentDirection', function (newVal) {
+    $scope.$watch('userDesignInfo.componentDirection', function () {
         $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
         $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
@@ -519,7 +519,7 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
 
     function toRadian(degree) {                           //角度转弧度
         return degree * 0.017453293;
-    };
+    }
 
     var sin = function (degree) {
         return Math.sin(toRadian(degree));
@@ -545,7 +545,7 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
 
         var W1 = W * $scope.userDesignInfo.numPerFixture;
         return W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lng) + 0.4338) / (0.707 - 0.4338 * tan(lng));
-    };
+    }
 
     function compute_numPerRow() {                               //计算每行组件数
         var componentInfo = projectData.getData('componentInfo');
@@ -566,7 +566,7 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
         return res;
     }
 
-    $scope.$on('projectData.save', function (event) {
+    $scope.$on('projectData.save', function () {
         projectData.addOrUpdateData($scope.userDesignInfo, 'userDesignInfo');
     });
 
@@ -582,7 +582,7 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
 /*
  选择逆变器控制器
  */
-pvModule.controller('chooseInververCtrl', function ($scope, $uibModal) {
+pvModule.controller('chooseInverterCtrl', function ($scope, $uibModal) {
     $scope.show = true;
     $scope.obj = {
         type: "centralized"
@@ -640,14 +640,11 @@ pvModule.controller('chooseInververCtrl', function ($scope, $uibModal) {
         }, function () {
             $log.info('Modal dismissed at: ' + new Date());
         });
-    }
+    };
 
     $scope.$watch('obj.type', function (newVal) {
-        if (newVal == "centralized") {
-            $scope.show = true;
-        } else {
-            $scope.show = false;
-        }
+        //noinspection JSValidateTypes
+        $scope.show = newVal == "centralized";
     })
 });
 
@@ -684,18 +681,17 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
         $scope.centralizedInverterInfo.inverterNumNeeded = compute_inverterNumNeeded();
     });
 
-    $scope.$watch('centralizedInverterInfo.totalOpacity',function(){
+    $scope.$watch('centralizedInverterInfo.inverterNumNeeded',function(){
         $scope.centralizedInverterInfo.totalOpacity = compute_totalOpacity();
     });
 
     var componentInfo = projectData.getData('componentInfo');
 
     function compute_serialNumPerBranch() {
-        //var componentInfo = projectData.getData('componentInfo');
         var n1 = Math.floor($scope.centralizedInverterInfo.centralizedInverter['最大输入电压'] / (componentInfo['开路电压'] * (1 + (componentInfo['工作温度下限'] - 25) * componentInfo['开路电压温度系数']/100)));
         var n2min = Math.ceil($scope.centralizedInverterInfo.centralizedInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数']/100)));
         var n2max = Math.floor($scope.centralizedInverterInfo.centralizedInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数']/100)));
-        console.log(n1,n2max,n2min)
+
         if(n1 > n2max){                               //返回每支路串联数范围
             return [n2min, n2max];
         }else if(n1 < n2min){
@@ -706,12 +702,10 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     }
 
     function compute_branchNumPerInverter(){
-       // var componentInfo = projectData.getData('componentInfo');
         return Math.ceil($scope.centralizedInverterInfo.centralizedInverter['最大直流输入功率']/(componentInfo['峰值功率']*$scope.centralizedInverterInfo.serialNumPerBranch));
     }
 
     function compute_inverterNumNeeded(){
-        //var componentInfo = projectData.getData('componentInfo');
         var userDesignInfo = projectData.getData('userDesignInfo');
         var capacity = userDesignInfo.componentDirection === 'horizontal'? userDesignInfo.area.totalCapacity : userDesignInfo.capacity.totalCapacity;
         return Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
@@ -719,7 +713,6 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     }
 
     function compute_totalOpacity(){
-        //var componentInfo = projectData.getData('componentInfo');
         return $scope.centralizedInverterInfo.branchNumPerInverter * $scope.centralizedInverterInfo.serialNumPerBranch
             * $scope.centralizedInverterInfo.inverterNumNeeded * componentInfo['峰值功率'];
     }
@@ -741,7 +734,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  直流汇流箱控制器
@@ -790,7 +783,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
     $scope.directDistributionInfo = {
         directDistribution : {},
         num : 0
-    }
+    };
 
     $scope.items = [];
     $scope.selected = '{}';
@@ -798,7 +791,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
     $scope.$watch('selected', function (newVal) {
         $scope.directDistributionInfo.directDistribution = JSON.parse(newVal);
         $scope.directDistributionInfo.num = compute_num();
-    })
+    });
 
     function compute_num(){
         return Math.ceil(parentObj.directCurrentInfo.num / $scope.directDistributionInfo.directDistribution['接入直流路数']);
@@ -809,7 +802,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -826,20 +819,81 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 /*
  集中式直流电缆控制器
  */
-pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, parentObj, gainData) {
+pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj, gainData) {
+    $scope.directCurrentCableInfo = {
+        directCurrentCable : {},
+        cables : [{                           //光伏组件，组件->汇流箱，汇流箱->配电柜，配电柜->逆变器
+            length : 0,
+            lineDrop : 0,
+            loss : 0
+        },{
+            length : 0,
+            lineDrop : 0,
+            loss : 0
+        },{
+            length : 0,
+            lineDrop : 0,
+            loss : 0
+        },{
+            length : 0,
+            lineDrop : 0,
+            loss : 0
+        }],
+        totalLoss : 0
+    };
+
+    $scope.active = 0;
+    $scope.setActive = function(index){
+        $scope.active = index;
+    };
+
+    var componentInfo = projectData.getData('componentInfo');
+    var maxPowerCurrent = componentInfo['最大功率点电流'];
+    var maxPowerVoltage = componentInfo['最大功率点电压'];
+    var serialNumPerBranch = parentObj.centralizedInverterInfo.serialNumPerBranch;
+
+    function update(){
+        $scope.directCurrentCableInfo.totalLoss = 0;
+        $scope.directCurrentCableInfo.cables.forEach(function(cable,idx){
+            var maxCurrentPerBranch = maxPowerCurrent;
+            if(idx == 2){
+                maxCurrentPerBranch *= Number(parentObj.directCurrentInfo.directCurrent['输入路数']);
+            }
+            cable.lineDrop = Number((maxCurrentPerBranch*1.25*17.241*cable.length*2 / Number($scope.directCurrentCableInfo.directCurrentCable['导体截面'])).toFixed(3));
+            cable.loss = Number((compute_loss(cable.lineDrop)).toFixed(3));
+            $scope.directCurrentCableInfo.totalLoss += cable.loss;
+        });
+    }
+
+    function compute_loss(lineDrop){
+        return lineDrop / (serialNumPerBranch * maxPowerVoltage);
+    }
+
+    $scope.$watch('directCurrentCableInfo.cables',function(newVal, oldVal){
+        if(newVal === oldVal)
+            return;
+        update();
+    },true);
+
+    $scope.$watch('directCurrentCableInfo.directCurrentCable',function(newVal, oldVal){
+        if(newVal === oldVal)
+            return;
+        update();
+    },true);
+
     $scope.items = [];
     $scope.selected = '{}';
-    $scope.show = {};
+
     $scope.$watch('selected', function (newVal) {
-        $scope.show = JSON.parse(newVal);
-    })
+        $scope.directCurrentCableInfo.directCurrentCable = JSON.parse(newVal);
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
             .then(function (data) {
                 $scope.items = data.data;
             });
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -851,7 +905,7 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  组串式直流电缆控制器
@@ -862,14 +916,14 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
     $scope.show = {};
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
-    })
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -881,7 +935,7 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  组串式逆变器控制器
@@ -892,14 +946,14 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
     $scope.show = {};
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
-    })
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -911,7 +965,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  选择电网等级控制器
@@ -925,20 +979,23 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $uibModal) {
     };
 
     $scope.$watch('obj.type', function (newVal) {
+        //noinspection JSValidateTypes
         if (newVal == "10kv") {
             $scope['show_10'] = true;
             $scope['show_35'] = false;
             $scope['show_380'] = false;
-        } else if (newVal == "35kv") {
-            $scope['show_10'] = false;
-            $scope['show_35'] = true;
-            $scope['show_380'] = false;
-        } else {
-            $scope['show_10'] = false;
-            $scope['show_35'] = false;
-            $scope['show_380'] = true;
+        } else { //noinspection JSValidateTypes
+            if (newVal == "35kv") {
+                        $scope['show_10'] = false;
+                        $scope['show_35'] = true;
+                        $scope['show_380'] = false;
+                    } else {
+                        $scope['show_10'] = false;
+                        $scope['show_35'] = false;
+                        $scope['show_380'] = true;
+                    }
         }
-    })
+    });
 
     $scope.showForm = function (name) {
         var templateUrl, controller;
@@ -991,14 +1048,14 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
     $scope.show = {};
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
-    })
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1010,7 +1067,7 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  10kv升压变压器控制器
@@ -1021,14 +1078,14 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData) 
     $scope.show = {};
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
-    })
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1040,7 +1097,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData) 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 /*
  35kv升压变压器控制器
@@ -1051,14 +1108,14 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
     $scope.show = {};
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
-    })
+    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
             .then(function (data) {
                 $scope.items = data.data;
             })
-    }
+    };
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1070,7 +1127,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-})
+});
 
 
 //指令区

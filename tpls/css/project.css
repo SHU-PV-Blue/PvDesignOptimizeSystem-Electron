@@ -115,9 +115,9 @@ td,th{
 .cocurrent{
     position: relative;
     height: 160px;
-    position: relative;
     top: 210px;
     box-shadow: 3px 3px 3px #000000;
+    border-radius: 10px;
 }
 .pv-mask{
     color: white;
@@ -131,6 +131,7 @@ td,th{
     font-size: 1.2em;
     line-height: 160px;
     text-align: center;
+    border-radius: 10px;
 }
 .pv-mask:hover{
     opacity: 1;
@@ -149,26 +150,32 @@ td,th{
 }
 /*直流汇流箱*/
 #cocurrent-combiner{
-    background: url("#");
+    background: url(../../res/images/huiliuxiang.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*直流配电柜*/
 #DC-power-distribution{
-    background: url("#");
+    background: url(../../res/images/peidiangui.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*电缆*/
 #cocurrent-cable{
-    background: url("#");
+    background: url(../../res/images/dianlan.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*三张图片位置*/
 .group{
-    border: 1px solid black;
     height: 160px;
     position: relative;
     top: 210px;
     box-shadow: 3px 3px 3px #000000;
+    border-radius: 10px;
 }
 /*#centralism-instrument{*/
     /*position: relative;*/
@@ -177,17 +184,23 @@ td,th{
 /*添加三张交流图片*/
 /*组串式逆变器*/
 #groups-inverter{
-    background: url("#");
+    background: url(../../res/images/zunibianqi.png);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 10px;
 }
 /*交流汇电箱*/
 #AC-combiner{
-    background: url("#");
+    background: url(../../res/images/zuhuiliuxiang.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*电缆*/
 #group-cable{
-    background: url("#");
+    background: url(../../res/images/dianlan.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 
