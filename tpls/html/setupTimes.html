@@ -1,0 +1,295 @@
+<div class="modal-header">
+    <h3 class="modal-title">升压变压器</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+            <input type="radio" name="upone">
+            <label>一次升压</label>
+        </div>
+        <div class="col-md-3">
+            <input type="radio" name="upone">
+            <label>二次升压</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <uib-tabset active="activeForm">
+              <uib-tab index="0" heading="一次升压">
+                <div class="row">
+                    <div class="col-md-9">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <button class="btn btn-primary" ng-click="getData()">获取数据</button>
+                        </div>
+                        <div class="col-md-8">
+                          <select ng-model="selected" class="form-control">
+                            <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 30px">
+                        <div class="col-md-12">
+                          <table class="table table-bordered">
+                            <tr>
+                              <th>最大直流输入功率（W）</th>
+                              <th>最大输入电压（V）</th>
+                              <th>启动电压（V）</th>
+                              <th>MPP电压下限（V）</th>
+                              <th>MPP电压上限（V）</th>
+                              <th>最大直流输入电流（A）</th>
+                            </tr>
+                            <tr>
+                              <td>{{show['最大直流输入功率']}} </td>
+                              <td>{{show['最大输入电压']}} </td>
+                              <td>{{show['启动电压']}} </td>
+                              <td>{{show['MPP电压下限']}} </td>
+                              <td>{{show['MPP电压上限']}} </td>
+                              <td>{{show['最大直流输入电流']}} </td>
+                            </tr>
+                            <tr>
+                              <th>额定交流输出功率（W）</th>
+                              <th>最大输出功率（VA）</th>
+                              <th>最大交流输出电流（A）</th>
+                              <th>额定电网电压（V）</th>
+                              <th>最大效率（%）</th>
+                            </tr>
+                            <tr>
+                              <td>{{show['额定交流输出功率']}} </td>
+                              <td>{{show['最大输出功率']}} </td>
+                              <td>{{show['最大交流输出电流']}} </td>
+                              <td>{{show['额定电网电压']}} </td>
+                              <td>{{show['最大效率']}} </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                        <form role="form">
+                           <div class="form-group">
+                              <label for="every-group">每台升压变压器串联逆变器的数量</label>
+                              <input type="text" class="form-control" id="every-group">
+                           </div>
+                           <div class="2">
+                              <label for="2">升压变压器数量</label>
+                              <input type="text" class="form-control" id="2">
+                           </div>
+                        </form>
+                    </div>
+                </div>
+              </uib-tab>
+              <uib-tab index="1" heading="二次升压">
+                 <div class="row">
+                    <div class="col-md-9">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <button class="btn btn-primary" ng-click="getData()">获取数据</button>
+                        </div>
+                        <div class="col-md-8">
+                          <select ng-model="selected" class="form-control">
+                            <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 30px">
+                        <div class="col-md-12">
+                          <table class="table table-bordered">
+                            <tr>
+                              <th>最大直流输入功率（W）</th>
+                              <th>最大输入电压（V）</th>
+                              <th>启动电压（V）</th>
+                              <th>MPP电压下限（V）</th>
+                              <th>MPP电压上限（V）</th>
+                              <th>最大直流输入电流（A）</th>
+                            </tr>
+                            <tr>
+                              <td>{{show['最大直流输入功率']}} </td>
+                              <td>{{show['最大输入电压']}} </td>
+                              <td>{{show['启动电压']}} </td>
+                              <td>{{show['MPP电压下限']}} </td>
+                              <td>{{show['MPP电压上限']}} </td>
+                              <td>{{show['最大直流输入电流']}} </td>
+                            </tr>
+                            <tr>
+                              <th>额定交流输出功率（W）</th>
+                              <th>最大输出功率（VA）</th>
+                              <th>最大交流输出电流（A）</th>
+                              <th>额定电网电压（V）</th>
+                              <th>最大效率（%）</th>
+                            </tr>
+                            <tr>
+                              <td>{{show['额定交流输出功率']}} </td>
+                              <td>{{show['最大输出功率']}} </td>
+                              <td>{{show['最大交流输出电流']}} </td>
+                              <td>{{show['额定电网电压']}} </td>
+                              <td>{{show['最大效率']}} </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                        <form role="form">
+                           <div class="form-group">
+                              <label for="every-group">每台升压变压器串联逆变器的数量</label>
+                              <input type="text" class="form-control" id="every-group">
+                           </div>
+                           <div class="2">
+                              <label for="2">升压变压器数量</label>
+                              <input type="text" class="form-control" id="2">
+                           </div>
+                        </form>
+                    </div>
+                </div>
+              </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
+
+<!--选择升压次数-->
+<!-- <div id="select-once-or-twice">
+    <div class="row">
+        <div class="col-md-2 col-md-offset-4">
+            <input type="radio" name="vCheck" class="iCheck" checked id="once-booting">
+            <label>一次升压</label>
+        </div>
+        <div class="col-md-2">
+            <input type="radio" name="vCheck" class="iCheck" id="twice-booting">
+            <label>二次升压</label>
+        </div>
+    </div>
+    <div id="show-once-booting">
+        <div class="row" id="step-up-transformer">
+            <div class="col-md-4" id="show-step-up-type">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-show-step-up-type">
+                        显示升压变压器类型
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="show-step-up-parameter">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-show-step-up-parameter">
+                        显示升压变压器参数
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 form-group" id="show-step-up-message">
+                <div class="panel panel-default">
+                    <div class="panel-body panel-show-step-up-message">
+                        <form>
+                            <label for="step-up-serial-inverter-number">每台升压变压器串联逆变器的数量</label>
+                            <input type="text" class="form-control" id="step-up-serial-inverter-number">
+                        </form>
+                        <form>
+                            <label for="step-up-transformer-number">升压变压器数量</label>
+                            <input type="text" class="form-control" id="step-up-transformer-number">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="show-twice-booting">
+        <div class="row">
+            <div class="col-md-6">
+                <!--<div class="panel panel-default">-->
+                <!--<div class="panel-body contain-panel">-->
+                <!-- <div class="row">
+                    <div class="col-md-12" id="show-first-step-up-type">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-first-step-up-type">
+                                （一次升压）显示升压变压器类型
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="show-first-step-up-parameter">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-first-step-up-parameter">
+                                显示升压变压器参数
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group" id="show-first-step-up-message">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-first-step-up-message">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form>
+                                            <label for="step-up-serial-inverter-number">逆变器的数量</label>
+                                            <input type="text" class="form-control" id="first-step-up-serial-inverter-number">
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form>
+                                            <label for="step-up-transformer-number">升压变压器数量</label>
+                                            <input type="text" class="form-control" id="first-step-up-transformer-number">
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+                <!--</div>-->
+           <!--  </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12" id="show-twice-step-up-type">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-twice-step-up-type">
+                                （二次升压）显示升压变压器类型
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="show-twice-step-up-parameter">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-twice-step-up-parameter">
+                                显示升压变压器参数
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group" id="show-twice-step-up-message">
+                        <div class="panel panel-default panel-min-default">
+                            <div class="panel-body panel-show-twice-step-up-message">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <form>
+                                            <label for="step-up-serial-inverter-number">逆变器的数量</label>
+                                            <input type="text" class="form-control" id="second-step-up-serial-inverter-number">
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form>
+                                            <label for="step-up-transformer-number">升压变压器数量</label>
+                                            <input type="text" class="form-control" id="second-step-up-transformer-number">
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div> -->
+           <!--          </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> -->

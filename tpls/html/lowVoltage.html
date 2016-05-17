@@ -1,31 +1,71 @@
-<!--低压开关柜信息-->
-<div class="row" id="low-voltage-switchgear">
-    <div class="col-md-4" id="show-low-type">
-        <div class="panel panel-default">
-            <div class="panel-body panel-show-low-type">
-                显示低压开关柜类型
+<div class="modal-header">
+    <h3 class="modal-title">低压开关柜</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
             </div>
+            <div class="col-md-8">
+              <select ng-model="selected" class="form-control">
+                <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+              </select>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 30px">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <tr>
+                  <th>最大直流输入功率（W）</th>
+                  <th>最大输入电压（V）</th>
+                  <th>启动电压（V）</th>
+                  <th>MPP电压下限（V）</th>
+                  <th>MPP电压上限（V）</th>
+                  <th>最大直流输入电流（A）</th>
+                </tr>
+                <tr>
+                  <td>{{show['最大直流输入功率']}} </td>
+                  <td>{{show['最大输入电压']}} </td>
+                  <td>{{show['启动电压']}} </td>
+                  <td>{{show['MPP电压下限']}} </td>
+                  <td>{{show['MPP电压上限']}} </td>
+                  <td>{{show['最大直流输入电流']}} </td>
+                </tr>
+                <tr>
+                  <th>额定交流输出功率（W）</th>
+                  <th>最大输出功率（VA）</th>
+                  <th>最大交流输出电流（A）</th>
+                  <th>额定电网电压（V）</th>
+                  <th>最大效率（%）</th>
+                </tr>
+                <tr>
+                  <td>{{show['额定交流输出功率']}} </td>
+                  <td>{{show['最大输出功率']}} </td>
+                  <td>{{show['最大交流输出电流']}} </td>
+                  <td>{{show['额定电网电压']}} </td>
+                  <td>{{show['最大效率']}} </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+            <form role="form">
+               <div class="form-group">
+                  <label for="every-group">每台低压开关柜串联逆变器的数量</label>
+                  <input type="text" class="form-control" id="every-group">
+               </div>
+               <div class="2">
+                  <label for="2">低压开关柜数量</label>
+                  <input type="text" class="form-control" id="2">
+               </div>
+            </form>
         </div>
     </div>
-    <div class="col-md-6" id="show-low-parameter">
-        <div class="panel panel-default">
-            <div class="panel-body panel-show-low-parameter">
-                显示低压开关柜参数
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2 form-group" id="show-low-message">
-        <div class="panel panel-default">
-            <div class="panel-body panel-show-low-message">
-                <form>
-                    <label for="serial-inverter-number">每台低压开关柜串联逆变器的数量</label>
-                    <input type="text" class="form-control" id="serial-inverter-number">
-                </form>
-                <form>
-                    <label for="low-voltage-switchgear-number">低压开关柜数量</label>
-                    <input type="text" class="form-control" id="low-voltage-switchgear-number">
-                </form>
-            </div>
-        </div>
-    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

@@ -1,13 +1,28 @@
 html,body{
 	height: 100%;
+	font-size: 14px;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
 body{
 	padding: 0;
 	margin: 0;
+	/*color: white;*/
 	position: relative;
+	background: #35434f;
 }
 a{
 	text-decoration: none;
+}
+a:focus{
+	outline: none;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;          
 }
 #mainBody 
 {  
@@ -17,9 +32,8 @@ a{
 { 
     width:120px; 
     height:100%; 
-    /*background-color:#f0f0f0; */
-    position:absolute; 
-    border-right: 1px solid black;
+    background-color: #1b1e24; 
+    position:absolute;
 }
 #ProcedureNav ul{
 	width: 100%;
@@ -30,16 +44,18 @@ a{
 	list-style: none;
 	width: 100%;
 	display: block;
-	color: #337ab7;
     background-color: transparent;
 }
 #ProcedureNav li a{
+	text-decoration: none;
+	color: #d6d6d6;
 	position: relative;
     display: block;
     padding: 10px 15px;
+    border-bottom: 2px solid #181b20;
 }
 #ProcedureNav li a:hover{
-	background: #eee;
+	background: #212121;
 }
 
 .panel-body{
@@ -64,11 +80,16 @@ a{
 	width: 100%;
 	height: 50px;
 	padding: 5px 10px;
-	border-top: 2px solid gray;
+	background: #202f38;
 }
 div#pre-next #preBtn{
 	float: left;
+	background: #27aac8;
 }
 div#pre-next #nextBtn{
 	float: right;
+	background: #27aac8;
+}
+input[type="text"]{
+	background: #e5e5e5;
 }

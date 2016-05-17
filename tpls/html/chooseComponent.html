@@ -1,0 +1,74 @@
+<div class="row" ng-controller="chooseComponentCtrl" style="color:white" id="pv-component">
+	<div class="col-md-12">
+		<div class="row" style="margin-top:30px">
+			<div class="col-md-12">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="control-label col-md-2">选择组件：</label>
+						<div class="col-md-10">
+							<select ng-model="selected" class="form-control">
+								<option value="">--选择组件--</option>
+								<option ng-repeat="component in components" value="{{component}}">
+									{{component['公司'] + '(公司) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['类型'] + '(类型)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['系列'] + '(系列)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['型号'] + '(型号)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['峰值功率'] + '(峰值功率)'}}
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-offset-2">
+							<button class="btn btn-primary" ng-click="confirmChoose()" type="button">确定选择此组件</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<hr>
+		<h2>组件信息：</h2>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<tr>
+						<td>开路电压(V)</td>
+						<td>最大功率点电压(V)</td>
+						<td>最大功率点电流(A)</td>
+						<td>短路电流(A)</td>
+						<td>转换效率(%)</td>
+						<td>开路电压温度系数(%/℃)</td>
+						<td>最大功率温度系数(%/℃)</td>
+					</tr>
+					<tr>
+						<td>{{ show['开路电压'] }}</td>
+						<td>{{show['最大功率点电压']}}</td>
+						<td>{{show['最大功率点电流']}}</td>
+						<td>{{show['短路电流']}}</td>
+						<td>{{show['转换效率']}}</td>
+						<td>{{show['开路电压温度系数']}}</td>
+						<td>{{show['最大功率温度系数']}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-bordered">
+					<tr>
+						<td>短路电流温度系数(%/℃)</td>
+						<td>长度(mm)</td>
+						<td>宽度(mm)</td>
+						<td>重量(kg)</td>
+						<td>工作温度下限(℃)</td>
+						<td>工作温度上限(℃)</td>
+					</tr>
+					<tr>
+						<td>{{show['短路电流温度系数']}}</td>
+						<td>{{show['长度']}}</td>
+						<td>{{show['宽度']}}</td>
+						<td>{{show['重量']}}</td>
+						<td>{{show['工作温度下限']}}</td>
+						<td>{{show['工作温度上限']}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

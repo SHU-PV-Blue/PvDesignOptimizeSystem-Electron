@@ -1,134 +1,101 @@
-<div id="design-type">
-    <div class="row">
-        <div class="col-md-2">
-            <input type="radio" name="pCheck" class="iCheck" checked id="user-give-area">
-            <label >给定面积</label>
-        </div>
-        <div class="col-md-2">
-            <input type="radio" name="pCheck" class="iCheck" id="user-define">
-            <label >用户自定义</label>
-        </div>
-    </div>
-    <!--<hr noshade color="#229FFD" id="blue-line">-->
-
-    <div class="row">
-        <div class="col-md-1">
-            <input type="radio" name="hCheck" class="iCheck" id="horizontal" checked>
-            <label >横排</label>
+<div id="design-type" ng-controller="userDesignCtrl" style="color:white">
+    <div class="row" style="margin-top:30px">
+        <div class="col-md-2 col-md-offset-2">
+            <label>组件排列方式：</label>
         </div>
         <div class="col-md-1">
-            <input type="radio" name="hCheck" class="iCheck" id="verticality">
-            <label> 竖排</label>
+            <input type="radio" id="pv-r1" name="pv-r" value="horizontal" ng-model="userDesignInfo.componentDirection">
+            <label for="pv-r1">横排</label>
+        </div>
+        <div class="col-md-1">
+            <input type="radio" id="pv-r2" name="pv-r" value="vertical" ng-model="userDesignInfo.componentDirection">
+            <label for="pv-r2">竖排</label>
         </div>
     </div>
-    <div class="row">
-        <div id="give-area-component">
-            <div class="col-md-2">
-                <form>
-                    <div class="form-group">
-                        <label for="component-length">区域长</label>
-                        <input type="text" class="form-control" id="component-length">
-                    </div>
-                    <div class="form-group">
-                        <label for="component-width">区域宽</label>
-                        <input type="text" class="form-control" id="component-width">
-                    </div>
-                    <div class="form-group">
-                        <label for="holder-component-number">单个支架所放的组件数</label>
-                        <input type="text" class="form-control" id="holder-component-number">
-                    </div>
-                    <div class="form-group">
-                        <label for="fore-and-aft">阵列前后间距</label>
-                        <input type="text" class="form-control" id="fore-and-aft">
-                    </div>
-                </form>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+        <form class="form-inline col-md-offset-1">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="">每个支架上所放置组件数</label>
+                    <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" size="4" min="1" value="1">
+                </div>
+                <div class="form-group" style="margin-left: 40px">
+                    <label for="">阵列前后间距</label>
+                    <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
+                </div>
             </div>
-            <div class="col-md-2">
-                <form>
-                    <div class="form-group">
-                        <label for="each-line-component-number">每行组件数</label>
-                        <input type="text" id="each-line-component-number" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="pattern-line-number">阵列行数</label>
-                        <input type="text" class="form-control" id="pattern-line-number">
-                    </div>
-                    <div class="form-group">
-                        <label for="area-component-number">区域组件总数</label>
-                        <input type="text" id="area-component-number" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="area-all-capacity">区域总容量</label>
-                        <input type="text" class="form-control" id="area-all-capacity">
-                    </div>
-                </form>
-            </div>
+        </form>
         </div>
-        <div id="user-defined">
-            <div class="col-md-2">
-                <form>
-                    <div class="form-group">
-                        <label for="define-install-capacity">安装容量</label>
-                        <input type="text" class="form-control" id="define-install-capacity">
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <input type="radio" name="pv-c" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
+            <label for="pv-c1">自定义面积</label>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">区域长</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
                     </div>
-                    <div class="form-group">
-                        <label for="define-holder-component-number">单个支架所放的组件数</label>
-                        <input type="text" class="form-control" id="define-holder-component-number">
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">区域宽</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.width">
                     </div>
-                    <div class="form-group">
-                        <label for="define-fore-and-aft">阵列前后间距</label>
-                        <input type="text" class="form-control" id="define-fore-and-aft">
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">每行组件数</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
                     </div>
-                    <div class="form-group">
-                        <label for="define-area-component-number">区域组件总数</label>
-                        <input type="text" class="form-control" id="define-area-component-number">
+                    <div class="col-md-5">
+                        左右剩余间距：<span ng-bind="lrspace"></span>
                     </div>
-                </form>
-            </div>
-            <div class="col-md-2">
-                <form>
-                    <div class="form-group">
-                        <label for="define-each-line-component-number">每行组件数</label>
-                        <input type="text" class="form-control" id="define-each-line-component-number">
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">阵列行数</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
                     </div>
-                    <div class="form-group">
-                        <label for="define-pattern-line-number">阵列行数</label>
-                        <input type="text" class="form-control" id="define-pattern-line-number">
+                    <div class="col-md-5">
+                        前后剩余间距：<span ng-bind="fbspace"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="cover-total-area">占地总面积</label>
-                        <input type="text" class="form-control" id="cover-total-area">
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">总组件数</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.componentsNum">
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">总占地面积</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.totalArea">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-4 control-label">总容量</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" ng-model="userDesignInfo.area.totalCapacity">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <input type="radio" name="pv-c" id="pv-c2" value="capacity" ng-model="userDesignInfo.capacity">
+            <label for="pv-c2">自定义安装容量</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control" ng-model="userDesignInfo.capacity.totalCapacity">
+        </div>
+        <div class="col-md-1">
+            (MW)
         </div>
     </div>
 </div>
-<script type="text/javascript-lazy">
-$(document).ready(function() {
-   //调用bootstrap自己的方法
-    $("#user-give-area").on('ifChecked', function(){
-        $("#give-area-component").css("display","block");
-            $("#user-defined").css("display","none");
-    });
-    $("#user-define").on('ifChecked', function(){
-        $("#user-defined").css("display","block");
-        $("#give-area-component").css("display","none");
-    });
-    //改变radio样式
-    $('.iCheck').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
-    });
-    //显示集中式四张图
-    $("#centralism-inverter").on('ifChecked', function(){
-        $("#centralism-instrument").css("display","block");
-        $("#group-instrument").css("display","none");
-    });
-    //显示组串式三张图
-    $("#group-inverter").on('ifChecked', function(){
-        $("#group-instrument").css("display","block");
-        $("#centralism-instrument").css("display","none");
-    });
-});
-</script>

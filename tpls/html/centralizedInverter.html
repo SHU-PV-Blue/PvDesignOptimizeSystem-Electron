@@ -1,72 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/project.css">
-    <link rel="stylesheet" href="../../static/components/bootstrap/dist/css/bootstrap.min.css">
-    <script src="../../static/components/angular/angular.min.js"></script>
-</head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div id="cen-inverter-select-model" class="col-md-11">
-                    <div class="panel panel-default">
-                        <div class="panel-body" id="cen-inverter-pan-select-model">
-                            显示逆变器选型
-                        </div>
-                    </div>
-                </div>
+<div class="modal-header">
+    <h3 class="modal-title">集中式逆变器</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-2">
+              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
             </div>
-            <div class="row">
-                <div id="cen-inverter-parameter" class="col-md-11">
-                    <div class="panel panel-default">
-                        <div class="panel-body" id="cen-inverter-pan-parameter">
-                            显示逆变器参数
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-8">
+              <select ng-model="selected" class="form-control">
+                <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+              </select>
             </div>
-            <!--<div class="row">-->
-            <div id="cen-inverter-configuration" class="col-md-11">
-                <div class="row">
-                    <div class="form-group col-md-2">
-                        <label for="cen-inverter-serial-number">
-                            每支路串联数
-                        </label>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <input type="text" class="form-control" id="cen-inverter-serial-number">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="cen-inverter-branch-number">
-                            每个逆变器分配的支路数
-                        </label>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <input type="text" class="form-control" id="cen-inverter-branch-number">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-2">
-                        <label for="cen-inverter-complexion">
-                            容配比
-                        </label>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <input type="text" class="form-control" id="cen-inverter-complexion">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="cen-inverter-numbers">
-                            所需逆变器数量
-                        </label>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <input type="text" class="form-control" id="cen-inverter-numbers">
-                    </div>
-                </div>
+          </div>
+          <div class="row" style="margin-top: 30px">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <tr>
+                  <th>最大直流输入功率（W）</th>
+                  <th>最大输入电压（V）</th>
+                  <th>启动电压（V）</th>
+                  <th>MPP电压下限（V）</th>
+                  <th>MPP电压上限（V）</th>
+                  <th>最大直流输入电流（A）</th>
+                </tr>
+                <tr>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大直流输入功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大输入电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['启动电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['MPP电压下限']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['MPP电压上限']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大直流输入电流']}} </td>
+                </tr>
+                <tr>
+                  <th>额定交流输出功率（W）</th>
+                  <th>最大输出功率（VA）</th>
+                  <th>最大交流输出电流（A）</th>
+                  <th>额定电网电压（V）</th>
+                  <th>最大效率（%）</th>
+                </tr>
+                <tr>
+                  <td>{{centralizedInverterInfo.centralizedInverter['额定交流输出功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大输出功率']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大交流输出电流']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['额定电网电压']}} </td>
+                  <td>{{centralizedInverterInfo.centralizedInverter['最大效率']}} </td>
+                </tr>
+              </table>
             </div>
-            <!--</div>-->
+          </div>
         </div>
-    </body>
-</html>
+        <div class="col-md-3">
+            <form role="form">
+               <div class="form-group">
+                  <label for="every-group">每支路串联数</label>
+                  <input type="text" class="form-control" id="every-group" ng-model="centralizedInverterInfo.serialNumPerBranch">
+               </div>
+               <div class="2">
+                  <label for="2">每个逆变器分配的支路数</label>
+                  <input type="text" class="form-control" id="2" ng-model="centralizedInverterInfo.branchNumPerInverter">
+               </div>
+               <div class="form-group">
+                  <label for="3">容配比</label>
+                  <input type="number" class="form-control" min="1" step="0.01" id="3" ng-model="centralizedInverterInfo.volumeRatio">
+               </div>
+               <div class="form-group">
+                  <label for="4">所需逆变器数量</label>
+                  <input type="text" class="form-control" id="4" ng-model="centralizedInverterInfo.inverterNumNeeded">
+               </div>
+               <div class="form-group">
+                  <label for="5">总安装容量</label>
+                  <input type="text" class="form-control" id="5" ng-model="centralizedInverterInfo.totalOpacity">
+               </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

@@ -6,26 +6,69 @@ td input{
 td,th{
     text-align: center;
 }
+
+#pv-direct-cable .rect{
+    display: inline-block;
+    height: 100px;
+    width: 40px;
+    border: 2px solid black;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+#pv-direct-cable .arrows{
+    position: relative;
+}
+#pv-direct-cable img{
+    cursor: pointer;
+}
+
+#pv-alternating-cable .rect{
+    display: inline-block;
+    height: 100px;
+    width: 40px;
+    border: 2px solid black;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+#pv-alternating-cable .arrows{
+    position: relative;
+}
+#pv-alternating-cable img{
+    cursor: pointer;
+}
+
 #left-information{
-    top:50px;
-    /*left: 60px;*/
+    top: 30px;
     position: relative;
 }
 #map{
     position: relative;
-    top: 76px;
-    /*left: 10px;*/
+    top: 30px;
 }
-#data-table{
+#meterTable{
     position: relative;
-    top:70px;
-    left: 30px;
+    top:30px;
 }
+#meterTable table{
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+}
+
+#meterTable input{
+    background-color: rgba(0,0,0,0);
+}
+
 #mete-basicinfo{
+    color: white;
+    background-color: rgba(0,0,0,0.3);
     position: relative;
-    top:70px;
-    left: 20px;
+    top: 30px;
 }
+#pv-component table{
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+}
+
 .panel-message{
     width: auto;
     height:429px;
@@ -70,10 +113,28 @@ td,th{
 }*/
 /*四张图片*/
 .cocurrent{
-    border: 1px solid black;
-    height: 160px;
     position: relative;
+    height: 160px;
     top: 210px;
+    box-shadow: 3px 3px 3px #000000;
+    border-radius: 10px;
+}
+.pv-mask{
+    color: white;
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 1.2em;
+    line-height: 160px;
+    text-align: center;
+    border-radius: 10px;
+}
+.pv-mask:hover{
+    opacity: 1;
 }
 #centralism-group-radio{
     position: relative;
@@ -82,30 +143,39 @@ td,th{
 /*添加直流四张图片*/
 /*集中式逆变器*/
 #centralized-inverter{
-    background: url("#");
+    background: url(../../res/images/nibianqi.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 10px;
 }
 /*直流汇流箱*/
 #cocurrent-combiner{
-    background: url("#");
+    background: url(../../res/images/huiliuxiang.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*直流配电柜*/
 #DC-power-distribution{
-    background: url("#");
+    background: url(../../res/images/peidiangui.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*电缆*/
 #cocurrent-cable{
-    background: url("#");
+    background: url(../../res/images/dianlan.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*三张图片位置*/
 .group{
-    border: 1px solid black;
     height: 160px;
     position: relative;
     top: 210px;
+    box-shadow: 3px 3px 3px #000000;
+    border-radius: 10px;
 }
 /*#centralism-instrument{*/
     /*position: relative;*/
@@ -114,17 +184,23 @@ td,th{
 /*添加三张交流图片*/
 /*组串式逆变器*/
 #groups-inverter{
-    background: url("#");
+    background: url(../../res/images/zunibianqi.png);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 10px;
 }
 /*交流汇电箱*/
 #AC-combiner{
-    background: url("#");
+    background: url(../../res/images/zuhuiliuxiang.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 /*电缆*/
 #group-cable{
-    background: url("#");
+    background: url(../../res/images/dianlan.jpg);
+    background-position: center;
+    background-size: cover;
     margin: 0 0 0 110px;
 }
 
@@ -228,9 +304,6 @@ td,th{
 #power-system-grade{
     margin: 100px 0 0 0;
 }
-#select-switch-cabinet{
-    margin: 20px 0 0 0;
-}
 .switch-cabinet{
     height: 100px;
     border: 1px solid black;
@@ -240,9 +313,6 @@ td,th{
 }
 
 /*低压开关柜界面*/
-#low-voltage-switchgear{
-    margin: 40px 0 0 0;
-}
 .panel-show-low-message {
     padding: 15px;
     height: 500px;
@@ -263,9 +333,6 @@ td,th{
     padding: 0 10px 0 10px;
 }
 /*升压变压器页面*/
-#step-up-transformer{
-    margin: 30px 0 0 0;
-}
 .panel-show-step-up-message{
     padding: 15px;
     height: 500px;
