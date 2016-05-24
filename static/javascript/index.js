@@ -818,7 +818,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 
 /*
  集中式直流电缆控制器
- */
+*/
 pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj, gainData) {
     $scope.directCurrentCableInfo = {
         directCurrentCable : {},
