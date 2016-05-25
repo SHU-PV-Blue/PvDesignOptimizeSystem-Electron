@@ -108,8 +108,7 @@ function getChartData(H,lat,az,com_e,T,d){
             sum_g += g;
             sum += H_t;
 		}
-		sums.push(sum.toFixed(2));
-        sums_g.push((sum_g/12).toFixed(3));
+
 		if(max < sum_g / 12){
 			max = sum_g / 12;
 			res = i;
@@ -118,6 +117,8 @@ function getChartData(H,lat,az,com_e,T,d){
             max_H = sum;
             res1 = i;
         }
+		sums.push(sum.toFixed(3));
+		sums_g.push((sum_g/12).toFixed(3));
 	}
 
 	return {
