@@ -5,25 +5,25 @@
             <div class="col-md-3">
                 <label>一、项目总收入预算(不含税)</label>
             </div>
-            <div class="col-md-offset-7 col-md-2">
+            <div class="col-md-offset-5 col-md-2">
                 <label>小计：</label>
                 <label>计算结果</label>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-2">
-                <label>总容量(W)：</label>
-                <label>
-                    BA
-                </label>
+            <div class="col-md-2">
+                <form>
+                    <label>总容量(W)：</label>
+                    <input type="text" class="form-control" value="BA">
+                </form>
             </div>
             <div class="col-md-2 col-md-offset-1">
                 <label>电站年限：</label>
-                <label>BB</label>
+                <input type="text" value="BB">
             </div>
             <div class="col-md-2 col-md-offset-1">
                 <label>结算日期(月)：</label>
-                <label>BC</label>
+                <input type="text" value="BC">
             </div>
         </div>
         <div class="row">
@@ -43,7 +43,7 @@
                         <td><input type="text" value="AB"></td>
                         <td><input type="text" value="AC"></td>
                         <td><input type="text" value="AD"></td>
-                        <td><input type="text" value="AJ"></td>
+                        <td>AJ</td>
                     </tr>
                     <tr>
                         <th>其他设置：</th>
@@ -59,7 +59,7 @@
                         <td><input type="text" value="AF"></td>
                         <td><input type="text" value="AG"></td>
                         <td><input type="text" value="AH"></td>
-                        <td><input type="text" value="AI"></td>
+                        <td>AI</td>
                     </tr>
                 </table>
             </div>
@@ -79,23 +79,23 @@
                     </tr>
                     <tr>
                         <th>年平均</th>
-                        <td><input type="text" value="CC"></td>
-                        <td><input type="text" value="CK"></td>
-                        <td><input type="text" value="CM"></td>
-                        <td><input type="text" value="CO"></td>
-                        <td><input type="text" value="CQ"></td>
-                        <td><input type="text" value="CS"></td>
-                        <td><input type="text" value="CU"></td>
+                        <td>CC</td>
+                        <td>CK</td>
+                        <td>CM</td>
+                        <td>CO</td>
+                        <td>CQ</td>
+                        <td>CS</td>
+                        <td>CU</td>
                     </tr>
                     <tr>
                         <th>总计</th>
-                        <td><input type="text" value="CB"></td>
-                        <td><input type="text" value="CJ"></td>
-                        <td><input type="text" value="CL"></td>
-                        <td><input type="text" value="CN"></td>
-                        <td><input type="text" value="CP"></td>
-                        <td><input type="text" value="CR"></td>
-                        <td><input type="text" value="CT"></td>
+                        <td>CB</td>
+                        <td>CJ</td>
+                        <td>CL</td>
+                        <td>CN</td>
+                        <td>CP</td>
+                        <td>CR</td>
+                        <td>CT</td>
                     </tr>
                 </table>
             </div>
@@ -110,26 +110,281 @@
     </div>
     <div id="subcontract-budget">
         <!--分包预算-->
+        <div class="row">
+            <div class="col-md-3">
+                <label>二、分包预算(不含税)</label>
+            </div>
+            <div class="col-md-2 col-md-offset-5">
+                <label>小计：</label>
+                <label>DS</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>建设期(月)：</label>
+                <input type="text" value="BD">
+            </div>
+            <div class="col-md-3">
+                <label>结算期数：</label>
+                <label>BE</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>序号</th>
+                        <th>内容</th>
+                        <th>单价(元/W)</th>
+                        <th>含税成本(元)</th>
+                        <th>不含税成本(元)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>设备费</td>
+                        <td><input type="text" value="DA"></td>
+                        <td>DF</td>
+                        <td>DK</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>设计费</td>
+                        <td><input type="text" value="DB"></td>
+                        <td>DG</td>
+                        <td>DL</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>建安费</td>
+                        <td><input type="text" value="DC"></td>
+                        <td>DH</td>
+                        <td>DM</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>监理费</td>
+                        <td><input type="text" value="DD"></td>
+                        <td>DI</td>
+                        <td>DN</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>税金及其他费用</td>
+                        <td><input type="text" value="DE"></td>
+                        <td>DJ</td>
+                        <td>DO</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>总计</td>
+                        <td>DP</td>
+                        <td>DQ</td>
+                        <td>DR</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
     <div id="contract">
+        <div class="row">
+            <div class="col-md-3">
+                <label>三、合同</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>合同毛利：</label>
+                <label>EA</label>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    合同毛利率：
+                </label>
+                <label>
+                    EB
+                </label>
+            </div>
+        </div>
         <!--合同-->
     </div>
     <div id="operation-subpackage">
+        <div class="row">
+            <div class="col-md-3">
+                <label>四、运维分包</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>运维单价：</label>
+                <input type="text" value="FA">
+            </div>
+            <div class="col-md-3">
+                <label>
+                    运维总价：
+                </label>
+                <label>
+                    FB
+                </label>
+            </div>
+        </div>
         <!--运维分包-->
     </div>
     <div id="direct-expense-budget">
+        <div class="row">
+            <div class="col-md-3">
+                <label>五、项目直接费用预算</label>
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <label>小计：</label>
+                <label>GN</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>序号</th>
+                        <th>内容</th>
+                        <th>备注</th>
+                        <th>建造期</th>
+                        <th>分享期</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>项目人工成本</td>
+                        <td>工本率：<input type="text" value="GA"></td>
+                        <td>GE</td>
+                        <td>GK</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>差旅费</td>
+                        <td></td>
+                        <td>GF</td>
+                        <td>GO</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>业务活动费</td>
+                        <td></td>
+                        <td>GG</td>
+                        <td>GP</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>利息</td>
+                        <td>利率：<input type="text" value="GB"> <br>
+                            贷款比例：<input type="text" value="GC"> <br>
+                            贷款年限：<input type="text" value="GD">
+                        </td>
+                        <td>GH</td>
+                        <td>GL</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>专家外协咨询</td>
+                        <td></td>
+                        <td>GI</td>
+                        <td>GQ</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>其他</td>
+                        <td></td>
+                        <td>GR</td>
+                        <td>GS</td>
+                    </tr>
+                    <tr>
+                        <td>总计</td>
+                        <td></td>
+                        <td>GJ</td>
+                        <td>GM</td>
+                        <td>GN</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <!--项目直接费用预算-->
     </div>
     <div id="departmental-expense-budget">
+        <div class="row">
+            <div class="col-md-3"><label>六、部门费用分摊</label></div>
+            <div class="col-md-offset-5 col-md-2">
+                <label>小计：</label>
+                <label>HD</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>分摊率</th>
+                        <th>建造期费用</th>
+                        <th>分享期费用</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="HA"></td>
+                        <td>HB</td>
+                        <td>HC</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
         <!--部门费用分摊-->
     </div>
     <div id="predict-gross-profit">
+        <div class="row">
+            <div class="col-md-3">
+                <label>七、项目预计毛利</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>预计毛利：</label>
+                <label>IA</label>
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <label>预计毛利率：</label>
+                <label>IB</label>
+            </div>
+        </div>
         <!--项目预计毛利-->
     </div>
     <div id="expense-allocation">
+        <div class="row">
+            <div class="col-md-3">
+                <label>八、期间费用分摊</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>分摊率：</label>
+                <input type="text" value="JA">
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <label>小计：</label>
+                <label>JB</label>
+            </div>
+        </div>
         <!--期间费用分摊-->
     </div>
     <div id="project-expected-profit">
+        <div class="row">
+            <div class="col-md-3">
+                <label>九、项目预计净利</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>预计净利润：</label>
+                <label>KA</label>
+            </div>
+            <div class="col-md-offset-5 col-md-2">
+                <label>预计净利润率：</label>
+                <label>KB</label>
+            </div>
+        </div>
         <!--项目预计净利-->
     </div>
 </div>
