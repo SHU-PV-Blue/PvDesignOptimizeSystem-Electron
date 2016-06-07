@@ -376,6 +376,8 @@ pvModule.controller('chooseComponentCtrl', function ($scope, gainData, projectDa
 pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     $scope.angleInfo = {
         dip: 0,
+        bestDipH: 0,
+        bestDipG: 0,
         az: 0
     };
 
@@ -414,6 +416,8 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
         $scope.data[0][0] = temp.sums;
         $scope.data[1][0] = temp.sums_g;
         $scope.angleInfo.dip = temp.best;
+        $scope.angleInfo.bestDipG = temp.best;
+        $scope.angleInfo.bestDipH = temp.bestH;
     });
 
     $scope.$watch('angleInfo.dip',function(){
@@ -818,7 +822,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 
 /*
  集中式直流电缆控制器
- */
+*/
 pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj, gainData) {
     $scope.directCurrentCableInfo = {
         directCurrentCable : {},
