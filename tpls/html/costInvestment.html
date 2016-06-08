@@ -1,135 +1,323 @@
-<!--投资成本情况表-->
-<div id="investment">
-    <div id="project-total-income-budget">
+<div class="row" style="color:white;margin:20px 0">
+    <div class="col-md-2">
+        <ul class="list-group">
+            <li class="list-group-item"><a href="">项目总收入预算</a></li>
+            <li class="list-group-item"><a href="">分包预算</a></li>
+            <li class="list-group-item"><a href="">合同</a></li>
+            <li class="list-group-item"><a href="">运维分包</a></li>
+            <li class="list-group-item"><a href="">项目直接费用预算</a></li>
+            <li class="list-group-item"><a href="">部门费用分摊</a></li>
+            <li class="list-group-item"><a href="">项目预计毛利</a></li>
+            <li class="list-group-item"><a href="">期间费用分摊</a></li>
+            <li class="list-group-item"><a href="">项目预计净利</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+
         <div class="row">
-            <div class="col-md-3">
-                <label>一、项目总收入预算(不含税)</label>
-            </div>
-            <div class="col-md-offset-7 col-md-2">
-                <label>小计：</label>
-                <label>计算结果</label>
-            </div>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>分摊率:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>建造期费用:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>分享期费用:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
         </div>
         <div class="row">
-            <div class="col-md-offset-1 col-md-2">
-                <label>总容量(W)：</label>
-                <label>
-                    BA
-                </label>
-            </div>
-            <div class="col-md-2 col-md-offset-1">
-                <label>电站年限：</label>
-                <label>BB</label>
-            </div>
-            <div class="col-md-2 col-md-offset-1">
-                <label>结算日期(月)：</label>
-                <label>BC</label>
-            </div>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>预计毛利:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>预计毛利率:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <tr>
-                        <th>电价设置：</th>
-                        <th>地方电价(元/KWH)</th>
-                        <th>上网电价(元/KWH)</th>
-                        <th>补贴电价1(元/KWH)</th>
-                        <th>补贴电价2(元/KWH)</th>
-                        <th>销售电价</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="text" value="AA"></td>
-                        <td><input type="text" value="AB"></td>
-                        <td><input type="text" value="AC"></td>
-                        <td><input type="text" value="AD"></td>
-                        <td><input type="text" value="AJ"></td>
-                    </tr>
-                    <tr>
-                        <th>其他设置：</th>
-                        <th>分享比例</th>
-                        <th>自用比例</th>
-                        <th>补贴1年限(年)</th>
-                        <th>补贴2年限(年)</th>
-                        <th>售电增值服务税</th>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="text" value="AE"></td>
-                        <td><input type="text" value="AF"></td>
-                        <td><input type="text" value="AG"></td>
-                        <td><input type="text" value="AH"></td>
-                        <td><input type="text" value="AI"></td>
-                    </tr>
-                </table>
-            </div>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>分摊率:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>小计:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <tr>
-                        <td></td>
-                        <th>年发电量(KWH)</th>
-                        <th>产值(含税)(元)</th>
-                        <th>产值(不含税)(元)</th>
-                        <th>年补贴(含税)(元)</th>
-                        <th>年补贴(不含税)(元)</th>
-                        <th>年收入(含税)(元)</th>
-                        <th>年收入(不含税)(元)</th>
-                    </tr>
-                    <tr>
-                        <th>年平均</th>
-                        <td><input type="text" value="CC"></td>
-                        <td><input type="text" value="CK"></td>
-                        <td><input type="text" value="CM"></td>
-                        <td><input type="text" value="CO"></td>
-                        <td><input type="text" value="CQ"></td>
-                        <td><input type="text" value="CS"></td>
-                        <td><input type="text" value="CU"></td>
-                    </tr>
-                    <tr>
-                        <th>总计</th>
-                        <td><input type="text" value="CB"></td>
-                        <td><input type="text" value="CJ"></td>
-                        <td><input type="text" value="CL"></td>
-                        <td><input type="text" value="CN"></td>
-                        <td><input type="text" value="CP"></td>
-                        <td><input type="text" value="CR"></td>
-                        <td><input type="text" value="CT"></td>
-                    </tr>
-                </table>
-            </div>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>预计净利润:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>预计净利润率:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <table class="table table-bordered">
+                <tr>
+                    <th>序号</th>
+                    <th>内容</th>
+                    <th>备注</th>
+                    <th>建造期</th>
+                    <th>分享期</th>
+                    <th>小计</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>项目人工成本</th>
+                    <th>工本率：</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <th>差旅费</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <th>业务活动费</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <th>利息</th>
+                    <th>利率：<br>贷款比例：<br>贷款年限：</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <th>专家外协咨询</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>6</th>
+                    <th>其它</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>总计</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row">
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>合同毛利:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>合同毛利率:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>运维单价:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>运维总价:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>建设期(月):</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>结算期数:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <table class="table table-bordered">
+                <tr>
+                    <th>序号</th>
+                    <th>内容</th>
+                    <th>单价（元/W）</th>
+                    <th>含税成本（元）</th>
+                    <th>不含税成本（元）</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>总计</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>                                                                                                        </th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row" style="margin:20px 0">
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label>总容量(W):</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>电站年限:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>结算周期(月):</label>
+                    <input type="text" class="form-control">
+                </div>
+            </form>
+        </div>
+        <div class="row" style="margin:20px 0">
+            <table class="table table-bordered">
+                <tr>
+                    <th>地方电价(元/KWH)</th>
+                    <th>上网电价(元/KWH)</th>
+                    <th>补贴电价1(元/KWH)</th>
+                    <th>补贴电价2(元/KWH)</th>
+                    <th>销售电价</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+        <div class="row" style="margin:20px 0">
+            <table class="table table-bordered">
+                <tr>
+                    <th>分享比例</th>
+                    <th>自用比例</th>
+                    <th>补贴1年限（年）</th>
+                    <th>补贴2年限（年）</th>
+                    <th>售电增值服务税</th>
+                    <th>补贴收入</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </table>
         </div>
         <div class="row">
-            <div class="col-md-12" style="height: 200px;border: 1px solid black">
-                <div><label>项目年度</label></div>
-                <div>这里是一个动态年度表</div>
-            </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>其它</th>
+                    <th>年发电量(KWH)</th>
+                    <th>产值（含税）(元)</th>
+                    <th>产值（不含税）(元)</th>
+                    <th>年补贴（含税）（元）</th>
+                    <th>年补贴（不含税）（元）</th>
+                    <th>年收入（含税）（元）</th>
+                    <th>年收入（不含税）（元）</th>
+                </tr>
+                <tr>
+                    <th>年平均</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>总计</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </table>
+            <button class="btn btn-success">
+                查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </button>
         </div>
-        <!--项目总收入预算-->
-    </div>
-    <div id="subcontract-budget">
-        <!--分包预算-->
-    </div>
-    <div id="contract">
-        <!--合同-->
-    </div>
-    <div id="operation-subpackage">
-        <!--运维分包-->
-    </div>
-    <div id="direct-expense-budget">
-        <!--项目直接费用预算-->
-    </div>
-    <div id="departmental-expense-budget">
-        <!--部门费用分摊-->
-    </div>
-    <div id="predict-gross-profit">
-        <!--项目预计毛利-->
-    </div>
-    <div id="expense-allocation">
-        <!--期间费用分摊-->
-    </div>
-    <div id="project-expected-profit">
-        <!--项目预计净利-->
     </div>
 </div>

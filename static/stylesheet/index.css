@@ -1,95 +1,119 @@
+*{
+    padding: 0;
+    margin: 0;
+}
 html,body{
-	height: 100%;
-	font-size: 14px;
-	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-}
-body{
-	padding: 0;
-	margin: 0;
-	/*color: white;*/
-	position: relative;
-	background: #35434f;
-}
-a{
-	text-decoration: none;
-}
-a:focus{
-	outline: none;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-    outline: none;          
-}
-#mainBody 
-{  
     height: 100%;
-} 
-#ProcedureNav 
-{ 
-    width:120px; 
-    height:100%; 
-    background-color: #1b1e24; 
-    position:absolute;
+    background: transparent;
 }
-#ProcedureNav ul{
-	width: 100%;
-	padding: 0;
-	margin: 0;
-}
-#ProcedureNav ul li{
-	list-style: none;
-	width: 100%;
-	display: block;
-    background-color: transparent;
-}
-#ProcedureNav li a{
-	text-decoration: none;
-	color: #d6d6d6;
-	position: relative;
-    display: block;
-    padding: 10px 15px;
-    border-bottom: 2px solid #181b20;
-}
-#ProcedureNav li a:hover{
-	background: #212121;
-}
-
-.panel-body{
-	padding: 0;
-}
-#mainContentWrap
-{ 
-    /*background-color:#f0ffff; */
-    height:100%; 
-    margin-left:121px;
+.wrap{
+    border-radius: 5px 5px 0 0;
+    background: #fff;
+    height: 100%;
     position: relative;
 }
-#mainContent{
-	position: absolute;
-	bottom: 50px;
-	top: 0;
-	width: 100%;
+.titlebar{
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    -webkit-app-region: drag;
+    height: 30px;
+    background: #1d1f22;
 }
-#pre-next{
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 50px;
-	padding: 5px 10px;
-	background: #202f38;
+.titlebar .window-op{
+    -webkit-app-region: no-drag;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-size: 15px 15px;
+    background-position: center;
+    background-repeat:no-repeat;
 }
-div#pre-next #preBtn{
-	float: left;
-	background: #27aac8;
+.window-op:hover{
+    background-color: #007aff;
 }
-div#pre-next #nextBtn{
-	float: right;
-	background: #27aac8;
+.titlebar .minimum{
+    background-image: url(../../res/icons/minimum.png);
+    top: 0;
+    right: 60px;
 }
-input[type="text"]{
-	background: #e5e5e5;
+.titlebar .maximum{
+    background-image: url(../../res/icons/maximum.png);
+    top: 0;
+    right: 30px;
+}
+.titlebar .closebtn{
+    border-radius: 0 5px 0 0;
+    background-image: url(../../res/icons/close.png);
+    top: 0;
+    right: 0;
+}
+.menu{
+    height: 30px;
+    background: #007aff;
+}
+#project{
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    background: #2a2d31;
+}
+.mainbody{
+    position: absolute;
+    top: 60px;
+    left: 200px;
+    bottom: 0;
+    right: 0;
+    background: #191a1b;
+    overflow: hidden;
+}
+.mainbody>.container{
+    padding-top: 20px;
+}
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.y-card{
+    text-align: center;
+    color: #f9f9f9;
+    background-color: #2a2d31;
+    margin: 10px 10px;
+}
+.y-card>.header{
+    line-height:30px;
+    height: 30px;
+    border-bottom: 1px solid #0f0f0f;
+}
+.y-card>.body{
+    height: 100px;
+}
+.y-card>.body:hover{
+    cursor: pointer;
+}
+.y-card>.footer{
+    border-top: 1px solid #0f0f0f;
+    font-size: 1.2em;
+    height: 40px;
+    line-height:40px;
+}
+.task-finish{
+    color: #419641;
+}
+.task-todo{
+    position: relative;
+    color: #2b669a;
+    animation:up-down 1s infinite;
+}
+.task-ban{
+    color: #b92c28;
+}
+@keyframes up-down {
+    0%   {top:0px;}
+    25%  {top:3px;}
+    75%  {top:-3px;}
+    100% {top:0px;}
 }

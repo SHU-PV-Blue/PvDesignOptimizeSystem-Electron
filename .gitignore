@@ -40,3 +40,4 @@ jspm_packages
 electron-quick-start-win32-ia32
 *.zip
 *.7z
+.idea
