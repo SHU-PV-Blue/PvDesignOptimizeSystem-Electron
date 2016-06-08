@@ -1,20 +1,20 @@
-<div class="row" ng-controller="basicInfoCtrl" style="color:white">
+<div class="row" ng-controller="basicInfoCtrl">
     <div id="left-information" class="col-md-3">
         <form>
             <div class="form-group">
-                <label for="projectname">项目名</label>
+                <label for="projectname">项目名称</label>
                 <input type="text" class=" form-control" ng-model="projectInfo.projectName" id="projectname">
             </div>
             <div class="form-group">
-                <label for="address">地址</label>
+                <label for="address">拟建地点</label>
                 <input type="text" class=" form-control" ng-model="projectInfo.projectAddress" id="address">
             </div>
             <div class="form-group">
-                <label for="username">用户名</label>
+                <label for="username">建设单位</label>
                 <input type="text" class=" form-control" ng-model="projectInfo.userName" id="username">
             </div>
             <div class="form-group">
-                <label for="lastmodifytime">最后修改时间</label>
+                <label for="lastmodifytime">时间</label>
                 <p class="input-group">
                     <input type="text" id="lastmodifytime" class="form-control" uib-datepicker-popup ng-model="projectInfo.projectDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" />
                     <span class="input-group-btn">
@@ -24,9 +24,10 @@
             </div>
             <div class="form-group">
                 <label for="notes">备注</label>
-                <textarea class="form-control" ng-model="projectInfo.remark" rows="8" id="notes" style="resize:none;background:#e5e5e5"></textarea>
+                <textarea class="form-control" ng-model="projectInfo.remark" rows="8" id="notes" style="resize:none"></textarea>
             </div>
         </form>
     </div>
     <pvmap></pvmap>
+    <button class="btn btn-primary" ng-click="save()">确定</button>
 </div>

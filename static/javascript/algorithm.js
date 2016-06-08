@@ -88,10 +88,12 @@ params:
     H:array  月平均辐照度
     lat:number 纬度
     az:number 方位角
-    e:number 组件的转换效率
+    com_e:number 组件的转换效率
+    com_len:number 组件的长度(mm)
+    com_wid:number 组件的宽度(mm)
     T:array  月平均温度
 */
-function getChartData(H,lat,az,com_e,T,d){
+function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
 	var sums = [],sums_g=[];
     var sum,max = 0,sum_g,res = 0, S,S_d,T_d,H_t,e, g,max_H = 0,res1;
 	for(var i = 0; i <=90; i++){
@@ -102,9 +104,9 @@ function getChartData(H,lat,az,com_e,T,d){
             S = H_t * 100;
             S_d = H_t / 10 - 1;
             T_d = T[j-1] + 0.03*S -25;
-            e = com_e /100 *(1 + d*T_d)*Math.log(Math.E + 0.5*S_d);
+            e = com_e /100 *(1 - 0.011*T_d)*Math.log(Math.E + 0.5*S_d);
             //console.log(e)
-            g = e*H_t;
+            g = e*H_t*(com_len*com_wid/1000000);
             sum_g += g;
             sum += H_t;
 		}

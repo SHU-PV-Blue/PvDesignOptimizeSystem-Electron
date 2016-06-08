@@ -17,8 +17,30 @@ html,body{
     position: relative;
     -webkit-app-region: drag;
     height: 30px;
-    background: #1d1f22;
+    background: #1f71c5;
 }
+.titlebar .logo{
+    float: left;
+    height: 100%;
+    width: 40px;
+    padding-left: 10px;
+    line-height: 30px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 700;
+}
+.titlebar .toggle-menu{
+    float: left;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    width: 30px;
+    margin: 5px 0;
+    border-radius: 10px;
+    color: white;
+    background: #318ce7;
+}
+
 .titlebar .window-op{
     -webkit-app-region: no-drag;
     position: absolute;
@@ -48,16 +70,34 @@ html,body{
     right: 0;
 }
 .menu{
-    height: 30px;
-    background: #007aff;
+    height:25px;
+    background: #2e81d7;
 }
+.menu ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.menu li{
+    color: #91c3f2;
+    float: left;
+    width: 50px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+}
+.menu li:hover{
+    color: white;
+    cursor: pointer;
+}
+
 #project{
     position: absolute;
-    top: 60px;
+    top: 55px;
     bottom: 0;
     left: 0;
     width: 200px;
-    background: #2a2d31;
+    background: #f6f8f9;
 }
 .mainbody{
     position: absolute;
@@ -65,7 +105,7 @@ html,body{
     left: 200px;
     bottom: 0;
     right: 0;
-    background: #191a1b;
+    background: #fff;
     overflow: hidden;
 }
 .mainbody>.container{
@@ -79,26 +119,28 @@ html,body{
 }
 .y-card{
     text-align: center;
-    color: #f9f9f9;
-    background-color: #2a2d31;
+    background-color: #f2f2f2;
     margin: 10px 10px;
+    border-radius: 5px;
 }
 .y-card>.header{
     line-height:30px;
     height: 30px;
-    border-bottom: 1px solid #0f0f0f;
+    border-bottom: 1px solid #d6d6d6;
+    border-radius: 5px 5px 0 0;
 }
 .y-card>.body{
-    height: 100px;
+    height: 120px;
 }
 .y-card>.body:hover{
     cursor: pointer;
 }
 .y-card>.footer{
-    border-top: 1px solid #0f0f0f;
+    border-top: 1px solid #d6d6d6;
     font-size: 1.2em;
     height: 40px;
     line-height:40px;
+    border-radius: 0 0 2px 2px;
 }
 .task-finish{
     color: #419641;

@@ -49,24 +49,10 @@ td,th{
     position: relative;
     top:30px;
 }
-#meterTable table{
-    color: white;
-    background-color: rgba(0,0,0,0.3);
-}
-
-#meterTable input{
-    background-color: rgba(0,0,0,0);
-}
 
 #mete-basicinfo{
-    color: white;
-    background-color: rgba(0,0,0,0.3);
     position: relative;
     top: 30px;
-}
-#pv-component table{
-    color: white;
-    background-color: rgba(0,0,0,0.3);
 }
 
 .panel-message{

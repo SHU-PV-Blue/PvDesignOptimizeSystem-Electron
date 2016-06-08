@@ -3,95 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="static/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/stylesheet/index.css">
     <script src="tpls/javascript/jquery-1.8.3.min.js"></script>
     <script src="static/javascript/windowop.js"></script>
+
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi"></script>
+    <link rel="stylesheet" href="static/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/components/angular-chart.js/dist/angular-chart.css">
+    <link rel="stylesheet" href="static/stylesheet/project.css">
+    <link rel="stylesheet" href="tpls/css/project.css">
+    <link rel="stylesheet" href="tpls/css/buttons.css">
+    <link rel="stylesheet" href="tpls/css/blue.css">
+    <script src="static/components/angular/angular.min.js"></script>
+    <script src="static/components/ui-bootstrap-tpls-1.3.2.min.js"></script>
+    <script src="static/components/angular-route/angular-route.min.js"></script>
+    <script src="static/components/angular-animate/angular-animate.min.js"></script>
+    <script src="static/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="static/components/Chart.js/Chart.js"></script>
+    <script src="static/components/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="static/javascript/index.js"></script>
+    <script src="static/javascript/algorithm.js"></script>
+    <script src="tpls/javascript/radioButton.js"></script>
+    <script src="tpls/javascript/icheck.min.js"></script>
 </head>
-<body>
+<body ng-app="PVModule">
     <div class="wrap">
         <div class="titlebar">
+            <div class="logo">
+                PV
+            </div>
+            <div class="toggle-menu"><span class="glyphicon glyphicon-chevron-down"></span></div>
             <div class="maximum window-op"></div>
             <div class="minimum window-op"></div>
             <div class="closebtn window-op"></div>
         </div>
         <div class="menu">
-
+            <ul>
+                <li>项目</li>
+                <li></li>
+                <li>设置</li>
+                <li>关于</li>
+            </ul>
         </div>
         <div id="project">
 
         </div>
         <div class="mainbody">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">项目信息</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ok task-finish"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">地理气象</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-hand-up task-todo"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">组件选型</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">组件布局</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">设备</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">效率分析</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">效益分析</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">报告</div>
-                            <div class="body">as</div>
-                            <div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="y-card">
-                            <div class="header">a</div>
-                            <div class="body">as</div>
-                            <div class="footer">f</div>
-                        </div>
-                    </div>
-                </div>
+                <ng-view></ng-view>
             </div>
         </div>
     </div>

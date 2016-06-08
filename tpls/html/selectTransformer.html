@@ -1,5 +1,5 @@
 <!--变压器电压选择页面-->
-<div class="col-md-12" id="power-system-grade" ng-controller="selectTransformerCtrl" style="color:white">
+<div class="col-md-12" id="power-system-grade" ng-controller="selectTransformerCtrl">
     <div class="row">
         <div class="col-md-offset-5 col-md-2">
             接入电网等级
@@ -32,4 +32,5 @@
             <div class="switch-cabinet" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</div>
         </div>
     </div>
+    <button class="btn btn-primary" ng-click="finish()">完成</button>
 </div>

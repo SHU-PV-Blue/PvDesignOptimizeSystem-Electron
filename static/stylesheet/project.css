@@ -3,13 +3,7 @@ html,body{
 	font-size: 14px;
 	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
-body{
-	padding: 0;
-	margin: 0;
-	/*color: white;*/
-	position: relative;
-	background: #35434f;
-}
+
 a{
 	text-decoration: none;
 }
@@ -24,72 +18,6 @@ a:focus{
 .btn.active.focus {
     outline: none;          
 }
-#mainBody 
-{  
-    height: 100%;
-} 
-#ProcedureNav 
-{ 
-    width:120px; 
-    height:100%; 
-    background-color: #1b1e24; 
-    position:absolute;
-}
-#ProcedureNav ul{
-	width: 100%;
-	padding: 0;
-	margin: 0;
-}
-#ProcedureNav ul li{
-	list-style: none;
-	width: 100%;
-	display: block;
-    background-color: transparent;
-}
-#ProcedureNav li a{
-	text-decoration: none;
-	color: #d6d6d6;
-	position: relative;
-    display: block;
-    padding: 10px 15px;
-    border-bottom: 2px solid #181b20;
-}
-#ProcedureNav li a:hover{
-	background: #212121;
-}
-
 .panel-body{
 	padding: 0;
-}
-#mainContentWrap
-{ 
-    /*background-color:#f0ffff; */
-    height:100%; 
-    margin-left:121px;
-    position: relative;
-}
-#mainContent{
-	position: absolute;
-	bottom: 50px;
-	top: 0;
-	width: 100%;
-}
-#pre-next{
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 50px;
-	padding: 5px 10px;
-	background: #202f38;
-}
-div#pre-next #preBtn{
-	float: left;
-	background: #27aac8;
-}
-div#pre-next #nextBtn{
-	float: right;
-	background: #27aac8;
-}
-input[type="text"]{
-	background: #e5e5e5;
 }

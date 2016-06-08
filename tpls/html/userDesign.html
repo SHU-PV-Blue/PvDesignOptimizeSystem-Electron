@@ -1,4 +1,4 @@
-<div id="design-type" ng-controller="userDesignCtrl" style="color:white">
+<div id="design-type" ng-controller="userDesignCtrl">
     <div class="row" style="margin-top:30px">
         <div class="col-md-2 col-md-offset-2">
             <label>组件排列方式：</label>
@@ -17,11 +17,11 @@
         <form class="form-inline col-md-offset-1">
             <div class="form-group">
                 <div class="form-group">
-                    <label for="">每个支架上所放置组件数</label>
+                    <label >每个支架上所放置组件数</label>
                     <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" size="4" min="1" value="1">
                 </div>
                 <div class="form-group" style="margin-left: 40px">
-                    <label for="">阵列前后间距</label>
+                    <label >阵列前后间距</label>
                     <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
                 </div>
             </div>
@@ -35,19 +35,19 @@
             <label for="pv-c1">自定义面积</label>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">区域长</label>
+                    <label class="col-md-4 control-label">区域长</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">区域宽</label>
+                    <label class="col-md-4 control-label">区域宽</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.width">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">每行组件数</label>
+                    <label class="col-md-4 control-label">每行组件数</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
                     </div>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">阵列行数</label>
+                    <label class="col-md-4 control-label">阵列行数</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
                     </div>
@@ -65,19 +65,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">总组件数</label>
+                    <label class="col-md-4 control-label">总组件数</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.componentsNum">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">总占地面积</label>
+                    <label class="col-md-4 control-label">总占地面积</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.totalArea">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="" class="col-md-4 control-label">总容量</label>
+                    <label class="col-md-4 control-label">总容量</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" ng-model="userDesignInfo.area.totalCapacity">
                     </div>
@@ -98,4 +98,5 @@
             (MW)
         </div>
     </div>
+    <button class="btn btn-primary" ng-click="save()">确定</button>
 </div>

@@ -144,9 +144,18 @@ pvModule.controller('prenextCtrl', function ($scope, $location, projectData, man
 });
 
 /*
+项目步骤控制器
+ */
+pvModule.controller('projectCtrl',function($scope, $location){
+    $scope.switchToUrl = function(url){
+        $location.path(url);
+    };
+});
+
+/*
  项目信息控制器
  */
-pvModule.controller('basicInfoCtrl', function ($scope, projectData) {
+pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
     $scope.projectInfo = {
         projectName: '',
         projectAddress: '',
@@ -156,9 +165,10 @@ pvModule.controller('basicInfoCtrl', function ($scope, projectData) {
         lat: 31.219456
     };
 
-    $scope.$on('projectData.save', function () {
+    $scope.save =  function () {
         projectData.addOrUpdateData($scope.projectInfo, 'basicInfo');
-    });
+        $location.path('/');
+    };
 
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('basicInfo');
@@ -257,7 +267,7 @@ pvModule.controller('basicInfoCtrl', function ($scope, projectData) {
 /*
  气象信息控制器
  */
-pvModule.controller('meteorologyCtrl', function ($scope, projectData, gainData) {
+pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData, gainData) {
     $scope.meteorologyInfo = {
         type: 'db',
         minTem: '',
@@ -298,13 +308,17 @@ pvModule.controller('meteorologyCtrl', function ($scope, projectData, gainData) 
         }
     };
 
+    $scope.$watch('meteorologyInfo.monthinfos',function(){
+        computeAvg();
+    },true);
+
     function computeAvg() {
         var i = 0, t = 0, h = 0, w = 0;
         $scope.meteorologyInfo.monthinfos.forEach(function (monthinfo) {
-            i += monthinfo.H;
-            t += monthinfo.temperature;
-            h += monthinfo.humidity;
-            w += monthinfo.wind;
+            i += Number(monthinfo.H);
+            t += Number(monthinfo.temperature);
+            h += Number(monthinfo.humidity);
+            w += Number(monthinfo.wind);
         });
 
         $scope.meteorologyInfo.monthavgs.H = (i / 12).toFixed(2);
@@ -328,9 +342,10 @@ pvModule.controller('meteorologyCtrl', function ($scope, projectData, gainData) 
     $scope.lng = projectData.getData('basicInfo').lng;
     $scope.lat = projectData.getData('basicInfo').lat;
 
-    $scope.$on('projectData.save', function () {
+    $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
-    });
+        $location.path('/');
+    };
 
     $scope.$watch('$viewContentLoaded', function () {
         var tempObj = projectData.getData('meteorologyInfo');
@@ -347,7 +362,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, projectData, gainData) 
 /*
  选择组件控制器
  */
-pvModule.controller('chooseComponentCtrl', function ($scope, gainData, projectData) {
+pvModule.controller('chooseComponentCtrl', function ($scope,$location, gainData, projectData) {
     $scope.components = [];
     $scope.selected = '{}';
     $scope.show = {};
@@ -357,6 +372,7 @@ pvModule.controller('chooseComponentCtrl', function ($scope, gainData, projectDa
 
     $scope.confirmChoose = function () {
         projectData.addOrUpdateData($scope.show, 'componentInfo');
+        $location.path('/');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -373,7 +389,7 @@ pvModule.controller('chooseComponentCtrl', function ($scope, gainData, projectDa
 /*
  方位角倾角控制器
  */
-pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
+pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData) {
     $scope.angleInfo = {
         dip: 0,
         bestDipH: 0,
@@ -437,14 +453,15 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
     });
 
     function getHData() {
-        var res =  getChartData(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100);
+        var res =  getChartData(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],componentInfo['长度'],componentInfo['宽度'],T,componentInfo['最大功率温度系数']/100);
         console.log(res);
         return res;
     }
 
-    $scope.$on('projectData.save', function () {
+    $scope.save =  function () {
         projectData.addOrUpdateData($scope.angleInfo, 'angleInfo');
-    });
+        $location.path('/');
+    };
 
 
     //for(var i = 0; i <= 90; i++){
@@ -462,7 +479,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, projectData) {
 /*
  用户自定义面积或安装容量控制器
 */
-pvModule.controller('userDesignCtrl', function ($scope, projectData) {
+pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
     $scope.userDesignInfo = {
         componentDirection: 'horizontal',
         designType: 'area',                     //capacity
@@ -570,9 +587,10 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
         return res;
     }
 
-    $scope.$on('projectData.save', function () {
+    $scope.save = function () {
         projectData.addOrUpdateData($scope.userDesignInfo, 'userDesignInfo');
-    });
+        $location.path('/');
+    };
 
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('userDesignInfo');
@@ -586,11 +604,15 @@ pvModule.controller('userDesignCtrl', function ($scope, projectData) {
 /*
  选择逆变器控制器
  */
-pvModule.controller('chooseInverterCtrl', function ($scope, $uibModal) {
+pvModule.controller('chooseInverterCtrl', function ($scope,$location, $uibModal) {
     $scope.show = true;
     $scope.obj = {
         type: "centralized"
     };
+
+    $scope.finish = function(){
+        $location.path('/');
+    }
 
     $scope.showForm = function (name) {
         var templateUrl, controller;
@@ -974,7 +996,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
 /*
  选择电网等级控制器
  */
-pvModule.controller('selectTransformerCtrl', function ($scope, $uibModal) {
+pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibModal) {
     $scope['show_10'] = true;
     $scope['show_35'] = false;
     $scope['show_380'] = false;
@@ -1000,6 +1022,10 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $uibModal) {
                     }
         }
     });
+
+    $scope.finish = function(){
+        $location.path('/');
+    };
 
     $scope.showForm = function (name) {
         var templateUrl, controller;
@@ -1133,6 +1159,159 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
     };
 });
 
+/*
+效益分析控制器
+ */
+pvModule.controller('benefitCtrl',function($scope, $location){
+    $scope.switchToUrl = function(url){
+        $location.path(url);
+    };
+
+    $scope.back = function(){
+        $location.path('/');
+    }
+});
+
+/*
+ 参数列表控制器
+ */
+pvModule.controller('parametersCtrl',function($scope, $location, projectData){
+
+    $scope.defaultParameters = {
+        AA : 0.9575,
+        AB : 0.45927,
+        AC : 0.42,
+        AD : 0.25,
+        AE : 0.9,
+        AF : 1,
+        AG : 20,
+        AH : 5,
+        AI : 0.17,
+        AJ : 0.86175,
+        BB : 25,
+        BC : 3,
+        BD: 4,
+        BE : 0,
+        DA : 5.6,
+        DB : 0.3,
+        DC : 1.6,
+        DD : 0.1,
+        DE : 0.18,
+        LC : 0.0793,
+        FA : 0.085,
+        HA : 0.005,
+        JA : 0.02,
+        GA : 0.005,
+        GB : 0.655,
+        GC : 0.5,
+        GD : 10,
+        GF : 0,
+        GG : 20000,
+        GI : 0,
+        GR : 0,
+        GP : 100000,
+        GQ : 0,
+        GO : 0,
+        GS : 0,
+        MM : 0,
+        MY : 0.0655
+    };
+
+    $scope.save = function(){
+        projectData.addOrUpdateData($scope.defaultParameters,'parameters');
+        $location.path('/8');
+    };
+});
+
+/*
+投资成本情况控制器
+data1 : 项目总收入预算
+data2 : 分包预算
+data3 : 合同
+data4 : 运维分包
+data5 : 项目直接费用预算
+data6 : 部门费用分摊
+data7 : 项目预计毛利
+data8 : 期间费用分摊
+data9 : 项目预计净利润
+ */
+pvModule.controller('investmentCostsCtrl',function($scope, $location, projectData){
+
+    $scope.show = [true,false,false,false,false,false,false,false,false];
+    $scope.showMe = function(id){
+        for(var i = 0; i < $scope.show.length; i++){
+            if(i === id){
+                $scope.show[i] = true;
+            }else{
+                $scope.show[i] = false;
+            }
+        }
+    };
+
+    var p = projectData.getData('parameters');
+    var BA = 1.915815;
+
+//////////////////////////////////   项目总收入预算
+    $scope.data1 = {
+
+    };
+
+
+
+///////////////////////////////////   分包预算
+    $scope.data2 = {
+        DA : p.DA,
+        DB : p.DB,
+        DC : p.DC,
+        DD : p.DD,
+        DE : p.DE,
+        DF : Number((p.DA * BA * 1000000).toFixed(1)),
+        DG : Number((p.DB * BA * 1000000).toFixed(1)),
+        DH : Number((p.DC * BA * 1000000).toFixed(1)),
+        DI : Number((p.DD * BA * 1000000).toFixed(1)),
+        DJ : Number((p.DE * BA * 1000000).toFixed(1))
+    };
+    $scope.data2.DK = Number(($scope.data2.DF / (1+ p.AI)).toFixed(3));
+    $scope.data2.DL = Number(($scope.data2.DG / (1+ p.AI)).toFixed(3));
+    $scope.data2.DM = Number(($scope.data2.DH / (1+ p.AI)).toFixed(3));
+    $scope.data2.DN = Number(($scope.data2.DI / (1+ p.AI)).toFixed(3));
+    $scope.data2.DO = Number(($scope.data2.DJ / (1+ p.AI)).toFixed(3));
+
+    $scope.data2.DP = Number((p.DA+ p.DB+ p.DC+ p.DD+ p.DE).toFixed(3));
+    $scope.data2.DQ = Number(($scope.data2.DF + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ).toFixed(3));
+    $scope.data2.DR = Number(($scope.data2.DK + $scope.data2.DL + $scope.data2.DM + $scope.data2.DN + $scope.data2.DO).toFixed(3));
+
+   $scope.back = function(){
+       $location.path('/8');
+   }
+});
+
+/*
+ 符合条件EMC表控制器
+ */
+pvModule.controller('emcCtrl',function($scope,$location){
+    $scope.back = function(){
+        $location.path('/8');
+    }
+});
+
+/*
+ 收益期状况表控制器
+ */
+pvModule.controller('profitPeriodCtrl',function($scope,$location){
+    $scope.back = function(){
+        $location.path('/8');
+    }
+});
+
+/*
+ 综合指标表
+ */
+pvModule.controller('overallIndexCtrl',function($scope,$location){
+    $scope.back = function(){
+        $location.path('/8');
+    }
+});
 
 //指令区
 pvModule.directive('script', function () {
@@ -1184,6 +1363,8 @@ pvModule.directive('pvmap', function () {
 //路由
 pvModule.config(function ($routeProvider) {
     $routeProvider.when('/', {
+        templateUrl: 'tpls/html/project.html'
+    }).when('/1',{
         templateUrl: 'tpls/html/basicInfo.html'
     }).when('/2', {
         templateUrl: 'tpls/html/displayMeteInfo.html'
@@ -1197,6 +1378,18 @@ pvModule.config(function ($routeProvider) {
         templateUrl: 'tpls/html/chooseInverter.html'
     }).when('/7', {
         templateUrl: 'tpls/html/selectTransformer.html'
+    }).when('/8', {
+        templateUrl: 'tpls/html/benefitAnalysis.html'
+    }).when('/9', {
+        templateUrl: 'tpls/html/benefit/parameters.html'
+    }).when('/10', {
+        templateUrl: 'tpls/html/benefit/investmentCosts.html'
+    }).when('/11', {
+        templateUrl: 'tpls/html/benefit/emc.html'
+    }).when('/12', {
+        templateUrl: 'tpls/html/benefit/profitPeriod.html'
+    }).when('/13', {
+        templateUrl: 'tpls/html/benefit/overallIndex.html'
     });
 
     $routeProvider.otherwise({redirectTo: '/'});

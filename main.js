@@ -21,7 +21,7 @@ app.on('ready',function(){
 		height : 800,
 		title : 'PvDesignOptimizeSystem',
 		center: true,
-		//frame: false,
+		frame: false,
 		transparent:true,
 		webPreferences : {
 		  webSecurity : false,
@@ -30,7 +30,7 @@ app.on('ready',function(){
 		minWidth : 1000,
 		minHeight : 700
 	});
-	mainWindow.loadURL('file://' + __dirname + '/newProject.html');
+	mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 	mainWindow.on('closed',function(){
 		mainWindow = null;
