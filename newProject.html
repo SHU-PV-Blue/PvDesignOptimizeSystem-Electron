@@ -23,6 +23,7 @@
     <script src="tpls/javascript/icheck.min.js"></script>
 </head>
 <body ng-app="PVModule">
+<<<<<<< HEAD
 <div id="mainBody">
     <div id="ProcedureNav" ng-controller="cordionCtrl">
         <ul>
@@ -105,6 +106,37 @@
                 </div>
                 <div class="col-md-2">
                     <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
+=======
+    <div id="mainBody">
+        <div id="ProcedureNav" ng-controller="cordionCtrl">
+            <ul>
+                <li><a href=""><span class="glyphicon glyphicon-tree-deciduous"></span>&nbsp;&nbsp;快速导航</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;项目信息</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;地理气象</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;组件选型与布局</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;设备</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;效率分析</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;效益分析</a></li>
+                <li><a href=""><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;报告</a></li>
+            </ul>
+        </div>
+        <div id="mainContentWrap">
+            <div class="container" id="mainContent">
+                
+                <!--<ng-view></ng-view>-->
+            </div>
+            <div id="pre-next" ng-controller="prenextCtrl" class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="preBtn" class="btn btn-primary" ng-click="preStep()">上一步</button>
+                    </div>
+                    <div class="col-md-8" style="padding-top:10px">
+                        <uib-progressbar max="max" value="current"><span style="color:white; white-space:nowrap;">{{current}} / {{max}}</span></uib-progressbar>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="nextBtn" class="btn btn-primary" ng-click="nextStep()">下一步</button>
+                    </div>
+>>>>>>> e7a5f19241c61cf453cfe114a304d2538f2d63de
                 </div>
             </div>
         </div>

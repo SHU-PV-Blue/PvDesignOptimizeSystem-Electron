@@ -407,3 +407,8 @@ td,th{
 /*.contain-panel{*/
     /*padding: 5px 10px;*/
 /*}*/
+
+/*投资成本情况表防止溢出*/
+#investment{
+    overflow: scroll;
+}
