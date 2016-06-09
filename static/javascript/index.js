@@ -1339,8 +1339,17 @@ pvModule.directive('pvmap', function () {
         link: function (scope, elem, attrs) {
             var map = new BMap.Map("mapContainer");          // 创建地图实例
             map.enableScrollWheelZoom();
+            map.enableInertialDragging();
+            map.enableContinuousZoom();
+
             var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标
             map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别
+
+            var size = new BMap.Size(10, 20);
+            map.addControl(new BMap.CityListControl({
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                offset: size
+            }));
             map.addEventListener("click", function (e) {
                 var lngInput = document.getElementById('lng');
                 var latInput = document.getElementById('lat');
@@ -1354,7 +1363,7 @@ pvModule.directive('pvmap', function () {
             document.getElementById('locatePoint').addEventListener('click', function (e) {
                 var lng = document.getElementById('lng').value;
                 var lat = document.getElementById('lat').value;
-                map.centerAndZoom(new BMap.Point(lng, lat), 13);
+                map.centerAndZoom(new BMap.Point(lng, lat), 10);
             });
         }
     };
