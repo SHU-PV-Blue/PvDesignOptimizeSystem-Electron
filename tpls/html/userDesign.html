@@ -1,101 +1,148 @@
 <div id="design-type" ng-controller="userDesignCtrl">
-    <div class="row" style="margin-top:30px">
-        <div class="col-md-2 col-md-offset-2">
-            <label>组件排列方式：</label>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="res/images/comsmall.png" alt="">
         </div>
-        <div class="col-md-1">
-            <input type="radio" id="pv-r1" name="pv-r" value="horizontal" ng-model="userDesignInfo.componentDirection">
-            <label for="pv-r1">横排</label>
-        </div>
-        <div class="col-md-1">
-            <input type="radio" id="pv-r2" name="pv-r" value="vertical" ng-model="userDesignInfo.componentDirection">
-            <label for="pv-r2">竖排</label>
-        </div>
-    </div>
-    <div class="row" style="margin-top:20px">
-        <div class="col-md-12">
-        <form class="form-inline col-md-offset-1">
-            <div class="form-group">
-                <div class="form-group">
-                    <label >每个支架上所放置组件数</label>
-                    <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" size="4" min="1" value="1">
+        <div class="col-md-6">
+            <div class="row" style="margin-top:30px">
+                <div class="col-md-2 col-md-offset-2">
+                    <label>组件排列方式：</label>
                 </div>
-                <div class="form-group" style="margin-left: 40px">
-                    <label >阵列前后间距</label>
-                    <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
+                <div class="col-md-3">
+                    <input type="radio" id="pv-r1" name="pv-r" value="horizontal"
+                           ng-model="userDesignInfo.componentDirection">
+                    <label for="pv-r1">横排</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="radio" id="pv-r2" name="pv-r" value="vertical"
+                           ng-model="userDesignInfo.componentDirection">
+                    <label for="pv-r2">竖排</label>
                 </div>
             </div>
-        </form>
+            <div class="row" style="margin-top:20px">
+                <div class="col-md-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-8">每个支架上所放置组件数</label>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" min="1" value="1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-8">阵列前后间距</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
     <hr>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-5">
+            <img src="res/images/combig.png" alt="" style="width: 100%;margin-top: 40px">
+            <button class="btn btn-primary">
+                <span class="glyphicon glyphicon-fullscreen"></span>
+            </button>
+        </div>
+        <div class="col-md-6">
             <input type="radio" name="pv-c" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
             <label for="pv-c1">自定义面积</label>
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label class="col-md-4 control-label">区域长</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
-                    </div>
+            <div class="rwo">
+                <div class="col-md-6">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">区域长L(m)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">左右间距d(m)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">区域长可放置支架数</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">区域宽可放置行数</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">总组件数(个)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.componentsNum">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">总容量(KW)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.totalCapacity">
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">区域宽</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.width">
-                    </div>
+                <div class="col-md-6">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">区域宽W(m)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.width">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">前后间距D(m)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">左右剩余间距(m):</label>
+                            <div class="col-md-4">
+                                <p class="form-control-static">58</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">前后剩余间距(m):</label>
+                            <div class="col-md-4">
+                                <p class="form-control-static">20</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-8 control-label">总占地面积(m2)</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.area.totalArea">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">每行组件数</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
-                    </div>
-                    <div class="col-md-5">
-                        左右剩余间距：<span ng-bind="lrspace"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">阵列行数</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
-                    </div>
-                    <div class="col-md-5">
-                        前后剩余间距：<span ng-bind="fbspace"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">总组件数</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.componentsNum">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">总占地面积</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.totalArea">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">总容量</label>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" ng-model="userDesignInfo.area.totalCapacity">
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-5">
             <input type="radio" name="pv-c" id="pv-c2" value="capacity" ng-model="userDesignInfo.capacity">
-            <label for="pv-c2">自定义安装容量</label>
-        </div>
-        <div class="col-md-3">
-            <input type="text" class="form-control" ng-model="userDesignInfo.capacity.totalCapacity">
+            <label for="pv-c2">自定义安装容量(KW)</label>
         </div>
         <div class="col-md-1">
-            (MW)
+            <input type="text" class="form-control" ng-model="userDesignInfo.capacity.totalCapacity">
         </div>
     </div>
     <button class="btn btn-primary" ng-click="save()">确定</button>
