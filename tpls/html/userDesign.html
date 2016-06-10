@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-8">每个支架上组件行数m</label>
                             <div class="col-md-4">
-                                <input type="number" class="form-control" ng-model="userDesignInfo.numPerFixture" min="1" value="1">
+                                <input type="number" class="form-control" ng-model="userDesignInfo.rowsPerFixture" min="1" value="1">
                             </div>
                         </div>
                     </form>
@@ -33,9 +33,9 @@
                 <div class="col-md-6">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-md-8">列数n</label>
+                            <label class="control-label col-md-8">每个支架上组件列数n</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.fbspace" size="8">
+                                <input type="number" class="form-control" ng-model="userDesignInfo.colsPerFixture" min="1" value="1">
                             </div>
                         </div>
                     </form>
@@ -67,31 +67,31 @@
                         <div class="form-group">
                             <label class="col-md-8 control-label">左右间距d(m)</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.lrspace">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">区域长可放置支架数</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.numPerRow">
+                                <p class="form-control-static">{{userDesignInfo.area.numPerRow}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">区域宽可放置行数</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.rowsNum">
+                                <p class="form-control-static">{{userDesignInfo.area.rowsNum}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">总组件数(个)</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.componentsNum">
+                                <p class="form-control-static">{{userDesignInfo.area.componentsNum}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">总容量(KW)</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.totalCapacity">
+                                <p class="form-control-static">{{userDesignInfo.area.totalCapacity}}</p>
                             </div>
                         </div>
 
@@ -109,25 +109,25 @@
                         <div class="form-group">
                             <label class="col-md-8 control-label">前后间距D(m)</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.fbspace">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">左右剩余间距(m):</label>
                             <div class="col-md-4">
-                                <p class="form-control-static">58</p>
+                                <p class="form-control-static">{{userDesignInfo.area.lrRestSpace}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">前后剩余间距(m):</label>
                             <div class="col-md-4">
-                                <p class="form-control-static">20</p>
+                                <p class="form-control-static">{{userDesignInfo.area.fbRestSpace}}</p>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-8 control-label">总占地面积(m2)</label>
                             <div class="col-md-4">
-                                <input type="text" class="form-control" ng-model="userDesignInfo.area.totalArea">
+                                <p class="form-control-static">{{userDesignInfo.area.totalArea}}</p>
                             </div>
                         </div>
                     </form>

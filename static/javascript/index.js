@@ -483,13 +483,17 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
     $scope.userDesignInfo = {
         componentDirection: 'horizontal',
         designType: 'area',                     //capacity
-        numPerFixture: 1,
+        rowsPerFixture: 1,
+        colsPerFixture: 1,
         fbspace: 0,
+        lrspace: 0,
         area: {
             length: 0,
             width: 0,
             numPerRow: 0,
             rowsNum: 0,
+            fbRestSpace: 0,
+            lrRestSpace: 0,
             componentsNum: 0,
             totalArea: 0,
             totalCapacity: 0
@@ -499,15 +503,20 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
         }
     };
 
-    $scope.lrspace = 0;
-    $scope.fbspace = 0;
+    function isNumber(obj) {
+        return typeof obj === 'number' && !isNaN(obj)
+    }
 
-    $scope.$watch('userDesignInfo.numPerFixture', function () {
-        $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
+    $scope.$watch('userDesignInfo.rowsPerFixture', function () {
+        $scope.userDesignInfo.fbspace = Number(compute_fbspace());
+    });
+
+    $scope.$watch('userDesignInfo.colsPerFixture',function(){
+        $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
     $scope.$watch('userDesignInfo.componentDirection', function () {
-        $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
+        $scope.userDesignInfo.fbspace = Number(compute_fbspace());
         $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
@@ -521,21 +530,31 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
         $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
     });
 
-    $scope.$watch('userDesignInfo.fbspace', function () {
-        $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
+    $scope.$watch('userDesignInfo.lrspace', function (newval) {
+        if(Number(newval)){
+            $scope.userDesignInfo.lrspace = Number(newval);
+            $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
+        }
+    });
+
+    $scope.$watch('userDesignInfo.fbspace', function (newval) {
+        if(Number(newval)){
+            $scope.userDesignInfo.fbspace = Number(newval);
+            $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
+        }
     });
 
     $scope.$watch('userDesignInfo.area.numPerRow', function (newVal) {
-        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.rowsNum;
+        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.rowsNum * $scope.userDesignInfo.rowsPerFixture * $scope.userDesignInfo.colsPerFixture;
     });
 
     $scope.$watch('userDesignInfo.area.rowsNum', function (newVal) {
-        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.numPerRow;
+        $scope.userDesignInfo.area.componentsNum = newVal * $scope.userDesignInfo.area.numPerRow * $scope.userDesignInfo.rowsPerFixture * $scope.userDesignInfo.colsPerFixture;
     });
 
     $scope.$watch('userDesignInfo.area.componentsNum', function (newVal) {
         var componentInfo = projectData.getData('componentInfo');
-        $scope.userDesignInfo.area.totalCapacity = newVal * componentInfo['峰值功率'];
+        $scope.userDesignInfo.area.totalCapacity = (newVal * componentInfo['峰值功率']) / 1000;            //总安装容量
     });
 
     function toRadian(degree) {                           //角度转弧度
@@ -556,34 +575,38 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
     function compute_fbspace() {                           //计算阵列前后间距
         var componentInfo = projectData.getData('componentInfo');
         var dip = projectData.getData('angleInfo').dip;
-        var lng = projectData.getData('basicInfo').lng;
-        var W;
+        var lat = projectData.getData('basicInfo').lat;
+        var w;
         if ($scope.userDesignInfo.componentDirection === 'horizontal') {
-            W = componentInfo['宽度'] / 1000;
+            w = componentInfo['宽度'] / 1000;
         } else {
-            W = componentInfo['长度'] / 1000;
+            w = componentInfo['长度'] / 1000;
         }
 
-        var W1 = W * $scope.userDesignInfo.numPerFixture;
-        return W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lng) + 0.4338) / (0.707 - 0.4338 * tan(lng));
+        var W1 = w * $scope.userDesignInfo.rowsPerFixture;
+        console.log(''+w+','+dip+','+lat+','+$scope.userDesignInfo.rowsPerFixture);
+        return W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lat) + 0.4338) / (0.707 - 0.4338 * tan(lat));
     }
 
-    function compute_numPerRow() {                               //计算每行组件数
+    function compute_numPerRow() {                               //计算每行支架数
         var componentInfo = projectData.getData('componentInfo');
         var L;
         if ($scope.userDesignInfo.componentDirection === 'horizontal') {
-            L = componentInfo['宽度'] / 1000;
-        } else {
             L = componentInfo['长度'] / 1000;
+        } else {
+            L = componentInfo['宽度'] / 1000;
         }
-        var res = Math.floor($scope.userDesignInfo.area.length / L);
-        $scope.lrspace = ($scope.userDesignInfo.area.length - res * L).toFixed(2);
+
+        var _L = L * $scope.userDesignInfo.colsPerFixture;
+
+        var res = Math.floor(($scope.userDesignInfo.area.length - _L) / (_L + $scope.userDesignInfo.lrspace)) + 1;
+        $scope.userDesignInfo.area.lrRestSpace = ($scope.userDesignInfo.area.length - res * _L - (res-1)*$scope.userDesignInfo.lrspace).toFixed(2);            //左右剩余间距
         return res;
     }
 
     function compute_rowsNum() {                                 //计算阵列行数
         var res = Math.floor($scope.userDesignInfo.area.width / $scope.userDesignInfo.fbspace);
-        $scope.fbspace = ($scope.userDesignInfo.area.width - res * $scope.userDesignInfo.fbspace).toFixed(2);
+        $scope.userDesignInfo.area.fbRestSpace = ($scope.userDesignInfo.area.width - res * $scope.userDesignInfo.fbspace).toFixed(2);
         return res;
     }
 
@@ -1190,7 +1213,7 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
         AJ : 0.86175,
         BB : 25,
         BC : 3,
-        BD: 4,
+        BD : 4,
         BE : 0,
         DA : 5.6,
         DB : 0.3,
@@ -1238,6 +1261,7 @@ data9 : 项目预计净利润
 pvModule.controller('investmentCostsCtrl',function($scope, $location, projectData){
 
     $scope.show = [true,false,false,false,false,false,false,false,false];
+
     $scope.showMe = function(id){
         for(var i = 0; i < $scope.show.length; i++){
             if(i === id){
@@ -1251,14 +1275,78 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
     var p = projectData.getData('parameters');
     var BA = 1.915815;
 
-//////////////////////////////////   项目总收入预算
+///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
-
+        CA : [],
+        CD : [],
+        CE : [],
+        CF : [],
+        CG : [],
+        CH : [],
+        CI : [],
+        CB : 0,
+        CC : 0,
+        CJ : 0,
+        CK : 0,
+        CL : 0,
+        CM : 0,
+        CN : 0,
+        CO : 0,
+        CP : 0,
+        CQ : 0,
+        CR : 0,
+        CS : 0,
+        CT : 0,
+        CU : 0,
+        CV : 0
     };
 
+    var ca,cd,ce,cf,cg,ch,ci;
+    for(var i = 0; i < p.BB; i++){
+        if(i == 0){
+            ca = BA * 0.9228 * 1000000;
+        }else if(i < 11){
+            ca = $scope.data1.CA[i-1] * 0.99;
+        }else{
+            ca = $scope.data1.CA[i-1] * 0.99;
+        }
+
+        cd = ca * p.AF * p.AJ + ca * (1 - p.AF) * p.AB;
+        ce = cd / (1 + p.AI);
+        cf = ca * (p.AC + p.AD);
+        cg = cf / (1 + p.AI);
+        ch = cd + cf;
+        ci = ce + cg;
+
+        $scope.data1.CB += ca;
+        $scope.data1.CJ += cd;
+        $scope.data1.CL += ce;
+        $scope.data1.CN += cf;
+        $scope.data1.CP += cg;
+        $scope.data1.CR += ch;
+        $scope.data1.CT += ci;
+
+        $scope.data1.CA.push(ca);
+        $scope.data1.CD.push(cd);
+        $scope.data1.CE.push(ce);
+        $scope.data1.CF.push(cf);
+        $scope.data1.CG.push(cg);
+        $scope.data1.CH.push(ch);
+        $scope.data1.CI.push(ci);
+    }
+
+    $scope.data1.CC = $scope.data1.CB / p.BB;
+    $scope.data1.CK = $scope.data1.CJ / p.BB;
+    $scope.data1.CM = $scope.data1.CL / p.BB;
+    $scope.data1.CO = $scope.data1.CN / p.BB;
+    $scope.data1.CQ = $scope.data1.CP / p.BB;
+    $scope.data1.CS = $scope.data1.CR / p.BB;
+    $scope.data1.CU = $scope.data1.CT / p.BB;
+
+    $scope.data1.CV = $scope.data1.CT + p.AJ;
 
 
-///////////////////////////////////   分包预算
+//////////////////////////////////////////////////////////////////////////   分包预算
     $scope.data2 = {
         DA : p.DA,
         DB : p.DB,
@@ -1269,7 +1357,16 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         DG : Number((p.DB * BA * 1000000).toFixed(1)),
         DH : Number((p.DC * BA * 1000000).toFixed(1)),
         DI : Number((p.DD * BA * 1000000).toFixed(1)),
-        DJ : Number((p.DE * BA * 1000000).toFixed(1))
+        DJ : Number((p.DE * BA * 1000000).toFixed(1)),
+        DK : 0,
+        DL : 0,
+        DM : 0,
+        DN : 0,
+        DO : 0,
+        DP : 0,
+        DQ : 0,
+        DR : 0,
+        DS : 0
     };
     $scope.data2.DK = Number(($scope.data2.DF / (1+ p.AI)).toFixed(3));
     $scope.data2.DL = Number(($scope.data2.DG / (1+ p.AI)).toFixed(3));
@@ -1281,15 +1378,118 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
     $scope.data2.DQ = Number(($scope.data2.DF + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ).toFixed(3));
     $scope.data2.DR = Number(($scope.data2.DK + $scope.data2.DL + $scope.data2.DM + $scope.data2.DN + $scope.data2.DO).toFixed(3));
 
-   $scope.back = function(){
-       $location.path('/8');
+    $scope.data2.DS = $scope.data2.DK + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ;
+
+//////////////////////////////////////////////////////////////////////////   合同
+    $scope.data3 = {
+        EA : 0,
+        EB : 0
+    };
+
+    $scope.data3.EA = $scope.data1.CV - $scope.data2.DS;
+    $scope.data3.EB = $scope.data3.EA / $scope.data1.CV;
+
+//////////////////////////////////////////////////////////////////////////   运维分包
+    $scope.data4 = {
+        FA : 0,
+        FB : 0
+    };
+
+    $scope.FA = p.FA;
+    $scope.FB = p.FA * BA * 25 * 1000000;
+
+//////////////////////////////////////////////////////////////////////////   项目直接费用预算
+    $scope.data5 = {
+        GE : $scope.data1.CV * p.GA * p.BD / 12,
+        GF : p.GF,
+        GG : p.GG,
+        GH : ($scope.data2.DS + $scope.data2.DK * p.AI) * p.BD / 12 * p.GB / 2 * p.GC,
+        GI : p.GI,
+        GR : p.GR,
+        GK : ($scope.data1.CV - $scope.data2.DS) * p.BB * p.GA / 2,
+        GO : p.GO,
+        GP : p.GP,
+        GL : 0,
+        GQ : p.GQ,
+        GS : p.GS,
+        S1 : 0,
+        S2 : 0,
+        S3 : 0,
+        S4 : 0,
+        S5 : 0,
+        S6 : 0,
+        GJ : 0,
+        GM : 0,
+        GN : 0
+    };
+
+    $scope.data5.S1 = $scope.data5.GE + $scope.data5.GK;
+    $scope.data5.S2 = $scope.data5.GF + $scope.data5.GO;
+    $scope.data5.S3 = $scope.data5.GG + $scope.data5.GP;
+    $scope.data5.S4 = $scope.data5.GH + $scope.data5.GL;
+    $scope.data5.S5 = $scope.data5.GI + $scope.data5.GQ;
+    $scope.data5.S6 = $scope.data5.GR + $scope.data5.GS;
+
+    $scope.data5.GJ = $scope.data5.GE + $scope.data5.GF + $scope.data5.GG + $scope.data5.GH + $scope.data5.GI + $scope.data5.GR;
+    $scope.data5.GM = $scope.data5.GK + $scope.data5.GO + $scope.data5.GP + $scope.data5.GL + $scope.data5.GQ + $scope.data5.GS;
+    $scope.data5.GN = $scope.data5.S1 + $scope.data5.S2 + $scope.data5.S3 + $scope.data5.S4 + $scope.data5.S5 + $scope.data5.S6;
+
+
+//////////////////////////////////////////////////////////////////////////   部门费用分摊
+    $scope.data6 = {
+        HB : $scope.data1.CV * p.HA * p.BD / 12,
+        HC : ($scope.data1.CV - $scope.data2.DS) * p.HA * p.BB / 2,
+        HD : 0
+    };
+    $scope.data6.HD = $scope.data6.HB + $scope.data6.HC;
+
+//////////////////////////////////////////////////////////////////////////   项目预计毛利
+    $scope.data7 = {
+        IA : $scope.data1.CV - $scope.data2.DS - $scope.data4.FB - $scope.data5.GN - $scope.data6.HD,
+        IB : 0
+    };
+
+    $scope.data7.IB = $scope.data7.IA / $scope.data1.CV;
+
+//////////////////////////////////////////////////////////////////////////   期间费用分摊
+    $scope.data8 = {
+        JA : p.JA,
+        JB : $scope.data1.CV * p.JA * p.BD / 12 + ($scope.data1.CV - $scope.data2.DS) * p.JA * p.BB / 2
+    };
+
+//////////////////////////////////////////////////////////////////////////   项目预计净利润
+    $scope.data9 = {
+        KA : $scope.data7.IA - $scope.data8.JB,
+        KB : 0
+    };
+
+    $scope.data9.KB = $scope.data9.KA / $scope.data1.CV;
+
+//////////////////////////////////////////////////////////////////////////   其它函数
+    $scope.back = function(){
+        var investmentCosts = {
+            data1 : $scope.data1,
+            data2 : $scope.data2,
+            data3 : $scope.data3,
+            data4 : $scope.data4,
+            data5 : $scope.data5,
+            data6 : $scope.data6,
+            data7 : $scope.data7,
+            data8 : $scope.data8,
+            data9 : $scope.data9
+        };
+        projectData.addOrUpdateData(investmentCosts,'investmentCosts');
+
+        $location.path('/8');
    }
 });
 
 /*
  符合条件EMC表控制器
  */
-pvModule.controller('emcCtrl',function($scope,$location){
+pvModule.controller('emcCtrl',function($scope, $location, projectData){
+
+
     $scope.back = function(){
         $location.path('/8');
     }

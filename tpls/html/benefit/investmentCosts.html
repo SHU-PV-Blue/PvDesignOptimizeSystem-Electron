@@ -17,7 +17,6 @@
             </div>
         </div>
         <div class="col-md-10">
-
             <div class="row" ng-show="show[0]">
                 <table class="table table-bordered">
                     <tr>
@@ -32,25 +31,26 @@
                     </tr>
                     <tr>
                         <th>年平均</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data1.CC}}</th>
+                        <th>{{data1.CK}}</th>
+                        <th>{{data1.CM}}</th>
+                        <th>{{data1.CO}}</th>
+                        <th>{{data1.CQ}}</th>
+                        <th>{{data1.CS}}</th>
+                        <th>{{data1.CU}}</th>
                     </tr>
                     <tr>
                         <th>总计</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data1.CB}}</th>
+                        <th>{{data1.CJ}}</th>
+                        <th>{{data1.CL}}</th>
+                        <th>{{data1.CN}}</th>
+                        <th>{{data1.CP}}</th>
+                        <th>{{data1.CR}}</th>
+                        <th>{{data1.CT}}</th>
                     </tr>
                 </table>
+                <p>小计：{{data1.CV}}</p>
                 <button class="btn btn-success">
                     查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
                 </button>
@@ -107,17 +107,18 @@
                         <th>{{data2.DR}}</th>
                     </tr>
                 </table>
+                <p>小计(元)：{{data2.DS}}</p>
             </div>
 
             <div class="row" ng-show="show[2]">
                 <form role="form" class="form-inline">
                     <div class="form-group">
                         <label>合同毛利:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data3.EA}}</p>
                     </div>
                     <div class="form-group">
                         <label>合同毛利率:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data3.EB}}</p>
                     </div>
                 </form>
             </div>
@@ -125,12 +126,12 @@
             <div class="row" ng-show="show[3]">
                 <form role="form" class="form-inline">
                     <div class="form-group">
-                        <label>运维单价:</label>
-                        <input type="text" class="form-control">
+                        <label>运维单价（元/W）:</label>
+                        <p class="form-control-static">{{data4.FB}}</p>
                     </div>
                     <div class="form-group">
-                        <label>运维总价:</label>
-                        <input type="text" class="form-control">
+                        <label>运维总价（元）:</label>
+                        <p class="form-control-static">{{data4.FB}}</p>
                     </div>
                 </form>
             </div>
@@ -140,7 +141,6 @@
                     <tr>
                         <th>序号</th>
                         <th>内容</th>
-                        <th>备注</th>
                         <th>建造期</th>
                         <th>分享期</th>
                         <th>小计</th>
@@ -148,84 +148,78 @@
                     <tr>
                         <th>1</th>
                         <th>项目人工成本</th>
-                        <th>工本率：</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GE}}</th>
+                        <th>{{data5.GK}}</th>
+                        <th>{{data5.S1}}</th>
                     </tr>
                     <tr>
                         <th>2</th>
                         <th>差旅费</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GF}}</th>
+                        <th>{{data5.GO}}</th>
+                        <th>{{data5.S2}}</th>
                     </tr>
                     <tr>
                         <th>3</th>
                         <th>业务活动费</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GG}}</th>
+                        <th>{{data5.GP}}</th>
+                        <th>{{data5.S3}}</th>
                     </tr>
                     <tr>
                         <th>4</th>
                         <th>利息</th>
-                        <th>利率：<br>贷款比例：<br>贷款年限：</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GH}}</th>
+                        <th>{{data5.GL}}</th>
+                        <th>{{data5.S4}}</th>
                     </tr>
                     <tr>
                         <th>5</th>
                         <th>专家外协咨询</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GI}}</th>
+                        <th>{{data5.GQ}}</th>
+                        <th>{{data5.S5}}</th>
                     </tr>
                     <tr>
                         <th>6</th>
                         <th>其它</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>{{data5.GR}}</th>
+                        <th>{{data5.GS}}</th>
+                        <th>{{data5.S6}}</th>
                     </tr>
                     <tr>
-                        <th>总计</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="2">总计</th>
+                        <th>{{data5.GJ}}</th>
+                        <th>{{data5.GM}}</th>
+                        <th>{{data5.GN}}</th>
                     </tr>
                 </table>
+                <p>小计：{{data5.GN}}</p>
             </div>
 
             <div class="row" ng-show="show[5]">
                 <form role="form" class="form-inline">
                     <div class="form-group">
                         <label>建造期费用:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data6.HB}}</p>
                     </div>
                     <div class="form-group">
                         <label>分享期费用:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data6.HC}}</p>
                     </div>
                 </form>
+                <p>小计：{{data6.HD}}</p>
             </div>
 
             <div class="row" ng-show="show[6]">
                 <form role="form" class="form-inline">
                     <div class="form-group">
                         <label>预计毛利:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data7.IA}}</p>
                     </div>
                     <div class="form-group">
                         <label>预计毛利率:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data7.IB}}</p>
                     </div>
                 </form>
             </div>
@@ -234,11 +228,11 @@
                 <form role="form" class="form-inline">
                     <div class="form-group">
                         <label>分摊率:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data8.JA}}</p>
                     </div>
                     <div class="form-group">
                         <label>小计:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data8.JB}}</p>
                     </div>
                 </form>
             </div>
@@ -247,11 +241,11 @@
                 <form role="form" class="form-inline">
                     <div class="form-group">
                         <label>预计净利润:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data9.KA}}</p>
                     </div>
                     <div class="form-group">
                         <label>预计净利润率:</label>
-                        <input type="text" class="form-control">
+                        <p class="form-control-static">{{data9.KB}}</p>
                     </div>
                 </form>
             </div>
