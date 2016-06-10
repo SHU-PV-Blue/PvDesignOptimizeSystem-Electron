@@ -1,32 +1,42 @@
 <div class="row" ng-controller="meteorologyCtrl">
-    <div class="col-md-9" id="meterTable">
-        <table class="table table-bordered">
-            <tr>
-                <td>月份</td>
-                <td>辐照度(kWh/m2/day)</td>
-                <td>温度(°C)</td>
-                <td>湿度(%)</td>
-                <td>风速(m/s)</td>
-            </tr>
-            <tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
-                <td>{{$index + 1}}月</td>
-                <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-                <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-                <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-                <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
-            </tr>
-            <tr>
-                <td>平均值</td>
-                <td>{{meteorologyInfo.monthavgs.H}}</td>
-                <td>{{meteorologyInfo.monthavgs.temperature}}</td>
-                <td>{{meteorologyInfo.monthavgs.humidity}}</td>
-                <td>{{meteorologyInfo.monthavgs.wind}}</td>
-            </tr>
-        </table>
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">气象数据</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>月份</td>
+                        <td>辐照度(kWh/m2/day)</td>
+                        <td>温度(°C)</td>
+                        <td>湿度(%)</td>
+                        <td>风速(m/s)</td>
+                    </tr>
+                    <tr ng-repeat="monthinfo in meteorologyInfo.monthinfos">
+                        <td>{{$index + 1}}月</td>
+                        <td><input ng-model="monthinfo.H" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.temperature" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.humidity" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                        <td><input ng-model="monthinfo.wind" size="4" ng-readonly="meteorologyInfo.type == 'db'"></td>
+                    </tr>
+                    <tr>
+                        <td>平均值</td>
+                        <td>{{meteorologyInfo.monthavgs.H}}</td>
+                        <td>{{meteorologyInfo.monthavgs.temperature}}</td>
+                        <td>{{meteorologyInfo.monthavgs.humidity}}</td>
+                        <td>{{meteorologyInfo.monthavgs.wind}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
-    <div id="mete-basicinfo" class="col-md-3">
-        <div class="panel-body panel-message" style="padding:30px 20px">
-            <div id="mete-data">
+    <div class="col-md-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">数据库</h3>
+            </div>
+            <div class="panel-body">
                 <form>
                     <div class="form-group">
                         <input type="radio" name="mete-data" id="pv-db" ng-model="meteorologyInfo.type"
@@ -37,8 +47,6 @@
                         <label for="pv-user">用户自定义</label>
                     </div>
                 </form>
-            </div>
-            <div id="lat-longitude">
                 <form>
                     <div class="form-group">
                         <label for="longitude">经度</label>
@@ -47,8 +55,6 @@
                         <input type="text" ng-model="lat" readonly="true" class=" form-control" id="latitude">
                     </div>
                 </form>
-            </div>
-            <div id="ult-temperature">
                 <form>
                     <div class="form-group">
                         <label for="max-temperature"> 最高温度</label>
@@ -58,7 +64,9 @@
                     </div>
                 </form>
             </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary btn-block" ng-click="save()">确定</button>
+            </div>
         </div>
     </div>
-    <button class="btn btn-primary" ng-click="save()">确定</button>
 </div>

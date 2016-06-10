@@ -627,15 +627,19 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
 /*
  选择逆变器控制器
  */
-pvModule.controller('chooseInverterCtrl', function ($scope,$location, $uibModal) {
-    $scope.show = true;
+pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal, projectData) {
     $scope.obj = {
         type: "centralized"
     };
 
+    $scope.setType = function(type){
+        $scope.obj.type = type;
+    };
+
     $scope.finish = function(){
+        projectData.addOrUpdateData($scope.obj, 'inverter');
         $location.path('/');
-    }
+    };
 
     $scope.showForm = function (name) {
         var templateUrl, controller;
@@ -1240,6 +1244,8 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
         MY : 0.0655
     };
 
+    $scope.defaultParameters.BE = $scope.defaultParameters.BB * (12 / $scope.defaultParameters.BC);
+
     $scope.save = function(){
         projectData.addOrUpdateData($scope.defaultParameters,'parameters');
         $location.path('/8');
@@ -1488,7 +1494,44 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
  符合条件EMC表控制器
  */
 pvModule.controller('emcCtrl',function($scope, $location, projectData){
+    var finance = new Finance();
+    var p = projectData.getData('parameters');
 
+    var itc  = projectData.getData('investmentCosts');
+
+    $scope.data = {
+        LA : 0,
+        LB : 0,
+        LC : 0,
+        LD : 0,
+        LE : 0,
+        LF : 0,
+        LG : 0,
+        LH : 0,
+        LI : 0,
+        LJ : 0,
+        LK : 0,
+        LM : 0,
+        LN : 0
+    };
+
+    $scope.data.LA = (itc.data2.DS + itc.data5.GJ) - itc.data5.GH + itc.data6.HB;
+    $scope.data.LB = (itc.data1.CV - ((itc.data4.FB + itc.data5.GM) - itc.data5.GL + itc.data6.HC) * 1.1) / p.BB;
+    $scope.data.LC = p.LC;
+    $scope.data.LD = $scope.data.LC / (12 / p.BC);
+    $scope.data.LE = $scope.data.LB / (12 / p.BC);
+    var les = [];
+    for(var i = 0; i < p.BE; i++){
+        les.push($scope.data.LE);
+    }
+    $scope.data.LF = finance.NPV($scope.data.LD * 100 ,les);
+    $scope.data.LG = $scope.data.LA * 1.1;
+    $scope.data.LH = Math.min($scope.data.LF, $scope.data.LG);
+    $scope.data.LI = $scope.data.LH - $scope.data.LA;
+    $scope.data.LJ = $scope.data.LI / $scope.data.LH;
+    $scope.data.LK = itc.data1.CV - $scope.data.LH;
+    $scope.data.LM = itc.data7.IA - $scope.data.LI + itc.data5.GH + itc.data5.GL;
+    $scope.data.LN = $scope.data.LM / $scope.data.LK;
 
     $scope.back = function(){
         $location.path('/8');

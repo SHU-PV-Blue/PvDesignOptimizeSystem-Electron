@@ -1,65 +1,84 @@
 <div id="component-angle" ng-controller="confirmAngleCtrl">
     <div class="row">
-        <div class="col-md-3">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="azimuthal-angel" class="control-label col-md-6">方位角</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="angleInfo.az" id="azimuthal-angel">
-                    </div>
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">方位角和倾角</h3>
                 </div>
-                <div class="form-group">
-                    <label for="incidence-angel" class="control-label col-md-6">倾角</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" ng-model="angleInfo.dip" id="incidence-angel">
-                    </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="azimuthal-angel" class="control-label col-md-4">方位角</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="angleInfo.az" id="azimuthal-angel">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="incidence-angel" class="control-label col-md-4">倾角</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" ng-model="angleInfo.dip" id="incidence-angel">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <table class="table table-bordered">
-                <tr>
-                    <td>最大辐照度</td>
-                    <td>{{angleInfo.bestDipH}}</td>
-                    <td>值</td>
-                    <td>23</td>
-                </tr>
-                <tr>
-                    <td>最大输出功率</td>
-                    <td>{{angleInfo.bestDipG}}</td>
-                    <td>值</td>
-                    <td>23</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-md-3">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" ng-click="showChart(0)">年总辐照度</button>
-                <button type="button" class="btn btn-primary" ng-click="showChart(1)">组件输出端功率</button>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" ng-click="showChart(2)">月均辐照度</button>
-                <button type="button" class="btn btn-primary" ng-click="showChart(3)">月均组件输出端功率</button>
             </div>
         </div>
-        <div class="col-md-1">
-            <button class="btn btn-success" ng-click="save()">确定</button>
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">最优倾角信息</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>最大辐照度</td>
+                            <td>{{angleInfo.bestDipH}}</td>
+                            <td>值</td>
+                            <td>23</td>
+                        </tr>
+                        <tr>
+                            <td>最大输出功率</td>
+                            <td>{{angleInfo.bestDipG}}</td>
+                            <td>值</td>
+                            <td>23</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <canvas id="line" class="chart chart-line" chart-data="data[0]"
-                    chart-labels="labelsAngle" chart-options="options" chart-series="series[0]" ng-show="show[0]">
-            </canvas>
-            <canvas id="line" class="chart chart-line" chart-data="data[1]"
-                    chart-labels="labelsAngle" chart-options="options" chart-series="series[1]" ng-show="show[1]">
-            </canvas>
-            <canvas id="line" class="chart chart-line" chart-data="data[2]"
-                    chart-labels="labelsMonth" chart-options="options" chart-series="series[2]" ng-show="show[2]">
-            </canvas>
-            <canvas id="line" class="chart chart-line" chart-data="data[3]"
-                    chart-labels="labelsMonth" chart-options="options" chart-series="series[3]" ng-show="show[3]">
-            </canvas>
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <canvas class="chart chart-line" chart-data="data[0]"
+                            chart-labels="labelsAngle" chart-options="options" chart-series="series[0]" ng-show="show[0]">
+                    </canvas>
+                    <canvas  class="chart chart-line" chart-data="data[1]"
+                            chart-labels="labelsAngle" chart-options="options" chart-series="series[1]" ng-show="show[1]">
+                    </canvas>
+                    <canvas  class="chart chart-line" chart-data="data[2]"
+                            chart-labels="labelsMonth" chart-options="options" chart-series="series[2]" ng-show="show[2]">
+                    </canvas>
+                    <canvas  class="chart chart-line" chart-data="data[3]"
+                            chart-labels="labelsMonth" chart-options="options" chart-series="series[3]" ng-show="show[3]">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">选择折线图</h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-click="showChart(0)"><span class="btn btn-block btn-primary">年总辐照度</span></li>
+                    <li class="list-group-item" ng-click="showChart(1)"><span class="btn btn-block btn-primary">组件输出端功率</span></li>
+                    <li class="list-group-item" ng-click="showChart(2)"><span class="btn btn-block btn-primary">月均辐照度</span></li>
+                    <li class="list-group-item" ng-click="showChart(3)"><span class="btn btn-block btn-primary">月均组件输出端功率</span></li>
+                </ul>
+            </div>
+            <button class="btn btn-success btn-block" ng-click="save()">确定</button>
         </div>
     </div>
 </div>

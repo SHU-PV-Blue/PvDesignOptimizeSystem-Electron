@@ -18,6 +18,3 @@ a:focus{
 .btn.active.focus {
     outline: none;          
 }
-.panel-body{
-	padding: 0;
-}

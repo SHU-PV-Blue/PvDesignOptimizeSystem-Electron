@@ -1,7 +1,11 @@
 <div id="design-type" ng-controller="userDesignCtrl">
     <div class="row">
         <div class="col-md-5">
-            <img src="res/images/comsmall.png" alt="">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <img src="res/images/comsmall.png" alt="组件图">
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="row" style="margin-top:30px">
@@ -47,15 +51,21 @@
     <hr>
     <div class="row">
         <div class="col-md-5">
-            <img src="res/images/combig.png" alt="" style="width: 100%;margin-top: 40px">
-            <button class="btn btn-primary">
-                <span class="glyphicon glyphicon-fullscreen"></span>
-            </button>
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <img src="res/images/combig.png" alt="" style="width: 100%">
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-fullscreen"></span>
+                    </button>
+                </div>
+            </div>
         </div>
         <div class="col-md-6">
             <input type="radio" name="pv-c" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
             <label for="pv-c1">自定义面积</label>
-            <div class="rwo">
+            <div class="row">
                 <div class="col-md-6">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
