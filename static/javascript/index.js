@@ -1266,6 +1266,8 @@ data9 : 项目预计净利润
  */
 pvModule.controller('investmentCostsCtrl',function($scope, $location, projectData){
 
+    $scope.hide = true;
+
     $scope.show = [true,false,false,false,false,false,false,false,false];
 
     $scope.showMe = function(id){
@@ -1415,7 +1417,7 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         GK : ($scope.data1.CV - $scope.data2.DS) * p.BB * p.GA / 2,
         GO : p.GO,
         GP : p.GP,
-        GL : 0,
+        GL : 0,                                                /////////////////////////////// GL=MI
         GQ : p.GQ,
         GS : p.GS,
         S1 : 0,
@@ -1484,16 +1486,19 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
             data8 : $scope.data8,
             data9 : $scope.data9
         };
+
         projectData.addOrUpdateData(investmentCosts,'investmentCosts');
 
         $location.path('/8');
-   }
+   };
 });
 
 /*
  符合条件EMC表控制器
  */
 pvModule.controller('emcCtrl',function($scope, $location, projectData){
+    $scope.hide = true;
+
     var finance = new Finance();
     var p = projectData.getData('parameters');
 
@@ -1512,7 +1517,11 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
         LJ : 0,
         LK : 0,
         LM : 0,
-        LN : 0
+        LN : 0,
+        LO : [],
+        LP : [],
+        LQ : [],
+        LR : []
     };
 
     $scope.data.LA = (itc.data2.DS + itc.data5.GJ) - itc.data5.GH + itc.data6.HB;
@@ -1520,10 +1529,12 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
     $scope.data.LC = p.LC;
     $scope.data.LD = $scope.data.LC / (12 / p.BC);
     $scope.data.LE = $scope.data.LB / (12 / p.BC);
+
     var les = [];
     for(var i = 0; i < p.BE; i++){
         les.push($scope.data.LE);
     }
+
     $scope.data.LF = finance.NPV($scope.data.LD * 100 ,les);
     $scope.data.LG = $scope.data.LA * 1.1;
     $scope.data.LH = Math.min($scope.data.LF, $scope.data.LG);
@@ -1532,6 +1543,20 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
     $scope.data.LK = itc.data1.CV - $scope.data.LH;
     $scope.data.LM = itc.data7.IA - $scope.data.LI + itc.data5.GH + itc.data5.GL;
     $scope.data.LN = $scope.data.LM / $scope.data.LK;
+
+    for(var i = 0; i < p.BE; i++){
+        if(i == 0){
+            $scope.data.LO.push($scope.data.LE);
+            $scope.data.LP.push($scope.data.LH * $scope.data.LD);
+            $scope.data.LQ.push($scope.data.LO[i] - $scope.data.LP[i]);
+            $scope.data.LR.push($scope.data.LH - $scope.data.LQ[i]);
+        }else{
+            $scope.data.LO.push($scope.data.LE);
+            $scope.data.LP.push($scope.data.LR[i-1] * $scope.data.LD);
+            $scope.data.LQ.push($scope.data.LO[i] - $scope.data.LP[i]);
+            $scope.data.LR.push($scope.data.LR[i-1] - $scope.data.LQ[i]);
+        }
+    }
 
     $scope.back = function(){
         $location.path('/8');
@@ -1571,12 +1596,36 @@ pvModule.directive('script', function () {
     };
 });
 
-/*
- 地图指令
- */
+pvModule.directive('fixedheadertable',function(){
+    return {
+        restrict : 'C',
+        link : function(scope,elem,attrs){
+            elem.css({
+                "position" : "relative",
+                "overflow-y" : "auto"
+            });
+            elem.scroll(function(){
+                elem.children('.fixedtop').css('top',elem.scrollTop());
+            });
+        }
+    }
+});
+
+pvModule.directive("fixedtop", function(){
+    return {
+        restrict: "C",
+        link: function(scope,elem){
+            elem.css({
+                "position" : "absolute",
+                "background-color" : "#fff"
+            });
+        }
+    };
+});
+
 pvModule.directive('pvmap', function () {
     return {
-        restrict: 'EA',
+        restrict: 'E',
         replace: true,
         templateUrl: 'tpls/diretpls/pvmap.html',
         link: function (scope, elem, attrs) {

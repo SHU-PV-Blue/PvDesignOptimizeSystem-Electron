@@ -1,5 +1,5 @@
 <div ng-controller="investmentCostsCtrl">
-    <div class="row" style="margin:20px 0">
+    <div class="row">
         <div class="col-md-2">
             <div class="panel panel-default">
                 <ul class="list-group">
@@ -29,7 +29,7 @@
                                 项目总收入预算
                             </h3>
                         </div>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="table-layout: fixed">
                             <tr>
                                 <th>其它</th>
                                 <th>年发电量(KWH)</th>
@@ -63,9 +63,23 @@
                         </table>
                         <div class="panel-footer">
                             <span class="btn">小计：{{data1.CV | number : 0}}</span>
-                            <button class="btn btn-success pull-right">
-                                查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
+                            <button class="btn btn-success pull-right" ng-click="hide = !hide">
+                                显示详细 <span class="caret"></span>
                             </button>
+                        </div>
+                        <div style="height: 380px;overflow-y: scroll" ng-hide="hide">
+                            <table class="table table-bordered"  style="table-layout: fixed">
+                                <tr ng-repeat="ca in data1.CA">
+                                    <td>第{{ $index + 1 }}年</td>
+                                    <td>{{ ca | number : 0}}</td>
+                                    <td>{{ data1.CD[$index] | number : 0}}</td>
+                                    <td>{{ data1.CE[$index] | number : 0}}</td>
+                                    <td>{{ data1.CF[$index] | number : 0}}</td>
+                                    <td>{{ data1.CG[$index] | number : 0}}</td>
+                                    <td>{{ data1.CH[$index] | number : 0}}</td>
+                                    <td>{{ data1.CI[$index] | number : 0}}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

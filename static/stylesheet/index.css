@@ -110,6 +110,8 @@ html,body{
 }
 .mainbody>.container{
     padding-top: 20px;
+    /*max-height: 90%;*/
+    overflow: hidden;
 }
 .row-eq-height {
     display: -webkit-box;

@@ -1,87 +1,135 @@
 <div ng-controller="emcCtrl">
     <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-11" ng-show="hide">
             <div class="panel panel-default">
-                <table class="table table-bordered">
-                    <tr>
-                        <td>预计建造成本(元)</td>
-                        <td>{{data.LA | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>合同收款扣除运维收入（年）</td>
-                        <td>{{data.LB | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>综合利率</td>
-                        <td>{{data.LC * 100 | number : 2}}%</td>
-                    </tr>
-                    <tr>
-                        <td>折现率</td>
-                        <td>{{data.LD * 100 | number : 2}}%</td>
-                    </tr>
-                    <tr>
-                        <td>租金</td>
-                        <td>{{data.LE | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>预计收入折现值NPV</td>
-                        <td>{{data.LF | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>设施公允价值</td>
-                        <td>{{data.LG | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>建造收入（上面两者取小值）</td>
-                        <td>{{data.LH | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>建造毛利</td>
-                        <td>{{data.LI | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>建造毛利率</td>
-                        <td>{{data.LJ * 100 | number : 2}}%</td>
-                    </tr>
-                    <tr>
-                        <td>运维期收入</td>
-                        <td>{{data.LK | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>运维期毛利</td>
-                        <td>{{data.LM | number : 2}}</td>
-                    </tr>
-                    <tr>
-                        <td>运维期毛利率</td>
-                        <td>{{data.LN * 100 | number : 2}}%</td>
-                    </tr>
-                </table>
+                <div class="row">
+                    <div class="col-md-7">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>预计建造成本(元)</td>
+                                <td>{{data.LA | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>合同收款扣除运维收入（年）</td>
+                                <td>{{data.LB | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>综合利率</td>
+                                <td>{{data.LC * 100 | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>折现率</td>
+                                <td>{{data.LD * 100 | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>租金</td>
+                                <td>{{data.LE | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>预计收入折现值NPV</td>
+                                <td>{{data.LF | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>设施公允价值</td>
+                                <td>{{data.LG | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>建造收入（上面两者取小值）</td>
+                                <td>{{data.LH | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>建造毛利</td>
+                                <td>{{data.LI | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>建造毛利率</td>
+                                <td>{{data.LJ * 100 | number : 2}}%</td>
+                            </tr>
+                            <tr>
+                                <td>运维期收入</td>
+                                <td>{{data.LK | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>运维期毛利</td>
+                                <td>{{data.LM | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>运维期毛利率</td>
+                                <td>{{data.LN * 100 | number : 2}}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>建造收入</td>
+                                <td>asd</td>
+                            </tr>
+                            <tr>
+                                <td>建造毛利</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>租赁收入</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>运维收入</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>运维毛利</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="panel-footer">
                     <button class="btn btn-primary" ng-click="back()">
                         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
                     </button>
-                    <button class="btn btn-success pull-right">
+                    <button class="btn btn-success pull-right" ng-click="hide=!hide">
                         查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </button>
                 </div>
             </div>
-
-            <table class="table table-bordered">
-                <tr>
-                    <td>建造收入</td>
-                    <td>建造毛利</td>
-                    <td>租赁收入</td>
-                    <td>运维收入</td>
-                    <td>运维毛利</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+        </div>
+        <div class="col-md-11" ng-hide="hide">
+            <div class="panel panel-default">
+                <div class="fixedheadertable" style="height: 500px">
+                    <table class="table table-bordered fixedtop" style="table-layout: fixed">
+                        <tr>
+                            <th>结算期数</th>
+                            <th>租金</th>
+                            <th>融资收入</th>
+                            <th>租赁投资净额减少额</th>
+                            <th>租赁投资净额余额</th>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered" style="table-layout: fixed">
+                        <tr>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr ng-repeat="lo in data.LO track by $index">
+                            <td>{{$index + 1}}</td>
+                            <td>{{lo | number : 4}}</td>
+                            <td>{{data.LP[$index] | number : 2}}</td>
+                            <td>{{data.LQ[$index] | number : 2}}</td>
+                            <td>{{data.LR[$index] | number : 2}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-success" ng-click="hide=!hide">
+                        返回 &nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
