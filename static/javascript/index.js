@@ -1359,11 +1359,11 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         DC : p.DC,
         DD : p.DD,
         DE : p.DE,
-        DF : Number((p.DA * BA * 1000000).toFixed(1)),
-        DG : Number((p.DB * BA * 1000000).toFixed(1)),
-        DH : Number((p.DC * BA * 1000000).toFixed(1)),
-        DI : Number((p.DD * BA * 1000000).toFixed(1)),
-        DJ : Number((p.DE * BA * 1000000).toFixed(1)),
+        DF : p.DA * BA * 1000000,
+        DG : p.DB * BA * 1000000,
+        DH : p.DC * BA * 1000000,
+        DI : p.DD * BA * 1000000,
+        DJ : p.DE * BA * 1000000,
         DK : 0,
         DL : 0,
         DM : 0,
@@ -1374,15 +1374,15 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         DR : 0,
         DS : 0
     };
-    $scope.data2.DK = Number(($scope.data2.DF / (1+ p.AI)).toFixed(3));
-    $scope.data2.DL = Number(($scope.data2.DG / (1+ p.AI)).toFixed(3));
-    $scope.data2.DM = Number(($scope.data2.DH / (1+ p.AI)).toFixed(3));
-    $scope.data2.DN = Number(($scope.data2.DI / (1+ p.AI)).toFixed(3));
-    $scope.data2.DO = Number(($scope.data2.DJ / (1+ p.AI)).toFixed(3));
+    $scope.data2.DK = $scope.data2.DF / (1+ p.AI);
+    $scope.data2.DL = $scope.data2.DG / (1+ p.AI);
+    $scope.data2.DM = $scope.data2.DH / (1+ p.AI);
+    $scope.data2.DN = $scope.data2.DI / (1+ p.AI);
+    $scope.data2.DO = $scope.data2.DJ / (1+ p.AI);
 
-    $scope.data2.DP = Number((p.DA+ p.DB+ p.DC+ p.DD+ p.DE).toFixed(3));
-    $scope.data2.DQ = Number(($scope.data2.DF + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ).toFixed(3));
-    $scope.data2.DR = Number(($scope.data2.DK + $scope.data2.DL + $scope.data2.DM + $scope.data2.DN + $scope.data2.DO).toFixed(3));
+    $scope.data2.DP = p.DA+ p.DB+ p.DC+ p.DD+ p.DE;
+    $scope.data2.DQ = $scope.data2.DF + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ;
+    $scope.data2.DR = $scope.data2.DK + $scope.data2.DL + $scope.data2.DM + $scope.data2.DN + $scope.data2.DO;
 
     $scope.data2.DS = $scope.data2.DK + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ;
 

@@ -15,7 +15,10 @@
                                     <img src="res/images/nibianqi.jpg" alt="集中式逆变器">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('centralized-inverter')">集中式逆变器</button>
+                                    <button class="btn btn-link">集中式逆变器</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="!(obj.type === 'centralized')" ng-click="showForm('centralized-inverter')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +28,10 @@
                                     <img src="res/images/huiliuxiang.jpg" alt="直流汇流箱">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('cocurrent-combiner')">直流汇流箱</button>
+                                    <button class="btn btn-link">直流汇流箱</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="!(obj.type === 'centralized')" ng-click="showForm('cocurrent-combiner')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +43,10 @@
                                     <img src="res/images/peidiangui.jpg" alt="直流配电柜">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('DC-power-distribution')">直流配电柜</button>
+                                    <button class="btn btn-link">直流配电柜</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="!(obj.type === 'centralized')" ng-click="showForm('DC-power-distribution')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +56,10 @@
                                     <img src="res/images/dianlan.jpg" alt="电缆">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('cocurrent-cable')">电缆</button>
+                                    <button class="btn btn-link">电缆</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="!(obj.type === 'centralized')" ng-click="showForm('cocurrent-cable')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +82,10 @@
                                     <img src="res/images/zunibianqi.png" alt="组串式逆变器">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('groups-inverter')">组串式逆变器</button>
+                                    <button class="btn btn-link">组串式逆变器</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="(obj.type === 'centralized')" ng-click="showForm('groups-inverter')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +95,10 @@
                                     <img src="res/images/zuhuiliuxiang.jpg" alt="交流汇流箱">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('AC-combiner')">交流汇流箱</button>
+                                    <button class="btn btn-link">交流汇流箱</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="(obj.type === 'centralized')" ng-click="showForm('AC-combiner')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +110,10 @@
                                     <img src="res/images/dianlan.jpg" alt="电缆">
                                 </div>
                                 <div class="panel-footer">
-                                    <button class="btn btn-link btn-block" ng-click="showForm('group-cable')">电缆</button>
+                                    <button class="btn btn-link">电缆</button>
+                                    <button class="btn btn-primary pull-right btn-sm" ng-disabled="(obj.type === 'centralized')" ng-click="showForm('group-cable')">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>

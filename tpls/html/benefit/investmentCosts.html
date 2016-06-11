@@ -1,253 +1,322 @@
 <div ng-controller="investmentCostsCtrl">
     <div class="row" style="margin:20px 0">
         <div class="col-md-2">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="" ng-click="showMe(0)">项目总收入预算</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(1)">分包预算</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(2)">合同</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(3)">运维分包</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(4)">项目直接费用预算</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(5)">部门费用分摊</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(6)">项目预计毛利</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(7)">期间费用分摊</a></li>
-                <li class="list-group-item"><a href="" ng-click="showMe(8)">项目预计净利</a></li>
-            </ul>
-            <div class="row">
-                <button class="btn btn-primary" ng-click="back()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回</button>
+            <div class="panel panel-default">
+                <ul class="list-group">
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(0)">项目总收入预算</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(1)">分包预算</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(2)">合同</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(3)">运维分包</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(4)">项目直接费用预算</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(5)">部门费用分摊</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(6)">项目预计毛利</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(7)">期间费用分摊</a></li>
+                    <li class="list-group-item"><a class="btn btn-block btn-link" ng-click="showMe(8)">项目预计净利</a></li>
+                </ul>
+                <div class="panel-footer">
+                    <button class="btn btn-primary" ng-click="back()">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="row" ng-show="show[0]">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>其它</th>
-                        <th>年发电量(KWH)</th>
-                        <th>产值（含税）(元)</th>
-                        <th>产值（不含税）(元)</th>
-                        <th>年补贴（含税）（元）</th>
-                        <th>年补贴（不含税）（元）</th>
-                        <th>年收入（含税）（元）</th>
-                        <th>年收入（不含税）（元）</th>
-                    </tr>
-                    <tr>
-                        <th>年平均</th>
-                        <th>{{data1.CC}}</th>
-                        <th>{{data1.CK}}</th>
-                        <th>{{data1.CM}}</th>
-                        <th>{{data1.CO}}</th>
-                        <th>{{data1.CQ}}</th>
-                        <th>{{data1.CS}}</th>
-                        <th>{{data1.CU}}</th>
-                    </tr>
-                    <tr>
-                        <th>总计</th>
-                        <th>{{data1.CB}}</th>
-                        <th>{{data1.CJ}}</th>
-                        <th>{{data1.CL}}</th>
-                        <th>{{data1.CN}}</th>
-                        <th>{{data1.CP}}</th>
-                        <th>{{data1.CR}}</th>
-                        <th>{{data1.CT}}</th>
-                    </tr>
-                </table>
-                <p>小计：{{data1.CV}}</p>
-                <button class="btn btn-success">
-                    查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
-                </button>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                项目总收入预算
+                            </h3>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>其它</th>
+                                <th>年发电量(KWH)</th>
+                                <th>产值（含税）(元)</th>
+                                <th>产值（不含税）(元)</th>
+                                <th>年补贴（含税）（元）</th>
+                                <th>年补贴（不含税）（元）</th>
+                                <th>年收入（含税）（元）</th>
+                                <th>年收入（不含税）（元）</th>
+                            </tr>
+                            <tr>
+                                <td>年平均</td>
+                                <td>{{data1.CC | number : 0}}</td>
+                                <td>{{data1.CK | number : 0}}</td>
+                                <td>{{data1.CM | number : 0}}</td>
+                                <td>{{data1.CO | number : 0}}</td>
+                                <td>{{data1.CQ | number : 0}}</td>
+                                <td>{{data1.CS | number : 0}}</td>
+                                <td>{{data1.CU | number : 0}}</td>
+                            </tr>
+                            <tr>
+                                <td>总计</td>
+                                <td>{{data1.CB | number : 0}}</td>
+                                <td>{{data1.CJ | number : 0}}</td>
+                                <td>{{data1.CL | number : 0}}</td>
+                                <td>{{data1.CN | number : 0}}</td>
+                                <td>{{data1.CP | number : 0}}</td>
+                                <td>{{data1.CR | number : 0}}</td>
+                                <td>{{data1.CT | number : 0}}</td>
+                            </tr>
+                        </table>
+                        <div class="panel-footer">
+                            <span class="btn">小计：{{data1.CV | number : 0}}</span>
+                            <button class="btn btn-success pull-right">
+                                查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="row" style="margin-top:20px" ng-show="show[1]">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>序号</th>
-                        <th>内容</th>
-                        <th>单价（元/W）</th>
-                        <th>含税成本（元）</th>
-                        <th>不含税成本（元）</th>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <th>设备费</th>
-                        <th>{{data2.DA}}</th>
-                        <th>{{data2.DF}}</th>
-                        <th>{{data2.DK}}</th>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <th>设计费</th>
-                        <th>{{data2.DB}}</th>
-                        <th>{{data2.DG}}</th>
-                        <th>{{data2.DL}}</th>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <th>建安费</th>
-                        <th>{{data2.DC}}</th>
-                        <th>{{data2.DH}}</th>
-                        <th>{{data2.DM}}</th>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <th>监理费</th>
-                        <th>{{data2.DD}}</th>
-                        <th>{{data2.DI}}</th>
-                        <th>{{data2.DN}}</th>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <th>税金及其他费</th>
-                        <th>{{data2.DE}}</th>
-                        <th>{{data2.DJ}}</th>
-                        <th>{{data2.DO}}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">总计</th>
-                        <th>{{data2.DP}}</th>
-                        <th>{{data2.DQ}}</th>
-                        <th>{{data2.DR}}</th>
-                    </tr>
-                </table>
-                <p>小计(元)：{{data2.DS}}</p>
+            <div class="row" ng-show="show[1]">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                分包预算
+                            </h3>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>序号</th>
+                                <th>内容</th>
+                                <th>单价（元/W）</th>
+                                <th>含税成本（元）</th>
+                                <th>不含税成本（元）</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>设备费</td>
+                                <td>{{data2.DA}}</td>
+                                <td>{{data2.DF | number : 1}}</td>
+                                <td>{{data2.DK | number : 3}}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>设计费</td>
+                                <td>{{data2.DB}}</td>
+                                <td>{{data2.DG | number : 1}}</td>
+                                <td>{{data2.DL | number : 3}}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>建安费</td>
+                                <td>{{data2.DC}}</td>
+                                <td>{{data2.DH | number : 1}}</td>
+                                <td>{{data2.DM | number : 3}}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>监理费</td>
+                                <td>{{data2.DD}}</td>
+                                <td>{{data2.DI | number : 1}}</td>
+                                <td>{{data2.DN | number : 3}}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>税金及其他费</td>
+                                <td>{{data2.DE}}</td>
+                                <td>{{data2.DJ | number : 1}}</td>
+                                <td>{{data2.DO | number : 3}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">总计</td>
+                                <td>{{data2.DP | number : 2}}</td>
+                                <td>{{data2.DQ | number : 1}}</td>
+                                <td>{{data2.DR | number : 3}}</td>
+                            </tr>
+                        </table>
+                        <div class="panel-footer">
+                            小计(元)：{{data2.DS | number : 2}}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row" ng-show="show[2]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>合同毛利:</label>
-                        <p class="form-control-static">{{data3.EA}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                合同
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>合同毛利: {{data3.EA | number : 2}}</td>
+                                <td>合同毛利率: {{data3.EB * 100 | number : 2}}%</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>合同毛利率:</label>
-                        <p class="form-control-static">{{data3.EB}}</p>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <div class="row" ng-show="show[3]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>运维单价（元/W）:</label>
-                        <p class="form-control-static">{{data4.FB}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                运维分包
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>运维单价（元/W）: {{data4.FA }}</td>
+                                <td>运维总价（元）: {{data4.FB | number : 2}}</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>运维总价（元）:</label>
-                        <p class="form-control-static">{{data4.FB}}</p>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <div class="row" ng-show="show[4]">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>序号</th>
-                        <th>内容</th>
-                        <th>建造期</th>
-                        <th>分享期</th>
-                        <th>小计</th>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <th>项目人工成本</th>
-                        <th>{{data5.GE}}</th>
-                        <th>{{data5.GK}}</th>
-                        <th>{{data5.S1}}</th>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <th>差旅费</th>
-                        <th>{{data5.GF}}</th>
-                        <th>{{data5.GO}}</th>
-                        <th>{{data5.S2}}</th>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <th>业务活动费</th>
-                        <th>{{data5.GG}}</th>
-                        <th>{{data5.GP}}</th>
-                        <th>{{data5.S3}}</th>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <th>利息</th>
-                        <th>{{data5.GH}}</th>
-                        <th>{{data5.GL}}</th>
-                        <th>{{data5.S4}}</th>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <th>专家外协咨询</th>
-                        <th>{{data5.GI}}</th>
-                        <th>{{data5.GQ}}</th>
-                        <th>{{data5.S5}}</th>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <th>其它</th>
-                        <th>{{data5.GR}}</th>
-                        <th>{{data5.GS}}</th>
-                        <th>{{data5.S6}}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">总计</th>
-                        <th>{{data5.GJ}}</th>
-                        <th>{{data5.GM}}</th>
-                        <th>{{data5.GN}}</th>
-                    </tr>
-                </table>
-                <p>小计：{{data5.GN}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                项目直接费用预算
+                            </h3>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>序号</th>
+                                <th>内容</th>
+                                <th>建造期</th>
+                                <th>分享期</th>
+                                <th>小计</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>项目人工成本</td>
+                                <td>{{data5.GE | number : 2}}</td>
+                                <td>{{data5.GK | number : 2}}</td>
+                                <td>{{data5.S1 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>差旅费</td>
+                                <td>{{data5.GF | number : 2}}</td>
+                                <td>{{data5.GO | number : 2}}</td>
+                                <td>{{data5.S2 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>业务活动费</td>
+                                <td>{{data5.GG | number : 2}}</td>
+                                <td>{{data5.GP | number : 2}}</td>
+                                <td>{{data5.S3 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>利息</td>
+                                <td>{{data5.GH | number : 2}}</td>
+                                <td>{{data5.GL | number : 2}}</td>
+                                <td>{{data5.S4 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>专家外协咨询</td>
+                                <td>{{data5.GI | number : 2}}</td>
+                                <td>{{data5.GQ | number : 2}}</td>
+                                <td>{{data5.S5 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>其它</td>
+                                <td>{{data5.GR | number : 2}}</td>
+                                <td>{{data5.GS | number : 2}}</td>
+                                <td>{{data5.S6 | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">总计</td>
+                                <td>{{data5.GJ | number : 2}}</td>
+                                <td>{{data5.GM | number : 2}}</td>
+                                <td>{{data5.GN | number : 2}}</td>
+                            </tr>
+                        </table>
+                        <div class="panel-footer">
+                            小计：{{data5.GN | number : 2}}
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="row" ng-show="show[5]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>建造期费用:</label>
-                        <p class="form-control-static">{{data6.HB}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                部门费用分摊
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>建造期费用: {{data6.HB | number : 3}}</td>
+                                <td>分享期费用: {{data6.HC | number : 3}}</td>
+                            </tr>
+                        </table>
+                        <div class="panel-footer">
+                            小计：{{data6.HD | number : 3}}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>分享期费用:</label>
-                        <p class="form-control-static">{{data6.HC}}</p>
-                    </div>
-                </form>
-                <p>小计：{{data6.HD}}</p>
+                </div>
             </div>
 
             <div class="row" ng-show="show[6]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>预计毛利:</label>
-                        <p class="form-control-static">{{data7.IA}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                项目预计毛利
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>预计毛利: {{data7.IA | number : 2}}</td>
+                                <td>预计毛利率: {{data7.IB * 100 | number : 2}}%</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>预计毛利率:</label>
-                        <p class="form-control-static">{{data7.IB}}</p>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <div class="row" ng-show="show[7]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>分摊率:</label>
-                        <p class="form-control-static">{{data8.JA}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                期间费用分摊
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>分摊率: {{data8.JA * 100 | number : 2}} %</td>
+                                <td>小计: {{data8.JB | number : 2}}</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>小计:</label>
-                        <p class="form-control-static">{{data8.JB}}</p>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <div class="row" ng-show="show[8]">
-                <form role="form" class="form-inline">
-                    <div class="form-group">
-                        <label>预计净利润:</label>
-                        <p class="form-control-static">{{data9.KA}}</p>
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                项目预计净利润
+                            </h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <td>预计净利润: {{data9.KA | number : 2}}</td>
+                                <td>预计净利润率: {{data9.KB * 100 | number : 2}}%</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="form-group">
-                        <label>预计净利润率:</label>
-                        <p class="form-control-static">{{data9.KB}}</p>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
