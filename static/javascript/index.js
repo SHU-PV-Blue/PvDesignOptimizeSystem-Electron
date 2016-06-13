@@ -1215,6 +1215,7 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
         AH : 5,
         AI : 0.17,
         AJ : 0.86175,
+        AY : 0,
         BB : 25,
         BC : 3,
         BD : 4,
@@ -1229,7 +1230,7 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
         HA : 0.005,
         JA : 0.02,
         GA : 0.005,
-        GB : 0.655,
+        GB : 0.0655,
         GC : 0.5,
         GD : 10,
         GF : 0,
@@ -1313,15 +1314,23 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
     for(var i = 0; i < p.BB; i++){
         if(i == 0){
             ca = BA * 0.9228 * 1000000;
-        }else if(i < 11){
+        }else if(i < 10){
             ca = $scope.data1.CA[i-1] * 0.99;
         }else{
-            ca = $scope.data1.CA[i-1] * 0.99;
+            ca = $scope.data1.CA[i-1] * 0.9934;
         }
 
         cd = ca * p.AF * p.AJ + ca * (1 - p.AF) * p.AB;
         ce = cd / (1 + p.AI);
-        cf = ca * (p.AC + p.AD);
+
+        if(i < p.AH){
+            cf = ca * (p.AC + p.AD);
+        }else if(i< p.AG){
+            cf = ca * p.AC;
+        }else{
+            cf = 0;
+        }
+
         cg = cf / (1 + p.AI);
         ch = cd + cf;
         ci = ce + cg;
@@ -1351,7 +1360,7 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
     $scope.data1.CS = $scope.data1.CR / p.BB;
     $scope.data1.CU = $scope.data1.CT / p.BB;
 
-    $scope.data1.CV = $scope.data1.CT + p.AJ;
+    $scope.data1.CV = $scope.data1.CT + p.AY;
 
 
 //////////////////////////////////////////////////////////////////////////   分包预算
@@ -1388,6 +1397,32 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
 
     $scope.data2.DS = $scope.data2.DK + $scope.data2.DG + $scope.data2.DH + $scope.data2.DI + $scope.data2.DJ;
 
+//////////////////////////////////////////////////////////////////////////   融资成本和贷款余额
+    $scope.otherdata = {
+        MI : 0,
+        MX : [],
+        MF : $scope.data2.DQ * p.GC,
+        MG : []
+    };
+
+    var mx,mg;
+    for(var i = 0; i < p.BB; i++){
+        mg = $scope.otherdata.MF / p.GD * (p.GD - (i + 1));
+        if(mg < 0){
+            mg = 0;
+        }
+
+        if(i == 0){
+            mx = $scope.otherdata.MF * p.MY;
+        }else{
+            mx = $scope.otherdata.MG[i - 1] * p.MY;
+        }
+
+        $scope.otherdata.MI += mx;
+        $scope.otherdata.MX.push(mx);
+        $scope.otherdata.MG.push(mg);
+    }
+
 //////////////////////////////////////////////////////////////////////////   合同
     $scope.data3 = {
         EA : 0,
@@ -1403,8 +1438,8 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         FB : 0
     };
 
-    $scope.FA = p.FA;
-    $scope.FB = p.FA * BA * 25 * 1000000;
+    $scope.data4.FA = p.FA;
+    $scope.data4.FB = p.FA * BA * 25 * 1000000;
 
 //////////////////////////////////////////////////////////////////////////   项目直接费用预算
     $scope.data5 = {
@@ -1430,6 +1465,7 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         GM : 0,
         GN : 0
     };
+    $scope.data5.GL = $scope.otherdata.MI;
 
     $scope.data5.S1 = $scope.data5.GE + $scope.data5.GK;
     $scope.data5.S2 = $scope.data5.GF + $scope.data5.GO;
@@ -1484,7 +1520,8 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
             data6 : $scope.data6,
             data7 : $scope.data7,
             data8 : $scope.data8,
-            data9 : $scope.data9
+            data9 : $scope.data9,
+            otherdata : $scope.otherdata
         };
 
         projectData.addOrUpdateData(investmentCosts,'investmentCosts');
@@ -1500,6 +1537,7 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
     $scope.hide = true;
 
     var finance = new Finance();
+
     var p = projectData.getData('parameters');
 
     var itc  = projectData.getData('investmentCosts');
@@ -1521,7 +1559,12 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
         LO : [],
         LP : [],
         LQ : [],
-        LR : []
+        LR : [],
+        sumLO : 0,
+        LS : 0,
+        sumLQ : 0,
+        LT : 0,
+        LU : 0
     };
 
     $scope.data.LA = (itc.data2.DS + itc.data5.GJ) - itc.data5.GH + itc.data6.HB;
@@ -1556,9 +1599,23 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
             $scope.data.LQ.push($scope.data.LO[i] - $scope.data.LP[i]);
             $scope.data.LR.push($scope.data.LR[i-1] - $scope.data.LQ[i]);
         }
+
+        $scope.data.sumLO += $scope.data.LO[i];
+        $scope.data.LS += $scope.data.LP[i];
+        $scope.data.sumLQ += $scope.data.LQ[i];
     }
 
+    var t = ((itc.data4.FB + itc.data5.GM) - itc.data5.GL + itc.data6.HC);
+    $scope.data.LT = t * 1.1;
+    $scope.data.LU = t * 0.1;
+
     $scope.back = function(){
+        var emc = {
+            data : $scope.data
+        };
+
+        projectData.addOrUpdateData(emc,'emc');
+
         $location.path('/8');
     }
 });
@@ -1566,8 +1623,107 @@ pvModule.controller('emcCtrl',function($scope, $location, projectData){
 /*
  收益期状况表控制器
  */
-pvModule.controller('profitPeriodCtrl',function($scope,$location){
+pvModule.controller('profitPeriodCtrl',function($scope, $location, projectData){
+
+    var p = projectData.getData('parameters');
+    var itc = projectData.getData('investmentCosts');
+    var emc = projectData.getData('emc');
+
+    $scope.show = [true,false,false];
+    $scope.showMe = function(id){
+        for(var i = 0; i < $scope.show.length; i++){
+            if(id == i){
+                $scope.show[i] = true;
+            }else{
+                $scope.show[i] = false;
+            }
+        }
+    };
+
+    $scope.data = {
+        MA : 0,
+        DS : itc.data2.DS,
+        MB : 0,
+        MC : 0,
+        CL : itc.data1.CL,
+        CE : itc.data1.CE,
+        CQ : itc.data1.CQ,
+        CG : itc.data1.CG,
+        CT : itc.data1.CT,
+        CZ : itc.data1.CI,
+        ME : 0,
+        MD : (itc.data4.FB + itc.data5.GK + itc.data5.GO + itc.data5.GP + itc.data6.HC) / p.BB,
+        MM : p.MM,
+        sumMM : p.MM * p.BB,
+        MI : itc.otherdata.MI,
+        MX : itc.otherdata.MX,
+        MF : itc.otherdata.MF,
+        MG : itc.otherdata.MG,
+        ML : 0,
+        MJ : 0,
+        MK : [],
+        MR : 0,
+        MO : [],
+        MT : 0,
+        MS : [],
+        MW : 0,
+        MV : [],
+        MP : 0,
+        MQ : []
+    };
+
+    $scope.data.MA = itc.data2.DF / (1 + p.AI) * p.AI;
+    $scope.data.MB = itc.data5.GF + itc.data5.GG + itc.data5.GR + itc.data6.HB;
+    $scope.data.MC = $scope.data.DS + itc.data5.GH + $scope.data.MB + itc.data5.GE;
+    $scope.data.MJ = -$scope.data.MC;
+    $scope.data.MP = $scope.data.MF + $scope.data.MJ;
+
+    $scope.data.ME = $scope.data.MD * p.BB;
+    $scope.data.MR = $scope.data.MC / p.BB;
+
+    var mk,mo,ms,mv,mq;
+    for(var i = 0; i < p.BB; i++){
+        mk = $scope.data.CZ[i] - $scope.data.MD - $scope.data.MX[i] - p.MM;
+
+        if(i == 0){
+            mo = $scope.data.MF - $scope.data.MG[i];
+            mq = mk - mo + $scope.data.MP;
+        }else{
+            mo = $scope.data.MG[i-1] - $scope.data.MG[i];
+            mq = mk - mo + $scope.data.MQ[i-1];
+        }
+
+        ms = $scope.data.CE[i] + $scope.data.CG[i] - $scope.data.MD - $scope.data.MM - $scope.data.MX[i] - $scope.data.MR;
+        mv = ms / $scope.data.CE[i];
+
+        $scope.data.ML += mk;
+        $scope.data.MT += ms;
+        $scope.data.MK.push(mk);
+        $scope.data.MO.push(mo);
+        $scope.data.MS.push(ms);
+        $scope.data.MV.push(mv);
+        $scope.data.MQ.push(mq);
+    }
+
+    $scope.data.MW =  $scope.data.MT / $scope.data.CT;
+
+    $scope.labelsYear = [];
+    for(var i = 0; i < p.BB; i++){
+        $scope.labelsYear.push(i+1+'');
+    }
+
+    $scope.series =['债务偿还图','投资回收期图'];
+
+    $scope.chartData1 = [
+        $scope.data.MG
+    ];
+
+    $scope.chartData2 = [
+        $scope.data.MQ
+    ];
+
     $scope.back = function(){
+        projectData.addOrUpdateData($scope.data, 'profitPeriod');
         $location.path('/8');
     }
 });
@@ -1575,7 +1731,31 @@ pvModule.controller('profitPeriodCtrl',function($scope,$location){
 /*
  综合指标表
  */
-pvModule.controller('overallIndexCtrl',function($scope,$location){
+pvModule.controller('overallIndexCtrl',function($scope, $location, projectData){
+
+    var p = projectData.getData('parameters');
+    var itc = projectData.getData('investmentCosts');
+    var emc = projectData.getData('emc');
+    var pp = projectData.getData('profitPeriod');
+
+    $scope.data = {
+        MT : pp.MT,
+        NA : pp.ML - pp.MC,
+        NB : 0,
+        MW : pp.MW,
+        IB : itc.data7.IB,
+        NC : pp.MT / ( pp.MC + pp.ME + pp.MM + pp.MI),
+        ND : pp.MT / p.BB / (pp.MC + pp.ME + pp.MM + pp.MI),
+        NE : 0,
+        NF : 0,
+        NG : 0,
+        NH : p.BD / 12 + 32 / 111 + 9,
+        NI : 0
+    };
+
+    $scope.data.NI =$scope.data.NH / ( p.BD / 12 + p.BB);
+
+
     $scope.back = function(){
         $location.path('/8');
     }

@@ -1,59 +1,63 @@
 <div ng-controller="overallIndexCtrl">
     <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <tr>
-                    <td>项目销售毛利</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>项目现金净流入</td>
-                    <td>NA=ML-MC</td>
-                </tr>
-                <tr>
-                    <td>项目现金净现值</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>销售毛利率</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>项目毛利率</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>成本毛利率</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>投资回报率(ROI)</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>内部收益率(IRR)</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>资金回收期（年）</td>
-                    <td>NF=BD/12+(第12年的MF-第12年的MP)/第13年的MK+12</td>
-                </tr>
-                <tr>
-                    <td>回收期/收益期系数</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>静态资金回收期（年）</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>回收期/收益期系数</td>
-                    <td></td>
-                </tr>
-            </table>
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>项目销售毛利</td>
+                        <td>{{data.MT | number : 0}}</td>
+                    </tr>
+                    <tr>
+                        <td>项目现金净流入</td>
+                        <td>{{data.NA | number : 0}}</td>
+                    </tr>
+                    <tr>
+                        <td>项目现金净现值</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>销售毛利率</td>
+                        <td>{{data.MW * 100 | number : 2}}%</td>
+                    </tr>
+                    <tr>
+                        <td>项目毛利率</td>
+                        <td>{{data.IB * 100 | number : 2}}%</td>
+                    </tr>
+                    <tr>
+                        <td>成本毛利率</td>
+                        <td>{{data.NC * 100 | number : 2}}%</td>
+                    </tr>
+                    <tr>
+                        <td>投资回报率(ROI)</td>
+                        <td>{{data.ND * 100 | number : 2}}%</td>
+                    </tr>
+                    <tr>
+                        <td>内部收益率(IRR)</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>资金回收期（年）</td>
+                        <td>NF=BD/12+(第12年的MF-第12年的MP)/第13年的MK+12</td>
+                    </tr>
+                    <tr>
+                        <td>回收期/收益期系数</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>静态资金回收期（年）</td>
+                        <td>{{data.NH | number : 2}}</td>
+                    </tr>
+                    <tr>
+                        <td>回收期/收益期系数</td>
+                        <td>{{data.NI | number : 2}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-primary" ng-click="back()">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <button class="btn btn-primary" ng-click="back()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回</button>
     </div>
 </div>

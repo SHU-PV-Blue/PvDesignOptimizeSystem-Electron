@@ -1,69 +1,135 @@
 <div ng-controller="profitPeriodCtrl">
     <div class="row">
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <tr>
-                    <td>进项税</td>
-                    <td>项目建设成本</td>
-                    <td>建设期其他费用</td>
-                    <td>建造期项目成本合计</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <table class="table table-bordered">
-                <tr>
-                    <td>名称</td>
-                    <td>销售收入</td>
-                    <td>其他收入</td>
-                    <td>收入总额</td>
-                    <td>运营成本</td>
-                    <td>税费</td>
-                    <td>净现金收入</td>
-                    <td>贷款余额</td>
-                    <td>本期归还贷款</td>
-                </tr>
-                <tr>
-                    <td>合计</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>基准年</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>第一年</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+        <div class="col-md-11">
+            <div class="panel panel-default">
+                <table class="table table-bordered" style="table-layout: fixed">
+                    <tr>
+                        <td>进项税</td>
+                        <td>项目建设成本</td>
+                        <td>建设期其他费用</td>
+                        <td>建造期项目成本合计</td>
+                    </tr>
+                    <tr>
+                        <td>{{data.MA | number : 2}}</td>
+                        <td>{{data.DS | number : 2}}</td>
+                        <td>{{data.MB | number : 2}}</td>
+                        <td>{{data.MC | number : 2}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel panel-default">
+                <div class="fixedheadertable" style="height: 450px" ng-show="show[0]">
+                    <table class="table table-bordered fixedtop" style="table-layout: fixed">
+                        <tr>
+                            <th>名称</th>
+                            <th>销售收入</th>
+                            <th>其他收入</th>
+                            <th>收入总额</th>
+                            <th>运营成本</th>
+                            <th>税费</th>
+                            <th>融资成本</th>
+                            <th>净现金收入</th>
+                            <th>贷款余额</th>
+                            <th>本期归还贷款</th>
+                            <th>期末现金结余</th>
+                            <th>分摊项目成本</th>
+                            <th>实现毛利</th>
+                            <th>平均销售毛利率</th>
+                        </tr>
+                        <tr>
+                            <td>合计</td>
+                            <td>{{data.CL | number : 0}}</td>
+                            <td>{{data.CQ | number : 0}}</td>
+                            <td>{{data.CT | number : 0}}</td>
+                            <td>{{data.ME | number : 0}}</td>
+                            <td>{{data.sumMM}}</td>
+                            <td>{{data.MI | number : 0}}</td>
+                            <td>{{data.ML | number : 0}}</td>
+                            <td>{{data.MF | number : 0}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{data.MC | number : 0}}</td>
+                            <td>{{data.MT | number : 0}}</td>
+                            <td>{{data.MW * 100 | number : 1}}%</td>
+                        </tr>
+                        <tr>
+                            <td>基准年</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{data.MJ | number : 0}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{data.MP | number : 0}}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered" style="table-layout: fixed">
+                        <tr>
+                            <td>a</td>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                        </tr>
+                        <tr>
+                            <td>s</td>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                        </tr>
+                        <tr ng-repeat="ce in data.CE track by $index">
+                            <td>第{{$index + 1}}年</td>
+                            <td>{{ce | number : 0 }}</td>
+                            <td>{{data.CG[$index] | number : 0}}</td>
+                            <td>{{data.CZ[$index] | number : 0}}</td>
+                            <td>{{data.MD | number : 0}}</td>
+                            <td>{{data.MM}}</td>
+                            <td>{{data.MX[$index] | number : 0}}</td>
+                            <td>{{data.MK[$index] | number : 0}}</td>
+                            <td>{{data.MG[$index] | number : 0}}</td>
+                            <td>{{data.MO[$index] | number : 0}}</td>
+                            <td>{{data.MQ[$index] | number : 0}}</td>
+                            <td>{{data.MR | number : 0}}</td>
+                            <td>{{data.MS[$index] | number : 0}}</td>
+                            <td>{{data.MV[$index] * 100 | number : 1}}%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="panel-body" ng-show="show[1]">
+                            <canvas class="chart chart-line" chart-data="chartData1"
+                                    chart-labels="labelsYear" chart-options="options">
+                            </canvas>
+                        </div>
+                        <div class="panel-body" ng-show="show[2]">
+                            <canvas  class="chart chart-line" chart-data="chartData2"
+                                     chart-labels="labelsYear" chart-options="options">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <button class="btn btn-primary" ng-click="back()">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
+                    </button>
+                    <button class="btn btn-link" ng-click="showMe(0)">
+                        表格
+                    </button>
+                    <button class="btn btn-link" ng-click="showMe(1)">
+                        债务偿还图
+                    </button>
+                    <button class="btn btn-link" ng-click="showMe(2)">
+                        投资回收期图
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <button class="btn btn-primary" ng-click="back()"><span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回</button>
     </div>
 </div>
