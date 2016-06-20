@@ -9,11 +9,10 @@
 
     <script src="http://api.map.baidu.com/api?v=2.0&ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi"></script>
     <link rel="stylesheet" href="static/components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/components/FontAwesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/components/angular-chart.js/dist/angular-chart.css">
     <link rel="stylesheet" href="static/stylesheet/project.css">
     <link rel="stylesheet" href="tpls/css/project.css">
-    <link rel="stylesheet" href="tpls/css/buttons.css">
-    <link rel="stylesheet" href="tpls/css/blue.css">
     <script src="static/components/angular/angular.min.js"></script>
     <script src="static/components/ui-bootstrap-tpls-1.3.2.min.js"></script>
     <script src="static/components/angular-route/angular-route.min.js"></script>
@@ -38,16 +37,22 @@
             <div class="minimum window-op"></div>
             <div class="closebtn window-op"></div>
         </div>
-        <div class="menu">
-            <ul>
-                <li>项目</li>
-                <li></li>
-                <li>设置</li>
-                <li>关于</li>
-            </ul>
-        </div>
+        <!--<div class="menu">-->
+            <!--<ul>-->
+                <!--<li>项目</li>-->
+                <!--<li></li>-->
+                <!--<li>设置</li>-->
+                <!--<li>关于</li>-->
+            <!--</ul>-->
+        <!--</div>-->
         <div id="project">
-
+            <div class="navItem">
+                <div ng-click="" class="navName"><i class="icon-angle-down"></i> 项目<i class="icon-plus-sign-alt icon-large pull-right add-project"></i></div>
+                <ul>
+                    <li><a href=""><i class="icon-book"></i> 项目一</a></li>
+                    <li><a href=""><i class="icon-book"></i> 项目二</a></li>
+                </ul>
+            </div>
         </div>
         <div class="mainbody">
             <div class="container">

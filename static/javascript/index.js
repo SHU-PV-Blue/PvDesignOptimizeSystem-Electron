@@ -1187,6 +1187,61 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
 });
 
 /*
+效率分析控制器
+ loss [0]: 阴影损耗
+ loss [1] : 灰尘等遮挡损耗
+ loss [2] : 组件性能衰减
+ loss [3] : 组件温升损耗
+ loss [4] : 直流电缆损耗
+ loss [5] : 组串内失配损耗
+ loss [6] : 逆变器损耗
+ loss [7] : 变压器损耗
+ loss [8] : 交流电缆损耗
+ loss [9] : 故障检修、电网等其它损耗
+ */
+pvModule.controller('efficiencyAnalysisCtrl',function($scope, $location, projectData){
+
+    $scope.data = {
+        loss : [2.8, 10, 3, 3, 2.2, 2, 4, 1, 0.5, 5],
+        lossTotal : 0
+    };
+
+    $scope.$watch('data.loss',function(){
+        var total = 0;
+        for(var i = 0; i < $scope.data.loss.length; i++){
+            total += $scope.data.loss[i];
+        }
+        $scope.data.lossTotal = total;
+    },true);
+
+
+    var componentInfo = projectData.getData('componentInfo');
+    var meteorologyInfo = projectData.getData('meteorologyInfo');
+    var angleInfo = projectData.getData('angleInfo');
+
+    var H = [];
+
+    meteorologyInfo.monthinfos.forEach(function (monthinfo) {
+        H.push(monthinfo.H);
+    });
+
+    $scope.chartData = [
+        []
+    ];
+
+    for(var i = 1; i <= 12; i++ ){
+        $scope.chartData[0].push(getH_t(i,H[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az));
+    }
+
+    $scope.labelsMonth = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    $scope.back = function(){
+        $location.path('/');
+    }
+});
+
+
+/*
 效益分析控制器
  */
 pvModule.controller('benefitCtrl',function($scope, $location){
@@ -1761,6 +1816,31 @@ pvModule.controller('overallIndexCtrl',function($scope, $location, projectData){
     }
 });
 
+/*
+报告控制器
+ */
+pvModule.controller('reportCtrl',function($scope, $location, projectData){
+
+    var angleInfo = projectData.getData('angleInfo');
+    var meteorologyInfo = projectData.getData('meteorologyInfo');
+
+    $scope.getMapPath = function(){
+        return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
+    } ;
+
+    $scope.data = {
+        capacity : 0,
+        dip : angleInfo.dip,
+        az : angleInfo.az,
+        lat : meteorologyInfo.lat,
+        lng : meteorologyInfo.lng
+    };
+
+    $scope.back = function(){
+        $location.path('/');
+    }
+});
+
 //指令区
 pvModule.directive('script', function () {
     return {
@@ -1822,7 +1902,15 @@ pvModule.directive('pvmap', function () {
                 anchor: BMAP_ANCHOR_TOP_LEFT,
                 offset: size
             }));
+
+            var marker = new BMap.Marker(point);
+
             map.addEventListener("click", function (e) {
+
+                map.removeOverlay(marker);
+                marker = new BMap.Marker(e.point);        // 创建标注
+                map.addOverlay(marker);
+
                 var lngInput = document.getElementById('lng');
                 var latInput = document.getElementById('lat');
                 lngInput.value = e.point.lng;
@@ -1871,6 +1959,10 @@ pvModule.config(function ($routeProvider) {
         templateUrl: 'tpls/html/benefit/profitPeriod.html'
     }).when('/13', {
         templateUrl: 'tpls/html/benefit/overallIndex.html'
+    }).when('/14',{
+        templateUrl: 'tpls/html/efficiencyAnalysis.html'
+    }).when('/15',{
+        templateUrl: 'tpls/html/report.html'
     });
 
     $routeProvider.otherwise({redirectTo: '/'});
