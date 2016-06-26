@@ -49,24 +49,29 @@ var pvModule = angular.module('PVModule', ['chart.js','ui.bootstrap', 'ui.router
 /*
  项目数据服务
  */
-pvModule.service('projectData', function ($rootScope) {
-    this.projectData = {};
-    this.dataBasePath = 'data/';
+pvModule.service('projectData', function ($rootScope, $location) {
+    this.projectBasePath = "projects/";
+    this.projectInfo = {};
+    this.projectName = "";
+    this.loadProject = function(name){
+        this.projectInfo = JSON.parse(fs.readFileSync(this.projectBasePath + name + ".json","utf8"));
+        this.projectName = name;
+        $location.path('/');
+    };
+
     this.getData = function (propName) {
-        if (this.projectData[propName]) {
-            return this.projectData[propName];
+        if (this.projectInfo.projectData[propName]) {
+            return this.projectInfo.projectData[propName];
         } else {
             return null;
         }
     };
     this.addOrUpdateData = function (data, propName) {
-        this.projectData[propName] = data;
+        this.projectInfo.projectData[propName] = data;
     };
+
     this.saveToLocal = function () {
-        fs.writeFileSync(this.dataBasePath + 'projectdata', JSON.stringify(this.projectData, null, "    "), 'utf8');
-    };
-    this.noticeSaveData = function () {
-        $rootScope.$broadcast('projectData.save');
+        fs.writeFileSync(this.projectBasePath + this.projectName+".json", JSON.stringify(this.projectInfo, null, "    "), 'utf8');
     };
 });
 
@@ -91,55 +96,75 @@ pvModule.service('gainData', function ($http, $q) {
     }
 });
 
-/*
- 路由管理服务
- */
-pvModule.service('manageRoute', function () {
-    this.routes = ['/', '/2', '/3', '/4', '/5', '/6', '/7'];
-    this.curIndex = 0;
-    this.getTotal = function () {
-        return this.routes.length;
-    };
-    this.getCurrent = function () {
-        return this.curIndex;
-    };
-    this.getNextRoute = function () {
-        if (this.curIndex >= this.routes.length - 1)
-            return;
-        this.curIndex += 1;
-        return this.routes[this.curIndex];
-    };
-    this.getPreRoute = function () {
-        if (this.curIndex == 0)
-            return;
-        this.curIndex -= 1;
-        return this.routes[this.curIndex]
-    };
-});
-
 //控制器区
-
 /*
- 导航控制器
+项目管理控制器
  */
-pvModule.controller('cordionCtrl', function ($scope) {
-    $scope.oneAtATime = true;
+pvModule.controller('manageCtrl',function($scope, $uibModal, projectData){
+    var defaultProjectInfo = {
+        projectData : {},
+        projectSetting : {
+            isFinished : [0,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+        }
+    };
+
+    $scope.projects = [];
+
+    $scope.addNewProject = function(){
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "tpls/html/addProject.html",
+            controller: "addProjectCtrl",
+            size: 'lg',
+            backdrop: false
+        });
+        modalInstance.result.then(function (data) {
+            createNewProject(data.projectName);
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+    function createNewProject(name){
+        fs.writeFileSync( "projects/"+name+".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
+        projectData.loadProject(name);
+        refresh();
+    }
+
+    $scope.openProject = function(name){
+        projectData.loadProject(name);
+    };
+
+    function refresh(){
+        fs.readdir("projects/",function(err,files){
+            if(err){
+                return;
+            }
+            $scope.projects = files.map(function(name){
+                return name.replace(".json","");
+            })
+        });
+    }
+
+    $scope.$watch('$viewContentLoaded', function () {
+        refresh();
+    })
 });
 
 /*
- 上一步下一步控制器
+添加项目弹出框控制器
  */
-pvModule.controller('prenextCtrl', function ($scope, $location, projectData, manageRoute) {
-    $scope.max = manageRoute.getTotal();
-    $scope.current = 1;
-    $scope.nextStep = function () {
-        projectData.noticeSaveData();
-        $location.path(manageRoute.getNextRoute());
-        $scope.current = manageRoute.getCurrent() + 1;
+pvModule.controller('addProjectCtrl',function($scope, $uibModalInstance){
+    $scope.projectName = "";
+
+    $scope.ok = function () {
+        $uibModalInstance.close({
+            projectName : $scope.projectName
+        });
     };
-    $scope.preStep = function () {
-        $location.path(manageRoute.getPreRoute());
-        $scope.current = manageRoute.getCurrent() + 1;
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
     };
 });
 
@@ -167,6 +192,7 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
 
     $scope.save =  function () {
         projectData.addOrUpdateData($scope.projectInfo, 'basicInfo');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -344,6 +370,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -372,6 +399,7 @@ pvModule.controller('chooseComponentCtrl', function ($scope,$location, gainData,
 
     $scope.confirmChoose = function () {
         projectData.addOrUpdateData($scope.show, 'componentInfo');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -460,6 +488,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
 
     $scope.save =  function () {
         projectData.addOrUpdateData($scope.angleInfo, 'angleInfo');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -507,6 +536,16 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
         return typeof obj === 'number' && !isNaN(obj)
     }
 
+    $scope.$watch('userDesignInfo.componentDirection',function(newVal){
+        if(newVal === "horizontal"){
+            $scope.src1 = "res/images/heng1.png";
+            $scope.src2 = "res/images/heng2.png";
+        }else{
+            $scope.src1 = "res/images/shu1.png";
+            $scope.src2 = "res/images/shu2.png";
+        }
+    });
+
     $scope.$watch('userDesignInfo.rowsPerFixture', function () {
         $scope.userDesignInfo.fbspace = Number(compute_fbspace());
     });
@@ -521,12 +560,12 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
     });
 
     $scope.$watch('userDesignInfo.area.length', function (newVal) {
-        $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.width;
+        $scope.userDesignInfo.area.totalArea = Number(newVal) * $scope.userDesignInfo.area.width;
         $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
     $scope.$watch('userDesignInfo.area.width', function (newVal) {
-        $scope.userDesignInfo.area.totalArea = newVal * $scope.userDesignInfo.area.length;
+        $scope.userDesignInfo.area.totalArea = Number(newVal) * $scope.userDesignInfo.area.length;
         $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
     });
 
@@ -612,6 +651,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.userDesignInfo, 'userDesignInfo');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -638,6 +678,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 
     $scope.finish = function(){
         projectData.addOrUpdateData($scope.obj, 'inverter');
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -779,7 +820,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'centralizedInverterInfo',
+            name: 'centralizedInverter',
             obj: $scope.centralizedInverterInfo
         });
     };
@@ -1023,10 +1064,11 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
 /*
  选择电网等级控制器
  */
-pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibModal) {
+pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibModal,projectData) {
     $scope['show_10'] = true;
     $scope['show_35'] = false;
     $scope['show_380'] = false;
+
     $scope.obj = {
         type: "10kv"
     };
@@ -1051,6 +1093,8 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
     });
 
     $scope.finish = function(){
+        projectData.addOrUpdateData($scope.obj,"transformer");
+        projectData.saveToLocal();
         $location.path('/');
     };
 
@@ -1099,16 +1143,39 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
 /*
  10,35kv低压开关柜控制器
 */
-pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainData) {
+pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
+    $scope.lowSwitchInfo = {
+        lowSwitch: {},
+        serialNumPerSwitch: 2,
+        switchNum: 0
+    };
+
     $scope.items = [];
     $scope.selected = '';
-    $scope.show = {};
+
     $scope.$watch('selected', function (newVal) {
-        $scope.show = JSON.parse(newVal);
+        $scope.lowSwitchInfo.lowSwitch = JSON.parse(newVal);
+        computeSwitchNum();
     });
 
+    var inverter = projectData.getData("inverter");
+    var inverterNum = 0;
+    if( inverter.type === "centralized"){
+        inverterNum = inverter.centralizedInverter.inverterNumNeeded;
+    }else{
+
+    }
+
+    function computeSerialNumPerSwitch(){
+
+    }
+
+    function computeSwitchNum(){
+        $scope.lowSwitchInfo.switchNum = Math.ceil(inverterNum / $scope.lowSwitchInfo.serialNumPerSwitch);
+    }
+
     $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=低压')
             .then(function (data) {
                 $scope.items = data.data;
             })
@@ -1116,8 +1183,8 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'groupInverter',
-            selected: $scope.show
+            name: 'lowSwitch',
+            selected: $scope.lowSwitchInfo
         });
     };
 
@@ -1304,6 +1371,7 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
 
     $scope.save = function(){
         projectData.addOrUpdateData($scope.defaultParameters,'parameters');
+        projectData.saveToLocal();
         $location.path('/8');
     };
 });

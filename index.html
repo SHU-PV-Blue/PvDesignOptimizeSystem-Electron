@@ -32,25 +32,17 @@
             <div class="logo">
                 PV
             </div>
-            <div class="toggle-menu"><span class="glyphicon glyphicon-chevron-down"></span></div>
             <div class="maximum window-op"></div>
             <div class="minimum window-op"></div>
             <div class="closebtn window-op"></div>
         </div>
-        <!--<div class="menu">-->
-            <!--<ul>-->
-                <!--<li>项目</li>-->
-                <!--<li></li>-->
-                <!--<li>设置</li>-->
-                <!--<li>关于</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-        <div id="project">
+        <div id="project" ng-controller="manageCtrl">
             <div class="navItem">
-                <div ng-click="" class="navName"><i class="icon-angle-down"></i> 项目<i class="icon-plus-sign-alt icon-large pull-right add-project"></i></div>
+                <div class="navName">项目<i class="icon-plus-sign-alt icon-large pull-right add-project" ng-click="addNewProject()"></i></div>
                 <ul>
-                    <li><a href=""><i class="icon-book"></i> 项目一</a></li>
-                    <li><a href=""><i class="icon-book"></i> 项目二</a></li>
+                    <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
+                        <i class="icon-book"></i> {{project}}
+                    </li>
                 </ul>
             </div>
         </div>
