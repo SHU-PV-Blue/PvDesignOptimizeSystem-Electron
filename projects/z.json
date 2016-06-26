@@ -1,0 +1,174 @@
+{
+    "projectData": {
+        "basicInfo": {
+            "projectName": "fsdaf",
+            "projectAddress": "",
+            "userName": "",
+            "remark": "",
+            "lng": "121.12932",
+            "lat": "31.345863",
+            "projectDate": "2016-06-26T14:55:28.662Z"
+        },
+        "meteorologyInfo": {
+            "type": "db",
+            "minTem": "",
+            "maxTem": "",
+            "monthinfos": [
+                {
+                    "H": 2.63,
+                    "temperature": 4.84,
+                    "H0": 5.71,
+                    "humidity": 73.6,
+                    "Kt": 0.46,
+                    "Hd": 1.1,
+                    "Ws": 76.8,
+                    "wind": 6.22,
+                    "$$hashKey": "object:1016"
+                },
+                {
+                    "H": 3.09,
+                    "temperature": 5.88,
+                    "H0": 7.05,
+                    "humidity": 73.4,
+                    "Kt": 0.43,
+                    "Hd": 1.41,
+                    "Ws": 82.4,
+                    "wind": 6.2,
+                    "$$hashKey": "object:1017"
+                },
+                {
+                    "H": 3.53,
+                    "temperature": 9.03,
+                    "H0": 8.73,
+                    "humidity": 74.9,
+                    "Kt": 0.4,
+                    "Hd": 1.81,
+                    "Ws": 88.9,
+                    "wind": 5.68,
+                    "$$hashKey": "object:1018"
+                },
+                {
+                    "H": 4.28,
+                    "temperature": 14,
+                    "H0": 10.2,
+                    "humidity": 76.9,
+                    "Kt": 0.41,
+                    "Hd": 2.18,
+                    "Ws": 95.9,
+                    "wind": 5.42,
+                    "$$hashKey": "object:1019"
+                },
+                {
+                    "H": 4.84,
+                    "temperature": 18.4,
+                    "H0": 11.1,
+                    "humidity": 79.7,
+                    "Kt": 0.43,
+                    "Hd": 2.44,
+                    "Ws": 101,
+                    "wind": 5.01,
+                    "$$hashKey": "object:1020"
+                },
+                {
+                    "H": 4.58,
+                    "temperature": 22.4,
+                    "H0": 11.4,
+                    "humidity": 84.5,
+                    "Kt": 0.39,
+                    "Hd": 2.53,
+                    "Ws": 104,
+                    "wind": 5.2,
+                    "$$hashKey": "object:1021"
+                },
+                {
+                    "H": 5.17,
+                    "temperature": 25.8,
+                    "H0": 11.2,
+                    "humidity": 87.1,
+                    "Kt": 0.45,
+                    "Hd": 2.47,
+                    "Ws": 103,
+                    "wind": 5.37,
+                    "$$hashKey": "object:1022"
+                },
+                {
+                    "H": 4.78,
+                    "temperature": 25.7,
+                    "H0": 10.4,
+                    "humidity": 86.5,
+                    "Kt": 0.45,
+                    "Hd": 2.25,
+                    "Ws": 98.4,
+                    "wind": 5.24,
+                    "$$hashKey": "object:1023"
+                },
+                {
+                    "H": 4.07,
+                    "temperature": 22.6,
+                    "H0": 9.19,
+                    "humidity": 80.7,
+                    "Kt": 0.44,
+                    "Hd": 1.92,
+                    "Ws": 91.8,
+                    "wind": 5.51,
+                    "$$hashKey": "object:1024"
+                },
+                {
+                    "H": 3.36,
+                    "temperature": 17.8,
+                    "H0": 7.56,
+                    "humidity": 75.1,
+                    "Kt": 0.44,
+                    "Hd": 1.53,
+                    "Ws": 84.8,
+                    "wind": 5.44,
+                    "$$hashKey": "object:1025"
+                },
+                {
+                    "H": 2.79,
+                    "temperature": 12.7,
+                    "H0": 6.04,
+                    "humidity": 73.9,
+                    "Kt": 0.46,
+                    "Hd": 1.17,
+                    "Ws": 78.6,
+                    "wind": 5.83,
+                    "$$hashKey": "object:1026"
+                },
+                {
+                    "H": 2.58,
+                    "temperature": 7.27,
+                    "H0": 5.29,
+                    "humidity": 73.4,
+                    "Kt": 0.48,
+                    "Hd": 0.99,
+                    "Ws": 75.2,
+                    "wind": 5.94,
+                    "$$hashKey": "object:1027"
+                }
+            ],
+            "monthavgs": {
+                "H": "3.81",
+                "temperature": "15.54",
+                "humidity": "78.31",
+                "wind": "5.59"
+            },
+            "lng": "121.12932",
+            "lat": "31.345863"
+        }
+    },
+    "projectSetting": {
+        "isFinished": [
+            0,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+        ]
+    }
+}

@@ -109,13 +109,14 @@ pvModule.controller('manageCtrl',function($scope, $uibModal, projectData){
     };
 
     $scope.projects = [];
+    $scope.currentProject = "";
 
     $scope.addNewProject = function(){
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: "tpls/html/addProject.html",
             controller: "addProjectCtrl",
-            size: 'lg',
+            size: 'md',
             backdrop: false
         });
         modalInstance.result.then(function (data) {
@@ -127,11 +128,13 @@ pvModule.controller('manageCtrl',function($scope, $uibModal, projectData){
 
     function createNewProject(name){
         fs.writeFileSync( "projects/"+name+".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
+        $scope.currentProject = name;
         projectData.loadProject(name);
         refresh();
     }
 
     $scope.openProject = function(name){
+        $scope.currentProject = name;
         projectData.loadProject(name);
     };
 
@@ -422,7 +425,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         dip: 0,
         bestDipH: 0,
         bestDipG: 0,
-        az: 0
+        az: 0,
+        max: 0,
+        max_H: 0
     };
 
     $scope.sums_g = [];
@@ -462,6 +467,8 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $scope.angleInfo.dip = temp.best;
         $scope.angleInfo.bestDipG = temp.best;
         $scope.angleInfo.bestDipH = temp.bestH;
+        $scope.angleInfo.max = temp.max;
+        $scope.angleInfo.max_H = temp.max_H;
     });
 
     $scope.$watch('angleInfo.dip',function(){

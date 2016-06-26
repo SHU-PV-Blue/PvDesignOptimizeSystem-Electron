@@ -127,7 +127,9 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
         sums_g : sums_g,
 		sums : sums,
 		best : res,
-        bestH :res1
+        bestH :res1,
+		max : max,
+		max_H: max_H
 	};
 };
 //var fs = require('fs');
