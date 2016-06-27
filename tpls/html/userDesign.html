@@ -3,14 +3,14 @@
         <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <input type="radio" name="pv-c" id="pv-c2" value="capacity" ng-model="userDesignInfo.capacity">
+                    <input type="radio" name="designType" id="pv-c2" value="capacity" ng-model="userDesignInfo.designType">
                     <label for="pv-c2">自定义安装容量(KW)</label>
                 </div>
                 <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <label>容量：</label>
-                            <input type="text" class="form-control" size="6" ng-model="userDesignInfo.capacity.totalCapacity">
+                            <input type="text" class="form-control" size="8" ng-model="userDesignInfo.capacity.totalCapacity">
                         </div>
                         <div class="form-group">
                             <p class="form-control-static">KW</p>
@@ -29,7 +29,7 @@
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <input type="radio" name="pv-c" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
+                    <input type="radio" name="designType" id="pv-c1" value="area" ng-model="userDesignInfo.designType">
                     <label for="pv-c1">自定义面积</label>
                 </div>
                 <div class="panel-body">

@@ -4,96 +4,15 @@
 }
 html,body{
     height: 100%;
-    background: transparent;
 }
 .wrap{
-    border-radius: 5px 5px 0 0;
     background: #fff;
     height: 100%;
     position: relative;
 }
-.titlebar{
-    border-radius: 5px 5px 0 0;
-    position: relative;
-    -webkit-app-region: drag;
-    height: 30px;
-    background: #1f71c5;
-}
-.titlebar .logo{
-    float: left;
-    height: 100%;
-    width: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-    color: white;
-    font-size: 1.2em;
-    font-weight: 700;
-}
-.titlebar .toggle-menu{
-    float: left;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    width: 30px;
-    margin: 5px 0;
-    border-radius: 10px;
-    color: white;
-    background: #318ce7;
-}
-
-.titlebar .window-op{
-    -webkit-app-region: no-drag;
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-size: 15px 15px;
-    background-position: center;
-    background-repeat:no-repeat;
-}
-.window-op:hover{
-    background-color: #007aff;
-}
-.titlebar .minimum{
-    background-image: url(../../res/icons/minimum.png);
-    top: 0;
-    right: 60px;
-}
-.titlebar .maximum{
-    background-image: url(../../res/icons/maximum.png);
-    top: 0;
-    right: 30px;
-}
-.titlebar .closebtn{
-    border-radius: 0 5px 0 0;
-    background-image: url(../../res/icons/close.png);
-    top: 0;
-    right: 0;
-}
-.menu{
-    height:25px;
-    background: #2e81d7;
-}
-.menu ul{
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
-.menu li{
-    color: #91c3f2;
-    float: left;
-    width: 50px;
-    height: 25px;
-    line-height: 25px;
-    padding: 0 10px;
-}
-.menu li:hover{
-    color: white;
-    cursor: pointer;
-}
-
 #project{
     position: absolute;
-    top: 30px;
+    top: 0;
     bottom: 0;
     left: 0;
     width: 200px;
@@ -131,7 +50,7 @@ html,body{
 
 .mainbody{
     position: absolute;
-    top: 30px;
+    top: 0;
     left: 200px;
     bottom: 0;
     right: 0;
@@ -140,14 +59,7 @@ html,body{
 }
 .mainbody>.container{
     padding-top: 20px;
-    /*max-height: 90%;*/
     overflow: hidden;
-}
-.row-eq-height {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
 }
 .y-card{
     text-align: center;
@@ -190,4 +102,11 @@ html,body{
     25%  {top:3px;}
     75%  {top:-3px;}
     100% {top:0px;}
+}
+
+.op-row{
+    margin: 50px;
+}
+.op-row button{
+    height: 50px;
 }

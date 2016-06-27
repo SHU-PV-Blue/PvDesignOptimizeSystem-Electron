@@ -49,14 +49,23 @@ var pvModule = angular.module('PVModule', ['chart.js','ui.bootstrap', 'ui.router
 /*
  项目数据服务
  */
-pvModule.service('projectData', function ($rootScope, $location) {
+pvModule.service('projectData', function ($rootScope, $location, $route) {
     this.projectBasePath = "projects/";
     this.projectInfo = {};
     this.projectName = "";
     this.loadProject = function(name){
         this.projectInfo = JSON.parse(fs.readFileSync(this.projectBasePath + name + ".json","utf8"));
         this.projectName = name;
-        $location.path('/');
+        $location.path('/0');
+        $route.reload();
+    };
+
+    this.getSetting = function(){
+        return this.projectInfo.projectSetting;
+    };
+
+    this.setFinished = function(stepName){
+        this.projectInfo.projectSetting.isFinished[stepName] = true;
     };
 
     this.getData = function (propName) {
@@ -104,7 +113,18 @@ pvModule.controller('manageCtrl',function($scope, $uibModal, projectData){
     var defaultProjectInfo = {
         projectData : {},
         projectSetting : {
-            isFinished : [0,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+            isFinished : {
+                basicInfo : false,
+                meteorology : false,
+                chooseComponent : false,
+                confirmAngle : false,
+                userDesign : false,
+                chooseInverter : false,
+                selectTransformer : false,
+                efficiencyAnalysis : false,
+                benefit : false,
+                report : false
+            }
         }
     };
 
@@ -174,7 +194,8 @@ pvModule.controller('addProjectCtrl',function($scope, $uibModalInstance){
 /*
 项目步骤控制器
  */
-pvModule.controller('projectCtrl',function($scope, $location){
+pvModule.controller('projectCtrl',function($scope, $location, projectData){
+    $scope.isFinished = projectData.getSetting().isFinished;
     $scope.switchToUrl = function(url){
         $location.path(url);
     };
@@ -195,8 +216,9 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
 
     $scope.save =  function () {
         projectData.addOrUpdateData($scope.projectInfo, 'basicInfo');
+        projectData.setFinished("basicInfo");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -373,8 +395,9 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
+        projectData.setFinished("meteorology");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -402,8 +425,9 @@ pvModule.controller('chooseComponentCtrl', function ($scope,$location, gainData,
 
     $scope.confirmChoose = function () {
         projectData.addOrUpdateData($scope.show, 'componentInfo');
+        projectData.setFinished("chooseComponent");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -495,8 +519,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
 
     $scope.save =  function () {
         projectData.addOrUpdateData($scope.angleInfo, 'angleInfo');
+        projectData.setFinished("confirmAngle");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
 
@@ -658,8 +683,9 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.userDesignInfo, 'userDesignInfo');
+        projectData.setFinished("userDesign");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -685,8 +711,9 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 
     $scope.finish = function(){
         projectData.addOrUpdateData($scope.obj, 'inverter');
+        projectData.setFinished("chooseInverter");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.showForm = function (name) {
@@ -1101,8 +1128,9 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
 
     $scope.finish = function(){
         projectData.addOrUpdateData($scope.obj,"transformer");
+        projectData.setFinished("selectTransformer");
         projectData.saveToLocal();
-        $location.path('/');
+        $location.path('/0');
     };
 
     $scope.showForm = function (name) {
@@ -1310,7 +1338,9 @@ pvModule.controller('efficiencyAnalysisCtrl',function($scope, $location, project
     $scope.labelsMonth = [1,2,3,4,5,6,7,8,9,10,11,12];
 
     $scope.back = function(){
-        $location.path('/');
+        projectData.setFinished("efficiencyAnalysis");
+        projectData.saveToLocal();
+        $location.path('/0');
     }
 });
 
@@ -1318,13 +1348,15 @@ pvModule.controller('efficiencyAnalysisCtrl',function($scope, $location, project
 /*
 效益分析控制器
  */
-pvModule.controller('benefitCtrl',function($scope, $location){
+pvModule.controller('benefitCtrl',function($scope, $location,projectData){
     $scope.switchToUrl = function(url){
         $location.path(url);
     };
 
     $scope.back = function(){
-        $location.path('/');
+        projectData.setFinished("benefit");
+        projectData.saveToLocal();
+        $location.path('/0');
     }
 });
 
@@ -1399,7 +1431,7 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
 
     $scope.hide = true;
 
-    $scope.show = [true,false,false,false,false,false,false,false,false];
+    $scope.show = [true,false,false,false];
 
     $scope.showMe = function(id){
         for(var i = 0; i < $scope.show.length; i++){
@@ -1413,6 +1445,12 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
 
     var p = projectData.getData('parameters');
     var BA = 1.915815;
+    var userDesign = projectData.getData("userDesignInfo");
+    if(userDesign.designType === "area"){
+        BA = Number(userDesign.area.totalCapacity);
+    }else{
+        BA = Number(userDesign.capacity.totalCapacity);
+    }
 
 ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
@@ -1911,8 +1949,16 @@ pvModule.controller('reportCtrl',function($scope, $location, projectData){
         lng : meteorologyInfo.lng
     };
 
+    var userDesign = projectData.getData("userDesignInfo");
+    if(userDesign.designType === "area"){
+        $scope.data.capacity = userDesign.area.totalCapacity;
+    }else{
+        $scope.data.capacity = userDesign.capacity.totalCapacity;
+    }
+
     $scope.back = function(){
-        $location.path('/');
+        projectData.setFinished("report");
+        $location.path('/0');
     }
 });
 
@@ -2007,6 +2053,8 @@ pvModule.directive('pvmap', function () {
 //路由
 pvModule.config(function ($routeProvider) {
     $routeProvider.when('/', {
+        templateUrl: 'aaa.html'
+    }).when('/0', {
         templateUrl: 'tpls/html/project.html'
     }).when('/1',{
         templateUrl: 'tpls/html/basicInfo.html'

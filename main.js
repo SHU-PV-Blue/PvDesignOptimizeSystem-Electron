@@ -21,8 +21,6 @@ app.on('ready',function(){
 		height : 800,
 		title : 'PvDesignOptimizeSystem',
 		center: true,
-		frame: false,
-		transparent:true,
 		webPreferences : {
 		  webSecurity : false,
 		  plugins : true
