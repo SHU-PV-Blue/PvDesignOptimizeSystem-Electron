@@ -1,5 +1,5 @@
 var fs = require('fs');
-var pvModule = angular.module('PVModule', ['chart.js','ui.bootstrap', 'ui.router', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
+var pvModule = angular.module('PVModule', ['chart.js','ui.bootstrap','uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -419,9 +419,83 @@ pvModule.controller('chooseComponentCtrl', function ($scope,$location, gainData,
     $scope.components = [];
     $scope.selected = '{}';
     $scope.show = {};
+
+    $scope.showI = true;
+
     $scope.$watch('selected', function (newVal) {
         $scope.show = JSON.parse(newVal);
     });
+
+    $scope.data1 = [
+        []
+    ];
+
+    $scope.data2 = [
+        []
+    ];
+
+    $scope.T = 25;
+    $scope.S = 1000;
+
+    $scope.labels = [];
+    for(var i = 0; i < 35; i++){
+        $scope.labels.push(i+1);
+    }
+
+    $scope.$watch("T",function(){
+        getChartData();
+    });
+
+    $scope.$watch("S",function(){
+        getChartData();
+    });
+
+    $scope.$watch("show",function(){
+        getChartData();
+    },true);
+
+    function getChartData(){
+        var tempI = [];
+        var tempP = [];
+        for(var i = 0; i < 35; i++){
+            var I = computeI($scope.show['开路电压'],$scope.show['短路电流'],$scope.show['最大功率点电压'],
+                $scope.show['最大功率点电流'],$scope.show['开路电压温度系数'],$scope.show['短路电流温度系数'],i+1, Number($scope.T)-25,Number($scope.S)/1000 - 1);
+            if(I >= 0 ){
+                tempI.push(I.toFixed(2));
+                tempP.push((I*(i+1)).toFixed(2));
+            }
+        }
+
+        if(tempI.length == 0){
+            tempI.push(0);
+        }
+        $scope.data1[0] = tempI;
+        $scope.data2[0] = tempP;
+    }
+
+    /*
+    voc : 开路电压
+    isc : 短路电流
+    vmp : 最大功率点电压
+    imp : 最大功率点电流
+    r : 开路电压温度系数(负)
+    a : 短路电流温度系数
+    v : 电压
+     */
+    function computeI(voc,isc,vmp,imp,r,a,v,t,s){
+        r = r / 100;
+        a = a / 100;
+        var voc2 = voc*(1+r*t)*Math.log(Math.E + 0.5*s);
+        var vmp2 = vmp*(1+r*t)*Math.log(Math.E + 0.5*s);
+        var isc2 = isc*(s+1)*(1+a*t);
+        var imp2 = imp*(s+1)*(1+a*t);
+        var c2 = (vmp2/voc2 - 1)/(Math.log(1-imp2/isc2));//imp2/isc2 right
+        var c1 = (1-imp2/isc2)*Math.exp(-vmp2/(voc2*c2));//imp2/isc2 right
+        if(Number($scope.T) == 25 && Number($scope.S) == 500){
+            console.log(voc2,vmp2,isc2,imp2,c2,c1);
+        }
+        return isc2*(1-c1*(Math.exp(v/(c2*voc2))-1));  // isc2
+    }
 
     $scope.confirmChoose = function () {
         projectData.addOrUpdateData($scope.show, 'componentInfo');
@@ -709,8 +783,15 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
         $scope.obj.type = type;
     };
 
+    $scope.$watch('$viewContentLoaded', function () {
+        var temp = projectData.getData('chooseInverter');
+        if (temp) {
+            $scope.obj = temp;
+        }
+    });
+
     $scope.finish = function(){
-        projectData.addOrUpdateData($scope.obj, 'inverter');
+        projectData.addOrUpdateData($scope.obj, 'chooseInverter');
         projectData.setFinished("chooseInverter");
         projectData.saveToLocal();
         $location.path('/0');
@@ -748,7 +829,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
                 controller = 'alternatingCurrentCable';
                 break;
             default:
-                alert("faile");
+                alert("fail");
                 break;
         }
         var modalInstance = $uibModal.open({
@@ -854,7 +935,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'centralizedInverter',
+            name: 'centralizedInverterInfo',
             obj: $scope.centralizedInverterInfo
         });
     };
@@ -1025,8 +1106,8 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'directDistribution',
-            selected: $scope.show
+            name : 'directCurrentCableInfo',
+            obj : $scope.directCurrentCableInfo
         });
     };
 

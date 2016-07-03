@@ -13,21 +13,7 @@
 								{{component['公司'] + '(公司) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['类型'] + '(类型)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['系列'] + '(系列)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['型号'] + '(型号)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + component['峰值功率'] + '(峰值功率w)'}}
 							</option>
 						</select>
-					</div>
-					<div class="panel-footer">
-						<button class="btn btn-primary" ng-click="confirmChoose()" type="button">确定</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-11">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">组件信息</h3>
-					</div>
-					<div class="panel-body">
+						<br>
 						<table class="table table-bordered">
 							<tr>
 								<td>开路电压(V)</td>
@@ -47,8 +33,6 @@
 								<td>{{show['开路电压温度系数']}}</td>
 								<td>{{show['最大功率温度系数']}}</td>
 							</tr>
-						</table>
-						<table class="table table-bordered">
 							<tr>
 								<td>短路电流温度系数(%/℃)</td>
 								<td>长度(mm)</td>
@@ -66,6 +50,39 @@
 								<td>{{show['工作温度上限']}}</td>
 							</tr>
 						</table>
+					</div>
+					<div class="panel-footer">
+						<button class="btn btn-primary" ng-click="confirmChoose()" type="button">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<canvas  class="chart chart-line" chart-data="data1"
+								 chart-labels="labels" chart-options="options" height="100px" ng-show="showI">
+						</canvas>
+						<canvas  class="chart chart-line" chart-data="data2"
+								 chart-labels="labels" chart-options="options" height="100px" ng-show="!showI">
+						</canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<div>
+							<slider floor="-25" ceiling="100" step="1" precision="0" ng-model="T"></slider>
+							T:{{T}}
+						</div>
+						<div>
+							<slider floor="400" ceiling="1300" step="100" precision="0" ng-model="S"></slider>
+							S:{{S}}
+						</div>
+						<button ng-click="showI=true" class="btn btn-primary">i-v 图</button>
+						<button ng-click="showI=false" class="btn btn-primary">p-v 图</button>
 					</div>
 				</div>
 			</div>
