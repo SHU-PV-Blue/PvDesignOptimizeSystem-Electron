@@ -3,24 +3,27 @@
     <div class="col-md-11">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <form class="form-inline" role="form">
-                    <div class="form-group">
-                        <input type="radio" ng-model="obj.type" value="10kv" checked id="10kv">
-                        <label for="10kv">10KV</label>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="form-group">
-                        <input type="radio" ng-model="obj.type" value="35kv" id="35kv">
-                        <label for="35kv">35KV</label>
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="form-group">
-                        <input type="radio" ng-model="obj.type" value="380v" id="380v">
-                        <label for="380v">380V</label>
-                    </div>
-                </form>
+                <h3 class="panel-title">接入电网电压等级</h3>
             </div>
             <div class="panel-body">
+                <div class="row">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <input type="radio" ng-model="obj.type" value="10kv" checked id="10kv">
+                            <label for="10kv">10KV</label>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group">
+                            <input type="radio" ng-model="obj.type" value="35kv" id="35kv">
+                            <label for="35kv">35KV</label>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group">
+                            <input type="radio" ng-model="obj.type" value="380v" id="380v">
+                            <label for="380v">380V</label>
+                        </div>
+                    </form>
+                </div>
                 <div class="row" id="select-switch-cabinet">
                     <div class="col-md-3" id="low-voltage-switchgear">
                         <div class="switch-cabinet" ng-click="showForm('low_10_35')" ng-show="show_10 || show_35">低压开关柜</div>

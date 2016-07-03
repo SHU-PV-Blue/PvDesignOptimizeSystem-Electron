@@ -156,33 +156,13 @@
             "lng": "121.244303",
             "lat": "31.237242"
         },
-        "componentInfo": {
-            "id": 14,
-            "公司": "天合",
-            "型号": "TSM-PEG5",
-            "宽度": 992,
-            "峰值功率": 255,
-            "工作温度上限": 85,
-            "工作温度下限": -40,
-            "开路电压": 37.5,
-            "开路电压温度系数": -0.32,
-            "最大功率温度系数": -0.41,
-            "最大功率点电压": 30.3,
-            "最大功率点电流": 8.42,
-            "短路电流": 9.01,
-            "短路电流温度系数": 0.05,
-            "类型": "多晶",
-            "系列": "Duomax",
-            "转换效率": 15.5,
-            "重量": 23,
-            "长度": 1658
-        },
+        "componentInfo": {},
         "angleInfo": {
-            "dip": 26,
+            "dip": 0,
             "bestDipH": 24,
-            "bestDipG": 26,
+            "bestDipG": 0,
             "az": 0,
-            "max": 0.9362481922652779,
+            "max": 0,
             "max_H": 48.12226650573648
         },
         "userDesignInfo": {
@@ -190,18 +170,18 @@
             "designType": "area",
             "rowsPerFixture": 2,
             "colsPerFixture": 2,
-            "fbspace": 3.47331136039193,
+            "fbspace": null,
             "lrspace": 0,
             "area": {
                 "length": "23",
                 "width": "34",
-                "numPerRow": 6,
-                "rowsNum": 9,
-                "fbRestSpace": "2.74",
-                "lrRestSpace": "3.20",
+                "numPerRow": null,
+                "rowsNum": null,
+                "fbRestSpace": "NaN",
+                "lrRestSpace": "NaN",
                 "componentsNum": 216,
                 "totalArea": 782,
-                "totalCapacity": 59.4
+                "totalCapacity": null
             },
             "capacity": {
                 "totalCapacity": 0
@@ -210,55 +190,20 @@
         "chooseInverter": {
             "type": "group",
             "centralizedInverterInfo": {
-                "centralizedInverter": {
-                    "MPP电压上限": 850,
-                    "MPP电压下限": 460,
-                    "id": 2,
-                    "厂家": "阳光电源",
-                    "启动电压": 500,
-                    "型号": "SG500MX",
-                    "最大交流输出电流": 1008,
-                    "最大效率": 98.7,
-                    "最大直流输入功率": 560000,
-                    "最大直流输入电流": 1220,
-                    "最大输入电压": 1000,
-                    "最大输出功率": 550000,
-                    "额定交流输出功率": 500000,
-                    "额定电网电压": 315
-                },
-                "serialNumPerBranch": 19,
-                "branchNumPerInverter": 110,
+                "centralizedInverter": {},
+                "serialNumPerBranch": null,
+                "branchNumPerInverter": null,
                 "volumeRatio": 1.05,
-                "inverterNumNeeded": 1,
-                "totalOpacity": 564300
+                "inverterNumNeeded": null,
+                "totalOpacity": null
             },
             "directCurrentInfo": {
-                "directCurrent": {
-                    "id": 18,
-                    "价格上限": 11000,
-                    "价格下限": 7100,
-                    "厂家": "安科瑞",
-                    "型号": "APV-M-8",
-                    "有监控单元": true,
-                    "有直流断路器": true,
-                    "有防雷失效监控": true,
-                    "辅助电源": "AC85V-265V/DC330V-880V/DC24V(±10%)",
-                    "输入电流上限": 20,
-                    "输入路数": "8"
-                },
-                "num": 14
+                "directCurrent": {},
+                "num": null
             },
             "directDistributionInfo": {
-                "directDistribution": {
-                    "id": 12,
-                    "公司": "深圳永联科技有限公司",
-                    "型号": "YLDPG-500",
-                    "接入开路电压上限": 1000,
-                    "接入直流路数": "8",
-                    "输入直流功率上限": 550000,
-                    "输入输出总电流上限": "200"
-                },
-                "num": 2
+                "directDistribution": {},
+                "num": null
             },
             "directCurrentCableInfo": {
                 "directCurrentCable": {
@@ -295,8 +240,7 @@
             }
         },
         "transformer": {
-            "type": "10kv",
-            "groupInverter": {}
+            "type": "10kv"
         },
         "parameters": {
             "AA": 0.9575,

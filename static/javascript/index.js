@@ -321,8 +321,6 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
 pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData, gainData) {
     $scope.meteorologyInfo = {
         type: 'db',
-        minTem: '',
-        maxTem: '',
         monthinfos: [],
         monthavgs: {
             H: '',
