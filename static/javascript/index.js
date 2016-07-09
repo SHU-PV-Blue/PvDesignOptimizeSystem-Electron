@@ -728,7 +728,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
 
         var W1 = w * $scope.userDesignInfo.rowsPerFixture;
         console.log(''+w+','+dip+','+lat+','+$scope.userDesignInfo.rowsPerFixture);
-        return W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lat) + 0.4338) / (0.707 - 0.4338 * tan(lat));
+        return (W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lat) + 0.4338) / (0.707 - 0.4338 * tan(lat))).toFixed(2);
     }
 
     function compute_numPerRow() {                               //计算每行支架数
@@ -1384,17 +1384,24 @@ pvModule.controller('efficiencyAnalysisCtrl',function($scope, $location, project
 
     $scope.data = {
         loss : [2.8, 10, 3, 3, 2.2, 2, 4, 1, 0.5, 5],
-        lossTotal : 0
+        lossTotal : 0,
+        runYears : 10
     };
 
     $scope.$watch('data.loss',function(){
         var total = 0;
         for(var i = 0; i < $scope.data.loss.length; i++){
-            total += $scope.data.loss[i];
+            total += Number($scope.data.loss[i]);
         }
         $scope.data.lossTotal = total;
     },true);
 
+    $scope.show = [true,false,false];
+    $scope.showMe = function(index){
+        for(var i = 0; i < $scope.show.length; i++){
+            $scope.show[i] = i == index;
+        }
+    };
 
     var componentInfo = projectData.getData('componentInfo');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
@@ -1406,13 +1413,23 @@ pvModule.controller('efficiencyAnalysisCtrl',function($scope, $location, project
         H.push(monthinfo.H);
     });
 
-    $scope.chartData = [
+    $scope.chartData0 = [
         []
     ];
+    $scope.chartData1 = [];
+    $scope.chartData2 = [];
 
     for(var i = 1; i <= 12; i++ ){
-        $scope.chartData[0].push(getH_t(i,H[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az));
+        $scope.chartData0[0].push(getH_t(i,H[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az));
     }
+    $scope.$watch('data.lossTotal',function(){
+        $scope.chartData1.push($scope.chartData0[0].map(function(item){
+            return item*($scope.data.lossTotal / 100);
+        }));
+        $scope.chartData2.push($scope.chartData0[0].map(function(item){
+            return item*(1 - $scope.data.lossTotal / 100);
+        }));
+    });
 
     $scope.labelsMonth = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -1444,7 +1461,7 @@ pvModule.controller('benefitCtrl',function($scope, $location,projectData){
  */
 pvModule.controller('parametersCtrl',function($scope, $location, projectData){
 
-    $scope.defaultParameters = {
+    $scope.parameters = {
         AA : 0.9575,
         AB : 0.45927,
         AC : 0.42,
@@ -1485,10 +1502,10 @@ pvModule.controller('parametersCtrl',function($scope, $location, projectData){
         MY : 0.0655
     };
 
-    $scope.defaultParameters.BE = $scope.defaultParameters.BB * (12 / $scope.defaultParameters.BC);
+    $scope.parameters.BE = $scope.parameters.BB * (12 / $scope.parameters.BC);
 
     $scope.save = function(){
-        projectData.addOrUpdateData($scope.defaultParameters,'parameters');
+        projectData.addOrUpdateData($scope.parameters,'parameters');
         projectData.saveToLocal();
         $location.path('/8');
     };
@@ -1962,11 +1979,15 @@ pvModule.controller('profitPeriodCtrl',function($scope, $location, projectData){
     $scope.series =['债务偿还图','投资回收期图'];
 
     $scope.chartData1 = [
-        $scope.data.MG
+        $scope.data.MG.map(function(item){
+            return item / 10000;
+        })
     ];
 
     $scope.chartData2 = [
-        $scope.data.MQ
+        $scope.data.MQ.map(function(item){
+            return item / 10000;
+        })
     ];
 
     $scope.back = function(){

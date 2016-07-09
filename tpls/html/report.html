@@ -1,70 +1,105 @@
 <div ng-controller="reportCtrl">
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">基本信息</h3>
-                </div>
-                <div class="panel-body">
-                    规模： {{data.capacity}} KW
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">安装方式</h3>
-                </div>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>阵列跟踪方式</th>
-                        <th>倾角</th>
-                        <th>方位角</th>
-                    </tr>
-                    <tr>
-                        <td>固定方式</td>
-                        <td>{{data.dip}}</td>
-                        <td>{{data.az}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <table class="table">
+            <tr>
+                <td>项目名称：</td>
+                <td></td>
+                <td>设计时间：</td>
+                <td></td>
+                <td>总装机容量</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>地理位置：</td>
+                <td><img ng-src="{{ getMapPath() }}"></td>
+                <td>经度：</td>
+                <td>{{data.lng}}</td>
+                <td>纬度：</td>
+                <td>{{data.lat}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">固定式安装方式</td>
+                <td>倾角：</td>
+                <td>{{data.dip}}</td>
+                <td>方位角：</td>
+                <td>{{data.az}}</td>
+            </tr>
+            <tr>
+                <td>光伏阵列：</td>
+                <td></td>
+                <td>阵列占地面积：</td>
+                <td></td>
+                <td>阵列前后支架间距：</td>
+                <td></td>
+            </tr>
+        </table>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">地理位置</h3>
-                </div>
-                <div class="panel-body">
-                    <img ng-src="{{ getMapPath() }}">
-                </div>
-                <div class="panel-footer">
-                    经度：{{data.lng}} &nbsp;&nbsp;&nbsp;&nbsp;纬度：{{data.lat}}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">设备表</h3>
-                </div>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>设备类型</th>
-                        <th>型号</th>
-                        <th>个数</th>
-                        <th>价格</th>
-                    </tr>
-                    <tr>
-                        <td>aaa</td>
-                        <td>p2-5</td>
-                        <td>6</td>
-                        <td>34</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+    <!--<div class="row">-->
+        <!--<div class="col-md-4">-->
+            <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">基本信息</h3>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                    <!--规模： {{data.capacity}} KW-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-7">-->
+            <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">安装方式</h3>-->
+                <!--</div>-->
+                <!--<table class="table table-bordered">-->
+                    <!--<tr>-->
+                        <!--<th>阵列跟踪方式</th>-->
+                        <!--<th>倾角</th>-->
+                        <!--<th>方位角</th>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>固定方式</td>-->
+                        <!--<td>{{data.dip}}</td>-->
+                        <!--<td>{{data.az}}</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row">-->
+        <!--<div class="col-md-4">-->
+            <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">地理位置</h3>-->
+                <!--</div>-->
+                <!--<div class="panel-body">-->
+                    <!--<img ng-src="{{ getMapPath() }}">-->
+                <!--</div>-->
+                <!--<div class="panel-footer">-->
+                    <!--经度：{{data.lng}} &nbsp;&nbsp;&nbsp;&nbsp;纬度：{{data.lat}}-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-7">-->
+            <!--<div class="panel panel-primary">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h3 class="panel-title">设备表</h3>-->
+                <!--</div>-->
+                <!--<table class="table table-bordered">-->
+                    <!--<tr>-->
+                        <!--<th>设备类型</th>-->
+                        <!--<th>型号</th>-->
+                        <!--<th>个数</th>-->
+                        <!--<th>价格</th>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td>aaa</td>-->
+                        <!--<td>p2-5</td>-->
+                        <!--<td>6</td>-->
+                        <!--<td>34</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
     <button class="btn btn-primary" ng-click="back()">返回</button>
 </div>
