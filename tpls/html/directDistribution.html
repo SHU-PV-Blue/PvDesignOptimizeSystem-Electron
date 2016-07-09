@@ -36,9 +36,17 @@
         <div class="col-md-3">
             <form role="form">
                <div class="form-group">
-                  <label for="every-group">配电柜数</label>
-                  <input type="text" class="form-control" id="every-group" ng-model="directDistributionInfo.num">
+                  <label>配电柜数</label>
+                  <input type="text" class="form-control" ng-model="directDistributionInfo.num">
                </div>
+                <div class="form-group">
+                    <label>配电柜输入路数</label>
+                    <input type="text" class="form-control" ng-model="directDistributionInfo.branches">
+                </div>
+                <div class="form-group">
+                    <label>每台逆变器接入配电柜数</label>
+                    <input type="text" class="form-control" ng-model="directDistributionInfo.numPerInverter">
+                </div>
             </form>
         </div>
     </div>

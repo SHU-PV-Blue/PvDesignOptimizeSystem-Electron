@@ -86,24 +86,6 @@ html,body{
     line-height:40px;
     border-radius: 0 0 2px 2px;
 }
-.task-finish{
-    color: #419641;
-}
-.task-todo{
-    position: relative;
-    color: #2b669a;
-    animation:up-down 1s infinite;
-}
-.task-ban{
-    color: #b92c28;
-}
-@keyframes up-down {
-    0%   {top:0px;}
-    25%  {top:3px;}
-    75%  {top:-3px;}
-    100% {top:0px;}
-}
-
 .op-row{
     margin: 50px;
 }

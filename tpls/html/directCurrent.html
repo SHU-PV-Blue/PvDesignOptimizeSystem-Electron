@@ -48,9 +48,17 @@
         <div class="col-md-3">
             <form role="form">
                <div class="form-group">
-                  <label for="every-group">汇流箱数</label>
-                  <input type="text" class="form-control" id="every-group" ng-model="directCurrentInfo.num">
+                  <label>汇流箱数</label>
+                  <input type="text" class="form-control" ng-model="directCurrentInfo.num">
                </div>
+                <div class="form-group">
+                    <label>汇流箱输入路数</label>
+                    <input type="text" class="form-control" ng-model="directCurrentInfo.branches">
+                </div>
+                <div class="form-group">
+                    <label>每台逆变器接入汇流箱数</label>
+                    <input type="text" class="form-control" ng-model="directCurrentInfo.numPerInverter">
+                </div>
             </form>
         </div>
     </div>

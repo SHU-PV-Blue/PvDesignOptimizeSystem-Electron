@@ -844,8 +844,6 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
         });
         modalInstance.result.then(function (data) {
             $scope.obj[data.name] = data.obj;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
         });
     };
 
@@ -868,6 +866,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
         totalOpacity: 0
     };
 
+    $scope.load = false;
     $scope.items = [];
     $scope.selected = '{}';
 
@@ -914,9 +913,11 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     function compute_inverterNumNeeded(){
         var userDesignInfo = projectData.getData('userDesignInfo');
-        var capacity = userDesignInfo.componentDirection === 'horizontal'? userDesignInfo.area.totalCapacity : userDesignInfo.capacity.totalCapacity;
+        var capacity = userDesignInfo.designType == 'area'? userDesignInfo.area.totalCapacity : userDesignInfo.capacity.totalCapacity;
+        //console.log(capacity * $scope.centralizedInverterInfo.volumeRatio)
+        //console.log($scope.centralizedInverterInfo.serialNumPerBranch * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率']/1000))
         return Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
-            * $scope.centralizedInverterInfo.branchNumPerInverter * componentInfo['峰值功率']));
+            * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率']/1000)));
     }
 
     function compute_totalOpacity(){
@@ -925,9 +926,11 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     }
 
     $scope.getData = function () {
+        $scope.load = true;
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
             .then(function (data) {
                 $scope.items = data.data;
+                $scope.load = false;
             });
     };
 
@@ -949,7 +952,9 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, parentObj, gainData) {
     $scope.directCurrentInfo = {
         directCurrent : {},
-        num : 0
+        num : 0,
+        branches : 0,
+        numPerInverter : 0
     };
 
     $scope.items = [];
@@ -957,11 +962,20 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 
     $scope.$watch('selected', function (newVal) {
         $scope.directCurrentInfo.directCurrent = JSON.parse(newVal);
+        $scope.directCurrentInfo.branches = $scope.directCurrentInfo.directCurrent['输入路数'];
+    });
+
+    $scope.$watch('directCurrentInfo.branches',function(){
+        $scope.directCurrentInfo.numPerInverter = compute_numPerInverter();
         $scope.directCurrentInfo.num = compute_num();
     });
 
     function compute_num(){
-        return Math.ceil(parentObj.centralizedInverterInfo.branchNumPerInverter / $scope.directCurrentInfo.directCurrent['输入路数']);
+        return $scope.directCurrentInfo.numPerInverter * parentObj.centralizedInverterInfo.inverterNumNeeded;
+    }
+
+    function compute_numPerInverter(){
+        return Math.ceil(parentObj.centralizedInverterInfo.branchNumPerInverter / $scope.directCurrentInfo.branches);
     }
 
     $scope.getData = function () {
@@ -989,7 +1003,9 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstance,parentObj ,gainData) {
     $scope.directDistributionInfo = {
         directDistribution : {},
-        num : 0
+        num : 0,
+        branches : 0,
+        numPerInverter : 0
     };
 
     $scope.items = [];
@@ -997,11 +1013,20 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 
     $scope.$watch('selected', function (newVal) {
         $scope.directDistributionInfo.directDistribution = JSON.parse(newVal);
+        $scope.directDistributionInfo.branches = $scope.directDistributionInfo.directDistribution['接入直流路数'];
+    });
+
+    $scope.$watch('directDistributionInfo.branches',function(){
+        $scope.directDistributionInfo.numPerInverter = compute_numPerInverter();
         $scope.directDistributionInfo.num = compute_num();
     });
 
+    function compute_numPerInverter(){
+        return Math.ceil(parentObj.directCurrentInfo.numPerInverter / $scope.directDistributionInfo.branches);
+    }
+
     function compute_num(){
-        return Math.ceil(parentObj.directCurrentInfo.num / $scope.directDistributionInfo.directDistribution['接入直流路数']);
+        return $scope.directDistributionInfo.numPerInverter * parentObj.centralizedInverterInfo.inverterNumNeeded;
     }
 
     $scope.getData = function () {
@@ -1164,7 +1189,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'groupInverter',
+            name: 'groupInverterInfo',
             selected: $scope.show
         });
     };
@@ -1247,9 +1272,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
             backdrop: false
         });
         modalInstance.result.then(function (data) {
-            $scope.obj[data.name] = data.selected;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+            $scope.obj[data.name] = data.obj;
         });
     }
 });
@@ -1260,8 +1283,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
 pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
     $scope.lowSwitchInfo = {
         lowSwitch: {},
-        serialNumPerSwitch: 2,
-        switchNum: 0
+        num: 0
     };
 
     $scope.items = [];
@@ -1269,24 +1291,17 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 
     $scope.$watch('selected', function (newVal) {
         $scope.lowSwitchInfo.lowSwitch = JSON.parse(newVal);
-        computeSwitchNum();
     });
 
-    var inverter = projectData.getData("inverter");
-    var inverterNum = 0;
-    if( inverter.type === "centralized"){
-        inverterNum = inverter.centralizedInverter.inverterNumNeeded;
+    var chooseInverter = projectData.getData('chooseInverter');
+    var inverter;
+    if(chooseInverter.type == 'centralized'){
+        inverter = chooseInverter.centralizedInverterInfo;
     }else{
-
+        inverter = chooseInverter.groupInverterInfo;
     }
 
-    function computeSerialNumPerSwitch(){
-
-    }
-
-    function computeSwitchNum(){
-        $scope.lowSwitchInfo.switchNum = Math.ceil(inverterNum / $scope.lowSwitchInfo.serialNumPerSwitch);
-    }
+    $scope.lowSwitchInfo.num = inverter.inverterNumNeeded;
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=低压')
@@ -1297,8 +1312,8 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'lowSwitch',
-            selected: $scope.lowSwitchInfo
+            name: 'lowSwitchInfo',
+            obj: $scope.lowSwitchInfo
         });
     };
 

@@ -7,34 +7,37 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <form class="form-inline" role="form">
-                        <div class="form-group">
-                            <input type="radio" ng-model="obj.type" value="10kv" checked id="10kv">
-                            <label for="10kv">10KV</label>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="form-group">
-                            <input type="radio" ng-model="obj.type" value="35kv" id="35kv">
-                            <label for="35kv">35KV</label>
-                        </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="form-group">
-                            <input type="radio" ng-model="obj.type" value="380v" id="380v">
-                            <label for="380v">380V</label>
-                        </div>
-                    </form>
+                    <div class="col-md-12">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <input type="radio" ng-model="obj.type" value="10kv" checked id="10kv">
+                                <label for="10kv">10KV</label>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <input type="radio" ng-model="obj.type" value="35kv" id="35kv">
+                                <label for="35kv">35KV</label>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group">
+                                <input type="radio" ng-model="obj.type" value="380v" id="380v">
+                                <label for="380v">0.38KV</label>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="row" id="select-switch-cabinet">
-                    <div class="col-md-3" id="low-voltage-switchgear">
-                        <div class="switch-cabinet" ng-click="showForm('low_10_35')" ng-show="show_10 || show_35">低压开关柜</div>
-                        <div class="switch-cabinet" ng-click="showForm('low_380')" ng-show="show_380">低压开关柜</div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-block btn-primary" ng-click="showForm('low_10_35')" ng-show="show_10 || show_35">低压开关柜</button>
+                        <button class="btn btn-block btn-primary" ng-click="showForm('low_380')" ng-show="show_380">低压开关柜</button>
                     </div>
-                    <div class="col-md-3 col-md-offset-1" id="step-up-transformer">
-                        <div class="switch-cabinet" ng-click="showForm('up_10')" ng-show="show_10">升压变压器</div>
-                        <div class="switch-cabinet" ng-click="showForm('up_35')" ng-show="show_35">升压变压器</div>
+                    <div class="col-md-4">
+                        <button class="btn btn-block btn-primary" ng-click="showForm('up_10')" ng-show="show_10">升压变压器</button>
+                        <button class="btn btn-block btn-primary" ng-click="showForm('up_35')" ng-show="show_35">升压变压器</button>
                     </div>
-                    <div class="col-md-3 col-md-offset-1" id="high-voltage-switchgear">
-                        <div class="switch-cabinet" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</div>
+                    <div class="col-md-4">
+                        <button class="btn btn-block btn-primary" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</button>
                     </div>
                 </div>
             </div>
