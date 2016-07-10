@@ -2105,26 +2105,73 @@ pvModule.controller('overallIndexCtrl',function($scope, $location, projectData){
  */
 pvModule.controller('reportCtrl',function($scope, $location, projectData){
 
+    var basicInfo = projectData.getData('basicInfo');
     var angleInfo = projectData.getData('angleInfo');
+    var userDesign = projectData.getData("userDesignInfo");
     var meteorologyInfo = projectData.getData('meteorologyInfo');
+    var investmentCosts = projectData.getData('investmentCosts');
 
     $scope.getMapPath = function(){
         return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
-    } ;
-
-    $scope.data = {
-        capacity : 0,
-        dip : angleInfo.dip,
-        az : angleInfo.az,
-        lat : meteorologyInfo.lat,
-        lng : meteorologyInfo.lng
     };
 
-    var userDesign = projectData.getData("userDesignInfo");
+    $scope.data = {
+        projectInfo : {
+            projectName : basicInfo.projectName,
+            designTime : basicInfo.projectDate,
+            capacity : 0,
+            dip : angleInfo.dip,
+            az : angleInfo.az,
+            arrayArea : 0,
+            arrayfbspace : 0,
+            lat : meteorologyInfo.lat,
+            lng : meteorologyInfo.lng
+        },
+        meteorology : {
+            temperature : [],
+            HT : []
+        },
+        device : {
+
+        },
+        electricity : {
+            yearCapacity : 0,
+            yearHT : 0,
+            yearEfficient : 0
+        },
+        profit : {
+            totalCost : 0,
+            designCost : investmentCosts.data2.DG,
+            deviceCost : investmentCosts.data2.DF,
+            constructionCost : investmentCosts.data2.DH,
+            supervisionCost : investmentCosts.data2.DI,
+            otherCost : investmentCosts.data2.DJ,
+            projectBuildCost : 0,
+            buildPeriod : 0,
+            profitPeriod : 0,
+            yearProfit : 0
+        }
+    };
+
+    meteorologyInfo.monthinfos.forEach(function(monthinfo){
+        $scope.data.meteorology.temperature.push(monthinfo.temperature);
+        $scope.data.meteorology.HT.push(monthinfo.H);
+    });
+
     if(userDesign.designType === "area"){
-        $scope.data.capacity = userDesign.area.totalCapacity;
+        $scope.data.projectInfo.capacity = userDesign.area.totalCapacity;
+        $scope.data.projectInfo.arrayArea = userDesign.area.totalArea;
+        $scope.data.projectInfo.arrayfbspace = userDesign.fbspace;
     }else{
-        $scope.data.capacity = userDesign.capacity.totalCapacity;
+        $scope.data.projectInfo.capacity = userDesign.capacity.totalCapacity;
+    }
+
+    $scope.labelsMonth = [1,2,3,4,5,6,7,8,9,10,11,12];
+    $scope.HChartData = [
+        []
+    ];
+    for(var i = 1; i <= 12; i++ ){
+        $scope.HChartData[0].push(getH_t(i,$scope.data.meteorology.HT[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az));
     }
 
     $scope.back = function(){

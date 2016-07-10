@@ -1,12 +1,12 @@
 {
     "projectData": {
         "basicInfo": {
-            "projectName": "",
-            "projectAddress": "",
-            "userName": "",
-            "remark": "",
-            "lng": "121.462771",
-            "lat": "31.290581",
+            "projectName": "上海大学光伏",
+            "projectAddress": "上海大学",
+            "userName": "shu",
+            "remark": "good",
+            "lng": "121.416777",
+            "lat": "31.217479",
             "projectDate": "2016-06-27T06:08:18.183Z"
         },
         "meteorologyInfo": {
@@ -21,7 +21,7 @@
                     "Hd": 1.1,
                     "Ws": 76.8,
                     "wind": 6.22,
-                    "$$hashKey": "object:194"
+                    "$$hashKey": "object:383"
                 },
                 {
                     "H": 3.09,
@@ -32,7 +32,7 @@
                     "Hd": 1.41,
                     "Ws": 82.4,
                     "wind": 6.2,
-                    "$$hashKey": "object:195"
+                    "$$hashKey": "object:384"
                 },
                 {
                     "H": 3.53,
@@ -43,7 +43,7 @@
                     "Hd": 1.81,
                     "Ws": 88.9,
                     "wind": 5.68,
-                    "$$hashKey": "object:196"
+                    "$$hashKey": "object:385"
                 },
                 {
                     "H": 4.28,
@@ -54,7 +54,7 @@
                     "Hd": 2.18,
                     "Ws": 95.9,
                     "wind": 5.42,
-                    "$$hashKey": "object:197"
+                    "$$hashKey": "object:386"
                 },
                 {
                     "H": 4.84,
@@ -65,7 +65,7 @@
                     "Hd": 2.44,
                     "Ws": 101,
                     "wind": 5.01,
-                    "$$hashKey": "object:198"
+                    "$$hashKey": "object:387"
                 },
                 {
                     "H": 4.58,
@@ -76,7 +76,7 @@
                     "Hd": 2.53,
                     "Ws": 104,
                     "wind": 5.2,
-                    "$$hashKey": "object:199"
+                    "$$hashKey": "object:388"
                 },
                 {
                     "H": 5.17,
@@ -87,7 +87,7 @@
                     "Hd": 2.47,
                     "Ws": 103,
                     "wind": 5.37,
-                    "$$hashKey": "object:200"
+                    "$$hashKey": "object:389"
                 },
                 {
                     "H": 4.78,
@@ -98,7 +98,7 @@
                     "Hd": 2.25,
                     "Ws": 98.4,
                     "wind": 5.24,
-                    "$$hashKey": "object:201"
+                    "$$hashKey": "object:390"
                 },
                 {
                     "H": 4.07,
@@ -109,7 +109,7 @@
                     "Hd": 1.92,
                     "Ws": 91.8,
                     "wind": 5.51,
-                    "$$hashKey": "object:202"
+                    "$$hashKey": "object:391"
                 },
                 {
                     "H": 3.36,
@@ -120,7 +120,7 @@
                     "Hd": 1.53,
                     "Ws": 84.8,
                     "wind": 5.44,
-                    "$$hashKey": "object:203"
+                    "$$hashKey": "object:392"
                 },
                 {
                     "H": 2.79,
@@ -131,7 +131,7 @@
                     "Hd": 1.17,
                     "Ws": 78.6,
                     "wind": 5.83,
-                    "$$hashKey": "object:204"
+                    "$$hashKey": "object:393"
                 },
                 {
                     "H": 2.58,
@@ -142,7 +142,7 @@
                     "Hd": 0.99,
                     "Ws": 75.2,
                     "wind": 5.94,
-                    "$$hashKey": "object:205"
+                    "$$hashKey": "object:394"
                 }
             ],
             "monthavgs": {
@@ -151,8 +151,8 @@
                 "humidity": "78.31",
                 "wind": "5.59"
             },
-            "lng": "121.462771",
-            "lat": "31.290581"
+            "lng": "121.416777",
+            "lat": "31.217479"
         },
         "componentInfo": {
             "id": 31,
@@ -176,26 +176,26 @@
             "长度": 1978
         },
         "angleInfo": {
-            "dip": 26,
-            "bestDipH": 24,
-            "bestDipG": 26,
-            "az": 0,
-            "max": 1.0762081439528046,
-            "max_H": 48.146933250149885
+            "dip": 25,
+            "bestDipH": 23,
+            "bestDipG": 25,
+            "az": "13",
+            "max": 1.0716707246895456,
+            "max_H": 47.963285095759396
         },
         "userDesignInfo": {
             "componentDirection": "vertical",
             "designType": "area",
             "rowsPerFixture": 2,
             "colsPerFixture": 2,
-            "fbspace": 6.93,
+            "fbspace": 6.83,
             "lrspace": 0,
             "area": {
                 "length": "23",
                 "width": "34",
                 "numPerRow": 11,
                 "rowsNum": 4,
-                "fbRestSpace": "6.28",
+                "fbRestSpace": "6.68",
                 "lrRestSpace": "1.18",
                 "componentsNum": 176,
                 "totalArea": 782,
@@ -211,24 +211,24 @@
                 "centralizedInverter": {
                     "MPP电压上限": 850,
                     "MPP电压下限": 460,
-                    "id": 6,
+                    "id": 2,
                     "厂家": "阳光电源",
                     "启动电压": 500,
-                    "型号": "SG630MX",
-                    "最大交流输出电流": 1280,
+                    "型号": "SG500MX",
+                    "最大交流输出电流": 1008,
                     "最大效率": 98.7,
-                    "最大直流输入功率": 714000,
-                    "最大直流输入电流": 1552,
+                    "最大直流输入功率": 560000,
+                    "最大直流输入电流": 1220,
                     "最大输入电压": 1000,
-                    "最大输出功率": 700000,
-                    "额定交流输出功率": 630000,
+                    "最大输出功率": 550000,
+                    "额定交流输出功率": 500000,
                     "额定电网电压": 315
                 },
                 "serialNumPerBranch": 16,
-                "branchNumPerInverter": 142,
+                "branchNumPerInverter": 112,
                 "volumeRatio": 1.05,
                 "inverterNumNeeded": 1,
-                "totalOpacity": 715680
+                "totalOpacity": 564480
             },
             "directCurrentInfo": {
                 "directCurrent": {
@@ -295,11 +295,7 @@
             }
         },
         "transformer": {
-            "type": "10kv",
-            "lowSwitchInfo": {
-                "lowSwitch": {},
-                "num": 1
-            }
+            "type": "10kv"
         },
         "parameters": {
             "AA": 0.9575,

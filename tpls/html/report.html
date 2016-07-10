@@ -3,29 +3,30 @@
         <div class="col-md-11">
             <table class="report-info" style="width:100%;table-layout:fixed">
                 <tr>
-                    <td>项目名称：</td>
-                    <td>设计时间：</td>
-                    <td>总装机容量：</td>
+                    <td>项目名称：{{data.projectInfo.projectName}}</td>
+                    <td>设计时间：{{data.projectInfo.designTime | date:'yyyy-MM-dd'}}</td>
+                    <td>总装机容量：{{data.projectInfo.capacity}}KW</td>
                     <td rowspan="4"><img ng-src="{{ getMapPath() }}" style="width: 100%; height: 100%"></td>
                 </tr>
                 <tr>
                     <td>固定安装方式</td>
-                    <td>方位角：{{data.dip}}</td>
-                    <td>倾角：{{data.az}}</td>
+                    <td>方位角：{{data.projectInfo.dip}}</td>
+                    <td>倾角：{{data.projectInfo.az}}</td>
                 </tr>
                 <tr>
                     <td>光伏阵列</td>
-                    <td>阵列占地面积：</td>
-                    <td>阵列前后支架间距：</td>
+                    <td>阵列占地面积：{{data.projectInfo.arrayArea}}</td>
+                    <td>阵列前后支架间距：{{data.projectInfo.arrayfbspace | number:2}}</td>
                 </tr>
                 <tr>
-                    <td>经度：{{data.lng}}</td>
-                    <td>纬度：{{data.lat}}</td>
+                    <td>经度：{{data.projectInfo.lng | number:2}}</td>
+                    <td>纬度：{{data.projectInfo.lat | number:2}}</td>
                     <td></td>
                 </tr>
             </table>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-11">
             <table class="table table-bordered">
@@ -47,37 +48,16 @@
                 </tr>
                 <tr>
                     <td>辐照度</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td ng-repeat="h in data.meteorology.HT">{{h}}</td>
                 </tr>
                 <tr>
                     <td>温度</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td ng-repeat="t in data.meteorology.temperature">{{t}}</td>
                 </tr>
             </table>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-11">
             <table class="table table-bordered">
@@ -113,22 +93,36 @@
             </table>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-11">
             <table class="table table-bordered">
                 <tr>
-                    <th>系统年总发电量：</th>
-                    <th>系统年总辐射量：</th>
-                    <th>系统年总发电效率：</th>
+                    <th>系统年总发电量：{{data.electricity.yearCapacity}}</th>
+                    <th>系统年总辐射量：{{data.electricity.yearHT}}</th>
+                    <th>系统年总发电效率：{{data.electricity.yearEfficient}}</th>
                 </tr>
                 <tr>
-                    <td>发电量月分布图</td>
-                    <td>确定倾角下每月辐照度图</td>
-                    <td>损耗表（饼图）</td>
+                    <td>
+                        <canvas class="chart chart-line" chart-data="HChartData"
+                                chart-labels="labelsMonth" chart-options="options">
+                        </canvas>
+                    </td>
+                    <td>
+                        <canvas class="chart chart-line" chart-data="HChartData"
+                                chart-labels="labelsMonth" chart-options="options">
+                        </canvas>
+                    </td>
+                    <td>
+                        <canvas class="chart chart-line" chart-data="HChartData"
+                                chart-labels="labelsMonth" chart-options="options">
+                        </canvas>
+                    </td>
                 </tr>
             </table>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-11">
             <table class="table table-bordered">
@@ -140,57 +134,58 @@
                 </tr>
                 <tr>
                     <td>项目总现金支出</td>
-                    <td></td>
+                    <td>{{data.profit.totalCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>其中：设计费</td>
-                    <td></td>
+                    <td>{{data.profit.designCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>设备费</td>
-                    <td></td>
+                    <td>{{data.profit.deviceCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>建安费</td>
-                    <td></td>
+                    <td>{{data.profit.constructionCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>监理费</td>
-                    <td></td>
+                    <td>{{data.profit.supervisionCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>其他费用</td>
-                    <td></td>
+                    <td>{{data.profit.otherCost | number:1}}</td>
                     <td>含税</td>
                 </tr>
                 <tr>
                     <td>项目建设成本</td>
-                    <td></td>
+                    <td>{{data.profit.projectBuildCost}}</td>
                     <td>不含税</td>
                 </tr>
                 <tr>
                     <td>建设期</td>
-                    <td></td>
+                    <td>{{data.profit.buildPeriod}}</td>
                     <td>月</td>
                 </tr>
                 <tr>
                     <td>收益期</td>
-                    <td></td>
+                    <td>{{data.profit.profitPeriod}}</td>
                     <td>年</td>
                 </tr>
                 <tr>
                     <td>年总收入</td>
-                    <td></td>
+                    <td>{{data.profit.yearProfit}}</td>
                     <td>不含税</td>
                 </tr>
             </table>
         </div>
     </div>
+    <hr>
     <div class="row">
         <div class="col-md-5">
             债务偿还图
@@ -199,72 +194,5 @@
             投资回收期图
         </div>
     </div>
-    <!--<div class="row">-->
-        <!--<div class="col-md-4">-->
-            <!--<div class="panel panel-primary">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">基本信息</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                    <!--规模： {{data.capacity}} KW-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-7">-->
-            <!--<div class="panel panel-primary">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">安装方式</h3>-->
-                <!--</div>-->
-                <!--<table class="table table-bordered">-->
-                    <!--<tr>-->
-                        <!--<th>阵列跟踪方式</th>-->
-                        <!--<th>倾角</th>-->
-                        <!--<th>方位角</th>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>固定方式</td>-->
-                        <!--<td>{{data.dip}}</td>-->
-                        <!--<td>{{data.az}}</td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-4">-->
-            <!--<div class="panel panel-primary">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">地理位置</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                    <!--<img ng-src="{{ getMapPath() }}">-->
-                <!--</div>-->
-                <!--<div class="panel-footer">-->
-                    <!--经度：{{data.lng}} &nbsp;&nbsp;&nbsp;&nbsp;纬度：{{data.lat}}-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-7">-->
-            <!--<div class="panel panel-primary">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="panel-title">设备表</h3>-->
-                <!--</div>-->
-                <!--<table class="table table-bordered">-->
-                    <!--<tr>-->
-                        <!--<th>设备类型</th>-->
-                        <!--<th>型号</th>-->
-                        <!--<th>个数</th>-->
-                        <!--<th>价格</th>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td>aaa</td>-->
-                        <!--<td>p2-5</td>-->
-                        <!--<td>6</td>-->
-                        <!--<td>34</td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
     <button class="btn btn-primary" ng-click="back()">返回</button>
 </div>
