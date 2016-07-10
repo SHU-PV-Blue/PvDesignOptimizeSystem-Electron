@@ -96,3 +96,19 @@ html,body{
 .report-info td{
     text-align: left;
 }
+
+.directCurrentCable{
+    table-layout: fixed;
+}
+.directCurrentCable td{
+    width: 100px;
+    height: 100px;
+}
+.directCurrentCable img{
+    width: 100%;
+    height: 100%;
+}
+.directCurrentCable .arrows{
+    height: 10px;
+    cursor: pointer;
+}

@@ -2110,6 +2110,8 @@ pvModule.controller('reportCtrl',function($scope, $location, projectData){
     var userDesign = projectData.getData("userDesignInfo");
     var meteorologyInfo = projectData.getData('meteorologyInfo');
     var investmentCosts = projectData.getData('investmentCosts');
+    var profitPeriod = projectData.getData('profitPeriod');
+    var parameters = projectData.getData('parameters');
 
     $scope.getMapPath = function(){
         return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
@@ -2167,12 +2169,33 @@ pvModule.controller('reportCtrl',function($scope, $location, projectData){
     }
 
     $scope.labelsMonth = [1,2,3,4,5,6,7,8,9,10,11,12];
+    $scope.labelsYear = [];
+    $scope.lossLabel = ['损耗','发电量'];
+    for(var i = 0; i < parameters.BB; i++){
+        $scope.labelsYear.push(i+1+'');
+    }
+
     $scope.HChartData = [
         []
     ];
+    $scope.lossChartData = [
+        300,800
+    ];
     for(var i = 1; i <= 12; i++ ){
-        $scope.HChartData[0].push(getH_t(i,$scope.data.meteorology.HT[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az));
+        $scope.HChartData[0].push(Number((getH_t(i,$scope.data.meteorology.HT[i-1]*1000,meteorologyInfo.lat,angleInfo.dip,angleInfo.az)).toFixed(2)));
     }
+
+    $scope.debtChartData = [
+        profitPeriod.MG.map(function(item){
+            return Number((item / 10000).toFixed(1));
+        })
+    ];
+
+    $scope.investChartData = [
+        profitPeriod.MQ.map(function(item){
+            return Number((item / 10000).toFixed(1));
+        })
+    ];
 
     $scope.back = function(){
         projectData.setFinished("report");

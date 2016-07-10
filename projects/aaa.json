@@ -176,26 +176,26 @@
             "长度": 1978
         },
         "angleInfo": {
-            "dip": 25,
-            "bestDipH": 23,
-            "bestDipG": 25,
-            "az": "13",
-            "max": 1.0716707246895456,
-            "max_H": 47.963285095759396
+            "dip": 26,
+            "bestDipH": 24,
+            "bestDipG": 26,
+            "az": 0,
+            "max": 1.0753724967092342,
+            "max_H": 48.11315726169288
         },
         "userDesignInfo": {
             "componentDirection": "vertical",
             "designType": "area",
             "rowsPerFixture": 2,
             "colsPerFixture": 2,
-            "fbspace": 6.83,
+            "fbspace": 6.92,
             "lrspace": 0,
             "area": {
                 "length": "23",
                 "width": "34",
                 "numPerRow": 11,
                 "rowsNum": 4,
-                "fbRestSpace": "6.68",
+                "fbRestSpace": "6.32",
                 "lrRestSpace": "1.18",
                 "componentsNum": 176,
                 "totalArea": 782,

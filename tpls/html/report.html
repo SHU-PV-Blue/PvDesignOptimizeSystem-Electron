@@ -103,6 +103,11 @@
                     <th>系统年总发电效率：{{data.electricity.yearEfficient}}</th>
                 </tr>
                 <tr>
+                    <td>月发电量图</td>
+                    <td>月辐照度图</td>
+                    <td>损耗图</td>
+                </tr>
+                <tr>
                     <td>
                         <canvas class="chart chart-line" chart-data="HChartData"
                                 chart-labels="labelsMonth" chart-options="options">
@@ -114,8 +119,8 @@
                         </canvas>
                     </td>
                     <td>
-                        <canvas class="chart chart-line" chart-data="HChartData"
-                                chart-labels="labelsMonth" chart-options="options">
+                        <canvas class="chart chart-pie" chart-data="lossChartData"
+                                chart-labels="lossLabel" chart-options="options">
                         </canvas>
                     </td>
                 </tr>
@@ -187,12 +192,32 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-5">
-            债务偿还图
-        </div>
-        <div class="col-md-5">
-            投资回收期图
+        <div class="col-md-11">
+            <table class="table table-bordered" style="table-layout:fixed">
+                <tr>
+                    <tr>
+                        <th>债务偿还图</th>
+                        <th>投资回收期图</th>
+                    </tr>
+                    <td>
+                        年-万元
+                        <canvas class="chart chart-line" chart-data="debtChartData"
+                                chart-labels="labelsYear" chart-options="options">
+                        </canvas>
+                    </td>
+                    <td>
+                        年-万元
+                        <canvas  class="chart chart-line" chart-data="investChartData"
+                                    chart-labels="labelsYear" chart-options="options">
+                        </canvas>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <button class="btn btn-primary" ng-click="back()">返回</button>
+    <div class="row" style="margin: 20px 0;">
+        <div class="col-md-2">
+            <button class="btn btn-primary btn-block" ng-click="back()">返回</button>
+        </div>
+    </div>
 </div>
