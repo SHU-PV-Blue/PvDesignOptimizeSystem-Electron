@@ -10,7 +10,7 @@
             </div>
             <div class="col-md-8">
               <select ng-model="selected" class="form-control">
-                <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
+                <option ng-repeat="item in items" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}} </option>
               </select>
             </div>
           </div>
@@ -18,34 +18,38 @@
             <div class="col-md-12">
               <table class="table table-bordered">
                 <tr>
-                  <th>最大直流输入功率（W）</th>
-                  <th>最大输入电压（V）</th>
-                  <th>启动电压（V）</th>
-                  <th>MPP电压下限（V）</th>
-                  <th>MPP电压上限（V）</th>
-                  <th>最大直流输入电流（A）</th>
+                  <th>产品名</th>
+                  <th>分类</th>
+                  <th>额定容量</th>
+                  <th>类型</th>
                 </tr>
                 <tr>
-                  <td>{{show['最大直流输入功率']}} </td>
-                  <td>{{show['最大输入电压']}} </td>
-                  <td>{{show['启动电压']}} </td>
-                  <td>{{show['MPP电压下限']}} </td>
-                  <td>{{show['MPP电压上限']}} </td>
-                  <td>{{show['最大直流输入电流']}} </td>
+                  <td>{{transformerInfo.transformer['产品名']}}</td>
+                  <td>{{transformerInfo.transformer['分类']}}</td>
+                  <td>{{transformerInfo.transformer['额定容量']}}</td>
+                  <td>{{transformerInfo.transformer['类型']}} </td>
                 </tr>
                 <tr>
-                  <th>额定交流输出功率（W）</th>
-                  <th>最大输出功率（VA）</th>
-                  <th>最大交流输出电流（A）</th>
-                  <th>额定电网电压（V）</th>
-                  <th>最大效率（%）</th>
+                  <th>额定电压（V）</th>
+                  <th>高压分接范围</th>
+                  <th>联结组标号</th>
+                  <th>空载损耗（W）</th>
                 </tr>
                 <tr>
-                  <td>{{show['额定交流输出功率']}} </td>
-                  <td>{{show['最大输出功率']}} </td>
-                  <td>{{show['最大交流输出电流']}} </td>
-                  <td>{{show['额定电网电压']}} </td>
-                  <td>{{show['最大效率']}} </td>
+                  <td>{{transformerInfo.transformer['额定电压']}} </td>
+                  <td>{{transformerInfo.transformer['高压分接范围']}} </td>
+                  <td>{{transformerInfo.transformer['联结组标号']}} </td>
+                  <td>{{transformerInfo.transformer['空载损耗']}} </td>
+                </tr>
+                <tr>
+                  <th>负载损耗（W）</th>
+                  <th>空载电流（%）</th>
+                  <th>短路阻抗（%）</th>
+                </tr>
+                <tr>
+                  <td>{{transformerInfo.transformer['负载损耗']}} </td>
+                  <td>{{transformerInfo.transformer['空载电流']}} </td>
+                  <td>{{transformerInfo.transformer['短路阻抗']}} </td>
                 </tr>
               </table>
             </div>
@@ -54,12 +58,12 @@
         <div class="col-md-3">
             <form role="form">
                <div class="form-group">
-                  <label for="every-group">每台升压变压器串联逆变器的数量</label>
-                  <input type="text" class="form-control" id="every-group">
+                  <label>升压变压器串联逆变器的数量</label>
+                  <input type="text" class="form-control" ng-model="transformerInfo.serialNum">
                </div>
                <div class="2">
-                  <label for="2">升压变压器数量</label>
-                  <input type="text" class="form-control" id="2">
+                  <label>升压变压器数量</label>
+                  <input type="text" class="form-control" ng-model="transformerInfo.num">
                </div>
             </form>
         </div>

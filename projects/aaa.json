@@ -211,24 +211,24 @@
                 "centralizedInverter": {
                     "MPP电压上限": 850,
                     "MPP电压下限": 460,
-                    "id": 3,
+                    "id": 6,
                     "厂家": "阳光电源",
                     "启动电压": 500,
-                    "型号": "SG500MX睿版",
-                    "最大交流输出电流": 1008,
-                    "最大效率": 99,
-                    "最大直流输入功率": 560000,
-                    "最大直流输入电流": 1220,
+                    "型号": "SG630MX",
+                    "最大交流输出电流": 1280,
+                    "最大效率": 98.7,
+                    "最大直流输入功率": 714000,
+                    "最大直流输入电流": 1552,
                     "最大输入电压": 1000,
-                    "最大输出功率": 550000,
-                    "额定交流输出功率": 500000,
+                    "最大输出功率": 700000,
+                    "额定交流输出功率": 630000,
                     "额定电网电压": 315
                 },
                 "serialNumPerBranch": 16,
-                "branchNumPerInverter": 112,
+                "branchNumPerInverter": 142,
                 "volumeRatio": 1.05,
                 "inverterNumNeeded": 1,
-                "totalOpacity": 564480
+                "totalOpacity": 715680
             },
             "directCurrentInfo": {
                 "directCurrent": {
@@ -295,7 +295,11 @@
             }
         },
         "transformer": {
-            "type": "10kv"
+            "type": "10kv",
+            "lowSwitchInfo": {
+                "lowSwitch": {},
+                "num": 1
+            }
         },
         "parameters": {
             "AA": 0.9575,

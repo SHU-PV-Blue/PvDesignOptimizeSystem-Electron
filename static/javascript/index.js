@@ -1205,7 +1205,6 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
 pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibModal,projectData) {
     $scope['show_10'] = true;
     $scope['show_35'] = false;
-    $scope['show_380'] = false;
 
     $scope.obj = {
         type: "10kv"
@@ -1216,16 +1215,13 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
         if (newVal == "10kv") {
             $scope['show_10'] = true;
             $scope['show_35'] = false;
-            $scope['show_380'] = false;
         } else { //noinspection JSValidateTypes
             if (newVal == "35kv") {
                         $scope['show_10'] = false;
                         $scope['show_35'] = true;
-                        $scope['show_380'] = false;
                     } else {
                         $scope['show_10'] = false;
                         $scope['show_35'] = false;
-                        $scope['show_380'] = true;
                     }
         }
     });
@@ -1240,13 +1236,9 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
     $scope.showForm = function (name) {
         var templateUrl, controller;
         switch (name) {
-            case 'low_10_35':                //10,35kv低压开关柜
+            case 'low_10_35_380':                //低压开关柜
                 templateUrl = 'tpls/html/lowVoltage.html';
                 controller = 'low_10_35';
-                break;
-            case 'low_380':                  //380v低压开关柜
-                templateUrl = 'tpls/html/directCurrent.html';
-                controller = 'low_380';
                 break;
             case 'up_10':               //10kv升压变压器
                 templateUrl = 'tpls/html/setupTransformer.html';
@@ -1257,7 +1249,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
                 controller = 'up_35';
                 break;
             case 'high_10_35':                     //10,35kv高压开关柜
-                templateUrl = 'tpls/html/groupInverter.html';
+                templateUrl = 'tpls/html/highVoltage.html';
                 controller = 'high_10_35';
                 break;
             default:
@@ -1269,7 +1261,12 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
             templateUrl: templateUrl,
             controller: controller + 'Ctrl',
             size: 'lg',
-            backdrop: false
+            backdrop: false,
+            resolve : {
+                parentObj : function(){
+                    return $scope.obj;
+                }
+            }
         });
         modalInstance.result.then(function (data) {
             $scope.obj[data.name] = data.obj;
@@ -1278,7 +1275,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope,$location, $uibMod
 });
 
 /*
- 10,35kv低压开关柜控制器
+低压开关柜控制器
 */
 pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
     $scope.lowSwitchInfo = {
@@ -1325,7 +1322,59 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 /*
  10kv升压变压器控制器
  */
-pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData) {
+pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
+    $scope.transformerInfo = {
+        transformer : {},
+        serialNum : 1,
+        num : 0
+    };
+
+    $scope.items = [];
+    $scope.selected = '';
+
+    $scope.$watch('selected', function (newVal) {
+        $scope.transformerInfo.transformer = JSON.parse(newVal);
+    });
+
+    $scope.$watch('transformerInfo.serialNum',function(){
+        $scope.transformerInfo.num = compute_num();
+    })
+
+    var chooseInverter = projectData.getData('chooseInverter');
+    var inverter;
+    if(chooseInverter.type == 'centralized'){
+        inverter = chooseInverter.centralizedInverterInfo;
+    }else{
+        inverter = chooseInverter.groupInverterInfo;
+    }
+
+    function compute_num(){
+        return inverter.inverterNumNeeded / $scope.transformerInfo.serialNum;
+    }
+
+    $scope.getData = function () {
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=10KV%E5%8F%98%E5%8E%8B%E5%99%A8')
+            .then(function (data) {
+                $scope.items = data.data;
+            })
+    };
+
+    $scope.ok = function () {
+        $uibModalInstance.close({
+            name: 'transformerInfo',
+            obj: $scope.transformerInfo
+        });
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+/*
+ 35kv升压变压器控制器
+ */
+pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, gainData, projectData) {
     $scope.items = [];
     $scope.selected = '';
     $scope.show = {};
@@ -1353,18 +1402,25 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData) 
 });
 
 /*
- 35kv升压变压器控制器
- */
-pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, gainData) {
+高压开关柜控制器
+*/
+pvModule.controller('high_10_35Ctrl',function($scope, $uibModalInstance, $window, parentObj, gainData,projectData){
+    $scope.highSwitchInfo = {
+        highSwitch: {},
+        num: 0
+    };
+
     $scope.items = [];
     $scope.selected = '';
-    $scope.show = {};
+
     $scope.$watch('selected', function (newVal) {
-        $scope.show = JSON.parse(newVal);
+        $scope.highSwitchInfo.highSwitch = JSON.parse(newVal);
     });
 
+    $scope.highSwitchInfo.num = parentObj.type == '10kv' ? parentObj.transformerInfo.num : 12;
+
     $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=高压')
             .then(function (data) {
                 $scope.items = data.data;
             })
@@ -1372,8 +1428,8 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'groupInverter',
-            selected: $scope.show
+            name: 'highSwitchInfo',
+            obj: $scope.lowSwitchInfo
         });
     };
 
@@ -1563,7 +1619,7 @@ pvModule.controller('investmentCostsCtrl',function($scope, $location, projectDat
         BA = Number(userDesign.capacity.totalCapacity);
     }
 
-///////////////////////////////////////////////////////////////////////   项目总收入预算
+   ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
         CA : [],
         CD : [],
