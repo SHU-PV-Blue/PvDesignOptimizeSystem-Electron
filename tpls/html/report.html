@@ -1,38 +1,203 @@
 <div ng-controller="reportCtrl">
     <div class="row">
-        <table class="table">
-            <tr>
-                <td>项目名称：</td>
-                <td></td>
-                <td>设计时间：</td>
-                <td></td>
-                <td>总装机容量</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>地理位置：</td>
-                <td><img ng-src="{{ getMapPath() }}"></td>
-                <td>经度：</td>
-                <td>{{data.lng}}</td>
-                <td>纬度：</td>
-                <td>{{data.lat}}</td>
-            </tr>
-            <tr>
-                <td colspan="2">固定式安装方式</td>
-                <td>倾角：</td>
-                <td>{{data.dip}}</td>
-                <td>方位角：</td>
-                <td>{{data.az}}</td>
-            </tr>
-            <tr>
-                <td>光伏阵列：</td>
-                <td></td>
-                <td>阵列占地面积：</td>
-                <td></td>
-                <td>阵列前后支架间距：</td>
-                <td></td>
-            </tr>
-        </table>
+        <div class="col-md-11">
+            <table class="report-info" style="width:100%;table-layout:fixed">
+                <tr>
+                    <td>项目名称：</td>
+                    <td>设计时间：</td>
+                    <td>总装机容量：</td>
+                    <td rowspan="4"><img ng-src="{{ getMapPath() }}" style="width: 100%; height: 100%"></td>
+                </tr>
+                <tr>
+                    <td>固定安装方式</td>
+                    <td>方位角：{{data.dip}}</td>
+                    <td>倾角：{{data.az}}</td>
+                </tr>
+                <tr>
+                    <td>光伏阵列</td>
+                    <td>阵列占地面积：</td>
+                    <td>阵列前后支架间距：</td>
+                </tr>
+                <tr>
+                    <td>经度：{{data.lng}}</td>
+                    <td>纬度：{{data.lat}}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-bordered">
+                <caption>气象数据</caption>
+                <tr>
+                    <td>月份</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td>辐照度</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>温度</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-bordered">
+                <caption>设备表</caption>
+                <tr>
+                    <th>设备名称</th>
+                    <th>型号</th>
+                    <th>数量/长度</th>
+                    <th>单价</th>
+                    <th>总价</th>
+                </tr>
+                <tr>
+                    <td>光伏组件</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>逆变器</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>汇流箱</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-bordered">
+                <tr>
+                    <th>系统年总发电量：</th>
+                    <th>系统年总辐射量：</th>
+                    <th>系统年总发电效率：</th>
+                </tr>
+                <tr>
+                    <td>发电量月分布图</td>
+                    <td>确定倾角下每月辐照度图</td>
+                    <td>损耗表（饼图）</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <table class="table table-bordered">
+                <caption>综合经济效益表</caption>
+                <tr>
+                    <th>名称</th>
+                    <th>金额</th>
+                    <th>备注</th>
+                </tr>
+                <tr>
+                    <td>项目总现金支出</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>其中：设计费</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>设备费</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>建安费</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>监理费</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>其他费用</td>
+                    <td></td>
+                    <td>含税</td>
+                </tr>
+                <tr>
+                    <td>项目建设成本</td>
+                    <td></td>
+                    <td>不含税</td>
+                </tr>
+                <tr>
+                    <td>建设期</td>
+                    <td></td>
+                    <td>月</td>
+                </tr>
+                <tr>
+                    <td>收益期</td>
+                    <td></td>
+                    <td>年</td>
+                </tr>
+                <tr>
+                    <td>年总收入</td>
+                    <td></td>
+                    <td>不含税</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            债务偿还图
+        </div>
+        <div class="col-md-5">
+            投资回收期图
+        </div>
     </div>
     <!--<div class="row">-->
         <!--<div class="col-md-4">-->

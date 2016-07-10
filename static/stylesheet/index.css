@@ -92,3 +92,7 @@ html,body{
 .op-row button{
     height: 50px;
 }
+
+.report-info td{
+    text-align: left;
+}
