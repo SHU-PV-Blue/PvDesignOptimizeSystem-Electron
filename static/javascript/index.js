@@ -1375,24 +1375,45 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData, 
  35kv升压变压器控制器
  */
 pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, gainData, projectData) {
-    $scope.items = [];
-    $scope.selected = '';
-    $scope.show = {};
-    $scope.$watch('selected', function (newVal) {
-        $scope.show = JSON.parse(newVal);
+    $scope.transformerInfo = {
+        transformer1 : {},
+        transformer2 : {},
+        type : 'once',
+        serialNum : [1,1],
+        num : [0,0]
+    };
+
+    $scope.items1 = [];
+    $scope.selectedonce = '';
+    $scope.$watch('selectedonce', function (newVal) {
+        $scope.transformerInfo.transformer1 = JSON.parse(newVal);
+        console.log(newVal);
     });
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+    $scope.items2 = [];
+    $scope.selectedtwice = '';
+    $scope.$watch('selectedtwice', function (newVal) {
+        $scope.transformerInfo.transformer2 = JSON.parse(newVal);
+    });
+
+    $scope.getData1 = function () {
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(0.4-35KV)')
             .then(function (data) {
-                $scope.items = data.data;
+                $scope.items1 = data.data;
+            })
+    };
+
+    $scope.getData2 = function () {
+        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(10-35KV)')
+            .then(function (data) {
+                $scope.items2 = data.data;
             })
     };
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'groupInverter',
-            selected: $scope.show
+            name: 'transformerInfo',
+            obj: $scope.transformerInfo
         });
     };
 
