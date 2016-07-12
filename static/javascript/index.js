@@ -632,13 +632,20 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
             totalCapacity: 0
         },
         capacity: {
-            totalCapacity: 0
+            totalCapacity: 0,
+            componentsNum : 0
         }
     };
+
+    var componentInfo = projectData.getData('componentInfo');
 
     function isNumber(obj) {
         return typeof obj === 'number' && !isNaN(obj)
     }
+
+    $scope.$watch('userDesignInfo.capacity.totalCapacity',function(){
+        $scope.userDesignInfo.capacity.componentsNum = Math.ceil(Number($scope.userDesignInfo.capacity.totalCapacity) * 1000 / componentInfo['峰值功率']);
+    });
 
     $scope.$watch('userDesignInfo.componentDirection',function(newVal){
         if(newVal === "horizontal"){
@@ -732,7 +739,6 @@ pvModule.controller('userDesignCtrl', function ($scope, $location,projectData) {
     }
 
     function compute_numPerRow() {                               //计算每行支架数
-        var componentInfo = projectData.getData('componentInfo');
         var L;
         if ($scope.userDesignInfo.componentDirection === 'horizontal') {
             L = componentInfo['长度'] / 1000;
@@ -888,7 +894,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     });
 
     $scope.$watch('centralizedInverterInfo.inverterNumNeeded',function(){
-        $scope.centralizedInverterInfo.totalOpacity = compute_totalOpacity();
+        $scope.centralizedInverterInfo.totalOpacity = compute_totalOpacity() | 0;
     });
 
     var componentInfo = projectData.getData('componentInfo');
@@ -908,21 +914,19 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
     }
 
     function compute_branchNumPerInverter(){
-        return Math.ceil($scope.centralizedInverterInfo.centralizedInverter['最大直流输入功率']/(componentInfo['峰值功率']*$scope.centralizedInverterInfo.serialNumPerBranch));
+        return Math.floor($scope.centralizedInverterInfo.centralizedInverter['最大直流输入功率']/(componentInfo['峰值功率']*$scope.centralizedInverterInfo.serialNumPerBranch));
     }
 
     function compute_inverterNumNeeded(){
         var userDesignInfo = projectData.getData('userDesignInfo');
         var capacity = userDesignInfo.designType == 'area'? userDesignInfo.area.totalCapacity : userDesignInfo.capacity.totalCapacity;
-        //console.log(capacity * $scope.centralizedInverterInfo.volumeRatio)
-        //console.log($scope.centralizedInverterInfo.serialNumPerBranch * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率']/1000))
         return Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
             * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率']/1000)));
     }
 
     function compute_totalOpacity(){
         return $scope.centralizedInverterInfo.branchNumPerInverter * $scope.centralizedInverterInfo.serialNumPerBranch
-            * $scope.centralizedInverterInfo.inverterNumNeeded * componentInfo['峰值功率'];
+            * $scope.centralizedInverterInfo.inverterNumNeeded * componentInfo['峰值功率'] / 1000;
     }
 
     $scope.getData = function () {
@@ -967,7 +971,7 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 
     $scope.$watch('directCurrentInfo.branches',function(){
         $scope.directCurrentInfo.numPerInverter = compute_numPerInverter();
-        $scope.directCurrentInfo.num = compute_num();
+        $scope.directCurrentInfo.num = compute_num() | 0;
     });
 
     function compute_num(){
@@ -1018,7 +1022,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 
     $scope.$watch('directDistributionInfo.branches',function(){
         $scope.directDistributionInfo.numPerInverter = compute_numPerInverter();
-        $scope.directDistributionInfo.num = compute_num();
+        $scope.directDistributionInfo.num = compute_num() | 0;
     });
 
     function compute_numPerInverter(){
@@ -1052,21 +1056,30 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
  集中式直流电缆控制器
 */
 pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj, gainData) {
+    var componentInfo = projectData.getData('componentInfo');
+    var maxPowerCurrent = componentInfo['最大功率点电流'];
+    var maxPowerVoltage = componentInfo['最大功率点电压'];
+    var branchNumPerInverter = parentObj.centralizedInverterInfo.branchNumPerInverter;
+    var serialNumPerBranch = parentObj.centralizedInverterInfo.serialNumPerBranch;
     $scope.directCurrentCableInfo = {
-        directCurrentCable : {},
-        cables : [{                           //光伏组件，组件->汇流箱，汇流箱->配电柜，配电柜->逆变器
+        cables : [{
+            directCurrentCable : {},
+            maxCurrent : maxPowerCurrent,
+            branches : 1,
             length : 0,
             lineDrop : 0,
             loss : 0
         },{
+            directCurrentCable : {},
+            maxCurrent : maxPowerCurrent * parentObj.directCurrentInfo.branches,
+            branches : 1,
             length : 0,
             lineDrop : 0,
             loss : 0
         },{
-            length : 0,
-            lineDrop : 0,
-            loss : 0
-        },{
+            directCurrentCable : {},
+            maxCurrent : 0,
+            branches : 0,
             length : 0,
             lineDrop : 0,
             loss : 0
@@ -1074,51 +1087,48 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
         totalLoss : 0
     };
 
-    $scope.active = 0;
+    $scope.items = [];
+    $scope.selected0 = '{}';
+    $scope.selected1 = '{}';
+    $scope.selected2 = '{}';
+
+    $scope.$watch('selected0', function (newVal) {
+        $scope.directCurrentCableInfo.cables[0].directCurrentCable = JSON.parse(newVal);
+    });
+    $scope.$watch('selected1', function (newVal) {
+        $scope.directCurrentCableInfo.cables[1].directCurrentCable = JSON.parse(newVal);
+    });
+    $scope.$watch('selected2', function (newVal) {
+        $scope.directCurrentCableInfo.cables[2].directCurrentCable = JSON.parse(newVal);
+        $scope.directCurrentCableInfo.cables[2].branches = Math.ceil(maxPowerCurrent * branchNumPerInverter / $scope.directCurrentCableInfo.cables[2].directCurrentCable['允许载流量']);
+    });
+    $scope.$watch('directCurrentCableInfo.cables[2].branches',function(){
+        $scope.directCurrentCableInfo.cables[2].maxCurrent = Number((maxPowerCurrent * branchNumPerInverter / $scope.directCurrentCableInfo.cables[2].branches).toFixed(3)) || 0;
+    });
+
+    $scope.$watch('directCurrentCableInfo.cables',function(){
+        update_lineDrop_loss();
+    },true);
+
+    $scope.active = 3;
     $scope.setActive = function(index){
         $scope.active = index;
     };
 
-    var componentInfo = projectData.getData('componentInfo');
-    var maxPowerCurrent = componentInfo['最大功率点电流'];
-    var maxPowerVoltage = componentInfo['最大功率点电压'];
-    var serialNumPerBranch = parentObj.centralizedInverterInfo.serialNumPerBranch;
-
-    function update(){
+    function update_lineDrop_loss(){
         $scope.directCurrentCableInfo.totalLoss = 0;
-        $scope.directCurrentCableInfo.cables.forEach(function(cable,idx){
-            var maxCurrentPerBranch = maxPowerCurrent;
-            if(idx == 2){
-                maxCurrentPerBranch *= Number(parentObj.directCurrentInfo.directCurrent['输入路数']);
+        var cableTemp;
+        for(var i = 0; i < $scope.directCurrentCableInfo.cables.length; i++){
+            cableTemp = $scope.directCurrentCableInfo.cables[i];
+            $scope.directCurrentCableInfo.cables[i].lineDrop = 1.25 * 0.0184 * cableTemp.maxCurrent * cableTemp.length * 2 / cableTemp.directCurrentCable['导体截面'];
+            if(i === 0){
+                $scope.directCurrentCableInfo.cables[i].loss = $scope.directCurrentCableInfo.cables[i].lineDrop / (maxPowerVoltage * serialNumPerBranch);
+            }else{
+                $scope.directCurrentCableInfo.cables[i].loss = $scope.directCurrentCableInfo.cables[i].lineDrop / (maxPowerVoltage * serialNumPerBranch - $scope.directCurrentCableInfo.cables[i-1].lineDrop);
             }
-            cable.lineDrop = Number((maxCurrentPerBranch*1.25*17.241*cable.length*2 / Number($scope.directCurrentCableInfo.directCurrentCable['导体截面'])).toFixed(3));
-            cable.loss = Number((compute_loss(cable.lineDrop)).toFixed(3));
-            $scope.directCurrentCableInfo.totalLoss += cable.loss;
-        });
+            $scope.directCurrentCableInfo.totalLoss += $scope.directCurrentCableInfo.cables[i].loss;
+        }
     }
-
-    function compute_loss(lineDrop){
-        return lineDrop / (serialNumPerBranch * maxPowerVoltage);
-    }
-
-    $scope.$watch('directCurrentCableInfo.cables',function(newVal, oldVal){
-        if(newVal === oldVal)
-            return;
-        update();
-    },true);
-
-    $scope.$watch('directCurrentCableInfo.directCurrentCable',function(newVal, oldVal){
-        if(newVal === oldVal)
-            return;
-        update();
-    },true);
-
-    $scope.items = [];
-    $scope.selected = '{}';
-
-    $scope.$watch('selected', function (newVal) {
-        $scope.directCurrentCableInfo.directCurrentCable = JSON.parse(newVal);
-    });
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')

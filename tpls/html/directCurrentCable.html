@@ -1,149 +1,243 @@
 <!-- 直流电缆 -->
 <div class="modal-header">
-    <h3 class="modal-title">电缆</h3>
+  <h3 class="modal-title">电缆</h3>
 </div>
 <div class="modal-body">
-    <div class="row">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
         <div class="col-md-12">
-           <div class="row">
-               <div class="col-md-12">
-                   <table class="directCurrentCable">
-                     <tr>
-                       <td><img src="res/images/zhenlie.png" /></td>
-                       <td><img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(1)"></td>
-                       <td><img src="res/images/huiliuxiang.jpg" /></td>
-                       <td><img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(2)"></td>
-                       <td><img src="res/images/peidiangui.jpg" /></td>
-                       <td><img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(3)"></td>
-                       <td><img src="res/images/nibianqi.jpg" /></td>
-                     </tr>
-                   </table>
-                </div>
+          <table class="directCurrentCable">
+            <tr>
+              <td><img src="res/images/zhenlie.png" /></td>
+              <td>
+                <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(1)">
+                <button class="btn" ng-click="setActive(0)">配置</button>
+              </td>
+              <td><img src="res/images/huiliuxiang.jpg" /></td>
+              <td>
+                <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(2)">
+                <button class="btn" ng-click="setActive(1)">配置</button>
+              </td>
+              <td><img src="res/images/peidiangui.jpg" /></td>
+              <td>
+                <img src="res/images/arrow.png" class="arrows" title="点击配置电缆" ng-click="setActive(3)">
+                <button class="btn" ng-click="setActive(2)">配置</button>
+              </td>
+              <td><img src="res/images/nibianqi.jpg" /></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div ng-show="active == 0">
+        <h4>阵列到汇流箱</h4>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="btn btn-primary" ng-click="getData()">获取数据</button>
           </div>
-          <div class="row">
-            <uib-tabset active="active">
-              <uib-tab index="1" heading="组件->汇流箱">
-                <div class="row">
-                  <div class="col-md-2">
-                    <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-                  </div>
-                  <div class="col-md-8">
-                    <select ng-model="selected" class="form-control">
-                      <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row" style="margin-top: 30px">
-                  <div class="col-md-12">
-                    <table class="table table-bordered">
-                      <tr>
-                        <th>允许载流量/A</th>
-                        <th>容量/W</th>
-                        <th>截面积/mm^2</th>
-                      </tr>
-                      <tr>
-                        <td>{{directCurrentCableInfo.directCurrentCable['允许载流量']}} </td>
-                        <td>{{directCurrentCableInfo.directCurrentCable['容量']}} </td>
-                        <td>{{directCurrentCableInfo.directCurrentCable['导体截面']}} </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <label class="control-label col-md-4">直流电缆长度</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[1].length">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].loss}}</div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-md-6" >
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">线路压降：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].lineDrop}}</div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </uib-tab>
-              <uib-tab index="2" heading="汇流箱->配电柜">
-                <div class="row" style="margin-top:20px">
-                  <div class="col-md-6">
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <label class="control-label col-md-4">直流电缆长度</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[2].length">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].loss}}</div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-md-6" >
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">线路压降：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].lineDrop}}</div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </uib-tab>
-              <uib-tab index="3" heading="配电柜->逆变器">
-                <div class="row" style="margin-top:20px">
-                  <div class="col-md-6">
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <label class="control-label col-md-4">直流电缆长度</label>
-                        <div class="col-md-4">
-                          <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[3].length">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">电缆损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[3].loss}}</div>
-                      </div>
-                    </form>
-                  </div>
-                  <div class="col-md-6" >
-                    <form role="form" class="form-horizontal">
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">线路压降：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[3].lineDrop}}</div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
-                        <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </uib-tab>
-            <uib-tabset>
+          <div class="col-md-8">
+            <select ng-model="selected0" class="form-control">
+                  <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
+                </select>
           </div>
         </div>
+        <div class="row" style="margin-top: 30px">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <tr>
+                <th>允许载流量/A</th>
+                <th>容量/W</th>
+                <th>截面积/mm^2</th>
+              </tr>
+              <tr>
+                <td>{{directCurrentCableInfo.cables[0].directCurrentCable['允许载流量']}} </td>
+                <td>{{directCurrentCableInfo.cables[0].directCurrentCable['容量']}} </td>
+                <td>{{directCurrentCableInfo.cables[0].directCurrentCable['导体截面']}} </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <form role="form" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-md-4">每路最大连续电流</label>
+                <div class="col-md-4">
+                  <p class="form-control-static">{{directCurrentCableInfo.cables[0].maxCurrent}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-4">直流电缆长度</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[0].length">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].loss * 100 | number:3}} %</div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <form role="form" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-md-4">直流单元输出路数</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[0].branches">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">线路压降：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].lineDrop | number: 2}}</div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div ng-show="active == 1">
+        <h4>汇流箱到配电柜</h4>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="btn btn-primary" ng-click="getData()">获取数据</button>
+          </div>
+          <div class="col-md-8">
+            <select ng-model="selected1" class="form-control">
+                  <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
+                </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 30px">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <tr>
+                <th>允许载流量/A</th>
+                <th>容量/W</th>
+                <th>截面积/mm^2</th>
+              </tr>
+              <tr>
+                <td>{{directCurrentCableInfo.cables[1].directCurrentCable['允许载流量']}} </td>
+                <td>{{directCurrentCableInfo.cables[1].directCurrentCable['容量']}} </td>
+                <td>{{directCurrentCableInfo.cables[1].directCurrentCable['导体截面']}} </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-4">每路最大连续电流</label>
+              <div class="col-md-4">
+                <p class="form-control-static">{{directCurrentCableInfo.cables[1].maxCurrent}}</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-4">直流电缆长度</label>
+              <div class="col-md-4">
+                <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[1].length">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].loss}}</div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-md-4">直流单元输出路数</label>
+              <div class="col-md-4">
+                <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[1].branches">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4" style="text-align: right">线路压降：</div>
+              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].lineDrop}}</div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div ng-show="active == 2">
+        <h4>配电柜到逆变器</h4>
+        <div class="row">
+          <div class="col-md-2">
+            <button class="btn btn-primary" ng-click="getData()">获取数据</button>
+          </div>
+          <div class="col-md-8">
+            <select ng-model="selected2" class="form-control">
+                  <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
+                </select>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 30px">
+          <div class="col-md-12">
+            <table class="table table-bordered">
+              <tr>
+                <th>允许载流量/A</th>
+                <th>容量/W</th>
+                <th>截面积/mm^2</th>
+              </tr>
+              <tr>
+                <td>{{directCurrentCableInfo.cables[2].directCurrentCable['允许载流量']}} </td>
+                <td>{{directCurrentCableInfo.cables[2].directCurrentCable['容量']}} </td>
+                <td>{{directCurrentCableInfo.cables[2].directCurrentCable['导体截面']}} </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <form role="form" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-md-4">每路最大连续电流</label>
+                <div class="col-md-4">
+                  <p class="form-control-static">{{directCurrentCableInfo.cables[2].maxCurrent}}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-md-4">直流电缆长度</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[2].length">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].loss}}</div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <form role="form" class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-md-4">直流单元输出路数</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[2].branches">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">线路压降：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].lineDrop}}</div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.totalLoss | number : 4}}</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
