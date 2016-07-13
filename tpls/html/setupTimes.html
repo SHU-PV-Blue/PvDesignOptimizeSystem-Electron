@@ -12,148 +12,144 @@
             <label>二次升压</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <uib-tabset active="activeForm">
-              <uib-tab index="0" heading="一次升压">
-                  <br>
-                <div class="row">
-                    <div class="col-md-9">
-                      <div class="row">
-                        <div class="col-md-2">
-                          <button class="btn btn-primary" ng-click="getData1()">获取数据</button>
-                        </div>
-                        <div class="col-md-10">
-                          <select ng-model="selectedonce" class="form-control">
+    <div class="btn-group">
+        <button class="btn btn-default" ng-click="setActive(0)">一次升压</button>
+        <button class="btn btn-default" ng-click="setActive(1)" ng-disabled="transformerInfo.type == 'once'">二次升压</button>
+    </div>
+    <div class="row" ng-show="active == 0">
+        <div class="col-md-9">
+            <h4>一次升压</h4>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-primary" ng-click="getData1()">获取数据</button>
+                </div>
+                <div class="col-md-10">
+                    <select ng-model="selectedonce" class="form-control">
                             <option ng-repeat="item in items1" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}}</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="row" style="margin-top: 30px">
-                        <div class="col-md-12">
-                          <table class="table table-bordered">
-                            <tr>
-                                <td>产品名</td>
-                                <td>分类</td>
-                                <td>额定容量</td>
-                                <td>类型</td>
-                            </tr>
-                            <tr>
-                                <td>{{ transformerInfo.transformer1['产品名'] }}</td>
-                                <td>{{ transformerInfo.transformer1['分类'] }}</td>
-                                <td>{{ transformerInfo.transformer1['额定容量'] }}</td>
-                                <td>{{ transformerInfo.transformer1['类型'] }} </td>
-                            </tr>
-                            <tr>
-                                <td>额定电压（V）</td>
-                                <td>高压分接范围</td>
-                                <td>联结组标号</td>
-                                <td>空载损耗（W）</td>
-                            </tr>
-                            <tr>
-                                <td>{{transformerInfo.transformer1['额定电压']}} </td>
-                                <td>{{transformerInfo.transformer1['高压分接范围']}} </td>
-                                <td>{{transformerInfo.transformer1['联结组标号']}} </td>
-                                <td>{{transformerInfo.transformer1['空载损耗']}} </td>
-                            </tr>
-                            <tr>
-                                <td>负载损耗（W）</td>
-                                <td>空载电流（%）</td>
-                                <td>短路阻抗（%）</td>
-                            </tr>
-                            <tr>
-                                <td>{{transformerInfo.transformer1['负载损耗']}} </td>
-                                <td>{{transformerInfo.transformer1['空载电流']}} </td>
-                                <td>{{transformerInfo.transformer1['短路阻抗']}} </td>
-                            </tr>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                        <form role="form">
-                           <div class="form-group">
-                              <label>串联逆变器的数量</label>
-                              <input type="text" class="form-control" ng-model="transformerInfo.serialNum[0]">
-                           </div>
-                           <div class="2">
-                              <label>升压变压器数量</label>
-                              <input type="text" class="form-control" ng-model="transformerInfo.num[0]">
-                           </div>
-                        </form>
-                    </div>
                 </div>
-              </uib-tab>
-              <uib-tab index="1" heading="二次升压">
-                  <br>
-                 <div class="row">
-                    <div class="col-md-9">
-                      <div class="row">
-                        <div class="col-md-2">
-                          <button class="btn btn-primary" ng-click="getData2()">获取数据</button>
-                        </div>
-                        <div class="col-md-8">
-                          <select ng-model="selectedtwice" class="form-control">
-                            <option ng-repeat="item in items2" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量']}} </option>
+            </div>
+            <div class="row" style="margin-top: 30px">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>产品名</td>
+                            <td>分类</td>
+                            <td>额定容量</td>
+                            <td>类型</td>
+                        </tr>
+                        <tr>
+                            <td>{{ transformerInfo.transformer1['产品名'] }}</td>
+                            <td>{{ transformerInfo.transformer1['分类'] }}</td>
+                            <td>{{ transformerInfo.transformer1['额定容量'] }}</td>
+                            <td>{{ transformerInfo.transformer1['类型'] }} </td>
+                        </tr>
+                        <tr>
+                            <td>额定电压（V）</td>
+                            <td>高压分接范围</td>
+                            <td>联结组标号</td>
+                            <td>空载损耗（W）</td>
+                        </tr>
+                        <tr>
+                            <td>{{transformerInfo.transformer1['额定电压']}} </td>
+                            <td>{{transformerInfo.transformer1['高压分接范围']}} </td>
+                            <td>{{transformerInfo.transformer1['联结组标号']}} </td>
+                            <td>{{transformerInfo.transformer1['空载损耗']}} </td>
+                        </tr>
+                        <tr>
+                            <td>负载损耗（W）</td>
+                            <td>空载电流（%）</td>
+                            <td>短路阻抗（%）</td>
+                        </tr>
+                        <tr>
+                            <td>{{transformerInfo.transformer1['负载损耗']}} </td>
+                            <td>{{transformerInfo.transformer1['空载电流']}} </td>
+                            <td>{{transformerInfo.transformer1['短路阻抗']}} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <form role="form">
+                <div class="form-group">
+                    <label>串联逆变器的数量</label>
+                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[0]">
+                </div>
+                <div class="2">
+                    <label>升压变压器数量</label>
+                    <input type="text" class="form-control" ng-model="transformerInfo.num[0]">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" ng-show="active == 1">
+        <div class="col-md-9">
+            <h4>二次升压</h4>
+            <div class="row">
+                <div class="col-md-2">
+                    <button class="btn btn-primary" ng-click="getData2()">获取数据</button>
+                </div>
+                <div class="col-md-10">
+                    <select ng-model="selectedtwice" class="form-control">
+                            <option ng-repeat="item in items2" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}}</option>
                           </select>
-                        </div>
-                      </div>
-                      <div class="row" style="margin-top: 30px">
-                        <div class="col-md-12">
-                          <table class="table table-bordered">
-                            <tr>
-                                <td>额定容量（VA）</td>
-                                <td>额定频率（Hz）</td>
-                                <td>额定电流（A）</td>
-                                <td>空载额定变比</td>
-                            </tr>
-                            <tr>
-                                <td>{{transformerInfo.transformer2['额定容量']}}</td>
-                                <td>{{transformerInfo.transformer2['额定频率']}}</td>
-                                <td>{{transformerInfo.transformer2['额定电流']}}</td>
-                                <td>{{transformerInfo.transformer2['空载额定变比']}}</td>
-                            </tr>
-                            <tr>
-                                <td>半穿越阻抗电压（%）</td>
-                                <td>调压方式</td>
-                                <td>额定电压</td>
-                                <td>调压范围</td>
-                            </tr>
-                            <tr>
-                                <td>{{transformerInfo.transformer2['半穿越阻抗电压']}}</td>
-                                <td>{{transformerInfo.transformer2['调压方式']}}</td>
-                                <td>{{transformerInfo.transformer2['额定电压']}}</td>
-                                <td>{{transformerInfo.transformer2['调压范围']}}</td>
-                            </tr>
-                            <tr>
-                                <td>联接组标号</td>
-                                <td>中性点接地方式</td>
-                                <td>极性</td>
-                            </tr>
-                            <tr>
-                                <td>{{transformerInfo.transformer2['联接组标号']}}</td>
-                                <td>{{transformerInfo.transformer2['中性点接地方式']}}</td>
-                                <td>{{transformerInfo.transformer2['极性']}}</td>
-                            </tr>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                        <form role="form">
-                           <div class="form-group">
-                              <label>串联逆变器的数量</label>
-                              <input type="text" class="form-control" ng-model="transformerInfo.serialNum[1]">
-                           </div>
-                           <div class="form-group">
-                              <label>升压变压器数量</label>
-                              <input type="text" class="form-control" ng-model="transformerInfo.num[1]">
-                           </div>
-                        </form>
-                    </div>
                 </div>
-              </uib-tab>
-            </uib-tabset>
+            </div>
+            <div class="row" style="margin-top: 30px">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>产品名</td>
+                            <td>额定容量（VA）</td>
+                            <td>额定频率（Hz）</td>
+                            <td>额定电流（A）</td>
+                        </tr>
+                        <tr>
+                            <td>{{ transformerInfo.transformer2['产品名'] }}</td>
+                            <td>{{ transformerInfo.transformer2['额定容量'] }}</td>
+                            <td>{{ transformerInfo.transformer2['额定频率'] }}</td>
+                            <td>{{ transformerInfo.transformer2['额定电流'] }} </td>
+                        </tr>
+                        <tr>
+                            <td>空载额定变比</td>
+                            <td>半穿越阻抗电压</td>
+                            <td>调压方式</td>
+                            <td>额定电压</td>
+                        </tr>
+                        <tr>
+                            <td>{{transformerInfo.transformer2['空载额定变比']}} </td>
+                            <td>{{transformerInfo.transformer2['半穿越阻抗电压']}} </td>
+                            <td>{{transformerInfo.transformer2['调压方式']}} </td>
+                            <td>{{transformerInfo.transformer2['额定电压']}} </td>
+                        </tr>
+                        <tr>
+                            <td>调压范围</td>
+                            <td>联接组标号</td>
+                            <td>中性点接地方式</td>
+                            <td>极性</td>
+                        </tr>
+                        <tr>
+                            <td>{{transformerInfo.transformer2['调压范围']}} </td>
+                            <td>{{transformerInfo.transformer2['联接组标号']}} </td>
+                            <td>{{transformerInfo.transformer2['中性点接地方式']}} </td>
+                            <td>{{transformerInfo.transformer2['极性']}} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <form role="form">
+                <div class="form-group">
+                    <label>串联逆变器的数量</label>
+                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[0]">
+                </div>
+                <div class="2">
+                    <label>升压变压器数量</label>
+                    <input type="text" class="form-control" ng-model="transformerInfo.num[0]">
+                </div>
+            </form>
         </div>
     </div>
 </div>

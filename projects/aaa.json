@@ -264,41 +264,58 @@
                 "numPerInverter": 4
             },
             "directCurrentCableInfo": {
-                "directCurrentCable": {
-                    "id": 31,
-                    "允许载流量": 21,
-                    "名称": "铜芯聚氯乙烯绝缘电缆",
-                    "型号": "228 IEC 01(BV)",
-                    "容量": 12000,
-                    "导体截面": 1.5
-                },
                 "cables": [
                     {
+                        "directCurrentCable": {
+                            "id": 31,
+                            "允许载流量": 21,
+                            "名称": "铜芯聚氯乙烯绝缘电缆",
+                            "型号": "228 IEC 01(BV)",
+                            "容量": 12000,
+                            "导体截面": 1.5
+                        },
+                        "maxCurrent": 8.82,
+                        "branches": 1,
                         "length": "2",
-                        "lineDrop": 489.07,
-                        "loss": 0.826
+                        "lineDrop": 0.54096,
+                        "loss": 0.0010836538461538462
                     },
                     {
-                        "length": 0,
-                        "lineDrop": 0,
-                        "loss": 0
+                        "directCurrentCable": {
+                            "id": 37,
+                            "允许载流量": 120,
+                            "名称": "铜芯聚氯乙烯绝缘电缆",
+                            "型号": "234 IEC 01(BV)",
+                            "容量": 67000,
+                            "导体截面": 25
+                        },
+                        "maxCurrent": 35.28,
+                        "branches": 1,
+                        "length": "4",
+                        "lineDrop": 0.2596608,
+                        "loss": 0.0005207181243520624
                     },
                     {
-                        "length": 0,
-                        "lineDrop": 0,
-                        "loss": 0
-                    },
-                    {
-                        "length": 0,
-                        "lineDrop": 0,
-                        "loss": 0
+                        "directCurrentCable": {
+                            "id": 39,
+                            "允许载流量": 187,
+                            "名称": "铜芯聚氯乙烯绝缘电缆",
+                            "型号": "236 IEC 01(BV)",
+                            "容量": 105000,
+                            "导体截面": 50
+                        },
+                        "maxCurrent": 163.17,
+                        "branches": 6,
+                        "length": "6",
+                        "lineDrop": 0.9006983999999999,
+                        "loss": 0.0018052226473493365
                     }
                 ],
-                "totalLoss": 0.826
+                "totalLoss": 0.003409594617855245
             }
         },
         "transformer": {
-            "type": "10kv"
+            "type": "380v"
         },
         "parameters": {
             "AA": 0.9575,

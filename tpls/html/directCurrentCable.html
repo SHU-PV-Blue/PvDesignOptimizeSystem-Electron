@@ -88,7 +88,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-4" style="text-align: right">线路压降：</div>
-                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].lineDrop | number: 2}}</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[0].lineDrop | number: 4}}</div>
               </div>
               <div class="form-group">
                 <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
@@ -142,7 +142,7 @@
             </div>
             <div class="form-group">
               <div class="col-md-4" style="text-align: right">电缆损耗：</div>
-              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].loss}}</div>
+              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].loss * 100 | number:3}}</div>
             </div>
           </form>
         </div>
@@ -156,7 +156,7 @@
             </div>
             <div class="form-group">
               <div class="col-md-4" style="text-align: right">线路压降：</div>
-              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].lineDrop}}</div>
+              <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[1].lineDrop | number : 4}}</div>
             </div>
             <div class="form-group">
               <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
@@ -210,7 +210,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-4" style="text-align: right">电缆损耗：</div>
-                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].loss}}</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].loss * 100 | number:3}}</div>
               </div>
             </form>
           </div>
@@ -224,7 +224,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-4" style="text-align: right">线路压降：</div>
-                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].lineDrop}}</div>
+                <div class="col-md-4" style="text-align: left">{{directCurrentCableInfo.cables[2].lineDrop | number : 4}}</div>
               </div>
               <div class="form-group">
                 <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
