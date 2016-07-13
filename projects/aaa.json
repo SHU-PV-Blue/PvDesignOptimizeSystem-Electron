@@ -315,7 +315,7 @@
             }
         },
         "transformer": {
-            "type": "380v"
+            "type": "10kv"
         },
         "parameters": {
             "AA": 0.9575,
