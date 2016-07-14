@@ -3,61 +3,110 @@
         <div class="col-md-11">
             <div class="row op-row">
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/1')">项目信息</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/项目信息.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/1')">项目信息</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/2')" ng-disabled="!isFinished.basicInfo">地理气象</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/气象.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/2')" ng-disabled="!isFinished.basicInfo">地理气象</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/3')" ng-disabled="!isFinished.meteorology">组件选型</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/组件.jpg">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/3')" ng-disabled="!isFinished.meteorology">组件选型</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/4')" ng-disabled="!isFinished.chooseComponent">倾角</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/倾角.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/4')" ng-disabled="!isFinished.chooseComponent">方位角和倾角设计</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row  op-row">
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/5')" ng-disabled="!isFinished.confirmAngle">组件布局</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/组件布局.jpg">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/5')" ng-disabled="!isFinished.confirmAngle">组件布局</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/6')" ng-disabled="!isFinished.userDesign">逆变器</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/低压侧.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/6')" ng-disabled="!isFinished.userDesign">低压侧设计</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/7')" ng-disabled="!isFinished.chooseInverter">高压侧设计</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/高压侧.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/7')" ng-disabled="!isFinished.chooseInverter">高压侧设计</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/14')" ng-disabled="!isFinished.selectTransformer">效率分析</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/效率分析.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/14')" ng-disabled="!isFinished.selectTransformer">效率分析</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row  op-row">
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/8')" ng-disabled="!isFinished.efficiencyAnalysis">效益分析</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/效益分析.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/8')" ng-disabled="!isFinished.efficiencyAnalysis">效益分析</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-primary btn-block" ng-click="switchToUrl('/15')" ng-disabled="!isFinished.benefit">报告</button>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img src="res/images/报告.png">
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-primary btn-block" ng-click="switchToUrl('/15')" ng-disabled="!isFinished.benefit">报告</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--<div class="col-md-3">-->
-            <!--<div class="y-card">-->
-                <!--<div class="header">项目信息</div>-->
-                <!--<div class="body" ng-click="switchToUrl('/1')">as</div>-->
-                <!--<div class="footer"><span class="glyphicon glyphicon-ok task-finish"></span></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-            <!--<div class="y-card">-->
-                <!--<div class="header">地理气象</div>-->
-                <!--<div class="body" ng-click="switchToUrl('/2')">as</div>-->
-                <!--<div class="footer"><span class="glyphicon glyphicon-hand-up task-todo"></span></div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-            <!--<div class="y-card">-->
-                <!--<div class="header">组件选型</div>-->
-                <!--<div class="body" ng-click="switchToUrl('/3')">as</div>-->
-                <!--<div class="footer"><span class="glyphicon glyphicon-ban-circle task-ban"></span></div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>

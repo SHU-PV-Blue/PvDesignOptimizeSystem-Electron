@@ -1535,21 +1535,22 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
 效率分析控制器
  loss [0]: 阴影损耗
  loss [1] : 灰尘等遮挡损耗
- loss [2] : 组件性能衰减
- loss [3] : 组件温升损耗
- loss [4] : 直流电缆损耗
- loss [5] : 组串内失配损耗
- loss [6] : 逆变器损耗
- loss [7] : 变压器损耗
- loss [8] : 交流电缆损耗
- loss [9] : 故障检修、电网等其它损耗
+ loss [2] : 组件温升损耗
+ loss [3] : 直流电缆损耗
+ loss [4] : 组串内失配损耗
+ loss [5] : 逆变器损耗
+ loss [6] : 变压器损耗
+ loss [7] : 交流电缆损耗
+ loss [8] : 故障检修、电网等其它损耗
  */
 pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, projectData) {
 
     $scope.data = {
-        loss: [2.8, 10, 3, 3, 2.2, 2, 4, 1, 0.5, 5],
+        loss: [2.8, 10, 3, 2.2, 2, 4, 1, 0.5, 5],
+        componentLoss : 3,
         lossTotal: 0,
-        runYears: 10
+        runYears: 10,
+        totalYears:25
     };
 
     $scope.$watch('data.loss', function () {
@@ -1559,6 +1560,11 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         }
         $scope.data.lossTotal = total;
     }, true);
+
+    $scope.$watch('data.totalYears',function(){
+        if($scope.runYears > $scope.totalYears)
+            $scope.runYears = $scope.totalYears;
+    })
 
     $scope.show = [true, false, false];
     $scope.showMe = function (index) {

@@ -20,31 +20,31 @@
                     </tr>
                     <tr>
                         <td>组件温升损耗</td>
-                        <td><input type="text" ng-model="data.loss[3]"></td>
+                        <td><input type="text" ng-model="data.loss[2]"></td>
                     </tr>
                     <tr>
                         <td>直流电缆损耗</td>
-                        <td><input type="text" ng-model="data.loss[4]"></td>
+                        <td><input type="text" ng-model="data.loss[3]"></td>
                     </tr>
                     <tr>
                         <td>组串内失配损耗</td>
-                        <td><input type="text" ng-model="data.loss[5]"></td>
+                        <td><input type="text" ng-model="data.loss[4]"></td>
                     </tr>
                     <tr>
                         <td>逆变器损耗</td>
-                        <td><input type="text" ng-model="data.loss[6]"></td>
+                        <td><input type="text" ng-model="data.loss[5]"></td>
                     </tr>
                     <tr>
                         <td>变压器损耗</td>
-                        <td><input type="text" ng-model="data.loss[7]"></td>
+                        <td><input type="text" ng-model="data.loss[6]"></td>
                     </tr>
                     <tr>
                         <td>交流电缆损耗</td>
-                        <td><input type="text" ng-model="data.loss[8]"></td>
+                        <td><input type="text" ng-model="data.loss[7]"></td>
                     </tr>
                     <tr>
                         <td>故障检修、电网等其它损耗</td>
-                        <td><input type="text" ng-model="data.loss[9]"></td>
+                        <td><input type="text" ng-model="data.loss[8]"></td>
                     </tr>
                 </table>
                 <div class="panel-footer">
@@ -55,30 +55,36 @@
         </div>
         <div class="col-md-8">
             <div class="panel-body">
-                <canvas class="chart chart-line" chart-data="chartData0"
-                        chart-labels="labelsMonth" chart-options="options" ng-show="show[0]">
+                <div ng-show="show[0]">
+                    月总辐照度
+                    <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
-                <canvas class="chart chart-bar" chart-data="chartData1"
-                        chart-labels="labelsMonth" chart-options="options" ng-show="show[1]">
+                </div>
+                <div ng-show="show[1]">
+                    损耗电量
+                    <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
-                <canvas class="chart chart-bar" chart-data="chartData2"
-                        chart-labels="labelsMonth" chart-options="options" ng-show="show[2]">
+                </div>
+                <div ng-show="show[2]">
+                    并入电网电量
+                    <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
+                </div>
             </div>
             <div>
                 <button class="btn btn-link" ng-click="showMe(0)">月总辐照度</button>
                 <button class="btn btn-link" ng-click="showMe(1)">损耗电量</button>
                 <button class="btn btn-link" ng-click="showMe(2)">并入电网电量</button>
+                组件性能衰减：<input type="text" ng-model="data.componentLoss" size="4">%
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    发电系统运行年数（1-25）： 第{{data.runYears}}年
+                    发电系统运行年数<input type="text" ng-model="data.totalYears" class="form-control">： 第{{data.runYears}}年
                 </div>
                 <div class="col-md-7">
-                    <slider floor="1" ceiling="25" step="1" precision="0" ng-model="data.runYears"></slider>
+                    <slider floor="1" ceiling="{{data.totalYears}}" step="1" precision="0" ng-model="data.runYears"></slider>
                 </div>
             </div>
-            组件性能衰减：<input type="text" ng-model="data.loss[2]" size="4">%
         </div>
     </div>
 </div>

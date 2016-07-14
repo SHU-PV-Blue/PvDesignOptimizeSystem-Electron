@@ -187,19 +187,19 @@
             "componentDirection": "vertical",
             "designType": "capacity",
             "rowsPerFixture": 2,
-            "colsPerFixture": 2,
+            "colsPerFixture": 1,
             "fbspace": 5.77,
             "lrspace": 0,
             "area": {
                 "length": "23",
                 "width": "34",
-                "numPerRow": 11,
+                "numPerRow": 23,
                 "rowsNum": 5,
                 "fbRestSpace": "5.15",
-                "lrRestSpace": "1.18",
-                "componentsNum": 220,
+                "lrRestSpace": "0.18",
+                "componentsNum": 230,
                 "totalArea": 782,
-                "totalCapacity": 60.5
+                "totalCapacity": 63.25
             },
             "capacity": {
                 "totalCapacity": "3400",
