@@ -3,9 +3,9 @@
         <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-body">
-                    <img ng-src="{{src1}}" alt="组件图">
+                    <img ng-src="{{src1}}" alt="组件图" style="display:block;margin:auto">
                     <hr>
-                    <img ng-src="{{src2}}" alt="组件图" style="width: 100%">
+                    <img ng-src="{{src2}}" alt="组件图" style="display:block;margin:auto;width:100%">
                 </div>
             </div>
             <div class="panel panel-primary">
@@ -15,13 +15,11 @@
                             <label>组件排列方式：</label>
                         </div>
                         <div class="col-md-3">
-                            <input type="radio" id="pv-r1" name="pv-r" value="horizontal"
-                                   ng-model="userDesignInfo.componentDirection">
+                            <input type="radio" id="pv-r1" name="pv-r" value="horizontal" ng-model="userDesignInfo.componentDirection">
                             <label for="pv-r1">横排</label>
                         </div>
                         <div class="col-md-3">
-                            <input type="radio" id="pv-r2" name="pv-r" value="vertical"
-                                   ng-model="userDesignInfo.componentDirection">
+                            <input type="radio" id="pv-r2" name="pv-r" value="vertical" ng-model="userDesignInfo.componentDirection">
                             <label for="pv-r2">竖排</label>
                         </div>
                     </div>
@@ -32,8 +30,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-5">m数：</label>
                                     <div class="col-md-7">
-                                        <input type="number" class="form-control"
-                                               ng-model="userDesignInfo.rowsPerFixture" min="1" value="1">
+                                        <input type="number" class="form-control" ng-model="userDesignInfo.rowsPerFixture" min="1" value="1">
                                     </div>
                                 </div>
                             </form>
@@ -43,8 +40,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-5">n数：</label>
                                     <div class="col-md-7">
-                                        <input type="number" class="form-control"
-                                               ng-model="userDesignInfo.colsPerFixture" min="1" value="1">
+                                        <input type="number" class="form-control" ng-model="userDesignInfo.colsPerFixture" min="1" value="1">
                                     </div>
                                 </div>
                             </form>
@@ -68,8 +64,7 @@
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <input type="radio" name="designType" id="pv-c2" value="capacity"
-                           ng-model="userDesignInfo.designType">
+                    <input type="radio" name="designType" id="pv-c2" value="capacity" ng-model="userDesignInfo.designType">
                     <label for="pv-c2">自定义安装容量(KW)</label>
                 </div>
                 <div class="panel-body">
@@ -77,16 +72,14 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">容量：</label>
                             <div class="col-md-4 input-group">
-                                <input type="text" class="form-control"
-                                       ng-model="userDesignInfo.capacity.totalCapacity">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.capacity.totalCapacity">
                                 <span class="input-group-addon">KW</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-4">总组件数：</label>
                             <div class="col-md-4 input-group">
-                                <input type="text" class="form-control"
-                                      ng-model="userDesignInfo.capacity.componentsNum">
+                                <input type="text" class="form-control" ng-model="userDesignInfo.capacity.componentsNum">
                                 <span class="input-group-addon">个</span>
                             </div>
                         </div>
@@ -107,15 +100,13 @@
                                         <div class="form-group">
                                             <label class="col-md-8 control-label">区域长L(m)</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control"
-                                                       ng-model="userDesignInfo.area.length">
+                                                <input type="text" class="form-control" ng-model="userDesignInfo.area.length">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-8 control-label">左右间距d(m)</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control"
-                                                       ng-model="userDesignInfo.lrspace">
+                                                <input type="text" class="form-control" ng-model="userDesignInfo.lrspace">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -143,8 +134,7 @@
                                         <div class="form-group">
                                             <label class="col-md-8 control-label">区域宽W(m)</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control"
-                                                       ng-model="userDesignInfo.area.width">
+                                                <input type="text" class="form-control" ng-model="userDesignInfo.area.width">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -177,9 +167,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel-footer">
+                    <button class="btn btn-success btn-block" ng-click="save()">确定</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <button class="btn btn-primary" ng-click="save()">确定</button>
 </div>

@@ -1,5 +1,5 @@
 <!--变压器电压选择页面-->
-<div class="row"  ng-controller="selectTransformerCtrl">
+<div class="row" ng-controller="selectTransformerCtrl">
     <div class="col-md-11">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -27,21 +27,46 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row" id="transformer">
                     <div class="col-md-4">
-                        <button class="btn btn-block btn-primary" ng-click="showForm('low_10_35_380')">低压开关柜</button>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img src="res/images/低压开关柜.jpg">
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-block btn-primary" ng-click="showForm('low_10_35_380')">低压开关柜</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-block btn-primary" ng-click="showForm('up_10')" ng-show="show_10">升压变压器</button>
-                        <button class="btn btn-block btn-primary" ng-click="showForm('up_35')" ng-show="show_35">升压变压器</button>
+                    <div class="col-md-4" ng-show="show_10 || show_35">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img src="res/images/变压器.jpg">
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-block btn-primary" ng-click="showForm('up_10')" ng-show="show_10">升压变压器</button>
+                                <button class="btn btn-block btn-primary" ng-click="showForm('up_35')" ng-show="show_35">升压变压器</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-block btn-primary" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</button>
+                    <div class="col-md-4" ng-show="show_10 || show_35">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <img src="res/images/高压开关柜.jpg">
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-block btn-primary" ng-click="showForm('high_10_35')" ng-show="show_10 || show_35">高压开关柜</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="panel-footer">
-                <button class="btn btn-primary" ng-click="finish()">完成</button>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-8">
+                        <button class="btn btn-success btn-block" ng-click="finish()">完成</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

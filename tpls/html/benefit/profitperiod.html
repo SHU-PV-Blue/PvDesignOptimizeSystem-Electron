@@ -18,8 +18,8 @@
                 </table>
             </div>
             <div class="panel panel-default">
-                <div class="fixedheadertable" style="height: 450px" ng-show="show[0]">
-                    <table class="table table-bordered fixedtop" style="table-layout: fixed">
+                <div style="height: 450px;overflow:auto" ng-show="show[0]">
+                    <table class="table table-bordered profitPeriod-table" >
                         <tr>
                             <th>名称</th>
                             <th>销售收入</th>
@@ -67,20 +67,6 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                        </tr>
-                    </table>
-                    <table class="table table-bordered" style="table-layout: fixed">
-                        <tr>
-                            <td>a</td>
-                        </tr>
-                        <tr>
-                            <td>a</td>
-                        </tr>
-                        <tr>
-                            <td>s</td>
-                        </tr>
-                        <tr>
-                            <td>a</td>
                         </tr>
                         <tr ng-repeat="ce in data.CE track by $index">
                             <td>第{{$index + 1}}年</td>

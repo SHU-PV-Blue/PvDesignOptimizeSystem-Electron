@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="static/components/angular-chart.js/dist/angular-chart.css">
     <link rel="stylesheet" href="static/components/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/stylesheet/project.css">
-    <link rel="stylesheet" href="tpls/css/project.css">
     <link rel="stylesheet" href="static/stylesheet/angular-slider.min.css">
     <script src="static/components/angular/angular.min.js"></script>
     <script src="static/javascript/angular-slider.min.js"></script>
@@ -28,7 +27,7 @@
         <div id="project" ng-controller="manageCtrl">
             <p class="current-project">当前项目： &nbsp;<b>{{currentProject}}</b></p>
             <div class="navItem">
-                <div class="navName">项目<i class="pull-right add-project" ng-click="addNewProject()">add</i></div>
+                <div class="navName">项目<span class="pull-right add-project glyphicon glyphicon-plus" ng-click="addNewProject()"></span></div>
                 <ul>
                     <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
                         <i class="icon-book"></i> {{project}}

@@ -48,41 +48,66 @@
                     </tr>
                 </table>
                 <div class="panel-footer">
-                    <button class="btn btn-primary" ng-click="back()">返回</button>
-                    <span class="pull-right">总损耗值：{{data.lossTotal | number : 1 }}%</span>
+                    总损耗值：<span style="color:blue">{{data.lossTotal | number : 1 }}</span> %
                 </div>
             </div>
+            <button class="btn btn-success btn-block" ng-click="back()">确定</button>
         </div>
         <div class="col-md-8">
-            <div class="panel-body">
-                <div ng-show="show[0]">
-                    月总辐照度
-                    <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div ng-show="show[0]">
+                        月总辐照度
+                        <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
+                    </div>
+                    <div ng-show="show[1]">
+                        损耗电量
+                        <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options">
+                </canvas>
+                    </div>
+                    <div ng-show="show[2]">
+                        并入电网电量
+                        <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options">
+                </canvas>
+                    </div>
                 </div>
-                <div ng-show="show[1]">
-                    损耗电量
-                    <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options">
-                </canvas>
-                </div>
-                <div ng-show="show[2]">
-                    并入电网电量
-                    <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options">
-                </canvas>
+                <div class="panel-footer">
+                    <button class="btn btn-default" ng-click="showMe(0)">月总辐照度</button>
+                    <button class="btn btn-default" ng-click="showMe(1)">损耗电量</button>
+                    <button class="btn btn-default" ng-click="showMe(2)">并入电网电量</button>
+                    <span class="pull-right">第 <span style="color : blue">{{data.runYears}}</span> 年</span>
                 </div>
             </div>
-            <div>
-                <button class="btn btn-link" ng-click="showMe(0)">月总辐照度</button>
-                <button class="btn btn-link" ng-click="showMe(1)">损耗电量</button>
-                <button class="btn btn-link" ng-click="showMe(2)">并入电网电量</button>
-                组件性能衰减：<input type="text" ng-model="data.componentLoss" size="4">%
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    发电系统运行年数<input type="text" ng-model="data.totalYears" class="form-control">： 第{{data.runYears}}年
-                </div>
-                <div class="col-md-7">
-                    <slider floor="1" ceiling="{{data.totalYears}}" step="1" precision="0" ng-model="data.runYears"></slider>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            组件性能衰减：
+                            <form role="form" class="form-inline">
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" ng-model="data.componentLoss" size="4">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            发电系统运行年数：
+                            <form role="form" class="form-inline">
+                                <div class="form-group input-group">
+                                    <input type="text" ng-model="data.totalYears" class="form-control" size="4">
+                                    <span class="input-group-addon">年</span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <slider floor="1" ceiling="{{data.totalYears}}" step="1" precision="0" ng-model="data.runYears"></slider>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

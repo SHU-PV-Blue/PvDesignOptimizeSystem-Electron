@@ -51,9 +51,6 @@
 							</tr>
 						</table>
 					</div>
-					<div class="panel-footer">
-						<button class="btn btn-primary" ng-click="confirmChoose()" type="button">确定</button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -61,11 +58,9 @@
 			<div class="col-md-8">
 				<div class="panel panel-primary">
 					<div class="panel-body">
-						<canvas  class="chart chart-line" chart-data="data1"
-								 chart-labels="labels" chart-options="options" height="100px" ng-show="showI">
+						<canvas class="chart chart-line" chart-data="data1" chart-labels="labels" chart-options="options" height="100px" ng-show="showI">
 						</canvas>
-						<canvas  class="chart chart-line" chart-data="data2"
-								 chart-labels="labels" chart-options="options" height="100px" ng-show="!showI">
+						<canvas class="chart chart-line" chart-data="data2" chart-labels="labels" chart-options="options" height="100px" ng-show="!showI">
 						</canvas>
 					</div>
 				</div>
@@ -83,6 +78,9 @@
 						</div>
 						<button ng-click="showI=true" class="btn btn-primary">i-v 图</button>
 						<button ng-click="showI=false" class="btn btn-primary">p-v 图</button>
+					</div>
+					<div class="panel-footer">
+						<button class="btn btn-success btn-block" ng-click="confirmChoose()" type="button">确定</button>
 					</div>
 				</div>
 			</div>

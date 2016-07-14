@@ -5,6 +5,14 @@
 html,body{
     height: 100%;
 }
+td input{
+    border:none;
+    text-align: center;
+    width: 100%;
+}
+td,th{
+    text-align: center;
+}
 .wrap{
     background: #fff;
     height: 100%;
@@ -87,17 +95,22 @@ html,body{
     border-radius: 0 0 2px 2px;
 }
 .op-row img{
-    width: 100%;
+    display: block;
+    width: 60%;
     height: 100px;
+    margin: auto;
 }
 
 .welcoming{
+    text-align: center;
     height: 100%;
     width: 100%;
 }
 .welcoming img{
-    width: 100%;
-    height: 600px;
+    display: block;
+    margin: auto;
+    width: 350px;
+    height: 350px;
 }
 
 .report-info td{
@@ -134,4 +147,24 @@ html,body{
 .alternatingCurrentCable .arrows{
     height: 10px;
     cursor: pointer;
+}
+
+#transformer img{
+    width: 100%;
+    height: 270px;
+}
+
+.profitPeriod-table td{
+    min-width: 100px;
+}
+
+#choose-inverter img{
+    width: 100%;
+    height: 150px;
+}
+.benefitAnalysis img{
+    display: block;
+    width: 70%;
+    height: 150px;
+    margin: auto;
 }
