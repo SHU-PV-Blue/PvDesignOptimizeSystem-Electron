@@ -51,31 +51,31 @@
                     总损耗值：<span style="color:blue">{{data.lossTotal | number : 1 }}</span> %
                 </div>
             </div>
-            <button class="btn btn-success btn-block" ng-click="back()">确定</button>
+            <button class="btn btn-success btn-block" ng-click="finish()">确定</button>
         </div>
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div ng-show="show[0]">
+                    <div ng-show="active == 0">
                         月总辐照度
                         <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
                     </div>
-                    <div ng-show="show[1]">
+                    <div ng-show="active == 1">
                         损耗电量
                         <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
                     </div>
-                    <div ng-show="show[2]">
+                    <div ng-show="active == 2">
                         并入电网电量
                         <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options">
                 </canvas>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default" ng-click="showMe(0)">月总辐照度</button>
-                    <button class="btn btn-default" ng-click="showMe(1)">损耗电量</button>
-                    <button class="btn btn-default" ng-click="showMe(2)">并入电网电量</button>
+                    <button class="btn btn-default" ng-click="setActive(0)">月总辐照度</button>
+                    <button class="btn btn-default" ng-click="setActive(1)">损耗电量</button>
+                    <button class="btn btn-default" ng-click="setActive(2)">并入电网电量</button>
                     <span class="pull-right">第 <span style="color : blue">{{data.runYears}}</span> 年</span>
                 </div>
             </div>

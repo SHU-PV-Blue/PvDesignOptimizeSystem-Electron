@@ -69,26 +69,12 @@
                     <th>单价</th>
                     <th>总价</th>
                 </tr>
-                <tr>
-                    <td>光伏组件</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>逆变器</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>汇流箱</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                <tr ng-repeat="d in data.device">
+                    <td>{{d.name}}</td>
+                    <td>{{d.model}}</td>
+                    <td>{{d.num}}</td>
+                    <td>{{d.price}}</td>
+                    <td>{{d.sumPrice}}</td>
                 </tr>
             </table>
         </div>
@@ -98,9 +84,9 @@
         <div class="col-md-11">
             <table class="table table-bordered">
                 <tr>
-                    <th>系统年总发电量：{{data.electricity.yearCapacity}}</th>
-                    <th>系统年总辐射量：{{data.electricity.yearHT}}</th>
-                    <th>系统年总发电效率：{{data.electricity.yearEfficient}}</th>
+                    <th>系统年总发电量：{{data.electricity.yearCapacity | number : 2}}</th>
+                    <th>系统年总辐射量：{{data.electricity.yearHT | number : 2}}</th>
+                    <th>系统年总发电效率：{{data.electricity.yearEfficient * 100 | number : 2}} %</th>
                 </tr>
                 <tr>
                     <td>月发电量图</td>
@@ -109,7 +95,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <canvas class="chart chart-line" chart-data="HChartData"
+                        <canvas class="chart chart-line" chart-data="electricityChartData"
                                 chart-labels="labelsMonth" chart-options="options">
                         </canvas>
                     </td>
@@ -169,7 +155,7 @@
                 </tr>
                 <tr>
                     <td>项目建设成本</td>
-                    <td>{{data.profit.projectBuildCost}}</td>
+                    <td>{{data.profit.projectBuildCost | number:1}}</td>
                     <td>不含税</td>
                 </tr>
                 <tr>
@@ -184,7 +170,7 @@
                 </tr>
                 <tr>
                     <td>年总收入</td>
-                    <td>{{data.profit.yearProfit}}</td>
+                    <td>{{data.profit.yearProfit | number:1}}</td>
                     <td>不含税</td>
                 </tr>
             </table>

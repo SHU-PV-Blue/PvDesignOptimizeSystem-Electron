@@ -1452,7 +1452,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
     };
 
     $scope.active = 2;
-    $scope.setActive = function(index){
+    $scope.setActive = function (index) {
         $scope.active = index;
     }
 
@@ -1547,11 +1547,17 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
 
     $scope.data = {
         loss: [2.8, 10, 3, 2.2, 2, 4, 1, 0.5, 5],
-        componentLoss : 3,
+        componentLoss: 3,
         lossTotal: 0,
-        runYears: 10,
-        totalYears:25
+        runYears: 1,
+        totalYears: 25,
+        electricity: []
     };
+
+    $scope.active = 0;
+    $scope.setActive = function (index) {
+        $scope.active = index;
+    }
 
     $scope.$watch('data.loss', function () {
         var total = 0;
@@ -1561,17 +1567,10 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $scope.data.lossTotal = total;
     }, true);
 
-    $scope.$watch('data.totalYears',function(){
-        if($scope.runYears > $scope.totalYears)
+    $scope.$watch('data.totalYears', function () {
+        if ($scope.runYears > $scope.totalYears)
             $scope.runYears = $scope.totalYears;
-    })
-
-    $scope.show = [true, false, false];
-    $scope.showMe = function (index) {
-        for (var i = 0; i < $scope.show.length; i++) {
-            $scope.show[i] = i == index;
-        }
-    };
+    });
 
     var componentInfo = projectData.getData('componentInfo');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
@@ -1586,25 +1585,50 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     $scope.chartData0 = [
         []
     ];
-    $scope.chartData1 = [];
+
+    $scope.chartData1 = [
+        []
+    ];
     $scope.chartData2 = [];
 
     for (var i = 1; i <= 12; i++) {
-        $scope.chartData0[0].push(getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az));
+        var h = getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az);
+        $scope.chartData0[0].push(Number(h.toFixed(3)));
+        $scope.data.electricity.push(h * Number(componentInfo['转换效率']) / 100);
     }
+
+    compute_chartData();
+
     $scope.$watch('data.lossTotal', function () {
-        $scope.chartData1.push($scope.chartData0[0].map(function (item) {
-            return item * ($scope.data.lossTotal / 100);
-        }));
-        $scope.chartData2.push($scope.chartData0[0].map(function (item) {
-            return item * (1 - $scope.data.lossTotal / 100);
-        }));
+        compute_chartData();
     });
+
+    $scope.$watch('data.runYears', function () {
+        compute_chartData();
+    });
+
+    function compute_chartData() {
+        var yearLoss = 1 - $scope.data.runYears * $scope.data.componentLoss / 100;
+        if (yearLoss < 0)
+            yearLoss = 0;
+
+        $scope.chartData1 = [
+            []
+        ];
+        $scope.chartData2 = [];
+
+        $scope.chartData2.push($scope.data.electricity.map(function (item) {
+            var bingrudianliang = item * (1 - $scope.data.lossTotal / 100) * yearLoss;
+            $scope.chartData1[0].push(Number((item - bingrudianliang).toFixed(3)));
+            return Number(bingrudianliang.toFixed(3));
+        }));
+    }
 
     $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    $scope.back = function () {
+    $scope.finish = function () {
         projectData.setFinished("efficiencyAnalysis");
+        projectData.addOrUpdateData($scope.data, 'efficiencyAnalysisInfo');
         projectData.saveToLocal();
         $location.path('/0');
     }
@@ -2049,7 +2073,7 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
         };
 
         projectData.addOrUpdateData(emc, 'emc');
-
+        projectData.saveToLocal();
         $location.path('/8');
     }
 });
@@ -2209,8 +2233,10 @@ pvModule.controller('reportCtrl', function ($scope, $location, projectData) {
     var userDesign = projectData.getData("userDesignInfo");
     var meteorologyInfo = projectData.getData('meteorologyInfo');
     var investmentCosts = projectData.getData('investmentCosts');
+    var emc = projectData.getData('emc');
     var profitPeriod = projectData.getData('profitPeriod');
     var parameters = projectData.getData('parameters');
+    var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
 
     $scope.getMapPath = function () {
         return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
@@ -2232,25 +2258,72 @@ pvModule.controller('reportCtrl', function ($scope, $location, projectData) {
             temperature: [],
             HT: []
         },
-        device: {
-
-        },
+        device: [{
+            name: '光伏组件',
+            model: 'TSMS',
+            num: 12,
+            price: 123,
+            sumPrice: 1230
+        }, {
+                name: '逆变器',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '汇流箱',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '配电柜',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '电缆',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '低压开关柜',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '升压变压器',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }, {
+                name: '高压开关柜',
+                model: 'TSMS',
+                num: 12,
+                price: 123,
+                sumPrice: 1230
+            }
+        ],
         electricity: {
             yearCapacity: 0,
             yearHT: 0,
             yearEfficient: 0
         },
         profit: {
-            totalCost: 0,
+            totalCost: investmentCosts.data2.DQ,
             designCost: investmentCosts.data2.DG,
             deviceCost: investmentCosts.data2.DF,
             constructionCost: investmentCosts.data2.DH,
             supervisionCost: investmentCosts.data2.DI,
             otherCost: investmentCosts.data2.DJ,
-            projectBuildCost: 0,
+            projectBuildCost: emc.data.LA,
             buildPeriod: 0,
             profitPeriod: 0,
-            yearProfit: 0
+            yearProfit: profitPeriod.CT
         }
     };
 
@@ -2274,15 +2347,30 @@ pvModule.controller('reportCtrl', function ($scope, $location, projectData) {
         $scope.labelsYear.push(i + 1 + '');
     }
 
+    $scope.electricityChartData = [
+        efficiencyAnalysis.electricity.map(function (item) {
+            var temp = item * (1 - efficiencyAnalysis.componentLoss / 100)
+            $scope.data.electricity.yearCapacity += temp;
+            return Number(temp.toFixed(2));
+        })
+    ];
     $scope.HChartData = [
         []
     ];
-    $scope.lossChartData = [
-        300, 800
-    ];
+
+
     for (var i = 1; i <= 12; i++) {
-        $scope.HChartData[0].push(Number((getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az)).toFixed(2)));
+        var temp = getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az);
+        $scope.data.electricity.yearHT += temp;
+        $scope.HChartData[0].push(temp.toFixed(2));
     }
+
+    $scope.lossChartData = [
+        $scope.data.electricity.yearCapacity,
+        $scope.data.electricity.yearHT - $scope.data.electricity.yearCapacity
+    ];
+
+    $scope.data.electricity.yearEfficient = $scope.data.electricity.yearCapacity / $scope.data.electricity.yearHT;
 
     $scope.debtChartData = [
         profitPeriod.MG.map(function (item) {
