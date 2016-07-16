@@ -19,7 +19,7 @@
           </table>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="margin-top: 30px">
         <div class="col-md-2">
           <button class="btn btn-primary" ng-click="getData()">获取数据</button>
         </div>
@@ -35,12 +35,12 @@
             <tr>
               <th>允许载流量/A</th>
               <th>容量/W</th>
-              <th>截面积/mm^2</th>
+              <th>截面积/mm&sup2;</th>
             </tr>
             <tr>
-              <td>{{show['允许载流量']}} </td>
-              <td>{{show['容量']}} </td>
-              <td></td>
+              <td>{{alternatingCurrentCableInfo.alternatingCurrentCable['允许载流量']}} </td>
+              <td>{{alternatingCurrentCableInfo.alternatingCurrentCable['容量']}} </td>
+              <td>{{alternatingCurrentCableInfo.alternatingCurrentCable['导体截面']}}</td>
             </tr>
           </table>
         </div>
@@ -49,45 +49,39 @@
         <div class="col-md-6">
           <form role="form" class="form-horizontal">
             <div class="form-group">
-                <label class="control-label col-md-4">每路最大连续电流</label>
-                <div class="col-md-4">
-                  <p class="form-control-static">{{directCurrentCableInfo.cables[0].maxCurrent}}</p>
-                </div>
-              </div>
-            <div class="form-group">
-              <label class="control-label col-md-4">直流电缆长度</label>
+              <label class="control-label col-md-4">每路最大连续电流</label>
               <div class="col-md-4">
-                <input type="text" class="form-control">
+                <p class="form-control-static">{{alternatingCurrentCableInfo.maxCurrent}}</p>
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-md-4">电缆损耗</label>
+              <label class="control-label col-md-4">直流电缆长度</label>
               <div class="col-md-4">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" ng-model="alternatingCurrentCableInfo.length">
               </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4" style="text-align: right">电缆损耗：</div>
+              <div class="col-md-4" style="text-align: left">{{alternatingCurrentCableInfo.loss * 100 | number:3}} %</div>
             </div>
           </form>
         </div>
         <div class="col-md-6">
           <form role="form" class="form-horizontal">
             <div class="form-group">
-                <label class="control-label col-md-4">直流单元输出路数</label>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" ng-model="directCurrentCableInfo.cables[0].branches">
-                </div>
-              </div>
-            <div class="form-group">
-              <label class="control-label col-md-4">线路压降</label>
+              <label class="control-label col-md-4">直流单元输出路数</label>
               <div class="col-md-4">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" ng-model="alternatingCurrentCableInfo.branches">
               </div>
             </div>
             <div class="form-group">
-              <label class="control-label col-md-4">直流电缆总损耗</label>
-              <div class="col-md-4">
-                <input type="text" class="form-control">
-              </div>
+              <div class="col-md-4" style="text-align: right">线路压降：</div>
+              <div class="col-md-4" style="text-align: left">{{alternatingCurrentCableInfo.lineDrop | number : 4}}</div>
             </div>
+            <!--<div class="form-group">
+              <div class="col-md-4" style="text-align: right">直流电缆总损耗：</div>
+              <div class="col-md-4" style="text-align: left">{{alternatingCurrentCableInfo.totalLoss | number : 4}}</div>
+            </div>-->
           </form>
         </div>
       </div>

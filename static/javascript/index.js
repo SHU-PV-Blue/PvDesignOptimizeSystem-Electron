@@ -530,7 +530,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.sums = [];
 
     $scope.options = {
-        pointDotRadius: 2
+        pointDotRadius: 2,
     };
     $scope.show = [true, false, false, false];
 
@@ -1151,14 +1151,37 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
 /*
  组串式直流电缆控制器
  */
-pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalInstance, $window, gainData, projectData) {
+pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalInstance, $window, gainData, parentObj, projectData) {
+
+    var componentInfo = projectData.getData('componentInfo');
+    var maxPowerCurrent = componentInfo['最大功率点电流'];
+    var maxPowerVoltage = componentInfo['最大功率点电压'];
+    var branchNumPerInverter = parentObj.groupInverterInfo.branchNumPerInverter;
+    var serialNumPerBranch = parentObj.groupInverterInfo.serialNumPerBranch;
+    $scope.alternatingCurrentCableInfo = {
+        alternatingCurrentCable: {},
+        maxCurrent: maxPowerCurrent,
+        branches: 1,
+        length: 0,
+        lineDrop: 0,
+        loss: 0
+    };
 
     $scope.items = [];
     $scope.selected = '{}';
-    $scope.show = {};
     $scope.$watch('selected', function (newVal) {
-        $scope.show = JSON.parse(newVal);
+        $scope.alternatingCurrentCableInfo.alternatingCurrentCable = JSON.parse(newVal);
     });
+
+    $scope.$watch('alternatingCurrentCableInfo.length',function(){
+        update_lineDrop_loss();
+    });
+
+    function update_lineDrop_loss() {
+        var cableTemp = $scope.alternatingCurrentCableInfo;
+        $scope.alternatingCurrentCableInfo.lineDrop = 1.25 * 0.0184 * cableTemp.maxCurrent * cableTemp.length * 2 / cableTemp.alternatingCurrentCable['导体截面'];
+        $scope.alternatingCurrentCableInfo.loss = $scope.alternatingCurrentCableInfo.lineDrop / (maxPowerVoltage * serialNumPerBranch);
+    }
 
     $scope.getData = function () {
         gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
@@ -1169,8 +1192,8 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'directDistribution',
-            selected: $scope.show
+            name: 'alternatingCurrentCableInfo',
+            obj: $scope.alternatingCurrentCableInfo
         });
     };
 
@@ -1258,7 +1281,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
     $scope.ok = function () {
         $uibModalInstance.close({
             name: 'groupInverterInfo',
-            selected: $scope.groupInverterInfo
+            obj: $scope.groupInverterInfo
         });
     };
 

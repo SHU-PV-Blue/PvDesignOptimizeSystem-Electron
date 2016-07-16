@@ -207,7 +207,7 @@
             }
         },
         "chooseInverter": {
-            "type": "centralized",
+            "type": "group",
             "centralizedInverterInfo": {
                 "centralizedInverter": {
                     "MPP电压上限": 850,
@@ -312,6 +312,31 @@
                     }
                 ],
                 "totalLoss": 0.003409594617855245
+            },
+            "groupInverterInfo": {
+                "groupInverter": {
+                    "MPPT数量": 2,
+                    "MPP电压上限": 550,
+                    "MPP电压下限": 125,
+                    "id": 3,
+                    "厂家": "阳光电源",
+                    "启动电压": 150,
+                    "型号": "SG4KTL-M",
+                    "最大效率": 97.6,
+                    "最大输入功率": 4300,
+                    "最大输入电压": 550,
+                    "最大输入电流": 26,
+                    "最大输出功率": 4200,
+                    "最大输出电流": 20,
+                    "输入端子最大允许电流": 10,
+                    "额定输入电压": 370,
+                    "额定输出功率": 4000
+                },
+                "serialNumPerBranch": 11,
+                "branchNumPerInverter": 1,
+                "volumeRatio": 1.05,
+                "inverterNumNeeded": 22,
+                "totalOpacity": 66
             }
         },
         "transformer": {

@@ -18,23 +18,23 @@
             <div class="col-md-12">
               <table class="table table-bordered">
                 <tr>
-                  <th>输入路数（个）</th>
-                  <th>输入电流上限（A）</th>
-                  <th>有直流断路器（布尔）</th>
-                  <th>有防雷失效监控（布尔）</th>
-                  <th>有监控单元（布尔）</th>
+                  <th>输入路数/个/th>
+                  <th>输入电流上限/A</th>
+                  <th>直流断路器</th>
+                  <th>防雷失效监控</th>
+                  <th>监控单元</th>
                 </tr>
                 <tr>
                   <td>{{directCurrentInfo.directCurrent['输入路数']}} </td>
                   <td>{{directCurrentInfo.directCurrent['输入电流上限']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有直流断路器']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有防雷失效监控']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有监控单元']}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有直流断路器'] ? '有' : '无'}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有防雷失效监控']? '有' : '无'}} </td>
+                  <td>{{directCurrentInfo.directCurrent['有监控单元']? '有' : '无'}} </td>
                 </tr>
                 <tr>
                   <th>辅助电源</th>
-                  <th>价格下限（￥）</th>
-                  <th>价格上限（￥）</th>
+                  <th>价格下限/￥</th>
+                  <th>价格上限/￥</th>
                 </tr>
                 <tr>
                   <td>{{directCurrentInfo.directCurrent['辅助电源']}} </td>

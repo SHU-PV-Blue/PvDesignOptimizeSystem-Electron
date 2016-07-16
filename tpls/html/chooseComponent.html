@@ -16,11 +16,11 @@
 						<br>
 						<table class="table table-bordered">
 							<tr>
-								<td>开路电压(V)</td>
-								<td>最大功率点电压(V)</td>
-								<td>最大功率点电流(A)</td>
-								<td>短路电流(A)</td>
-								<td>转换效率(%)</td>
+								<td>开路电压/V</td>
+								<td>最大功率点电压/V</td>
+								<td>最大功率点电流/A</td>
+								<td>短路电流/A</td>
+								<td>转换效率/%</td>
 								<td>开路电压温度系数(%/℃)</td>
 								<td>最大功率温度系数(%/℃)</td>
 							</tr>
@@ -35,11 +35,11 @@
 							</tr>
 							<tr>
 								<td>短路电流温度系数(%/℃)</td>
-								<td>长度(mm)</td>
-								<td>宽度(mm)</td>
-								<td>重量(kg)</td>
-								<td>工作温度下限(℃)</td>
-								<td>工作温度上限(℃)</td>
+								<td>长度/mm</td>
+								<td>宽度/mm</td>
+								<td>重量/kg</td>
+								<td>工作温度下限/℃</td>
+								<td>工作温度上限/℃</td>
 							</tr>
 							<tr>
 								<td>{{show['短路电流温度系数']}}</td>
@@ -58,10 +58,16 @@
 			<div class="col-md-8">
 				<div class="panel panel-primary">
 					<div class="panel-body">
-						<canvas class="chart chart-line" chart-data="data1" chart-labels="labels" chart-options="options" height="100px" ng-show="showI">
+						<div ng-show="showI">
+							i-v 图
+							<canvas class="chart chart-line" chart-data="data1" chart-labels="labels" chart-options="options" height="100px">
 						</canvas>
-						<canvas class="chart chart-line" chart-data="data2" chart-labels="labels" chart-options="options" height="100px" ng-show="!showI">
+						</div>
+						<div ng-show="!showI">
+							p-v 图
+							<canvas class="chart chart-line" chart-data="data2" chart-labels="labels" chart-options="options" height="100px">
 						</canvas>
+						</div>
 					</div>
 				</div>
 			</div>

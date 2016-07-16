@@ -10,18 +10,18 @@
                 </tr>
                 <tr>
                     <td>固定安装方式</td>
-                    <td>方位角：{{data.projectInfo.dip}}</td>
-                    <td>倾角：{{data.projectInfo.az}}</td>
+                    <td>方位角：{{data.projectInfo.az}}&deg;</td>
+                    <td>倾角：{{data.projectInfo.dip}}&deg;</td>
                 </tr>
                 <tr>
                     <td>光伏阵列</td>
-                    <td>阵列占地面积：{{data.projectInfo.arrayArea}}</td>
+                    <td>阵列占地面积：{{data.projectInfo.arrayArea}} m&sup2; </td>
                     <td>阵列前后支架间距：{{data.projectInfo.arrayfbspace | number:2}}</td>
                 </tr>
                 <tr>
                     <td>经度：{{data.projectInfo.lng | number:2}}</td>
                     <td>纬度：{{data.projectInfo.lat | number:2}}</td>
-                    <td></td>
+                    <td>**年总发电量：</td>
                 </tr>
             </table>
         </div>
