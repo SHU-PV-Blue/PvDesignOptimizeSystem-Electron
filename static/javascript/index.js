@@ -147,6 +147,9 @@ pvModule.controller('manageCtrl', function ($scope, $uibModal, projectData) {
     };
 
     function createNewProject(name) {
+        if(!fs.existsSync('projects')){
+            fs.mkdirSync('projects');
+        }
         fs.writeFileSync("projects/" + name + ".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
         $scope.currentProject = name;
         projectData.loadProject(name);
@@ -2455,7 +2458,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
 
             $route.reload();
             var process = require("child_process");
-            process.exec('phantomjs.exe test.js ' + savePath, function (err, stdout, stderr) {
+            process.exec('phantomjs.exe run.js ' + savePath, function (err, stdout, stderr) {
                 console.log(err, stdout, stderr);
             });
         }
