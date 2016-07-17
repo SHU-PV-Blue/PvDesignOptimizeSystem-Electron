@@ -1173,7 +1173,7 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
         $scope.alternatingCurrentCableInfo.alternatingCurrentCable = JSON.parse(newVal);
     });
 
-    $scope.$watch('alternatingCurrentCableInfo.length',function(){
+    $scope.$watch('alternatingCurrentCableInfo.length', function () {
         update_lineDrop_loss();
     });
 
@@ -2249,7 +2249,7 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
 /*
 报告控制器
  */
-pvModule.controller('reportCtrl', function ($scope, $location, projectData) {
+pvModule.controller('reportCtrl', function ($scope, $location, $route, projectData) {
 
     var basicInfo = projectData.getData('basicInfo');
     var angleInfo = projectData.getData('angleInfo');
@@ -2407,10 +2407,46 @@ pvModule.controller('reportCtrl', function ($scope, $location, projectData) {
         })
     ];
 
+    $scope.gereratePdf = function () {
+
+        var dialog = require('electron').remote.dialog;
+        var savePath = dialog.showSaveDialog({
+            title: '保存报告',
+            defaultPath: 'D:/',
+            buttonLabel: '保存',
+            filters: [
+                { name: 'pdf', extensions: ['pdf'] }
+            ]
+        });
+
+        if (savePath) {
+            var printDiv = document.getElementById('divPrint');
+            var charts = document.getElementsByClassName('chart-container');
+
+            for (var i = 0; i < charts.length; i++) {
+                var chart = charts[i].firstChild;
+                var img = chart.toDataURL("image/png");
+                var imgNode = document.createElement('img');
+                imgNode.src = img;
+                charts[i].removeChild(chart);
+                charts[i].appendChild(imgNode);
+            }
+
+            document.getElementById('divPrint').style.padding = "60px";
+            fs.writeFileSync('report.html', document.getElementsByTagName('html')[0].outerHTML.replace(document.body.innerHTML, document.getElementById('divPrint').outerHTML));
+
+            $route.reload();
+            var process = require("child_process");
+            process.exec('phantomjs.exe test.js ' + savePath, function (err, stdout, stderr) {
+                console.log(err, stdout, stderr);
+            });
+        }
+    };
+
     $scope.back = function () {
         projectData.setFinished("report");
         $location.path('/0');
-    }
+    };
 });
 
 //指令区

@@ -207,7 +207,7 @@
             }
         },
         "chooseInverter": {
-            "type": "group",
+            "type": "centralized",
             "centralizedInverterInfo": {
                 "centralizedInverter": {
                     "MPP电压上限": 850,
@@ -340,7 +340,7 @@
             }
         },
         "transformer": {
-            "type": "10kv"
+            "type": "35kv"
         },
         "parameters": {
             "AA": 0.9575,
@@ -1452,7 +1452,7 @@
             ],
             "componentLoss": 3,
             "lossTotal": 30.5,
-            "runYears": "1",
+            "runYears": "7",
             "totalYears": 25,
             "electricity": [
                 0.5665535222348227,
