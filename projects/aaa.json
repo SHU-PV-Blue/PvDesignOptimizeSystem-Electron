@@ -207,7 +207,7 @@
             }
         },
         "chooseInverter": {
-            "type": "centralized",
+            "type": "group",
             "centralizedInverterInfo": {
                 "centralizedInverter": {
                     "MPP电压上限": 850,
@@ -318,29 +318,49 @@
                     "MPPT数量": 2,
                     "MPP电压上限": 550,
                     "MPP电压下限": 125,
-                    "id": 3,
+                    "id": 2,
                     "厂家": "阳光电源",
                     "启动电压": 150,
-                    "型号": "SG4KTL-M",
-                    "最大效率": 97.6,
-                    "最大输入功率": 4300,
+                    "型号": "SG3KTL-M",
+                    "最大效率": 97.4,
+                    "最大输入功率": 3200,
                     "最大输入电压": 550,
-                    "最大输入电流": 26,
-                    "最大输出功率": 4200,
-                    "最大输出电流": 20,
+                    "最大输入电流": 20,
+                    "最大输出功率": 3150,
+                    "最大输出电流": 15,
                     "输入端子最大允许电流": 10,
                     "额定输入电压": 370,
-                    "额定输出功率": 4000
+                    "额定输出功率": 3000
                 },
                 "serialNumPerBranch": 11,
                 "branchNumPerInverter": 1,
                 "volumeRatio": 1.05,
                 "inverterNumNeeded": 22,
                 "totalOpacity": 66
+            },
+            "alternatingCurrentCableInfo": {
+                "alternatingCurrentCable": {
+                    "id": 32,
+                    "允许载流量": 28,
+                    "名称": "铜芯聚氯乙烯绝缘电缆",
+                    "型号": "229 IEC 01(BV)",
+                    "容量": 16000,
+                    "导体截面": 2.5
+                },
+                "maxCurrent": 8.82,
+                "branches": 1,
+                "length": "5",
+                "lineDrop": 0.8114399999999999,
+                "loss": 0.002364335664335664
             }
         },
         "transformer": {
-            "type": "35kv"
+            "type": "35kv",
+            "transformerInfo": {
+                "transformer": {},
+                "serialNum": 1,
+                "num": 22
+            }
         },
         "parameters": {
             "AA": 0.9575,
@@ -1452,7 +1472,7 @@
             ],
             "componentLoss": 3,
             "lossTotal": 30.5,
-            "runYears": "7",
+            "runYears": "1",
             "totalYears": 25,
             "electricity": [
                 0.5665535222348227,

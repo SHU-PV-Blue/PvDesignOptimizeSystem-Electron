@@ -2260,6 +2260,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
     var profitPeriod = projectData.getData('profitPeriod');
     var parameters = projectData.getData('parameters');
     var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
+    var componentInfo = projectData.getData('componentInfo');
 
     $scope.getMapPath = function () {
         return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
@@ -2283,54 +2284,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         },
         device: [{
             name: '光伏组件',
-            model: 'TSMS',
-            num: 12,
-            price: 123,
-            sumPrice: 1230
-        }, {
-                name: '逆变器',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '汇流箱',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '配电柜',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '电缆',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '低压开关柜',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '升压变压器',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }, {
-                name: '高压开关柜',
-                model: 'TSMS',
-                num: 12,
-                price: 123,
-                sumPrice: 1230
-            }
-        ],
+            model: componentInfo['型号'],
+            num: userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum,
+            price: 0,
+            sumPrice: 0
+        }],
         electricity: {
             yearCapacity: 0,
             yearHT: 0,
@@ -2349,6 +2307,66 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             yearProfit: profitPeriod.CT
         }
     };
+
+    var chooseInverter = projectData.getData('chooseInverter');
+    if (chooseInverter.type === 'centralized') {
+        $scope.data.device.push({
+            name: '集中式逆变器',
+            model: chooseInverter.centralizedInverterInfo.centralizedInverter['型号'],
+            num: chooseInverter.centralizedInverterInfo.inverterNumNeeded,
+            price: 0,
+            sumPrice: 0
+        });
+        $scope.data.device.push({
+            name: '直流汇流箱',
+            model: chooseInverter.directCurrentInfo.directCurrent['型号'],
+            num: chooseInverter.directCurrentInfo.num,
+            price: 0,
+            sumPrice: 0
+        });
+        $scope.data.device.push({
+            name: '直流配电柜',
+            model: chooseInverter.directDistributionInfo.directDistribution['型号'],
+            num: chooseInverter.directDistributionInfo.num,
+            price: 0,
+            sumPrice: 0
+        });
+        for (var i = 0; i < 3; i++) {
+            var cableName;
+            if(i === 0){
+                cableName = '电缆:阵列->汇流箱';
+            }else if(i === 1){
+                cableName = '电缆:汇流箱->配电柜';
+            }else{
+                cableName = '电缆:配电柜->逆变器';
+            }
+
+            $scope.data.device.push({
+                name: cableName,
+                model: chooseInverter.directCurrentCableInfo.cables[i].directCurrentCable['型号'],
+                num: chooseInverter.directCurrentCableInfo.cables[i].length,
+                price: 0,
+                sumPrice: 0
+            });
+        }
+    } else {
+        $scope.data.device.push({
+            name: '组串式逆变器',
+            model: chooseInverter.groupInverterInfo.groupInverter['型号'],
+            num: chooseInverter.groupInverterInfo.inverterNumNeeded,
+            price: 0,
+            sumPrice: 0
+        });
+        $scope.data.device.push({
+            name: '电缆:阵列->逆变器',
+            model: chooseInverter.alternatingCurrentCableInfo.alternatingCurrentCable['型号'],
+            num: chooseInverter.alternatingCurrentCableInfo.length,
+            price: 0,
+            sumPrice: 0
+        });
+    }
+
+    //todo: 高压侧设备
 
     meteorologyInfo.monthinfos.forEach(function (monthinfo) {
         $scope.data.meteorology.temperature.push(monthinfo.temperature);
