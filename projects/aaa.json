@@ -5,154 +5,154 @@
             "projectAddress": "上海大学",
             "userName": "shu",
             "remark": "good",
-            "lng": "121.416777",
-            "lat": "31.217479",
+            "lng": "119.610393",
+            "lat": "31.124538",
             "projectDate": "2016-06-27T06:08:18.183Z"
         },
         "meteorologyInfo": {
-            "type": "db",
+            "type": "user",
             "monthinfos": [
                 {
-                    "H": 2.63,
-                    "temperature": 4.84,
+                    "H": 2.74,
+                    "temperature": 3.8,
                     "H0": 5.71,
-                    "humidity": 73.6,
-                    "Kt": 0.46,
-                    "Hd": 1.1,
+                    "humidity": 74.8,
+                    "Kt": 0.47,
+                    "Hd": 1.09,
                     "Ws": 76.8,
-                    "wind": 6.22,
-                    "$$hashKey": "object:383"
+                    "wind": 4.79,
+                    "$$hashKey": "object:1323"
                 },
                 {
-                    "H": 3.09,
-                    "temperature": 5.88,
+                    "H": 3.12,
+                    "temperature": 5.46,
                     "H0": 7.05,
-                    "humidity": 73.4,
-                    "Kt": 0.43,
+                    "humidity": 73.5,
+                    "Kt": 0.44,
                     "Hd": 1.41,
                     "Ws": 82.4,
-                    "wind": 6.2,
-                    "$$hashKey": "object:384"
+                    "wind": 4.75,
+                    "$$hashKey": "object:1324"
                 },
                 {
-                    "H": 3.53,
-                    "temperature": 9.03,
+                    "H": 3.32,
+                    "temperature": 9.33,
                     "H0": 8.73,
-                    "humidity": 74.9,
-                    "Kt": 0.4,
-                    "Hd": 1.81,
+                    "humidity": 73.9,
+                    "Kt": 0.38,
+                    "Hd": 1.8,
                     "Ws": 88.9,
-                    "wind": 5.68,
-                    "$$hashKey": "object:385"
+                    "wind": 4.4,
+                    "$$hashKey": "object:1325"
                 },
                 {
-                    "H": 4.28,
-                    "temperature": 14,
+                    "H": 4.15,
+                    "temperature": 15.2,
                     "H0": 10.2,
-                    "humidity": 76.9,
-                    "Kt": 0.41,
+                    "humidity": 74.3,
+                    "Kt": 0.4,
                     "Hd": 2.18,
-                    "Ws": 95.9,
-                    "wind": 5.42,
-                    "$$hashKey": "object:386"
+                    "Ws": 95.8,
+                    "wind": 4.17,
+                    "$$hashKey": "object:1326"
                 },
                 {
-                    "H": 4.84,
-                    "temperature": 18.4,
+                    "H": 4.72,
+                    "temperature": 19.8,
                     "H0": 11.1,
-                    "humidity": 79.7,
-                    "Kt": 0.43,
+                    "humidity": 76.7,
+                    "Kt": 0.42,
                     "Hd": 2.44,
                     "Ws": 101,
-                    "wind": 5.01,
-                    "$$hashKey": "object:387"
+                    "wind": 3.74,
+                    "$$hashKey": "object:1327"
                 },
                 {
-                    "H": 4.58,
-                    "temperature": 22.4,
+                    "H": 4.59,
+                    "temperature": 23.3,
                     "H0": 11.4,
-                    "humidity": 84.5,
-                    "Kt": 0.39,
+                    "humidity": 81.5,
+                    "Kt": 0.4,
                     "Hd": 2.53,
                     "Ws": 104,
-                    "wind": 5.2,
-                    "$$hashKey": "object:388"
+                    "wind": 3.71,
+                    "$$hashKey": "object:1328"
                 },
                 {
-                    "H": 5.17,
-                    "temperature": 25.8,
+                    "H": 5.01,
+                    "temperature": 26.2,
                     "H0": 11.2,
-                    "humidity": 87.1,
-                    "Kt": 0.45,
+                    "humidity": 85,
+                    "Kt": 0.44,
                     "Hd": 2.47,
                     "Ws": 103,
-                    "wind": 5.37,
-                    "$$hashKey": "object:389"
+                    "wind": 3.82,
+                    "$$hashKey": "object:1329"
                 },
                 {
-                    "H": 4.78,
-                    "temperature": 25.7,
+                    "H": 4.67,
+                    "temperature": 25.5,
                     "H0": 10.4,
-                    "humidity": 86.5,
-                    "Kt": 0.45,
-                    "Hd": 2.25,
+                    "humidity": 85.6,
+                    "Kt": 0.44,
+                    "Hd": 2.26,
                     "Ws": 98.4,
-                    "wind": 5.24,
-                    "$$hashKey": "object:390"
+                    "wind": 3.78,
+                    "$$hashKey": "object:1330"
                 },
                 {
-                    "H": 4.07,
-                    "temperature": 22.6,
+                    "H": 3.96,
+                    "temperature": 22,
                     "H0": 9.19,
-                    "humidity": 80.7,
-                    "Kt": 0.44,
-                    "Hd": 1.92,
+                    "humidity": 81.6,
+                    "Kt": 0.43,
+                    "Hd": 1.93,
                     "Ws": 91.8,
-                    "wind": 5.51,
-                    "$$hashKey": "object:391"
+                    "wind": 3.81,
+                    "$$hashKey": "object:1331"
                 },
                 {
-                    "H": 3.36,
-                    "temperature": 17.8,
+                    "H": 3.4,
+                    "temperature": 16.9,
                     "H0": 7.56,
-                    "humidity": 75.1,
+                    "humidity": 76.3,
                     "Kt": 0.44,
-                    "Hd": 1.53,
+                    "Hd": 1.52,
                     "Ws": 84.8,
-                    "wind": 5.44,
-                    "$$hashKey": "object:392"
+                    "wind": 3.83,
+                    "$$hashKey": "object:1332"
                 },
                 {
-                    "H": 2.79,
-                    "temperature": 12.7,
+                    "H": 2.85,
+                    "temperature": 11.4,
                     "H0": 6.04,
-                    "humidity": 73.9,
-                    "Kt": 0.46,
+                    "humidity": 74.5,
+                    "Kt": 0.47,
                     "Hd": 1.17,
                     "Ws": 78.6,
-                    "wind": 5.83,
-                    "$$hashKey": "object:393"
+                    "wind": 4.19,
+                    "$$hashKey": "object:1333"
                 },
                 {
-                    "H": 2.58,
-                    "temperature": 7.27,
+                    "H": 2.69,
+                    "temperature": 5.94,
                     "H0": 5.29,
-                    "humidity": 73.4,
-                    "Kt": 0.48,
-                    "Hd": 0.99,
-                    "Ws": 75.2,
-                    "wind": 5.94,
-                    "$$hashKey": "object:394"
+                    "humidity": 73.9,
+                    "Kt": 0.5,
+                    "Hd": 0.97,
+                    "Ws": 75.3,
+                    "wind": 4.45,
+                    "$$hashKey": "object:1334"
                 }
             ],
             "monthavgs": {
-                "H": "3.81",
-                "temperature": "15.54",
-                "humidity": "78.31",
-                "wind": "5.59"
+                "H": "3.77",
+                "temperature": "15.40",
+                "humidity": "77.63",
+                "wind": "4.12"
             },
-            "lng": "121.416777",
-            "lat": "31.217479"
+            "lng": "119.610393",
+            "lat": "31.124538"
         },
         "componentInfo": {
             "id": 4,
@@ -207,7 +207,7 @@
             }
         },
         "chooseInverter": {
-            "type": "group",
+            "type": "centralized",
             "centralizedInverterInfo": {
                 "centralizedInverter": {
                     "MPP电压上限": 850,
