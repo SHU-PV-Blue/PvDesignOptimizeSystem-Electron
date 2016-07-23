@@ -1,5 +1,11 @@
 var fs = require('fs');
-var moment = require('moment');
+var db = require('./common/db/db').db;
+db.serialize(function () {
+    db.each("SELECT * FROM inverterphase", function (err, row) {
+        console.log(row['额定输出电流']);
+    });
+});
+
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -148,7 +154,7 @@ pvModule.controller('manageCtrl', function ($scope, $uibModal, projectData) {
     };
 
     function createNewProject(name) {
-        if(!fs.existsSync('projects')){
+        if (!fs.existsSync('projects')) {
             fs.mkdirSync('projects');
         }
         fs.writeFileSync("projects/" + name + ".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
@@ -2337,11 +2343,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         });
         for (var i = 0; i < 3; i++) {
             var cableName;
-            if(i === 0){
+            if (i === 0) {
                 cableName = '电缆:阵列->汇流箱';
-            }else if(i === 1){
+            } else if (i === 1) {
                 cableName = '电缆:汇流箱->配电柜';
-            }else{
+            } else {
                 cableName = '电缆:配电柜->逆变器';
             }
 
