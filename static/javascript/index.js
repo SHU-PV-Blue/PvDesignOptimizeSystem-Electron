@@ -1,5 +1,5 @@
 var fs = require('fs');
-var db = require('./common/db/db').db;
+var db = require('./common/sqlite/db').db;
 db.serialize(function () {
     db.each("SELECT * FROM inverterphase", function (err, row) {
         console.log(row['额定输出电流']);
