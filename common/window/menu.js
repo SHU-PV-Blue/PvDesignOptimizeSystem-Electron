@@ -1,4 +1,7 @@
-module.exports = function (Menu) {
+/*
+ * 定义菜单
+*/
+module.exports = function (Menu,mainWindow) {
     const template = [
         {
             label: '编辑',
@@ -75,9 +78,15 @@ module.exports = function (Menu) {
             ]
         },
         {
+            label : '项目',
+            click : function () {
+                mainWindow.loadURL('file://' + __dirname + '/../../index.html');
+            }
+        },
+        {
             label : '自定义组件',
             click : function () {
-                
+                mainWindow.loadURL('file://' + __dirname + '/../../customer.html');
             }
         }
     ];

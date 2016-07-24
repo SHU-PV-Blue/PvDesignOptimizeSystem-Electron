@@ -1,0 +1,42 @@
+{
+    "pvmodule" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "centralizedinverter" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "groupinverter" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "dccombiner" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "dcdistribution" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "cable" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "switch" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    },
+    "transformer" : {
+        "nextIndex" : 0,
+        "items" : {
+        }
+    }
+}

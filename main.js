@@ -30,7 +30,7 @@ app.on('ready', function () {
 		minHeight: 700
 	});
 
-	setMenu(Menu);
+	setMenu(Menu,mainWindow);
 
 	mainWindow.once('ready-to-show', () => {
 		win.show()

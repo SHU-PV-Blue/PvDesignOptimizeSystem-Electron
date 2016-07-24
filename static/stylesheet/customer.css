@@ -1,0 +1,43 @@
+html,body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background: #f6f8f9;
+    font-size: 14px;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+}
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.wrap{
+    height: 100%;
+}
+#leftPanel{
+    width: 200px;
+    height: 100%;
+    border-right: 1px solid grey;
+}
+#leftPanel li{
+    height: 40px;
+    border-bottom: 1px solid #efefef;
+}
+#leftPanel a{
+    color: #000;
+    display: block;
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    height: 40px;
+    line-height: 30px;
+    padding: 5px 10px;
+}
+#leftPanel a:hover{
+    background: rgb(160, 195, 145);
+    color: #fff;
+}
+#leftPanel a.active{
+    background: rgb(150, 185, 125);
+    color: #fff;
+}
