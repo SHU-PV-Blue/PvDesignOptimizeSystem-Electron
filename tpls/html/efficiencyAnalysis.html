@@ -57,25 +57,22 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div ng-show="active == 0">
-                        月总辐照度
-                        <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options">
+                        <canvas class="chart chart-line" chart-data="chartData0" chart-labels="labelsMonth" chart-options="options0">
                 </canvas>
                     </div>
                     <div ng-show="active == 1">
-                        损耗电量
-                        <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options">
+                        <canvas class="chart chart-bar" chart-data="chartData1" chart-labels="labelsMonth" chart-options="options1">
                 </canvas>
                     </div>
                     <div ng-show="active == 2">
-                        并入电网电量
-                        <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options">
+                        <canvas class="chart chart-bar" chart-data="chartData2" chart-labels="labelsMonth" chart-options="options2">
                 </canvas>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-default" ng-click="setActive(0)">月总辐照度 kWh/m&sup2; </button>
-                    <button class="btn btn-default" ng-click="setActive(1)">损耗电量kW</button>
-                    <button class="btn btn-default" ng-click="setActive(2)">并入电网电量kW</button>
+                    <button class="btn btn-default" ng-click="setActive(0)">月总辐照度</button>
+                    <button class="btn btn-default" ng-click="setActive(1)">损耗电量</button>
+                    <button class="btn btn-default" ng-click="setActive(2)">并入电网电量</button>
                     <span class="pull-right">第 <span style="color : blue">{{data.runYears}}</span> 年</span>
                 </div>
             </div>

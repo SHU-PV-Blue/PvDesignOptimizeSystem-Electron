@@ -215,8 +215,8 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
         projectAddress: '',
         userName: '',
         remark: '',
-        lng: 121.494966,
-        lat: 31.219456
+        lng: 121.49,
+        lat: 31.22
     };
 
     $scope.save = function () {
@@ -432,10 +432,22 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     $scope.data1 = [
         []
     ];
+    $scope.options1={
+        title : {
+            display : true,
+            text : 'i-v 图'
+        }
+    }
 
     $scope.data2 = [
         []
     ];
+    $scope.options2={
+        title : {
+            display : true,
+            text : 'p-v 图'
+        }
+    }
 
     $scope.T = 25;
     $scope.S = 1000;
@@ -557,7 +569,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     };
 
     $scope.labelsAngle = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
-    $scope.labelsMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '12月', '12月'];
+    $scope.labelsMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
     $scope.series = [
         ['年总辐照度'],
         ['效率'],
@@ -571,6 +583,87 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         [],
         []
     ];
+
+    $scope.options0 = {
+        title : {
+            display : true,
+            text : '年总辐照度'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '倾角/度'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '辐照度 kWh/m^2'
+                }
+            }]
+        }
+    };
+    $scope.options1 = {
+        title : {
+            display : true,
+            text : '组件输出端功率'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '倾角/度'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '功率 w'
+                }
+            }]
+        }
+    },
+    $scope.options2 = {
+        title : {
+            display : true,
+            text : '月均辐照度'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '月份'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '辐照度 kWh/m^2'
+                }
+            }]
+        }
+    };
+    $scope.options3 = {
+        title : {
+            display : true,
+            text : '月均组件输出端功率'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '月份'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '功率 w'
+                }
+            }]
+        }
+    }
 
     $scope.$watch('angleInfo.az', function () {
         var temp = getHData();
@@ -1628,6 +1721,67 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         H.push(monthinfo.H);
     });
 
+    $scope.options0={
+        title : {
+            display : true,
+            text : '月总辐照度图'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '月份'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '辐照度 kWh/m^2'
+                }
+            }]
+        }
+    };
+    $scope.options1={
+        title : {
+            display : true,
+            text : '损耗电量'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '月份'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '损耗电量 kW'
+                }
+            }]
+        }
+    };
+    $scope.options2={
+        title : {
+            display : true,
+            text : '并入电网电量'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '月份'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '并入电网电量 kW'
+                }
+            }]
+        }
+    }
+
     $scope.chartData0 = [
         []
     ];
@@ -2230,6 +2384,47 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
         })
     ];
 
+    $scope.options1={
+        title : {
+            display : true,
+            text : '债务偿还图'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '年'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '万元'
+                }
+            }]
+        }
+    };
+    $scope.options2={
+        title : {
+            display : true,
+            text : '投资回收期图'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '年'
+                }
+            }],
+            yAxes: [{
+                scaleLabel : {
+                    display : true,
+                    labelString	: '万元'
+                }
+            }]
+        }
+    };
+
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'profitPeriod');
         $location.path('/8');
@@ -2543,7 +2738,7 @@ pvModule.directive('pvmap', function () {
             map.enableInertialDragging();
             map.enableContinuousZoom();
 
-            var point = new BMap.Point(121.494966, 31.219456);  // 创建点坐标
+            var point = new BMap.Point(121.49, 31.22);  // 创建点坐标
             map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别
 
             var size = new BMap.Size(10, 20);
@@ -2562,8 +2757,8 @@ pvModule.directive('pvmap', function () {
 
                 var lngInput = document.getElementById('lng');
                 var latInput = document.getElementById('lat');
-                lngInput.value = e.point.lng;
-                latInput.value = e.point.lat;
+                lngInput.value = e.point.lng.toFixed(2);
+                latInput.value = e.point.lat.toFixed(2);
                 var evt = document.createEvent('MouseEvents');
                 evt.initEvent('change', true, true);
                 lngInput.dispatchEvent(evt);

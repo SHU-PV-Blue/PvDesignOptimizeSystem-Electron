@@ -5,6 +5,7 @@ const BrowserWindow = electron.BrowserWindow;
 const ipcMain = require('electron').ipcMain;
 const nativeImage = require('electron').nativeImage;
 const Menu = require('electron').Menu;
+var setMenu = require('./common/window/menu');
 
 var mainWindow = null;
 
@@ -25,9 +26,12 @@ app.on('ready', function () {
 			webSecurity: false,
 			plugins: true
 		},
-		minWidth: 1000,
+		minWidth: 1100,
 		minHeight: 700
 	});
+
+	setMenu(Menu);
+
 	mainWindow.once('ready-to-show', () => {
 		win.show()
 	});
