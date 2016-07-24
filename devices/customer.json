@@ -1,42 +1,43 @@
 {
-    "pvmodule" : {
-        "nextIndex" : 0,
-        "items" : {
+    "pvmodule": {
+        "nextIndex": 1,
+        "items": {
+            "0": {
+                "公司": "sss",
+                "类型": "s",
+                "系列": "aaa",
+                "型号": "sssss",
+                "峰值功率": "123w",
+                "转换效率": "1.2"
+            }
         }
     },
-    "centralizedinverter" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "centralizedinverter": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "groupinverter" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "groupinverter": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "dccombiner" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "dccombiner": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "dcdistribution" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "dcdistribution": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "cable" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "cable": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "switch" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "switch": {
+        "nextIndex": 0,
+        "items": {}
     },
-    "transformer" : {
-        "nextIndex" : 0,
-        "items" : {
-        }
+    "transformer": {
+        "nextIndex": 0,
+        "items": {}
     }
 }

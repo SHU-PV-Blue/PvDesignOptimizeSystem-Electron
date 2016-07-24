@@ -6,6 +6,17 @@ html,body{
     font-size: 14px;
 	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
+a:focus{
+	outline: none;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;          
+}
 ul{
     padding: 0;
     margin: 0;
@@ -15,8 +26,11 @@ ul{
     height: 100%;
 }
 #leftPanel{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
     width: 200px;
-    height: 100%;
     border-right: 1px solid grey;
 }
 #leftPanel li{
@@ -34,10 +48,31 @@ ul{
     padding: 5px 10px;
 }
 #leftPanel a:hover{
-    background: rgb(160, 195, 145);
+    background: #5bc0dc;
     color: #fff;
 }
 #leftPanel a.active{
-    background: rgb(150, 185, 125);
+    background: #337ab7;
     color: #fff;
+}
+.mainbody{
+    position: absolute;
+    top: 0;
+    left: 200px;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    overflow: hidden;
+}
+.mainbody>.container{
+    padding-top: 20px;
+    overflow: hidden;
+}
+.device-items{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.device-items table{
+    table-layout: fixed;
+    width: 100%;
 }

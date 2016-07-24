@@ -1,0 +1,39 @@
+<div class="row" ng-controller="pvmoduleCtrl">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="panel-title">光伏组件</p>
+                    </div>
+                    <div class="col-md-1 col-md-offset-5">
+                        <button class="btn btn-success btn-sm" ng-click="addItem()"><span class="glyphicon glyphicon-plus"></span> 添加</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-success btn-sm" ng-click="flush()"><span class="glyphicon glyphicon-refresh"></span> 刷新</button>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group device-items">
+                <div class="list-group-item" ng-repeat="item in items">
+                    <table style="table-layout:fixed">
+                        <tr>
+                            <td>{{item.item['公司']}}</td>
+                            <td>{{item.item['类型']}}</td>
+                            <td>{{item.item['系列']}}</td>
+                            <td>{{item.item['型号']}}</td>
+                            <td>{{item.item['峰值功率']}}</td>
+                            <td>{{item.item['转换效率']}}</td>
+                            <td>
+                                <button class="btn btn-success btn-sm" ng-click="viewItem(item.index)"><span class="glyphicon glyphicon-folder-open
+"></span></button>
+                                <button class="btn btn-success btn-sm" ng-click="editItem(item.index)"><span class="glyphicon glyphicon-edit"></span></button>
+                                <button class="btn btn-danger btn-sm" ng-click="deleteItem(item.index)"><span class="glyphicon glyphicon-trash"></span></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
