@@ -1,10 +1,5 @@
 var fs = require('fs');
-var db = require('./common/sqlite/db').db;
-db.serialize(function () {
-    db.each("SELECT * FROM inverterphase", function (err, row) {
-        console.log(row['额定输出电流']);
-    });
-});
+var dbHelper = require('./common/sqlite/db');
 
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
@@ -513,13 +508,24 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     };
 
     $scope.$watch('$viewContentLoaded', function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/pv-module')
-            .then(function (data) {
-                $scope.components = data.data;
-                if (projectData.getData("componentInfo")) {
-                    $scope.selected = JSON.stringify(projectData.getData("componentInfo"));
-                }
-            })
+        dbHelper.getData('pvmodule', function (data) {
+            data.sort(function(a,b){
+                return -(a['转换效率'] - b['转换效率']);
+            });
+
+            $scope.components = data;
+            if (projectData.getData("componentInfo")) {
+                $scope.selected = JSON.stringify(projectData.getData("componentInfo"));
+            }
+            $scope.$digest();
+        });
+        // gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/pv-module')
+        //     .then(function (data) {
+        //         $scope.components = data.data;
+        //         if (projectData.getData("componentInfo")) {
+        //             $scope.selected = JSON.stringify(projectData.getData("componentInfo"));
+        //         }
+        //     })
     });
 });
 
@@ -872,7 +878,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 /*
  集中式逆变器控制器
 */
-pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance, gainData, projectData) {
+pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance,parentObj, gainData, projectData) {
     $scope.centralizedInverterInfo = {
         centralizedInverter: {},
         serialNumPerBranch: 0,
@@ -946,6 +952,13 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
                 $scope.load = false;
             });
     };
+
+    $scope.$watch('$viewContentLoaded',function(){
+        if(parentObj.centralizedInverterInfo){
+            $scope.centralizedInverterInfo = parentObj.centralizedInverterInfo;
+            $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
