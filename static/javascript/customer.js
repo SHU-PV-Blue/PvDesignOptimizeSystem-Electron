@@ -1,5 +1,6 @@
 
 var customer = require('./common/customer/customerDevice');
+var _ = require('lodash');
 var dialog = require('electron').remote.dialog;
 
 var pvCustomer = angular.module('PVCustomer', ['ui.bootstrap', 'ngRoute'],function(){});
@@ -92,7 +93,8 @@ pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
 
 pvCustomer.controller('pvmoduleOperateCtrl',function($scope, $uibModalInstance, item, type){
 
-    $scope.item = item.item;
+    $scope.item = {};
+    _.assign($scope.item,item.item);
     $scope.disable = type === 'view';
     $scope.isEdit = type === 'edit';
     $scope.isAdd = type === 'add';
