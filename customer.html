@@ -18,15 +18,14 @@
     <div class="wrap">
         <div id="leftPanel" ng-controller="chooseDeviceCtrl">
             <ul>
-                <li><a class="active" href="javascript:void(0);" ng-click="">光伏组件</a></li>
-                <li><a href="javascript:void(0);" ng-click="">集中式逆变器</a></li>
-                <li><a href="javascript:void(0);" ng-click="">直流汇流箱</a></li>
-                <li><a href="javascript:void(0);" ng-click="">直流配电柜</a></li>
-                <li><a href="javascript:void(0);" ng-click="">组串式逆变器</a></li>
-                <li><a href="javascript:void(0);" ng-click="">电缆</a></li>
-                <li><a href="javascript:void(0);" ng-click="">低压开关柜</a></li>
-                <li><a href="javascript:void(0);" ng-click="">升压变压器</a></li>
-                <li><a href="javascript:void(0);" ng-click="">高压开关柜</a></li>
+                <li><a class="active" href="javascript:void(0);" ng-click="switchDevice('pvmodule')">光伏组件</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('centralizedInverter')">集中式逆变器</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('dcCombiner')">直流汇流箱</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('dcDistribution')">直流配电柜</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('groupInverter')">组串式逆变器</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('cable')">电缆</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('switch')">开关柜</a></li>
+                <li><a href="javascript:void(0);" ng-click="switchDevice('transformer')">升压变压器</a></li>
             </ul>
         </div>
         <div class="mainbody" style="overflow-y: auto">

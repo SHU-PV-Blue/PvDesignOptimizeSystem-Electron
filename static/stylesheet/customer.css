@@ -76,3 +76,6 @@ ul{
     table-layout: fixed;
     width: 100%;
 }
+.operate-item input[type="text"]{
+    width: 100%;
+}

@@ -2,60 +2,63 @@
     <h3 class="modal-title">光伏组件</h3>
 </div>
 <div class="modal-body">
-    <table class="table table-bordered">
-        <tr>
-            <td>公司</td>
-            <td>类型</td>
-            <td>系列</td>
-            <td>型号</td>
-            <td>峰值功率/w</td>
-            <td>转换效率/%</td>
-            <td>开路电压/V</td>
-        </tr>
-        <tr>
-            <td>{{item['公司']}}</td>
-            <td>{{item['类型']}}</td>
-            <td>{{item['系列']}}</td>
-            <td>{{item['型号']}}</td>
-            <td>{{item['峰值功率']}}</td>
-            <td>{{item['转换效率']}}</td>
-            <td>{{item['开路电压']}}</td>
-        </tr>
-        <tr>
-            <td>最大功率点电压/V</td>
-            <td>最大功率点电流/A</td>
-            <td>短路电流/A</td>
-            <td>转换效率/%</td>
-            <td>开路电压温度系数(%/℃)</td>
-            <td>最大功率温度系数(%/℃)</td>
-            <td>短路电流温度系数(%/℃)</td>
-        </tr>
-        <tr>
-            <td>{{item['最大功率点电压']}}</td>
-            <td>{{item['最大功率点电流']}}</td>
-            <td>{{item['短路电流']}}</td>
-            <td>{{item['转换效率']}}</td>
-            <td>{{item['开路电压温度系数']}}</td>
-            <td>{{item['最大功率温度系数']}}</td>
-            <td>{{item['短路电流温度系数']}}</td>
-        </tr>
-        <tr>
-            <td>长度/mm</td>
-            <td>宽度/mm</td>
-            <td>重量/kg</td>
-            <td>工作温度下限/℃</td>
-            <td>工作温度上限/℃</td>
-        </tr>
-        <tr>
-            <td>{{item['长度']}}</td>
-            <td>{{item['宽度']}}</td>
-            <td>{{item['重量']}}</td>
-            <td>{{item['工作温度下限']}}</td>
-            <td>{{item['工作温度上限']}}</td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>公司</td>
+                    <td>类型</td>
+                    <td>系列</td>
+                    <td>型号</td>
+                    <td>峰值功率/w</td>
+                    <td>转换效率/%</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['公司']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['类型']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['系列']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['峰值功率']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['转换效率']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>开路电压/V</td>
+                    <td>最大功率点电压/V</td>
+                    <td>最大功率点电流/A</td>
+                    <td>短路电流/A</td>
+                    <td>开路电压温度系数(%/℃)</td>
+                    <td>最大功率温度系数(%/℃)</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['开路电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大功率点电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大功率点电流']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['短路电流']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['开路电压温度系数']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大功率温度系数']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>短路电流温度系数(%/℃)</td>
+                    <td>长度/mm</td>
+                    <td>宽度/mm</td>
+                    <td>重量/kg</td>
+                    <td>工作温度下限/℃</td>
+                    <td>工作温度上限/℃</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['短路电流温度系数']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['长度']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['宽度']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['重量']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['工作温度下限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['工作温度上限']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
 </div>

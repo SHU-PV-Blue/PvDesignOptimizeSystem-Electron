@@ -31,7 +31,7 @@ exports.saveItem = function (deviceName, index, item) {
 }
 
 exports.addItem = function (deviceName, item) {
-    var index = ++ devices[deviceName].nextIndex;
+    var index = devices[deviceName].nextIndex++;
     devices[deviceName].items[index] = item;
     saveToDiskAndReload();
 }
