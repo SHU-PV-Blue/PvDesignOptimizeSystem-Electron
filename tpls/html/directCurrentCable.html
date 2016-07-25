@@ -32,10 +32,10 @@
       <div ng-show="active == 0">
         <h4>阵列到汇流箱</h4>
         <div class="row">
-          <div class="col-md-2">
+          <!--<div class="col-md-2">
             <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-          </div>
-          <div class="col-md-8">
+          </div>-->
+          <div class="col-md-10">
             <select ng-model="selected0" class="form-control">
                   <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
                 </select>
@@ -102,10 +102,10 @@
       <div ng-show="active == 1">
         <h4>汇流箱到配电柜</h4>
         <div class="row">
-          <div class="col-md-2">
+          <!--<div class="col-md-2">
             <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-          </div>
-          <div class="col-md-8">
+          </div>-->
+          <div class="col-md-10">
             <select ng-model="selected1" class="form-control">
                   <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
                 </select>
@@ -170,10 +170,10 @@
       <div ng-show="active == 2">
         <h4>配电柜到逆变器</h4>
         <div class="row">
-          <div class="col-md-2">
+          <!--<div class="col-md-2">
             <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-          </div>
-          <div class="col-md-8">
+          </div>-->
+          <div class="col-md-10">
             <select ng-model="selected2" class="form-control">
                   <option ng-repeat="item in items" value="{{item}}">{{item['名称'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;' + item['导体截面'] + '(截面积/mm^2)'}} </option>
                 </select>

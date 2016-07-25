@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-md-9">
           <div class="row">
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
               <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-            </div>
-            <div class="col-md-8">
+            </div>-->
+            <div class="col-md-10">
               <select ng-model="selected" class="form-control">
                 <option ng-repeat="item in items" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}} </option>
               </select>

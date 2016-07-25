@@ -432,20 +432,20 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     $scope.data1 = [
         []
     ];
-    $scope.options1={
-        title : {
-            display : true,
-            text : 'i-v 图'
+    $scope.options1 = {
+        title: {
+            display: true,
+            text: 'i-v 图'
         }
     }
 
     $scope.data2 = [
         []
     ];
-    $scope.options2={
-        title : {
-            display : true,
-            text : 'p-v 图'
+    $scope.options2 = {
+        title: {
+            display: true,
+            text: 'p-v 图'
         }
     }
 
@@ -520,8 +520,8 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     };
 
     $scope.$watch('$viewContentLoaded', function () {
-        dbHelper.getData('pvmodule', function (data) {
-            data.sort(function(a,b){
+        dbHelper.getData('select * from pvmodule', function (data) {
+            data.sort(function (a, b) {
                 return -(a['转换效率'] - b['转换效率']);
             });
 
@@ -585,81 +585,81 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     ];
 
     $scope.options0 = {
-        title : {
-            display : true,
-            text : '年总辐照度'
+        title: {
+            display: true,
+            text: '年总辐照度'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '倾角/度'
+                scaleLabel: {
+                    display: true,
+                    labelString: '倾角/度'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '辐照度 kWh/m^2'
+                scaleLabel: {
+                    display: true,
+                    labelString: '辐照度 kWh/m^2'
                 }
             }]
         }
     };
     $scope.options1 = {
-        title : {
-            display : true,
-            text : '组件输出端功率'
+        title: {
+            display: true,
+            text: '组件输出端功率'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '倾角/度'
+                scaleLabel: {
+                    display: true,
+                    labelString: '倾角/度'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '功率 w'
+                scaleLabel: {
+                    display: true,
+                    labelString: '功率 w'
                 }
             }]
         }
     },
-    $scope.options2 = {
-        title : {
-            display : true,
-            text : '月均辐照度'
-        },
-        scales: {
-            xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '月份'
-                }
-            }],
-            yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '辐照度 kWh/m^2'
-                }
-            }]
-        }
-    };
+        $scope.options2 = {
+            title: {
+                display: true,
+                text: '月均辐照度'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '月份'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '辐照度 kWh/m^2'
+                    }
+                }]
+            }
+        };
     $scope.options3 = {
-        title : {
-            display : true,
-            text : '月均组件输出端功率'
+        title: {
+            display: true,
+            text: '月均组件输出端功率'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '月份'
+                scaleLabel: {
+                    display: true,
+                    labelString: '月份'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '功率 w'
+                scaleLabel: {
+                    display: true,
+                    labelString: '功率 w'
                 }
             }]
         }
@@ -971,7 +971,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 /*
  集中式逆变器控制器
 */
-pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance,parentObj, gainData, projectData) {
+pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
     $scope.centralizedInverterInfo = {
         centralizedInverter: {},
         serialNumPerBranch: 0,
@@ -1037,17 +1037,19 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
             * $scope.centralizedInverterInfo.inverterNumNeeded * componentInfo['峰值功率'] / 1000;
     }
 
-    $scope.getData = function () {
-        $scope.load = true;
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
-            .then(function (data) {
-                $scope.items = data.data;
-                $scope.load = false;
-            });
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         });
+    // };
 
-    $scope.$watch('$viewContentLoaded',function(){
-        if(parentObj.centralizedInverterInfo){
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from invertercentralized', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.centralizedInverterInfo) {
             $scope.centralizedInverterInfo = parentObj.centralizedInverterInfo;
             $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
         }
@@ -1097,12 +1099,23 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
         return Math.ceil(parentObj.centralizedInverterInfo.branchNumPerInverter / $scope.directCurrentInfo.branches);
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-combiner')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-combiner')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from dccombiner', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.directCurrentInfo) {
+            $scope.directCurrentInfo = parentObj.directCurrentInfo;
+            $scope.selected = JSON.stringify($scope.directCurrentInfo.directCurrent);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1148,12 +1161,22 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
         return $scope.directDistributionInfo.numPerInverter * parentObj.centralizedInverterInfo.inverterNumNeeded;
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-distribution')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-distribution')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from dcdistribution', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.directDistributionInfo) {
+            $scope.directDistributionInfo = parentObj.directDistributionInfo;
+            $scope.selected = JSON.stringify($scope.directDistributionInfo.directDistribution);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1225,7 +1248,7 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
         update_lineDrop_loss();
     }, true);
 
-    $scope.active = 3;
+    $scope.active = 0;
     $scope.setActive = function (index) {
         $scope.active = index;
     };
@@ -1245,12 +1268,24 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
         }
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
-            .then(function (data) {
-                $scope.items = data.data;
-            });
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         });
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from cable', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.directCurrentCableInfo) {
+            $scope.directCurrentCableInfo = parentObj.directCurrentCableInfo;
+            $scope.selected0 = JSON.stringify($scope.directCurrentCableInfo.cables[0].directCurrentCable);
+            $scope.selected1 = JSON.stringify($scope.directCurrentCableInfo.cables[1].directCurrentCable);
+            $scope.selected2 = JSON.stringify($scope.directCurrentCableInfo.cables[2].directCurrentCable);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1299,12 +1334,22 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
         $scope.alternatingCurrentCableInfo.loss = $scope.alternatingCurrentCableInfo.lineDrop / (maxPowerVoltage * serialNumPerBranch);
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from cable', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.alternatingCurrentCableInfo) {
+            $scope.alternatingCurrentCableInfo = parentObj.alternatingCurrentCableInfo;
+            $scope.selected = JSON.stringify($scope.alternatingCurrentCableInfo.alternatingCurrentCable);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1321,7 +1366,7 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
 /*
  组串式逆变器控制器
  */
-pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, gainData, projectData) {
+pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
     $scope.groupInverterInfo = {
         groupInverter: {},
         serialNumPerBranch: 0,
@@ -1387,12 +1432,22 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, ga
             * $scope.groupInverterInfo.inverterNumNeeded * componentInfo['峰值功率'] / 1000;
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from invertertandem', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.groupInverterInfo) {
+            $scope.groupInverterInfo = parentObj.groupInverterInfo;
+            $scope.selected = JSON.stringify($scope.groupInverterInfo.groupInverter);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1416,6 +1471,13 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
     $scope.obj = {
         type: "10kv"
     };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        var temp = projectData.getData('transformer');
+        if (temp) {
+            $scope.obj = temp;
+        }
+    });
 
     $scope.$watch('obj.type', function (newVal) {
         //noinspection JSValidateTypes
@@ -1484,7 +1546,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
 /*
 低压开关柜控制器
 */
-pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
+pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
     $scope.lowSwitchInfo = {
         lowSwitch: {},
         num: 0
@@ -1507,12 +1569,22 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 
     $scope.lowSwitchInfo.num = inverter.inverterNumNeeded;
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=低压')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=低压')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from switch where 类型=\'低压\'', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.lowSwitchInfo) {
+            $scope.lowSwitchInfo = parentObj.lowSwitchInfo;
+            $scope.selected = JSON.stringify($scope.lowSwitchInfo.lowSwitch);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1529,7 +1601,7 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, gainDa
 /*
  10kv升压变压器控制器
  */
-pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData, projectData) {
+pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
     $scope.transformerInfo = {
         transformer: {},
         serialNum: 1,
@@ -1559,16 +1631,26 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData, 
         return inverter.inverterNumNeeded / $scope.transformerInfo.serialNum;
     }
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=10KV%E5%8F%98%E5%8E%8B%E5%99%A8')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=10KV%E5%8F%98%E5%8E%8B%E5%99%A8')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from transformer where 类型=\'10KV变压器\'', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.transformerInfo10) {
+            $scope.transformerInfo10 = parentObj.transformerInfo10;
+            $scope.selected = JSON.stringify($scope.transformerInfo10.transformer);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'transformerInfo',
+            name: 'transformerInfo10',
             obj: $scope.transformerInfo
         });
     };
@@ -1581,7 +1663,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, gainData, 
 /*
  35kv升压变压器控制器
  */
-pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, gainData, projectData) {
+pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window,parentObj, gainData, projectData) {
     $scope.transformerInfo = {
         transformer1: {},
         transformer2: {},
@@ -1590,7 +1672,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
         num: [0, 0]
     };
 
-    $scope.active = 2;
+    $scope.active = 0;
     $scope.setActive = function (index) {
         $scope.active = index;
     }
@@ -1607,23 +1689,39 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, g
         $scope.transformerInfo.transformer2 = JSON.parse(newVal);
     });
 
-    $scope.getData1 = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(0.4-35KV)')
-            .then(function (data) {
-                $scope.items1 = data.data;
-            })
-    };
+    // $scope.getData1 = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(0.4-35KV)')
+    //         .then(function (data) {
+    //             $scope.items1 = data.data;
+    //         })
+    // };
 
-    $scope.getData2 = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(10-35KV)')
-            .then(function (data) {
-                $scope.items2 = data.data;
-            })
-    };
+    // $scope.getData2 = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(10-35KV)')
+    //         .then(function (data) {
+    //             $scope.items2 = data.data;
+    //         })
+    // };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from transformer where 类型=\'10KV变压器\'', function (data) {
+            $scope.items1 = data;
+            $scope.$digest();
+        });
+        dbHelper.getData('select * from transformer where 类型=\'35KV变压器(0.4-35KV)\'', function (data) {
+            $scope.items2 = data;
+            $scope.$digest();
+        });
+        if (parentObj.transformerInfo35) {
+            $scope.transformerInfo = parentObj.transformerInfo35;
+            $scope.selectedonce = JSON.stringify($scope.transformerInfo.transformer1);
+            $scope.selectedtwice = JSON.stringify($scope.transformerInfo.transformer2);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
-            name: 'transformerInfo',
+            name: 'transformerInfo35',
             obj: $scope.transformerInfo
         });
     };
@@ -1649,19 +1747,29 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
         $scope.highSwitchInfo.highSwitch = JSON.parse(newVal);
     });
 
-    $scope.highSwitchInfo.num = parentObj.type == '10kv' ? parentObj.transformerInfo.num : 12;
+    $scope.highSwitchInfo.num = parentObj.type == '10kv' ? parentObj.transformerInfo10.num : 12;
 
-    $scope.getData = function () {
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=高压')
-            .then(function (data) {
-                $scope.items = data.data;
-            })
-    };
+    // $scope.getData = function () {
+    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/switch?type=高压')
+    //         .then(function (data) {
+    //             $scope.items = data.data;
+    //         })
+    // };
+    $scope.$watch('$viewContentLoaded', function () {
+        dbHelper.getData('select * from switch where 类型=\'高压\'', function (data) {
+            $scope.items = data;
+            $scope.$digest();
+        });
+        if (parentObj.highSwitchInfo) {
+            $scope.highSwitchInfo = parentObj.highSwitchInfo;
+            $scope.selected = JSON.stringify($scope.highSwitchInfo.highSwitch);
+        }
+    })
 
     $scope.ok = function () {
         $uibModalInstance.close({
             name: 'highSwitchInfo',
-            obj: $scope.lowSwitchInfo
+            obj: $scope.highSwitchInfo
         });
     };
 
@@ -1721,62 +1829,62 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         H.push(monthinfo.H);
     });
 
-    $scope.options0={
-        title : {
-            display : true,
-            text : '月总辐照度图'
+    $scope.options0 = {
+        title: {
+            display: true,
+            text: '月总辐照度图'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '月份'
+                scaleLabel: {
+                    display: true,
+                    labelString: '月份'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '辐照度 kWh/m^2'
+                scaleLabel: {
+                    display: true,
+                    labelString: '辐照度 kWh/m^2'
                 }
             }]
         }
     };
-    $scope.options1={
-        title : {
-            display : true,
-            text : '损耗电量'
+    $scope.options1 = {
+        title: {
+            display: true,
+            text: '损耗电量'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '月份'
+                scaleLabel: {
+                    display: true,
+                    labelString: '月份'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '损耗电量 kW'
+                scaleLabel: {
+                    display: true,
+                    labelString: '损耗电量 kW'
                 }
             }]
         }
     };
-    $scope.options2={
-        title : {
-            display : true,
-            text : '并入电网电量'
+    $scope.options2 = {
+        title: {
+            display: true,
+            text: '并入电网电量'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '月份'
+                scaleLabel: {
+                    display: true,
+                    labelString: '月份'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '并入电网电量 kW'
+                scaleLabel: {
+                    display: true,
+                    labelString: '并入电网电量 kW'
                 }
             }]
         }
@@ -2384,42 +2492,42 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
         })
     ];
 
-    $scope.options1={
-        title : {
-            display : true,
-            text : '债务偿还图'
+    $scope.options1 = {
+        title: {
+            display: true,
+            text: '债务偿还图'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '年'
+                scaleLabel: {
+                    display: true,
+                    labelString: '年'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '万元'
+                scaleLabel: {
+                    display: true,
+                    labelString: '万元'
                 }
             }]
         }
     };
-    $scope.options2={
-        title : {
-            display : true,
-            text : '投资回收期图'
+    $scope.options2 = {
+        title: {
+            display: true,
+            text: '投资回收期图'
         },
         scales: {
             xAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '年'
+                scaleLabel: {
+                    display: true,
+                    labelString: '年'
                 }
             }],
             yAxes: [{
-                scaleLabel : {
-                    display : true,
-                    labelString	: '万元'
+                scaleLabel: {
+                    display: true,
+                    labelString: '万元'
                 }
             }]
         }
