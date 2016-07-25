@@ -41,6 +41,7 @@ jspm_packages
 db
 
 electron-quick-start-win32-ia32
+pvsystem-win32-ia32
 *.zip
 *.7z
 .idea

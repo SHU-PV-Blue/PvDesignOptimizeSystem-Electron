@@ -52,23 +52,34 @@ function getH_t(month,H,lat,dip,az){
 
 	var H_0 = 24*3600*Gsc*(1 + 0.033*cos(360*n[month-1]/365))*(cos_lat*cos_dec*Math.sin(w_s) + w_s*sin_lat*sin_dec)/Math.PI;
 	H_0 = H_0/(3.6*Math.pow(10,3));
-	var Kt = H/H_0;
+	var Kt = H/H_0;    //大写的K
 
 	function getH_d(){
-		if(w_s*180/Math.PI < 81.4){
-			if(Kt < 0.715){
-				return H*(1.0-0.2727*Kt + 2.4495*Kt*Kt - 11.9514*Kt*Kt*Kt + 9.3879*Kt*Kt*Kt*Kt);
-			}else{
-				return H*0.143;
-			}
+		if(Kt < 0.22){
+			return H*(1.00 - 1.13*Kt);
+		}else if(Kt > 0.8){
+			return H*(1.390-4.027*Kt+5.532*Kt*Kt-3.108*Kt*Kt*Kt);
 		}else{
-			if(Kt < 0.722){
-				return H*(1.0 + 0.2832*Kt - 2.5557*Kt*Kt + 0.8448*Kt*Kt*Kt);
+			if(w_s*180/Math.PI <= 81.4){
+				return H*(1.391-3.56*Kt+4.189*Kt*Kt-2.137*Kt*Kt*Kt);
 			}else{
-				return H*0.175;
+				return H*(1.311-3.022*Kt+3.427*Kt*Kt-1.821*Kt*Kt*Kt);
 			}
 		}
 	};
+	// if(w_s*180/Math.PI < 81.4){
+		// 	if(Kt < 0.715){
+		// 		return H*(1.0-0.2727*Kt + 2.4495*Kt*Kt - 11.9514*Kt*Kt*Kt + 9.3879*Kt*Kt*Kt*Kt);
+		// 	}else{
+		// 		return H*0.143;
+		// 	}
+		// }else{
+		// 	if(Kt < 0.722){
+		// 		return H*(1.0 + 0.2832*Kt - 2.5557*Kt*Kt + 0.8448*Kt*Kt*Kt);
+		// 	}else{
+		// 		return H*0.175;
+		// 	}
+		// }
 	var H_d = getH_d();
 	var H_b = H - H_d;
 
@@ -108,7 +119,7 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
             //console.log(e)
             g = e*H_t*(com_len*com_wid/1000000);
             sum_g += g;
-            sum += H_t;
+            sum += H_t * 30;        //这里修改为*30，原先是月每天平均
 		}
 
 		if(max < sum_g / 12){

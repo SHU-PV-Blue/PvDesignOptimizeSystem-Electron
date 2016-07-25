@@ -24,48 +24,60 @@
                                 项目总收入预算
                             </h3>
                         </div>
-                        <table class="table table-bordered" style="table-layout: fixed">
-                            <tr>
-                                <th>其它</th>
-                                <th>年发电量(KWH)</th>
-                                <th>产值（含税）(元)</th>
-                                <th>产值（不含税）(元)</th>
-                                <th>年补贴（含税）（元）</th>
-                                <th>年补贴（不含税）（元）</th>
-                                <th>年收入（含税）（元）</th>
-                                <th>年收入（不含税）（元）</th>
-                            </tr>
-                            <tr>
-                                <td>年平均</td>
-                                <td>{{data1.CC | number : 0}}</td>
-                                <td>{{data1.CK | number : 0}}</td>
-                                <td>{{data1.CM | number : 0}}</td>
-                                <td>{{data1.CO | number : 0}}</td>
-                                <td>{{data1.CQ | number : 0}}</td>
-                                <td>{{data1.CS | number : 0}}</td>
-                                <td>{{data1.CU | number : 0}}</td>
-                            </tr>
-                            <tr>
-                                <td>总计</td>
-                                <td>{{data1.CB | number : 0}}</td>
-                                <td>{{data1.CJ | number : 0}}</td>
-                                <td>{{data1.CL | number : 0}}</td>
-                                <td>{{data1.CN | number : 0}}</td>
-                                <td>{{data1.CP | number : 0}}</td>
-                                <td>{{data1.CR | number : 0}}</td>
-                                <td>{{data1.CT | number : 0}}</td>
-                            </tr>
-                        </table>
+                        <div style="overflow: auto">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>其它</th>
+                                    <th>年发电量(KWH)</th>
+                                    <th>产值（含税）(元)</th>
+                                    <th>产值（不含税）(元)</th>
+                                    <th>年补贴（含税）（元）</th>
+                                    <th>年补贴（不含税）（元）</th>
+                                    <th>年收入（含税）（元）</th>
+                                    <th>年收入（不含税）（元）</th>
+                                </tr>
+                                <tr>
+                                    <td style="min-width:100px">年平均</td>
+                                    <td>{{data1.CC | number : 0}}</td>
+                                    <td>{{data1.CK | number : 0}}</td>
+                                    <td>{{data1.CM | number : 0}}</td>
+                                    <td>{{data1.CO | number : 0}}</td>
+                                    <td>{{data1.CQ | number : 0}}</td>
+                                    <td>{{data1.CS | number : 0}}</td>
+                                    <td>{{data1.CU | number : 0}}</td>
+                                </tr>
+                                <tr>
+                                    <td>总计</td>
+                                    <td>{{data1.CB | number : 0}}</td>
+                                    <td>{{data1.CJ | number : 0}}</td>
+                                    <td>{{data1.CL | number : 0}}</td>
+                                    <td>{{data1.CN | number : 0}}</td>
+                                    <td>{{data1.CP | number : 0}}</td>
+                                    <td>{{data1.CR | number : 0}}</td>
+                                    <td>{{data1.CT | number : 0}}</td>
+                                </tr>
+                            </table>
+                        </div>
                         <div class="panel-footer">
                             <span class="btn">小计：{{data1.CV | number : 0}}</span>
                             <button class="btn btn-success pull-right" ng-click="hide = !hide">
                                 显示详细 <span class="caret"></span>
                             </button>
                         </div>
-                        <div style="height: 380px;overflow-y: scroll" ng-hide="hide">
-                            <table class="table table-bordered"  style="table-layout: fixed">
+                        <div style="height: 380px;overflow: auto" ng-hide="hide">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>其它</th>
+                                    <th>年发电量(KWH)</th>
+                                    <th>产值（含税）(元)</th>
+                                    <th>产值（不含税）(元)</th>
+                                    <th>年补贴（含税）（元）</th>
+                                    <th>年补贴（不含税）（元）</th>
+                                    <th>年收入（含税）（元）</th>
+                                    <th>年收入（不含税）（元）</th>
+                                </tr>
                                 <tr ng-repeat="ca in data1.CA">
-                                    <td>第{{ $index + 1 }}年</td>
+                                    <td style="min-width:100px">第{{ $index + 1 }}年</td>
                                     <td>{{ ca | number : 0}}</td>
                                     <td>{{ data1.CD[$index] | number : 0}}</td>
                                     <td>{{ data1.CE[$index] | number : 0}}</td>

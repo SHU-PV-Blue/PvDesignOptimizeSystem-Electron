@@ -16,12 +16,12 @@
                     </tr>
                     <tr>
                         <td>光伏阵列</td>
-                        <td>阵列前后支架间距：{{data.projectInfo.arrayfbspace | number:2}}</td>
-                        <td>**年总发电量：</td>
+                        <td>阵列前后支架间距：{{data.projectInfo.arrayfbspace | number:2}} m</td>
+                        <td>年总发电量：{{data.electricity.yearCapacity | number:2}}Kw</td>
                     </tr>
                     <tr>
-                        <td>经度：{{data.projectInfo.lng | number:2}}</td>
-                        <td>纬度：{{data.projectInfo.lat | number:2}}</td>
+                        <td>经度：{{data.projectInfo.lng | number:2}}&deg;</td>
+                        <td>纬度：{{data.projectInfo.lat | number:2}}&deg;</td>
                         <td></td>
                     </tr>
                 </table>
@@ -74,8 +74,8 @@
                         <td>{{d.name}}</td>
                         <td>{{d.model}}</td>
                         <td>{{d.num}}</td>
-                        <td>{{d.price}}</td>
-                        <td>{{d.sumPrice}}</td>
+                        <td><input size="6" type="text" ng-model="d.price"></td>
+                        <td>{{d.price * d.num}}</td>
                     </tr>
                 </table>
             </div>
@@ -85,7 +85,7 @@
             <div class="col-md-11">
                 <table class="table table-bordered">
                     <tr>
-                        <th>系统年总发电量：{{data.electricity.yearCapacity | number : 2}}</th>
+                        <th>系统年总发电量：{{data.electricity.yearCapacity | number : 2}} Kw</th>
                         <th>系统年总辐射量：{{data.electricity.yearHT | number : 2}}</th>
                         <th>系统年总发电效率：{{data.electricity.yearEfficient * 100 | number : 2}} %</th>
                     </tr>
