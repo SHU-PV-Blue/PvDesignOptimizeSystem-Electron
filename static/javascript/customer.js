@@ -10,6 +10,7 @@ pvCustomer.controller('chooseDeviceCtrl',function($scope,$location){
         $location.path('/' + deviceName);
     }
 });
+//////////////////////////////// pvmodule 光伏组件
 
 pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
     $scope.pvmodule = {
@@ -33,9 +34,15 @@ pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
         "工作温度上限":"",
     };
 
-    function openModal(item,type){
+    $scope.items = customer.getItems('pvmodule');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('pvmodule');
+    }
+
+    function openModal(item, type){
         var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
+            animation: false,
             templateUrl: 'tpls/html/customer/pvmodule/operate.html',
             controller: 'pvmoduleOperateCtrl',
             size: 'lg',
@@ -52,12 +59,6 @@ pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
         modalInstance.result.then(function () {
             $scope.flush();
         });
-    }
-
-    $scope.items = customer.getItems('pvmodule');
-
-    $scope.flush = function(){
-        $scope.items = customer.getItems('pvmodule');
     }
 
     $scope.addItem = function(){
@@ -114,29 +115,233 @@ pvCustomer.controller('pvmoduleOperateCtrl',function($scope, $uibModalInstance, 
     };
 });
 
-pvCustomer.controller('centralizedInverterCtrl',function($scope){
+/////////////////////////////// centralizedInverter  集中式逆变器
 
-});
-pvCustomer.controller('groupInverterCtrl',function($scope){
+pvCustomer.controller('centralizedInverterCtrl',function($scope, $uibModal){
+    $scope.centralizedInverter = {
+        "厂家":"",
+        "型号":"",
+        "最大直流输入功率":"",
+        "最大输入电压":"",
+        "启动电压":"",
+        "MPP电压下限":"",
+        "MPP电压上限":"",
+        "最大直流输入电流":"",
+        "额定交流输出功率":"",
+        "最大输出功率":"",
+        "最大交流输出电流":"",
+        "额定电网电压":"",
+        "最大效率":""
+    };
 
+    $scope.items = customer.getItems('centralizedInverter');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('centralizedInverter');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/centralizedInverter/operate.html',
+            controller: 'centralizedInverterOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.centralizedInverter
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('centralizedInverter',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('centralizedInverter',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('centralizedInverter',index),'view');
+    }
 });
+
+pvCustomer.controller('centralizedInverterOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('centralizedInverter', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('centralizedInverter',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+////////////////////////////// groupInverter  组串式逆变器
+
+pvCustomer.controller('groupInverterCtrl',function($scope, $uibModal){
+    $scope.groupInverter = {
+        "厂家":"",
+        "型号":"",
+        "最大输入功率":"",
+        "最大输入电压":"",
+        "启动电压":"",
+        "额定输入电压":"",
+        "MPP电压下限":"",
+        "MPP电压上限":"",
+        "MPPT数量":"",
+        "最大输入电流":"",
+        "输入端子最大允许电流":"",
+        "额定输出功率":"",
+        "最大输出功率":"",
+        "最大输出电流":"",
+        "最大效率":""
+    };
+
+    $scope.items = customer.getItems('groupInverter');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('groupInverter');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/groupInverter/operate.html',
+            controller: 'groupInverterOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.groupInverter
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('groupInverter',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('groupInverter',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('groupInverter',index),'view');
+    }
+});
+
+pvCustomer.controller('groupInverterOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('groupInverter', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('groupInverter',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+///////////////////////////// dcCombiner  直流汇流箱
+
 pvCustomer.controller('dcCombinerCtrl',function($scope){
 
 });
+//////////////////////////// dcDistribution  直流配电柜
+
 pvCustomer.controller('dcDistributionCtrl',function($scope){
 
 });
+
+//////////////////////////// switch  开关柜
 pvCustomer.controller('switchCtrl',function($scope){
 
 });
+///////////////////////////  transformer  变压器
 pvCustomer.controller('transformerCtrl',function($scope){
 
 });
-pvCustomer.controller('dableCtrl',function($scope){
+//////////////////////////   cable  电缆
+pvCustomer.controller('cableCtrl',function($scope){
 
 });
 
-//路由
+//////路由
 pvCustomer.config(function ($routeProvider) {
     $routeProvider.when('/pvmodule', {
         templateUrl: 'tpls/html/customer/pvmodule/pvmodule.html'

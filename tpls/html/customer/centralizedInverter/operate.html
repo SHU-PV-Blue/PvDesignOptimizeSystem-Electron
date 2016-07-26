@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h3 class="modal-title">集中式逆变器</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>厂家</td>
+                    <td>型号</td>
+                    <td>最大直流输入功率/W</td>
+                    <td>最大输入电压/V</td>
+                    <td>启动电压/V</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['厂家']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大直流输入功率']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大输入电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['启动电压']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>MPP电压下限/V</td>
+                    <td>MPP电压上限/V</td>
+                    <td>最大直流输入电流/A</td>
+                    <td>额定交流输出功率/W</td>
+                    <td>最大输出功率/W</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['MPP电压下限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['MPP电压上限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大直流输入电流']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定交流输出功率']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大输出功率']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>最大交流输出电流/A</td>
+                    <td>额定电网电压/A</td>
+                    <td>最大效率/%</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['最大交流输出电流']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定电网电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['最大效率']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

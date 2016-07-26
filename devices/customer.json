@@ -55,7 +55,7 @@
                 "公司": "阿萨德",
                 "类型": "s",
                 "系列": "超神",
-                "型号": "",
+                "型号": "sdfasf",
                 "峰值功率": "",
                 "转换效率": "",
                 "开路电压": "",
@@ -73,19 +73,35 @@
             }
         }
     },
-    "centralizedinverter": {
+    "centralizedInverter": {
+        "nextIndex": 2,
+        "items": {
+            "0": {
+                "厂家": "议案",
+                "型号": "收到罚单",
+                "最大直流输入功率": "",
+                "最大输入电压": "",
+                "启动电压": "",
+                "MPP电压下限": "",
+                "MPP电压上限": "",
+                "最大直流输入电流": "",
+                "额定交流输出功率": "",
+                "最大输出功率": "",
+                "最大交流输出电流": "",
+                "额定电网电压": "",
+                "最大效率": ""
+            }
+        }
+    },
+    "groupInverter": {
         "nextIndex": 0,
         "items": {}
     },
-    "groupinverter": {
+    "dcCombiner": {
         "nextIndex": 0,
         "items": {}
     },
-    "dccombiner": {
-        "nextIndex": 0,
-        "items": {}
-    },
-    "dcdistribution": {
+    "dcDistribution": {
         "nextIndex": 0,
         "items": {}
     },
