@@ -2884,7 +2884,7 @@ pvModule.directive('pvmap', function () {
 //路由
 pvModule.config(function ($routeProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'aaa.html'
+        templateUrl: 'welcome.html'
     }).when('/0', {
         templateUrl: 'tpls/html/project.html'
     }).when('/1', {
