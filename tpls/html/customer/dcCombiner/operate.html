@@ -1,0 +1,60 @@
+<div class="modal-header">
+    <h3 class="modal-title">直流汇流箱</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>厂家</td>
+                    <td>型号</td>
+                    <th>输入路数/个</th>
+                    <th>输入电流上限/A</th>
+                    <th>直流断路器</th>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['厂家']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['输入路数']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['输入电流上限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['直流断路器']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+
+                    <th>防雷失效监控</th>
+                    <th>监控单元</th>
+                    <th>辅助电源</th>
+                    <th>价格下限/￥</th>
+                    <th>价格上限/￥</th>
+                </tr>
+                <tr>
+                    <td>
+                        <select ng-model="item['防雷失效监控']" ng-disabled="disable">
+                            <option value="Y" selected>有</option>
+                            <option value="N">无</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select ng-model="item['监控单元']" ng-disabled="disable">
+                            <option value="Y" selected>有</option>
+                            <option value="N">无</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select ng-model="item['辅助电源']" ng-disabled="disable">
+                            <option value="Y" selected>有</option>
+                            <option value="N">无</option>
+                        </select>
+                    </td>
+                    <td><input type="text" ng-model="item['价格下限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['价格上限']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

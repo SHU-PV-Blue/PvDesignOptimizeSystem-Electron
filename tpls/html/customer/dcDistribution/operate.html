@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title">直流配电柜</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>公司</td>
+                    <td>型号</td>
+                    <td>接入直流路数/个</td>
+                    <td>输入直流功率上限/W</td>
+                    <td>输入输出总电流上限/A</td>
+                    <td>接入开路电压上限/V</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['公司']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['接入直流路数']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['输入直流功率上限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['输入输出总电流上限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['接入开路电压上限']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

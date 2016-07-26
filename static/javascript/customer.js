@@ -319,13 +319,192 @@ pvCustomer.controller('groupInverterOperateCtrl',function($scope, $uibModalInsta
 
 ///////////////////////////// dcCombiner  直流汇流箱
 
-pvCustomer.controller('dcCombinerCtrl',function($scope){
+pvCustomer.controller('dcCombinerCtrl',function($scope, $uibModal){
+    $scope.dcCombiner = {
+        "厂家":"",
+        "型号":"",
+        "输入路数":"",
+        "输入电流上限":"",
+        "直流断路器":"",
+        "防雷失效监控":"Y",
+        "监控单元":"Y",
+        "辅助电源":"Y",
+        "价格下限":"",
+        "价格上限":""
+    };
 
+    $scope.items = customer.getItems('dcCombiner');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('dcCombiner');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/dcCombiner/operate.html',
+            controller: 'dcCombinerOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.dcCombiner
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('dcCombiner',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('dcCombiner',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('dcCombiner',index),'view');
+    }
 });
+
+pvCustomer.controller('dcCombinerOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('dcCombiner', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('dcCombiner',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
 //////////////////////////// dcDistribution  直流配电柜
 
-pvCustomer.controller('dcDistributionCtrl',function($scope){
+pvCustomer.controller('dcDistributionCtrl',function($scope, $uibModal){
+     $scope.dcDistribution = {
+        "公司":"",
+        "型号":"",
+        "接入直流路数":"",
+        "输入直流功率上限":"",
+        "输入输出总电流上限":"",
+        "接入开路电压上限":""
+    };
 
+    $scope.items = customer.getItems('dcDistribution');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('dcDistribution');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/dcDistribution/operate.html',
+            controller: 'dcDistributionOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.dcDistribution
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('dcDistribution',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('dcDistribution',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('dcDistribution',index),'view');
+    }
+});
+
+pvCustomer.controller('dcDistributionOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('dcDistribution', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('dcDistribution',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
 
 //////////////////////////// switch  开关柜

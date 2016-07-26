@@ -79,3 +79,6 @@ ul{
 .operate-item input[type="text"]{
     width: 100%;
 }
+.operate-item select{
+    width: 100%;
+}
