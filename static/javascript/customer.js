@@ -508,16 +508,288 @@ pvCustomer.controller('dcDistributionOperateCtrl',function($scope, $uibModalInst
 });
 
 //////////////////////////// switch  开关柜
-pvCustomer.controller('switchCtrl',function($scope){
+pvCustomer.controller('switchCtrl',function($scope, $uibModal){
+     $scope.switch = {
+        "品牌":"",
+        "型号":"",
+        "类型":"低压",
+        "母线额定电流":"",
+        "额定电压":"",
+        "额定频率":"",
+        "防护等级":"",
+        "用途":"",
+        "结构形式":"",
+        "价格下限":"",
+        "价格上限":"",
+    };
 
+    $scope.items = customer.getItems('switch');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('switch');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/switch/operate.html',
+            controller: 'switchOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.switch
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('switch',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('switch',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('switch',index),'view');
+    }
 });
+
+pvCustomer.controller('switchOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('switch', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('switch',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
 ///////////////////////////  transformer  变压器
-pvCustomer.controller('transformerCtrl',function($scope){
+pvCustomer.controller('transformerCtrl',function($scope, $uibModal){
+    $scope.transformer = {
+        "产品名":"",
+        "分类":"",
+        "类型":"10KV变压器",
+        "额定容量":"",
+        "负载损耗":"",
+        "空载电流":"",
+        "短路阻抗":"",
+        "额定电压":"",
+        "高压分接范围":"",
+        "联结组标号":"",
+        "空载损耗":"",
+    };
 
+    $scope.items = customer.getItems('transformer');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('transformer');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/transformer/operate.html',
+            controller: 'transformerOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.transformer
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('transformer',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('transformer',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('transformer',index),'view');
+    }
 });
-//////////////////////////   cable  电缆
-pvCustomer.controller('cableCtrl',function($scope){
 
+pvCustomer.controller('transformerOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('transformer', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('transformer',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+//////////////////////////   cable  电缆
+pvCustomer.controller('cableCtrl',function($scope, $uibModal){
+    $scope.cable = {
+        "名称":"",
+        "型号":"",
+        "允许载流量":"",
+        "容量":"",
+        "截面积":""
+    };
+
+    $scope.items = customer.getItems('cable');
+
+    $scope.flush = function(){
+        $scope.items = customer.getItems('cable');
+    }
+
+    function openModal(item, type){
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'tpls/html/customer/cable/operate.html',
+            controller: 'cableOperateCtrl',
+            size: 'lg',
+            backdrop: false,
+            resolve: {
+                item : function () {
+                    return item;
+                },
+                type : function(){
+                    return type;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.flush();
+        });
+    }
+
+    $scope.addItem = function(){
+        openModal({
+            index : -1,
+            item : $scope.cable
+        },'add');
+    }
+
+    $scope.editItem = function(index){
+        openModal(customer.getItem('cable',index),'edit');
+    }
+
+    $scope.deleteItem = function(index){
+        dialog.showMessageBox(null,{
+            type : 'info',
+            message : '确认删除？',
+            title : 'pv',
+            buttons : ['确定','取消']
+        },function(response){
+            if(response === 0){
+                customer.deleteItem('cable',index);
+                $scope.flush();
+                $scope.$digest();
+            }
+        });
+    }
+    
+    $scope.viewItem = function(index){
+        openModal(customer.getItem('cable',index),'view');
+    }
+});
+
+pvCustomer.controller('cableOperateCtrl',function($scope, $uibModalInstance, item, type){
+
+    $scope.item = {};
+    _.assign($scope.item,item.item);
+    $scope.disable = type === 'view';
+    $scope.isEdit = type === 'edit';
+    $scope.isAdd = type === 'add';
+
+    $scope.save = function () {
+        customer.saveItem('cable', item.index, $scope.item);
+        $uibModalInstance.close();
+    };
+
+    $scope.add = function(){
+        customer.addItem('cable',$scope.item);
+        $uibModalInstance.close();
+    }
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
 
 //////路由

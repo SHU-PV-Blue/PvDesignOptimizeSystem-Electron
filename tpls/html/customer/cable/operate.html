@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">电缆</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>名称</td>
+                    <td>型号</td>
+                    <td>允许载流量/A</td>
+                    <td>容量/W</td>
+                    <td>截面积/mm&sup2;</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['名称']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['允许载流量']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['容量']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['截面积']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h3 class="modal-title">变压器</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>产品名</td>
+                    <td>类型</td>
+                    <td>分类</td>
+                    <td>额定容量</td>
+                    <td>负载损耗（W）</td>
+                    <td>空载电流（%）</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['产品名']" ng-disabled="disable"></td>
+                    <td>
+                        <select ng-model="item['类型']" ng-disabled="disable">
+                            <option value="10KV变压器">10KV变压器</option>
+                            <option value="35KV变压器(0.4-35KV)">35KV变压器(0.4-35KV)</option>
+                        </select>
+                    </td>
+                    <td><input type="text" ng-model="item['分类']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定容量']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['负载损耗']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['空载电流']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>短路阻抗（%）</td>
+                    <td>额定电压（V）</td>
+                    <td>高压分接范围</td>
+                    <td>联结组标号</td>
+                    <td>空载损耗（W）</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['短路阻抗']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['高压分接范围']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['联结组标号']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['空载损耗']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

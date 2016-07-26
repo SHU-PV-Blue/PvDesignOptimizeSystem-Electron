@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h3 class="modal-title">开关柜</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered operate-item">
+                <tr>
+                    <td>品牌</td>
+                    <td>型号</td>
+                    <td>类型</td>
+                    <td>母线额定电流/A</td>
+                    <td>额定电压/V</td>
+                    <td>额定频率/Hz</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['品牌']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['型号']" ng-disabled="disable"></td>
+                    <td>
+                        <select ng-model="item['类型']" ng-disabled="disable">
+                            <option value="低压">低压</option>
+                            <option value="高压">高压</option>
+                        </select>
+                    </td>
+                    <td><input type="text" ng-model="item['母线额定电流']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定电压']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['额定频率']" ng-disabled="disable"></td>
+                </tr>
+                <tr>
+                    <td>防护等级</td>
+                    <td>用途</td>
+                    <td>结构形式</td>
+                    <td>价格下限/￥</td>
+                    <td>价格上限/￥</td>
+                </tr>
+                <tr>
+                    <td><input type="text" ng-model="item['防护等级']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['用途']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['结构形式']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['价格下限']" ng-disabled="disable"></td>
+                    <td><input type="text" ng-model="item['价格上限']" ng-disabled="disable"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="save()" ng-show="isEdit">保存</button>
+    <button class="btn btn-primary" type="button" ng-click="add()" ng-show="isAdd">添加</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>
