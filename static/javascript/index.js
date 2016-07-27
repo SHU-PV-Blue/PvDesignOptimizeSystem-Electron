@@ -2594,6 +2594,7 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
     $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
 
     $scope.back = function () {
+        projectData.addOrUpdateData($scope.data, 'overallIndex');
         $location.path('/8');
     }
 });
@@ -2654,8 +2655,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             supervisionCost: investmentCosts.data2.DI,
             otherCost: investmentCosts.data2.DJ,
             projectBuildCost: emc.data.LA,
-            buildPeriod: 0,
-            profitPeriod: 0,
+            buildPeriod: parameters.BD,
+            profitPeriod: parameters.BB,
             yearProfit: profitPeriod.CT
         }
     };
