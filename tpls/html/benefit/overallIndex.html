@@ -13,7 +13,7 @@
                     </tr>
                     <tr>
                         <td>项目现金净现值</td>
-                        <td></td>
+                        <td>{{data.NB | number : 0}}</td>
                     </tr>
                     <tr>
                         <td>销售毛利率</td>
@@ -33,15 +33,15 @@
                     </tr>
                     <tr>
                         <td>内部收益率(IRR)</td>
-                        <td></td>
+                        <td>{{data.NE | number : 2}}</td>
                     </tr>
                     <tr>
                         <td>资金回收期（年）</td>
-                        <td>NF=BD/12+(第12年的MF-第12年的MP)/第13年的MK+12</td>
+                        <td>{{data.NF | number : 2}}</td>
                     </tr>
                     <tr>
                         <td>回收期/收益期系数</td>
-                        <td></td>
+                        <td>{{data.NG | number : 2}}</td>
                     </tr>
                     <tr>
                         <td>静态资金回收期（年）</td>

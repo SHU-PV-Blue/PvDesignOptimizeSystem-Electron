@@ -1780,7 +1780,7 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
 
 /*
 效率分析控制器
- loss [0]: 阴影损耗
+ loss [0] : 阴影损耗
  loss [1] : 灰尘等遮挡损耗
  loss [2] : 组件温升损耗
  loss [3] : 直流电缆损耗
@@ -1800,6 +1800,13 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         totalYears: 25,
         electricity: []
     };
+
+    var chooseInverter = projectData.getData('chooseInverter');
+    if(chooseInverter.type === 'centralized'){
+        $scope.data.loss[3] = Number((chooseInverter.directCurrentCableInfo.totalLoss * 100).toFixed(3));
+    }else{
+        $scope.data.loss[3] = Number((chooseInverter.alternatingCurrentCableInfo.loss * 100).toFixed(3));
+    }
 
     $scope.active = 0;
     $scope.setActive = function (index) {
@@ -2564,8 +2571,23 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
         NI: 0
     };
 
+    var finance = new Finance();
+    var rate = p.GB;
+    if(rate === 0)
+        rate = 0.07;
+    var values = [];
+    for(var i = 0; i < p.BB; i++){
+        if(i === 0){
+            values.push(pp.MK[i] + pp.MG[i] - pp.MC);
+        }else{
+            values.push(pp.MK[i] + pp.MK[i] - pp.MK[i-1]);
+        }
+    }
+    $scope.data.NB = finance.NPV(rate * 100, values);
     $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
-
+    $scope.data.NE = finance.IRR(pp.MJ,pp.MK);
+    $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12])/pp.MK[12]  + 12;
+    $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
 
     $scope.back = function () {
         $location.path('/8');
