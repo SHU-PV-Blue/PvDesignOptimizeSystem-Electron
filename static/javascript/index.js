@@ -1,5 +1,6 @@
 var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
+var customer = require('./common/customer/customerDevice');
 
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
@@ -521,6 +522,9 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from pvmodule', function (data) {
+            // customer.getItems('pvmodule').map(function(item){
+            //     data.push(item.item);
+            // })
             data.sort(function (a, b) {
                 return -(a['转换效率'] - b['转换效率']);
             });
@@ -2787,15 +2791,16 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
 
         if (savePath) {
             var printDiv = document.getElementById('divPrint');
-            var charts = document.getElementsByClassName('chart-container');
+            var charts = document.getElementsByClassName('chart');
 
             for (var i = 0; i < charts.length; i++) {
-                var chart = charts[i].firstChild;
-                var img = chart.toDataURL("image/png");
+                // var chart = charts[i].lastChild;
+                var img = charts[i].toDataURL("image/png");
                 var imgNode = document.createElement('img');
                 imgNode.src = img;
-                charts[i].removeChild(chart);
-                charts[i].appendChild(imgNode);
+                var parentNode = charts[i].parentNode;
+                // parentNode.innerHTML = '';
+                parentNode.appendChild(imgNode);
             }
 
             document.getElementById('divPrint').style.padding = "60px";

@@ -207,7 +207,7 @@
             }
         },
         "chooseInverter": {
-            "type": "centralized",
+            "type": "group",
             "centralizedInverterInfo": {
                 "centralizedInverter": {
                     "id": 2,
@@ -1549,7 +1549,7 @@
                 2.8,
                 10,
                 3,
-                0.735,
+                0.578,
                 2,
                 4,
                 1,
@@ -1557,7 +1557,7 @@
                 5
             ],
             "componentLoss": 3,
-            "lossTotal": 29.035,
+            "lossTotal": 28.878,
             "runYears": "1",
             "totalYears": 25,
             "electricity": [
