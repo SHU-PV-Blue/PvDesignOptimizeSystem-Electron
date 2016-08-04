@@ -77,7 +77,8 @@ pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('pvmodule',index);
@@ -177,7 +178,8 @@ pvCustomer.controller('centralizedInverterCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('centralizedInverter',index);
@@ -279,7 +281,8 @@ pvCustomer.controller('groupInverterCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('groupInverter',index);
@@ -376,7 +379,8 @@ pvCustomer.controller('dcCombinerCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('dcCombiner',index);
@@ -469,7 +473,8 @@ pvCustomer.controller('dcDistributionCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('dcDistribution',index);
@@ -566,7 +571,8 @@ pvCustomer.controller('switchCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('switch',index);
@@ -663,7 +669,8 @@ pvCustomer.controller('transformerCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('transformer',index);
@@ -754,7 +761,8 @@ pvCustomer.controller('cableCtrl',function($scope, $uibModal){
             type : 'info',
             message : '确认删除？',
             title : 'pv',
-            buttons : ['确定','取消']
+            buttons : ['确定','取消'],
+            cancelId : 1
         },function(response){
             if(response === 0){
                 customer.deleteItem('cable',index);

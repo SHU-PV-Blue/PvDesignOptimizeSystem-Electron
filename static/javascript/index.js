@@ -1,6 +1,8 @@
 var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
 var customer = require('./common/customer/customerDevice');
+var remote = require('electron').remote;
+var dialog = remote.dialog;
 
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
@@ -112,7 +114,7 @@ pvModule.service('gainData', function ($http, $q) {
 /*
 项目管理控制器
  */
-pvModule.controller('manageCtrl', function ($scope, $uibModal, projectData) {
+pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projectData) {
     var defaultProjectInfo = {
         projectData: {},
         projectSetting: {
@@ -144,14 +146,54 @@ pvModule.controller('manageCtrl', function ($scope, $uibModal, projectData) {
         });
         modalInstance.result.then(function (data) {
             createNewProject(data.projectName);
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
         });
     };
+
+    function refresh() {
+        fs.readdir("projects/", function (err, files) {
+            if (err) {
+                return;
+            }
+            $scope.$apply(function () {
+                if (files.length === 0) {
+                    $location.path('/');
+                    $scope.currentProject = '';
+                }
+                $scope.projects = files.map(function (name) {
+                    return name.replace(".json", "");
+                })
+            });
+        });
+    };
+
+    $scope.deleteProject = function (name) {
+        dialog.showMessageBox(remote.getCurrentWindow(), {
+            type: 'warning',
+            message: '确认删除项目 ' + name + '？',
+            title: 'pv',
+            buttons: ['确认', '取消'],
+            cancelId: 1
+        }, function (response) {
+            if (response === 0) {
+                $scope.$apply(function () {
+                    fs.unlinkSync("projects/" + name + '.json');
+                    refresh();
+                    if($scope.currentProject === name){
+                        $location.path('/');
+                        $scope.currentProject = '';
+                    }
+                });
+            }
+        });
+    }
 
     function createNewProject(name) {
         if (!fs.existsSync('projects')) {
             fs.mkdirSync('projects');
+        }
+        if (fs.existsSync('projects/' + name + '.json')) {
+            alert('项目已存在');
+            return;
         }
         fs.writeFileSync("projects/" + name + ".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
         $scope.currentProject = name;
@@ -163,17 +205,6 @@ pvModule.controller('manageCtrl', function ($scope, $uibModal, projectData) {
         $scope.currentProject = name;
         projectData.loadProject(name);
     };
-
-    function refresh() {
-        fs.readdir("projects/", function (err, files) {
-            if (err) {
-                return;
-            }
-            $scope.projects = files.map(function (name) {
-                return name.replace(".json", "");
-            })
-        });
-    }
 
     $scope.$watch('$viewContentLoaded', function () {
         refresh();
@@ -1667,7 +1698,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
 /*
  35kv升压变压器控制器
  */
-pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window,parentObj, gainData, projectData) {
+pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, parentObj, gainData, projectData) {
     $scope.transformerInfo = {
         transformer1: {},
         transformer2: {},
@@ -1806,9 +1837,9 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     };
 
     var chooseInverter = projectData.getData('chooseInverter');
-    if(chooseInverter.type === 'centralized'){
+    if (chooseInverter.type === 'centralized') {
         $scope.data.loss[3] = Number((chooseInverter.directCurrentCableInfo.totalLoss * 100).toFixed(3));
-    }else{
+    } else {
         $scope.data.loss[3] = Number((chooseInverter.alternatingCurrentCableInfo.loss * 100).toFixed(3));
     }
 
@@ -2577,20 +2608,20 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
 
     var finance = new Finance();
     var rate = p.GB;
-    if(rate === 0)
+    if (rate === 0)
         rate = 0.07;
     var values = [];
-    for(var i = 0; i < p.BB; i++){
-        if(i === 0){
+    for (var i = 0; i < p.BB; i++) {
+        if (i === 0) {
             values.push(pp.MK[i] + pp.MG[i] - pp.MC);
-        }else{
-            values.push(pp.MK[i] + pp.MK[i] - pp.MK[i-1]);
+        } else {
+            values.push(pp.MK[i] + pp.MK[i] - pp.MK[i - 1]);
         }
     }
     $scope.data.NB = finance.NPV(rate * 100, values);
     $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
-    $scope.data.NE = finance.IRR(pp.MJ,pp.MK);
-    $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12])/pp.MK[12]  + 12;
+    $scope.data.NE = finance.IRR(pp.MJ, pp.MK);
+    $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12]) / pp.MK[12] + 12;
     $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
 
     $scope.back = function () {

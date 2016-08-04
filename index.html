@@ -20,9 +20,10 @@
     <script src="static/javascript/finance.js"></script>
     <script src="static/javascript/algorithm.js"></script>
     <script src="static/javascript/index.js"></script>
+    <script src="static/javascript/jquery.min.js"></script>
 </head>
 
-<body ng-app="PVModule" ondragstart='return false' onselectstart='return false' onselect='document.selection.empty()' oncopy='document.selection.empty()' onbeforecopy='return false' onmouseup='document.selection.empty()'>
+<body ng-app="PVModule" ondragstart='return false' onselectstart='return false' onselect='document.selection.empty()' oncopy='document.selection.empty()' onbeforecopy='return false'>
     <div class="wrap">
         <div id="project" ng-controller="manageCtrl">
             <p class="current-project">当前项目： &nbsp;<b>{{currentProject}}</b></p>
@@ -30,7 +31,7 @@
                 <div class="navName">项目<span class="pull-right add-project glyphicon glyphicon-plus" ng-click="addNewProject()"></span></div>
                 <ul>
                     <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
-                        <i class="icon-book"></i> {{project}}
+                        <span class="glyphicon glyphicon-trash btn-delete-project" ng-click="deleteProject(project)"></span> <span class="project-name">{{project}}</span>
                     </li>
                 </ul>
             </div>
@@ -42,7 +43,28 @@
         </div>
     </div>
 </body>
-<script type='text/javascript'>
+<script>
+    $(document).ready(function() {
+        $(".navItem").on("mouseenter",".btn-delete-project",function() {
+            $(this).stop().animate({
+                "margin-left":"0px"
+            },200);
+            $(this).css({
+                color:"red",
+                background:"#fff"
+            })
+        });
+        $(".navItem").on("mouseout",".btn-delete-project",function() {
+            $(this).stop().animate({
+                "margin-left":"-20px"
+            },200)
+            $(this).css({
+                color:"#169fe6",
+                background:"#169fe6",
+            })
+        });
+    });
+
     //some default pre init
     var Countly = Countly || {};
     Countly.q = Countly.q || [];

@@ -44,8 +44,20 @@ td,th{
     padding:0;
     margin:0;
 }
-.navItem ul li{
-    padding: 5px 0px 5px 20px;
+.navItem ul li span{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+.navItem .btn-delete-project{
+    margin-left: -20px;
+    text-align: center;
+    width: 30px;
+    color: #169fe6;
+    background-color: #169fe6;
+}
+.navItem .project-name{
+    padding: 0 10px;
 }
 .navItem ul li:hover{
     cursor: pointer;
