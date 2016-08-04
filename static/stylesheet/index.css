@@ -118,11 +118,11 @@ td,th{
     height: 100%;
     width: 100%;
 }
-.welcoming img{
+.welcoming img.pv-image{
     display: block;
     margin: auto;
-    width: 350px;
-    height: 350px;
+    width: 280px;
+    height: 280px;
 }
 
 .report-info td{
