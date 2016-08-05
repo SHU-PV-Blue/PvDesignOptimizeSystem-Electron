@@ -331,9 +331,7 @@ pvCustomer.controller('dcCombinerCtrl',function($scope, $uibModal){
         "直流断路器":"",
         "防雷失效监控":"Y",
         "监控单元":"Y",
-        "辅助电源":"Y",
-        "价格下限":"",
-        "价格上限":""
+        "辅助电源":"Y"
     };
 
     $scope.items = customer.getItems('dcCombiner');
@@ -523,9 +521,7 @@ pvCustomer.controller('switchCtrl',function($scope, $uibModal){
         "额定频率":"",
         "防护等级":"",
         "用途":"",
-        "结构形式":"",
-        "价格下限":"",
-        "价格上限":"",
+        "结构形式":""
     };
 
     $scope.items = customer.getItems('switch');

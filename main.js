@@ -21,7 +21,7 @@ app.on('ready', function () {
 		height: 800,
 		title: 'PvDesignOptimizeSystem',
 		center: true,
-		icon: 'res/images/icon.png',
+		icon: 'res/images/logo.png',
 		webPreferences: {
 			webSecurity: false,
 			plugins: true
