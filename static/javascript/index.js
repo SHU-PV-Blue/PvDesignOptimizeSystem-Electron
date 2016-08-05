@@ -469,7 +469,9 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     $scope.options1 = {
         title: {
             display: true,
-            text: 'i-v 图'
+            text: 'i-v 图',
+            fontSize: 14,
+            fontStyle: 'normal'
         }
     }
 
@@ -479,7 +481,9 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
     $scope.options2 = {
         title: {
             display: true,
-            text: 'p-v 图'
+            text: 'p-v 图',
+            fontSize: 14,
+            fontStyle: 'normal'
         }
     }
 
@@ -624,7 +628,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.options0 = {
         title: {
             display: true,
-            text: '年总辐照度'
+            text: '年总辐照度',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -644,7 +650,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.options1 = {
         title: {
             display: true,
-            text: '组件年输出电量'
+            text: '组件年输出电量',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -664,7 +672,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $scope.options2 = {
             title: {
                 display: true,
-                text: '月总辐照度'
+                text: '月总辐照度',
+                fontSize: 14,
+                fontStyle: 'normal'
             },
             scales: {
                 xAxes: [{
@@ -684,7 +694,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.options3 = {
         title: {
             display: true,
-            text: '月总组件输出电量'
+            text: '月总组件输出电量',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -1887,7 +1899,9 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     $scope.options0 = {
         title: {
             display: true,
-            text: '月总辐照度图'
+            text: '月总辐照度图',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -1907,7 +1921,9 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     $scope.options1 = {
         title: {
             display: true,
-            text: '损耗电量'
+            text: '损耗电量',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -1927,7 +1943,9 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     $scope.options2 = {
         title: {
             display: true,
-            text: '并入电网电量'
+            text: '并入电网电量',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -2568,7 +2586,9 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
     $scope.options1 = {
         title: {
             display: true,
-            text: '债务偿还图'
+            text: '债务偿还图',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -2588,7 +2608,9 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
     $scope.options2 = {
         title: {
             display: true,
-            text: '投资回收期图'
+            text: '投资回收期图',
+            fontSize: 14,
+            fontStyle: 'normal'
         },
         scales: {
             xAxes: [{
@@ -2801,8 +2823,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             title: {
                 display: true,
                 text: '月发电量图',
-                fontSize : 14,
-                fontStyle : 'normal'
+                fontSize: 14,
+                fontStyle: 'normal'
             },
             scales: {
                 xAxes: [{
@@ -2822,8 +2844,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             title: {
                 display: true,
                 text: '月辐照度图',
-                fontSize : 14,
-                fontStyle : 'normal'
+                fontSize: 14,
+                fontStyle: 'normal'
             },
             scales: {
                 xAxes: [{
@@ -2843,8 +2865,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             title: {
                 display: true,
                 text: '损耗图',
-                fontSize : 14,
-                fontStyle : 'normal'
+                fontSize: 14,
+                fontStyle: 'normal'
             }
         }
     ];
@@ -2889,8 +2911,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             title: {
                 display: true,
                 text: '债务偿还图',
-                fontSize : 16,
-                fontStyle : 'normal'
+                fontSize: 16,
+                fontStyle: 'normal'
             },
             scales: {
                 xAxes: [{
@@ -2910,8 +2932,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             title: {
                 display: true,
                 text: '投资回收期图',
-                fontSize : 16,
-                fontStyle : 'normal'
+                fontSize: 16,
+                fontStyle: 'normal'
             },
             scales: {
                 xAxes: [{
