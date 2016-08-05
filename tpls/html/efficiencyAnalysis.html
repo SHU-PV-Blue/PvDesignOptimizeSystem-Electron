@@ -8,7 +8,7 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>损耗因素</th>
-                        <th>损耗预估值/%</th>
+                        <th>效率预估值/%</th>
                     </tr>
                     <tr>
                         <td>阴影损耗</td>
@@ -48,7 +48,8 @@
                     </tr>
                 </table>
                 <div class="panel-footer">
-                    总损耗值：<span style="color:blue">{{data.lossTotal | number : 1 }}</span> %
+                    总损耗值：<span style="color:blue">{{data.lossTotal | number : 1 }}</span> %  <br>
+                    总效率值：<span style="color:blue">{{100 - data.lossTotal | number : 1 }}</span> %
                 </div>
             </div>
             <button class="btn btn-success btn-block" ng-click="finish()">确定</button>
@@ -107,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            系统年并入电网电量：{{data.yearBing | number : 0}} kWh
         </div>
     </div>
 </div>

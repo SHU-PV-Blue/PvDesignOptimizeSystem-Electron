@@ -105,6 +105,7 @@ params:
     T:array  月平均温度
 */
 function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
+	var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
 	var sums = [],sums_g=[];
     var sum,max = 0,sum_g,res = 0, S,S_d,T_d,H_t,e, g,max_H = 0,res1;
 	for(var i = 0; i <=90; i++){
@@ -115,15 +116,17 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
             S = H_t * 100;
             S_d = H_t / 10 - 1;
             T_d = T[j-1] + 0.03*S -25;
-            e = com_e /100 *(1 - 0.011*T_d)*Math.log(Math.E + 0.5*S_d);
-            //console.log(e)
-            g = e*H_t*(com_len*com_wid/1000000);
+            e = com_e /100 *(1 + d*T_d)*Math.log(Math.E + 0.094*S_d);
+            // console.log(j + " 月 e:" + e)
+            g = e*H_t*(com_len*com_wid/1000000) * monthDays[j-1];
+			console.log("H_t:" + H_t)
+			console.log("g:" + g)
             sum_g += g;
-            sum += H_t * 30;        //这里修改为*30，原先是月每天平均
+            sum += H_t * monthDays[j-1];   
 		}
 
-		if(max < sum_g / 12){
-			max = sum_g / 12;
+		if(max < sum_g){
+			max = sum_g;
 			res = i;
 		}
         if(max_H < sum){
@@ -131,7 +134,7 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
             res1 = i;
         }
 		sums.push(sum.toFixed(3));
-		sums_g.push((sum_g/12).toFixed(3));
+		sums_g.push((sum_g).toFixed(3));
 	}
 
 	return {
@@ -144,7 +147,8 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
 	};
 };
 //var fs = require('fs');
-function getDataByDip(H,lat,az,com_e,T,d,dip){
+function getDataByDip(H,lat,az,com_e,com_len,com_wid,T,d,dip){
+	var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
     var S,S_d,T_d,H_t,e, g;
     var H_ts = [],gs = [];
 
@@ -153,10 +157,10 @@ function getDataByDip(H,lat,az,com_e,T,d,dip){
         S = H_t * 100;
         S_d = H_t / 10 - 1;
         T_d = T[j-1] + 0.03*S -25;
-        e = com_e /100 *(1 + d*T_d)*Math.log(Math.E + 0.5*S_d);
+        e = com_e /100 *(1 + d*T_d)*Math.log(Math.E + 0.094*S_d);
         //console.log(e)
-        g = e*H_t;
-        H_ts.push(H_t);
+        g = e*H_t*(com_len*com_wid/1000000) *monthDays[j-1];
+        H_ts.push(H_t * monthDays[j-1]);
         gs.push(g);
     }
 

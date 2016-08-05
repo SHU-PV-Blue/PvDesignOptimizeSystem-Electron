@@ -4,6 +4,8 @@ var customer = require('./common/customer/customerDevice');
 var remote = require('electron').remote;
 var dialog = remote.dialog;
 
+Chart.defaults.global.defaultFontFamily = "'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif";
+
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute', 'ngAnimate'], function ($httpProvider) {
     // Use x-www-form-urlencoded Content-Type
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -178,7 +180,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
                 $scope.$apply(function () {
                     fs.unlinkSync("projects/" + name + '.json');
                     refresh();
-                    if($scope.currentProject === name){
+                    if ($scope.currentProject === name) {
                         $location.path('/');
                         $scope.currentProject = '';
                     }
@@ -642,7 +644,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.options1 = {
         title: {
             display: true,
-            text: '组件输出端功率'
+            text: '组件年输出电量'
         },
         scales: {
             xAxes: [{
@@ -654,7 +656,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '功率 w'
+                    labelString: '电量/kWh'
                 }
             }]
         }
@@ -662,7 +664,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $scope.options2 = {
             title: {
                 display: true,
-                text: '月均辐照度'
+                text: '月总辐照度'
             },
             scales: {
                 xAxes: [{
@@ -682,7 +684,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     $scope.options3 = {
         title: {
             display: true,
-            text: '月均组件输出端功率'
+            text: '月总组件输出电量'
         },
         scales: {
             xAxes: [{
@@ -694,7 +696,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '功率 w'
+                    labelString: '电量/kWh'
                 }
             }]
         }
@@ -711,16 +713,16 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $scope.angleInfo.max_H = temp.max_H;
     });
 
-    $scope.$watch('angleInfo.dip', function () {
-        var temp = getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], T, componentInfo['最大功率温度系数'] / 100, $scope.angleInfo.dip);
-        $scope.data[2][0] = temp.H_ts;
-        $scope.data[3][0] = temp.gs;
-    });
-
     var componentInfo = projectData.getData('componentInfo');
     var meteorologyInfo = projectData.getData('meteorologyInfo');
     var H = [];
     var T = [];
+
+    $scope.$watch('angleInfo.dip', function () {
+        var temp = getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, $scope.angleInfo.dip);
+        $scope.data[2][0] = temp.H_ts;
+        $scope.data[3][0] = temp.gs;
+    });
 
     meteorologyInfo.monthinfos.forEach(function (monthinfo) {
         H.push(monthinfo.H);
@@ -739,6 +741,13 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         projectData.saveToLocal();
         $location.path('/0');
     };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        var temp = projectData.getData('angleInfo');
+        if (temp) {
+            $scope.angleInfo = temp;
+        }
+    });
 
 
     //for(var i = 0; i <= 90; i++){
@@ -1081,13 +1090,14 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertercentralized', function (data) {
-            $scope.items = data;
-            $scope.$digest();
+            $scope.$apply(function () {
+                $scope.items = data;
+                if (parentObj.centralizedInverterInfo) {
+                    $scope.centralizedInverterInfo = parentObj.centralizedInverterInfo;
+                    $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
+                }
+            });
         });
-        if (parentObj.centralizedInverterInfo) {
-            $scope.centralizedInverterInfo = parentObj.centralizedInverterInfo;
-            $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
-        }
     })
 
     $scope.ok = function () {
@@ -1828,19 +1838,20 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
 pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, projectData) {
 
     $scope.data = {
-        loss: [2.8, 10, 3, 2.2, 2, 4, 1, 0.5, 5],
-        componentLoss: 3,
+        loss: [97.2, 90, 97, 97.8, 98, 96, 99, 99.5, 95],
+        componentLoss: 1,
         lossTotal: 0,
         runYears: 1,
         totalYears: 25,
-        electricity: []
+        electricity: [],
+        yearBing: 0
     };
 
     var chooseInverter = projectData.getData('chooseInverter');
     if (chooseInverter.type === 'centralized') {
-        $scope.data.loss[3] = Number((chooseInverter.directCurrentCableInfo.totalLoss * 100).toFixed(3));
+        $scope.data.loss[3] = Number((100 - chooseInverter.directCurrentCableInfo.totalLoss * 100).toFixed(3));
     } else {
-        $scope.data.loss[3] = Number((chooseInverter.alternatingCurrentCableInfo.loss * 100).toFixed(3));
+        $scope.data.loss[3] = Number((100 - chooseInverter.alternatingCurrentCableInfo.loss * 100).toFixed(3));
     }
 
     $scope.active = 0;
@@ -1851,7 +1862,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     $scope.$watch('data.loss', function () {
         var total = 0;
         for (var i = 0; i < $scope.data.loss.length; i++) {
-            total += Number($scope.data.loss[i]);
+            total += Number(100 - $scope.data.loss[i]);
         }
         $scope.data.lossTotal = total;
     }, true);
@@ -1866,9 +1877,11 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     var angleInfo = projectData.getData('angleInfo');
 
     var H = [];
+    var T = [];
 
     meteorologyInfo.monthinfos.forEach(function (monthinfo) {
         H.push(monthinfo.H);
+        T.push(monthinfo.temperature);
     });
 
     $scope.options0 = {
@@ -1906,7 +1919,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '损耗电量 kW'
+                    labelString: '损耗电量 kWh'
                 }
             }]
         }
@@ -1926,7 +1939,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '并入电网电量 kW'
+                    labelString: '并入电网电量 kWh'
                 }
             }]
         }
@@ -1941,11 +1954,18 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     ];
     $scope.chartData2 = [];
 
+    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var userDesign = projectData.getData('userDesignInfo');
+    var componentsNum = userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum;
+
     for (var i = 1; i <= 12; i++) {
-        var h = getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az);
+        var h = getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
         $scope.chartData0[0].push(Number(h.toFixed(3)));
-        $scope.data.electricity.push(h * Number(componentInfo['转换效率']) / 100);
     }
+
+    $scope.data.electricity = getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
+        return item * componentsNum;
+    });
 
     compute_chartData();
 
@@ -1967,11 +1987,14 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         ];
         $scope.chartData2 = [];
 
+        $scope.data.yearBing = 0;
         $scope.chartData2.push($scope.data.electricity.map(function (item) {
             var bingrudianliang = item * (1 - $scope.data.lossTotal / 100) * yearLoss;
+            $scope.data.yearBing += bingrudianliang;
             $scope.chartData1[0].push(Number((item - bingrudianliang).toFixed(3)));
             return Number(bingrudianliang.toFixed(3));
         }));
+        // console.log(yearBing);
     }
 
     $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -1981,7 +2004,15 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         projectData.addOrUpdateData($scope.data, 'efficiencyAnalysisInfo');
         projectData.saveToLocal();
         $location.path('/0');
-    }
+    };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        var temp = projectData.getData('efficiencyAnalysisInfo');
+        if (temp) {
+            $scope.data = temp;
+        }
+    });
+
 });
 
 
@@ -2765,6 +2796,59 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         $scope.data.projectInfo.capacity = userDesign.capacity.totalCapacity;
     }
 
+    $scope.options1 = [
+        {
+            title: {
+                display: true,
+                text: '月发电量图',
+                fontSize : 14,
+                fontStyle : 'normal'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '月份'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '电量 kWh'
+                    }
+                }]
+            }
+        }, {
+            title: {
+                display: true,
+                text: '月辐照度图',
+                fontSize : 14,
+                fontStyle : 'normal'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '月份'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '辐照度 kWh/m^2'
+                    }
+                }]
+            }
+        }, {
+            title: {
+                display: true,
+                text: '损耗图',
+                fontSize : 14,
+                fontStyle : 'normal'
+            }
+        }
+    ];
+
     $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     $scope.labelsYear = [];
     $scope.lossLabel = ['损耗', '发电量'];
@@ -2772,10 +2856,13 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         $scope.labelsYear.push(i + 1 + '');
     }
 
+    var yearLossCapacity = 0;
+
     $scope.electricityChartData = [
         efficiencyAnalysis.electricity.map(function (item) {
-            var temp = item * (1 - efficiencyAnalysis.componentLoss / 100)
+            var temp = item * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - efficiencyAnalysis.lossTotal / 100);
             $scope.data.electricity.yearCapacity += temp;
+            yearLossCapacity += item - temp;
             return Number(temp.toFixed(2));
         })
     ];
@@ -2783,19 +2870,65 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         []
     ];
 
-
+    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     for (var i = 1; i <= 12; i++) {
-        var temp = getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az);
+        var temp = getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
         $scope.data.electricity.yearHT += temp;
         $scope.HChartData[0].push(temp.toFixed(2));
     }
 
     $scope.lossChartData = [
-        $scope.data.electricity.yearCapacity,
-        $scope.data.electricity.yearHT - $scope.data.electricity.yearCapacity
+        Number(yearLossCapacity.toFixed(0)),
+        Number($scope.data.electricity.yearCapacity.toFixed(0))
     ];
 
-    $scope.data.electricity.yearEfficient = $scope.data.electricity.yearCapacity / $scope.data.electricity.yearHT;
+    $scope.data.electricity.yearEfficient = 100 - efficiencyAnalysis.lossTotal;
+
+    $scope.options2 = [
+        {
+            title: {
+                display: true,
+                text: '债务偿还图',
+                fontSize : 16,
+                fontStyle : 'normal'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '年'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '万元'
+                    }
+                }]
+            }
+        }, {
+            title: {
+                display: true,
+                text: '投资回收期图',
+                fontSize : 16,
+                fontStyle : 'normal'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '年'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '万元'
+                    }
+                }]
+            }
+        }
+    ]
 
     $scope.debtChartData = [
         profitPeriod.MG.map(function (item) {

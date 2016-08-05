@@ -38,7 +38,7 @@
                             <td>{{angleInfo.max_H | number : 2}}</td>
                         </tr>
                         <tr>
-                            <td>组件输出端功率：</td>
+                            <td>组件年输出电量：</td>
                             <td>最优倾角</td>
                             <td>{{angleInfo.bestDipG }}</td>
                             <td>最大值</td>
@@ -83,9 +83,9 @@
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item" ng-click="showChart(0)"><span class="btn btn-block btn-primary">年总辐照度</span></li>
-                    <li class="list-group-item" ng-click="showChart(1)"><span class="btn btn-block btn-primary">组件输出端功率</span></li>
-                    <li class="list-group-item" ng-click="showChart(2)"><span class="btn btn-block btn-primary">月均辐照度</span></li>
-                    <li class="list-group-item" ng-click="showChart(3)"><span class="btn btn-block btn-primary">月均组件输出端功率</span></li>
+                    <li class="list-group-item" ng-click="showChart(1)"><span class="btn btn-block btn-primary">组件年输出电量</span></li>
+                    <li class="list-group-item" ng-click="showChart(2)"><span class="btn btn-block btn-primary">月总辐照度</span></li>
+                    <li class="list-group-item" ng-click="showChart(3)"><span class="btn btn-block btn-primary">月总组件输出电量</span></li>
                 </ul>
             </div>
             <button class="btn btn-success btn-block" ng-click="save()">确定</button>
