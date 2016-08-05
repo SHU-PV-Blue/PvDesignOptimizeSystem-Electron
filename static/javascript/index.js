@@ -1102,6 +1102,9 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertercentralized', function (data) {
+            data.sort(function (a, b) {
+                return -(a['最大效率'] - b['最大效率']);
+            });
             $scope.$apply(function () {
                 $scope.items = data;
                 if (parentObj.centralizedInverterInfo) {
@@ -1497,6 +1500,9 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertertandem', function (data) {
+            data.sort(function (a, b) {
+                return -(a['最大效率'] - b['最大效率']);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -2867,24 +2873,29 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
                 text: '损耗图',
                 fontSize: 14,
                 fontStyle: 'normal'
+            },
+            elements : {
+                arc : {
+                    borderWidth : 1
+                }
             }
         }
     ];
 
     $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     $scope.labelsYear = [];
-    $scope.lossLabel = ['损耗', '发电量'];
+    $scope.lossLabel = ['阴影损耗','灰尘等遮挡损耗','组件温升损耗','直流电缆损耗','组串内失配损耗','逆变器损耗','变压器损耗','交流电缆损耗','故障检修、电网等其它损耗','发电量'];
     for (var i = 0; i < parameters.BB; i++) {
         $scope.labelsYear.push(i + 1 + '');
     }
 
-    var yearLossCapacity = 0;
+    var yearElectricity = 0;
 
     $scope.electricityChartData = [
         efficiencyAnalysis.electricity.map(function (item) {
+            yearElectricity += item;
             var temp = item * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - efficiencyAnalysis.lossTotal / 100);
             $scope.data.electricity.yearCapacity += temp;
-            yearLossCapacity += item - temp;
             return Number(temp.toFixed(2));
         })
     ];
@@ -2899,10 +2910,10 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         $scope.HChartData[0].push(temp.toFixed(2));
     }
 
-    $scope.lossChartData = [
-        Number(yearLossCapacity.toFixed(0)),
-        Number($scope.data.electricity.yearCapacity.toFixed(0))
-    ];
+    $scope.lossChartData = efficiencyAnalysis.loss.map(function(loss){
+        return Number((yearElectricity * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - loss / 100)).toFixed(0));
+    });
+    $scope.lossChartData.push(Number($scope.data.electricity.yearCapacity.toFixed(0)));
 
     $scope.data.electricity.yearEfficient = 100 - efficiencyAnalysis.lossTotal;
 
