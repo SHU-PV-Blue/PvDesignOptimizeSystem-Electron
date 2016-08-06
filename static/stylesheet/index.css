@@ -108,7 +108,7 @@ td,th{
 }
 .op-row img{
     display: block;
-    width: 60%;
+    width: 100px;
     height: 100px;
     margin: auto;
 }
