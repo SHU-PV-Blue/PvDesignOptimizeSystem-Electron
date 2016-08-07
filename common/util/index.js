@@ -12,8 +12,9 @@ module.exports = {
     getDipLabel : function(){
         var label = [],i;
         for(i = 0; i<= 90; i++){
-            label.push((i % 5 === 0 ? i + '' : ''));
+            label.push((i % 5 === 0 ? i : ''));
         }
+        console.log(label)
         return label;
     }
 };

@@ -614,12 +614,6 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
 
     $scope.labelsAngle = util.getDipLabel();
     $scope.labelsMonth = util.getLabel(12);
-    $scope.series = [
-        ['年总辐照度'],
-        ['效率'],
-        ['月平均辐照度'],
-        ['月效率']
-    ];
 
     $scope.data = [
         [],
@@ -637,6 +631,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         },
         scales: {
             xAxes: [{
+                gridLines : {
+                    display:false
+                },
                 scaleLabel: {
                     display: true,
                     labelString: '倾角/度'
@@ -659,6 +656,9 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         },
         scales: {
             xAxes: [{
+                gridLines : {
+                    display:false
+                },
                 scaleLabel: {
                     display: true,
                     labelString: '倾角/度'
