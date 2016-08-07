@@ -1,5 +1,5 @@
 <div class="row" ng-controller="meteorologyCtrl">
-    <div class="col-md-9">
+    <div class="col-md-8">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">气象数据</h3>
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">数据库</h3>
@@ -57,7 +57,8 @@
                 </form>
             </div>
             <div class="panel-footer">
-                <button class="btn btn-success btn-block" ng-click="save()">确定</button>
+                <button class="btn btn-info" ng-click="back()">返回</button>
+                <button class="btn btn-primary" ng-click="save()">确定</button>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@ var dbHelper = require('./common/sqlite/db');
 var algorithm = require('./common/algorithm');
 var Finance = require('./common/algorithm/finance');
 var util = require('./common/util');
+var _ = require('lodash');
 
 var remote = require('electron').remote;
 var dialog = remote.dialog;
@@ -263,10 +264,14 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
         $location.path('/0');
     };
 
+    $scope.back = function () {
+        $location.path('/0');
+    }
+
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('basicInfo');
         if (temp) {
-            $scope.projectInfo = temp;
+            _.extend($scope.projectInfo, temp);
             $scope.projectInfo.projectDate = new Date($scope.projectInfo.projectDate);
         }
     });
@@ -423,7 +428,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
             lon: Number($scope.lng),
             lat: Number($scope.lat)
         }).then(function (data) {
-            $scope.meteorologyInfo.monthinfos = data.data;
+            _.extend($scope.meteorologyInfo.monthinfos, data.data);
             computeAvg();
             $scope.meteorologyInfo.lng = $scope.lng;
             $scope.meteorologyInfo.lat = $scope.lat;
@@ -440,10 +445,14 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
         $location.path('/0');
     };
 
+    $scope.back = function () {
+        $location.path('/0');
+    };
+
     $scope.$watch('$viewContentLoaded', function () {
         var tempObj = projectData.getData('meteorologyInfo');
-        if (tempObj !== null && $scope.lng == tempObj.lng && $scope.lat == tempObj.lat) {                             //如果数据存在则赋值
-            $scope.meteorologyInfo = tempObj;
+        if (tempObj && $scope.lng === tempObj.lng && $scope.lat === tempObj.lat) {      //如果数据存在则赋值
+            $scope.meteorologyInfo = JSON.parse(JSON.stringify(tempObj));
         } else {                                            //如果数据不存在，取默认值
             getDbData();
         }
@@ -631,8 +640,8 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         },
         scales: {
             xAxes: [{
-                gridLines : {
-                    display:false
+                gridLines: {
+                    display: false
                 },
                 scaleLabel: {
                     display: true,
@@ -656,8 +665,8 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         },
         scales: {
             xAxes: [{
-                gridLines : {
-                    display:false
+                gridLines: {
+                    display: false
                 },
                 scaleLabel: {
                     display: true,
@@ -2861,9 +2870,9 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
                 fontSize: 14,
                 fontStyle: 'normal'
             },
-            elements : {
-                arc : {
-                    borderWidth : 1
+            elements: {
+                arc: {
+                    borderWidth: 1
                 }
             }
         }
@@ -2871,7 +2880,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
 
     $scope.labelsMonth = util.getLabel(12);
     $scope.labelsYear = util.getLabel(parameters.BB);
-    $scope.lossLabel = ['阴影损耗','灰尘等遮挡损耗','组件温升损耗','直流电缆损耗','组串内失配损耗','逆变器损耗','变压器损耗','交流电缆损耗','故障检修、电网等其它损耗','发电量'];
+    $scope.lossLabel = ['阴影损耗', '灰尘等遮挡损耗', '组件温升损耗', '直流电缆损耗', '组串内失配损耗', '逆变器损耗', '变压器损耗', '交流电缆损耗', '故障检修、电网等其它损耗', '发电量'];
 
     var yearElectricity = 0;
 
@@ -2894,7 +2903,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         $scope.HChartData[0].push(temp.toFixed(2));
     }
 
-    $scope.lossChartData = efficiencyAnalysis.loss.map(function(loss){
+    $scope.lossChartData = efficiencyAnalysis.loss.map(function (loss) {
         return Number((yearElectricity * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - loss / 100)).toFixed(0));
     });
     $scope.lossChartData.push(Number($scope.data.electricity.yearCapacity.toFixed(0)));
@@ -3130,3 +3139,12 @@ pvModule.config(function ($routeProvider) {
 
     $routeProvider.otherwise({ redirectTo: '/' });
 });
+
+// 禁止模板缓存  
+pvModule.run(function($rootScope, $templateCache) {  
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {  
+        if (typeof(current) !== 'undefined'){  
+            $templateCache.remove(current.templateUrl);  
+        }  
+    });  
+});  
