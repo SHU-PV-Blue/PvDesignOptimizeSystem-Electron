@@ -1,6 +1,16 @@
+var CONST = require('../util').CONST;
+
+/**
+ * 计算倾斜面上日均辐照度
+ * @param  {number} month --月份
+ * @param  {number} H --该月日均辐照度
+ * @param  {number} lat --纬度
+ * @param  {number} dip --倾角
+ * @param  {number} az --方位角
+ * @return {number} --倾斜面上日均辐照度
+ */
 function getH_t(month,H,lat,dip,az){
 	var n = [15, 45, 74, 105, 135, 166, 197, 227, 258, 289, 319, 349];
-	//需要month,H,lat,dip,az
 	//var lat, dip, az;     //纬度，倾角，方位角
 
 	function toRadian(degree){
@@ -91,21 +101,19 @@ function getH_t(month,H,lat,dip,az){
 	return H_t / 1000;
 }
 
-// for(var i = 0; i <= 90; i++){
-// 	console.log(getH_t(1,2630,31,i,2));
-// }
-/*
-params:
-    H:array  月平均辐照度
-    lat:number 纬度
-    az:number 方位角
-    com_e:number 组件的转换效率
-    com_len:number 组件的长度(mm)
-    com_wid:number 组件的宽度(mm)
-    T:array  月平均温度
-*/
+/**
+ * 获取az方位角时各倾角的年总辐照度、组件年输出电量折线图数据
+ * @param  {number[]} H --月日均辐照度
+ * @param  {number} lat --纬度
+ * @param  {number} az --方位角
+ * @param  {number} com_e --组件的转换效率
+ * @param  {number} com_len --组件的长度(mm)
+ * @param  {number} com_wid --组件的宽度(mm)
+ * @param  {number} T --月平均温度
+ * @param  {number} d --组件最大功率温度系数
+ */
 function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
-	var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+	var monthDays = CONST.monthDays;
 	var sums = [],sums_g=[];
     var sum,max = 0,sum_g,res = 0, S,S_d,T_d,H_t,e, g,max_H = 0,res1;
 	for(var i = 0; i <=90; i++){
@@ -117,10 +125,7 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
             S_d = H_t / 10 - 1;
             T_d = T[j-1] + 0.03*S -25;
             e = com_e /100 *(1 + d*T_d)*Math.log(Math.E + 0.094*S_d);
-            // console.log(j + " 月 e:" + e)
             g = e*H_t*(com_len*com_wid/1000000) * monthDays[j-1];
-			console.log("H_t:" + H_t)
-			console.log("g:" + g)
             sum_g += g;
             sum += H_t * monthDays[j-1];   
 		}
@@ -138,17 +143,29 @@ function getChartData(H,lat,az,com_e,com_len,com_wid,T,d){
 	}
 
 	return {
-        sums_g : sums_g,
-		sums : sums,
-		best : res,
-        bestH :res1,
-		max : max,
-		max_H: max_H
+        sums_g : sums_g,   //组件年输出电量
+		sums : sums,       //组件年总辐照度
+		best : res,        //年输出电量最优倾角
+        bestH :res1,       //年总辐照度最优倾角
+		max : max,         //年输出电量最大值
+		max_H: max_H       //年总辐照度最大值
 	};
 };
-//var fs = require('fs');
+
+/**
+ * 获取特定倾角和方位角下的月总辐照度、月总组件输出电量折线图数据
+ * @param  {number[]} H --月日均辐照度
+ * @param  {number} lat --纬度
+ * @param  {number} az --方位角
+ * @param  {number} com_e --组件的转换效率
+ * @param  {number} com_len --组件的长度(mm)
+ * @param  {number} com_wid --组件的宽度(mm)
+ * @param  {number} T --月平均温度
+ * @param  {number} d --组件最大功率温度系数
+ * @param  {number} dip --倾角
+ */
 function getDataByDip(H,lat,az,com_e,com_len,com_wid,T,d,dip){
-	var monthDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+	var monthDays = CONST.monthDays;
     var S,S_d,T_d,H_t,e, g;
     var H_ts = [],gs = [];
 
@@ -170,12 +187,7 @@ function getDataByDip(H,lat,az,com_e,com_len,com_wid,T,d,dip){
     }
 }
 
-//fs.writeFileSync('data.txt','倾角: '+dip + '\r\n',{encoding:'utf8',flag:'a'});
-//fs.writeFileSync('data.txt','H_t:\r\n',{encoding:'utf8',flag:'a'});
-//H_ts.forEach(function(H_t){
-//    fs.writeFileSync('data.txt',H_t + '\r\n',{encoding:'utf8',flag:'a'});
-//});
-//fs.writeFileSync('data.txt','g:\r\n',{encoding:'utf8',flag:'a'});
-//gs.forEach(function(g){
-//    fs.writeFileSync('data.txt',g+'\r\n',{encoding:'utf8',flag:'a'});
-//});
+exports.getH_t = getH_t;
+exports.getChartData = getChartData;
+exports.getDataByDip = getDataByDip;
+

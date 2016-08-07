@@ -1,6 +1,9 @@
 var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
-var customer = require('./common/customer/customerDevice');
+var algorithm = require('./common/algorithm');
+var Finance = require('./common/algorithm/finance');
+var util = require('./common/util');
+
 var remote = require('electron').remote;
 var dialog = remote.dialog;
 
@@ -731,7 +734,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     var T = [];
 
     $scope.$watch('angleInfo.dip', function () {
-        var temp = getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, $scope.angleInfo.dip);
+        var temp = algorithm.getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, $scope.angleInfo.dip);
         $scope.data[2][0] = temp.H_ts;
         $scope.data[3][0] = temp.gs;
     });
@@ -742,8 +745,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
     });
 
     function getHData() {
-        var res = getChartData(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100);
-        console.log(res);
+        var res = algorithm.getChartData(H, meteorologyInfo.lat, $scope.angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100);
         return res;
     }
 
@@ -760,18 +762,6 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
             $scope.angleInfo = temp;
         }
     });
-
-
-    //for(var i = 0; i <= 90; i++){
-    //    getDataByDip(H, meteorologyInfo.lat, $scope.angleInfo.az,componentInfo['转换效率'],T,componentInfo['最大功率温度系数']/100,i);
-    //}
-
-    //$scope.$watch('$viewContentLoaded', function () {
-    //    var temp = getHData();
-    //    $scope.sums_g = temp.sums_g;
-    //    $scope.sums = temp.sums;
-    //    $scope.angleInfo.dip = temp.best;
-    //});
 });
 
 /*
@@ -1978,16 +1968,16 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     ];
     $scope.chartData2 = [];
 
-    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var monthDays = util.CONST.monthDays;
     var userDesign = projectData.getData('userDesignInfo');
     var componentsNum = userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum;
 
     for (var i = 1; i <= 12; i++) {
-        var h = getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
+        var h = algorithm.getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
         $scope.chartData0[0].push(Number(h.toFixed(3)));
     }
 
-    $scope.data.electricity = getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
+    $scope.data.electricity = algorithm.getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
         return item * componentsNum;
     });
 
@@ -2903,9 +2893,9 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         []
     ];
 
-    var monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var monthDays = util.CONST.monthDays;
     for (var i = 1; i <= 12; i++) {
-        var temp = getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
+        var temp = algorithm.getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
         $scope.data.electricity.yearHT += temp;
         $scope.HChartData[0].push(temp.toFixed(2));
     }

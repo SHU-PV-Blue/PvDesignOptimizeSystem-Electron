@@ -32,3 +32,5 @@ Finance.prototype.IRR = function (cfs) {
     }
     return Math.round(seekZero(npv) * 100) / 100;
 };
+
+module.exports = Finance;
