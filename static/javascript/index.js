@@ -612,8 +612,8 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         }
     };
 
-    $scope.labelsAngle = ["0", "", "", "", "", "5", "", "", "", "", "10", "", "", "", "", "15", "", "", "", "", "20", "", "", "", "", "25", "", "", "", "", "30", "", "", "", "", "35", "", "", "", "", "40", "", "", "", "", "45", "", "", "", "", "50", "", "", "", "", "55", "", "", "", "", "60", "", "", "", "", "65", "", "", "", "", "70", "", "", "", "", "75", "", "", "", "", "80", "", "", "", "", "85", "", "", "", "", "90"];
-    $scope.labelsMonth = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    $scope.labelsAngle = util.getDipLabel();
+    $scope.labelsMonth = util.getLabel(12);
     $scope.series = [
         ['年总辐照度'],
         ['效率'],
@@ -2011,7 +2011,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         // console.log(yearBing);
     }
 
-    $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    $scope.labelsMonth = util.getLabel(12);
 
     $scope.finish = function () {
         projectData.setFinished("efficiencyAnalysis");
@@ -2560,10 +2560,7 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
 
     $scope.data.MW = $scope.data.MT / $scope.data.CT;
 
-    $scope.labelsYear = [];
-    for (var i = 0; i < p.BB; i++) {
-        $scope.labelsYear.push(i + 1 + '');
-    }
+    $scope.labelsYear = util.getLabel(p.BB);
 
     $scope.series = ['债务偿还图', '投资回收期图'];
 
@@ -2872,12 +2869,9 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         }
     ];
 
-    $scope.labelsMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    $scope.labelsYear = [];
+    $scope.labelsMonth = util.getLabel(12);
+    $scope.labelsYear = util.getLabel(parameters.BB);
     $scope.lossLabel = ['阴影损耗','灰尘等遮挡损耗','组件温升损耗','直流电缆损耗','组串内失配损耗','逆变器损耗','变压器损耗','交流电缆损耗','故障检修、电网等其它损耗','发电量'];
-    for (var i = 0; i < parameters.BB; i++) {
-        $scope.labelsYear.push(i + 1 + '');
-    }
 
     var yearElectricity = 0;
 

@@ -1,8 +1,7 @@
-exports.CONST = {
-    monthDays : [31, 28, 31, 30, 31, 30, 31, 31 ,30, 31, 30, 31]
-};
-
-exports.Functions = {
+module.exports = {
+    CONST : {
+        monthDays : [31, 28, 31, 30, 31, 30, 31, 31 ,30, 31, 30, 31]
+    },
     getLabel : function(max){
         var label = [],i;
         for(i = 1; i <= max; i++){
