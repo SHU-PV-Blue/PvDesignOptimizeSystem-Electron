@@ -2173,13 +2173,11 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     };
 
     var p = projectData.getData('parameters');
-    var BA = 1.915815;
-    var userDesign = projectData.getData("userDesignInfo");
-    if (userDesign.designType === "area") {
-        BA = Number(userDesign.area.totalCapacity);
-    } else {
-        BA = Number(userDesign.capacity.totalCapacity);
-    }
+    var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
+    var componentLoss = efficiencyAnalysis.componentLoss;
+    var lossTotal = efficiencyAnalysis.lossTotal;
+    var electricity = efficiencyAnalysis.electricity;
+    var BA = _.sum(electricity);
 
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
@@ -2207,15 +2205,22 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
         CV: 0
     };
 
+    function computeYearBing(year){
+        var yearLoss = 1 - year * componentLoss / 100;
+        if (yearLoss < 0)
+            yearLoss = 0;
+
+        var yearBing = 0;
+        electricity.map(function (item) {
+            var bingrudianliang = item * (1 - lossTotal / 100) * yearLoss;
+            yearBing += bingrudianliang;
+        });
+        return yearBing*1000000;
+    }
+
     var ca, cd, ce, cf, cg, ch, ci;
     for (var i = 0; i < p.BB; i++) {
-        if (i == 0) {
-            ca = BA * 0.9228 * 1000000;
-        } else if (i < 10) {
-            ca = $scope.data1.CA[i - 1] * 0.99;
-        } else {
-            ca = $scope.data1.CA[i - 1] * 0.9934;
-        }
+        ca = computeYearBing(i + 1);
 
         cd = ca * p.AF * p.AJ + ca * (1 - p.AF) * p.AB;
         ce = cd / (1 + p.AI);

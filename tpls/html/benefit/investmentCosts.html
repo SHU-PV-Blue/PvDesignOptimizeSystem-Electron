@@ -76,7 +76,7 @@
                                     <th>年收入（含税）（元）</th>
                                     <th>年收入（不含税）（元）</th>
                                 </tr>
-                                <tr ng-repeat="ca in data1.CA">
+                                <tr ng-repeat="ca in data1.CA track by $index">
                                     <td style="min-width:100px">第{{ $index + 1 }}年</td>
                                     <td>{{ ca | number : 0}}</td>
                                     <td>{{ data1.CD[$index] | number : 0}}</td>
