@@ -2,6 +2,7 @@ var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
 var algorithm = require('./common/algorithm');
 var Finance = require('./common/algorithm/finance');
+var customer = require('./common/customer/customerDevice');
 var util = require('./common/util');
 var _ = require('lodash');
 
@@ -569,15 +570,15 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     };
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from pvmodule', function (data) {
-            // customer.getItems('pvmodule').map(function(item){
-            //     data.push(item.item);
-            // })
+            customer.getItems('pvmodule').map(function (item) {
+                data.push(item.item);
+            });
             data.sort(function (a, b) {
                 return -(a['转换效率'] - b['转换效率']);
             });
@@ -1117,6 +1118,9 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertercentralized', function (data) {
+            customer.getItems('centralizedInverter').map(function(item){
+                data.push(item.item);
+            });
             data.sort(function (a, b) {
                 return -(a['最大效率'] - b['最大效率']);
             });
@@ -1183,6 +1187,9 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dccombiner', function (data) {
+            customer.getItems('dcCombiner').map(function(item){
+                data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -1244,6 +1251,9 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dcdistribution', function (data) {
+            customer.getItems('dcDistribution').map(function(item){
+                data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -1351,6 +1361,9 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from cable', function (data) {
+            customer.getItems('cable').map(function(item){
+                data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -1417,6 +1430,9 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from cable', function (data) {
+            customer.getItems('cable').map(function(item){
+                data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -1515,6 +1531,9 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertertandem', function (data) {
+            customer.getItems('groupInverter').map(function(item){
+                data.push(item.item);
+            });
             data.sort(function (a, b) {
                 return -(a['最大效率'] - b['最大效率']);
             });
@@ -1659,6 +1678,10 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parent
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from switch where 类型=\'低压\'', function (data) {
+            customer.getItems('switch').map(function(item){
+                if(item.item['类型'] === '低压')
+                    data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
@@ -1839,6 +1862,10 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from switch where 类型=\'高压\'', function (data) {
+            customer.getItems('switch').map(function(item){
+                if(item.item['类型'] === '高压')
+                    data.push(item.item);
+            });
             $scope.items = data;
             $scope.$digest();
         });
