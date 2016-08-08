@@ -452,7 +452,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
     $scope.$watch('$viewContentLoaded', function () {
         var tempObj = projectData.getData('meteorologyInfo');
         if (tempObj && $scope.lng === tempObj.lng && $scope.lat === tempObj.lat) {      //如果数据存在则赋值
-            $scope.meteorologyInfo = JSON.parse(JSON.stringify(tempObj));
+            $scope.meteorologyInfo = _.cloneDeep(tempObj);
         } else {                                            //如果数据不存在，取默认值
             getDbData();
         }
@@ -562,10 +562,14 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
         return isc2 * (1 - c1 * (Math.exp(v / (c2 * voc2)) - 1));  // isc2
     }
 
-    $scope.confirmChoose = function () {
+    $scope.save = function () {
         projectData.addOrUpdateData($scope.show, 'componentInfo');
         projectData.setFinished("chooseComponent");
         projectData.saveToLocal();
+        $location.path('/0');
+    };
+
+    $scope.back = function(){
         $location.path('/0');
     };
 
@@ -765,10 +769,14 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $location.path('/0');
     };
 
+    $scope.back = function(){
+        $location.path('/0');
+    }
+
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('angleInfo');
         if (temp) {
-            $scope.angleInfo = temp;
+            $scope.angleInfo = _.cloneDeep(temp);
         }
     });
 });
@@ -930,10 +938,14 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         $location.path('/0');
     };
 
+    $scope.back = function(){
+        $location.path('/0');
+    }
+
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('userDesignInfo');
         if (temp) {
-            $scope.userDesignInfo = temp;
+            $scope.userDesignInfo = _.cloneDeep(temp);
             $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
         }
     });
@@ -954,16 +966,20 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('chooseInverter');
         if (temp) {
-            $scope.obj = temp;
+            $scope.obj = _.cloneDeep(temp);
         }
     });
 
-    $scope.finish = function () {
+    $scope.save = function () {
         projectData.addOrUpdateData($scope.obj, 'chooseInverter');
         projectData.setFinished("chooseInverter");
         projectData.saveToLocal();
         $location.path('/0');
     };
+
+    $scope.back = function(){
+        $location.path('/0');
+    }
 
     $scope.showForm = function (name) {
         var templateUrl, controller;
@@ -1537,7 +1553,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('transformer');
         if (temp) {
-            $scope.obj = temp;
+            $scope.obj = _.cloneDeep(temp);
         }
     });
 
@@ -1557,10 +1573,14 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
         }
     });
 
-    $scope.finish = function () {
+    $scope.save = function () {
         projectData.addOrUpdateData($scope.obj, "transformer");
         projectData.setFinished("selectTransformer");
         projectData.saveToLocal();
+        $location.path('/0');
+    };
+
+    $scope.back = function(){
         $location.path('/0');
     };
 
@@ -2022,17 +2042,21 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
 
     $scope.labelsMonth = util.getLabel(12);
 
-    $scope.finish = function () {
+    $scope.save = function () {
         projectData.setFinished("efficiencyAnalysis");
         projectData.addOrUpdateData($scope.data, 'efficiencyAnalysisInfo');
         projectData.saveToLocal();
         $location.path('/0');
     };
 
+    $scope.back = function(){
+        $location.path('/0');
+    }
+
     $scope.$watch('$viewContentLoaded', function () {
         var temp = projectData.getData('efficiencyAnalysisInfo');
         if (temp) {
-            $scope.data = temp;
+            $scope.data = _.cloneDeep(temp);
         }
     });
 
@@ -2107,6 +2131,17 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
         projectData.saveToLocal();
         $location.path('/8');
     };
+
+    $scope.back = function(){
+        $location.path('/8');
+    };
+
+    $scope.$watch('$viewContentLoaded', function () {
+        var temp = projectData.getData('parameters');
+        if (temp) {
+            $scope.parameters = _.cloneDeep(temp);
+        }
+    });
 });
 
 /*
