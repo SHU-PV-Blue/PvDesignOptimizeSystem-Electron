@@ -896,7 +896,6 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
     };
 
     function compute_fbspace() {                           //计算阵列前后间距
-        var componentInfo = projectData.getData('componentInfo');
         var dip = projectData.getData('angleInfo').dip;
         var lat = projectData.getData('basicInfo').lat;
         var w;
@@ -907,8 +906,8 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         }
 
         var W1 = w * $scope.userDesignInfo.rowsPerFixture;
-        console.log('' + w + ',' + dip + ',' + lat + ',' + $scope.userDesignInfo.rowsPerFixture);
-        return (W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lat) + 0.4338) / (0.707 - 0.4338 * tan(lat))).toFixed(2);
+        var res = Number((W1 * cos(dip) + W1 * sin(dip) * (0.707 * tan(lat) + 0.4338) / (0.707 - 0.4338 * tan(lat))).toFixed(2));
+        return res;
     }
 
     function compute_numPerRow() {                               //计算每行支架数
@@ -947,7 +946,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         var temp = projectData.getData('userDesignInfo');
         if (temp) {
             $scope.userDesignInfo = _.cloneDeep(temp);
-            $scope.userDesignInfo.fbspace = compute_fbspace().toFixed(2);
+            $scope.userDesignInfo.fbspace = (compute_fbspace()).toFixed(2);
         }
     });
 });

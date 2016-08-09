@@ -1,6 +1,5 @@
 var fs = require('fs');
 var devices = JSON.parse(fs.readFileSync('./devices/customer.json', "utf8"));
-console.log(devices);
 
 function saveToDiskAndReload() {
     fs.writeFileSync('./devices/customer.json', JSON.stringify(devices, null, "    "), 'utf8');
