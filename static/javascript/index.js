@@ -2046,6 +2046,10 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         compute_chartData();
     });
 
+    $scope.$watch('data.componentLoss',function(){
+        compute_chartData();
+    });
+
     function compute_chartData() {
         var yearLoss = 1 - $scope.data.runYears * $scope.data.componentLoss / 100;
         if (yearLoss < 0)

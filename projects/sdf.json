@@ -351,9 +351,9 @@
                 99.5,
                 95
             ],
-            "componentLoss": "2",
+            "componentLoss": "1",
             "lossTotal": 28.63799999999999,
-            "runYears": "1",
+            "runYears": "3",
             "totalYears": 25,
             "electricity": [
                 116338.84229222074,
@@ -369,7 +369,7 @@
                 112376.69083612383,
                 118235.70576532335
             ],
-            "yearBing": 1016671.6181193492
+            "yearBing": 1006297.4179344579
         },
         "parameters": {
             "AA": 0.9575,
