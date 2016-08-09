@@ -380,6 +380,8 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
         lat: ''
     };
 
+    $scope.lng = projectData.getData('basicInfo').lng;
+    $scope.lat = projectData.getData('basicInfo').lat;
 
     $scope.selectDb = function (e) {
         if ($scope.flag == 0) {
@@ -425,19 +427,24 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
     }
 
     function getDbData() {                          //从气象数据库获取气象信息
-        gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/weather', {
-            lon: Number($scope.lng),
-            lat: Number($scope.lat)
-        }).then(function (data) {
-            _.extend($scope.meteorologyInfo.monthinfos, data.data);
+        dbHelper.getWeatherData(Number($scope.lat),Number($scope.lng),function(data){
+            console.log(data);
+            _.extend($scope.meteorologyInfo.monthinfos, data);
             computeAvg();
             $scope.meteorologyInfo.lng = $scope.lng;
             $scope.meteorologyInfo.lat = $scope.lat;
+            $scope.$digest();
         });
+        // gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/weather', {
+        //     lon: Number($scope.lng),
+        //     lat: Number($scope.lat)
+        // }).then(function (data) {
+        //     _.extend($scope.meteorologyInfo.monthinfos, data.data);
+        //     computeAvg();
+        //     $scope.meteorologyInfo.lng = $scope.lng;
+        //     $scope.meteorologyInfo.lat = $scope.lat;
+        // });
     }
-
-    $scope.lng = projectData.getData('basicInfo').lng;
-    $scope.lat = projectData.getData('basicInfo').lat;
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
