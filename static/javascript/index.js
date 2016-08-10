@@ -2778,9 +2778,9 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
     var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
     var componentInfo = projectData.getData('componentInfo');
 
-    $scope.getMapPath = function () {
-        return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
-    };
+    // $scope.getMapPath = function () {
+    //     return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
+    // };
 
     $scope.data = {
         projectInfo: {
