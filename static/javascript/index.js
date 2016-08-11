@@ -1105,9 +1105,11 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     function compute_inverterNumNeeded() {
         var userDesignInfo = projectData.getData('userDesignInfo');
-        var capacity = userDesignInfo.designType == 'area' ? userDesignInfo.area.totalCapacity : userDesignInfo.capacity.totalCapacity;
-        return Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
+        var capacity = userDesignInfo.designType === 'area' ? userDesignInfo.area.totalCapacity : Number(userDesignInfo.capacity.totalCapacity);
+        var res = Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
             * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率'] / 1000)));
+        console.log(res);
+        return res;
     }
 
     function compute_totalOpacity() {
@@ -1133,12 +1135,12 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
             $scope.$apply(function () {
                 $scope.items = data;
                 if (parentObj.centralizedInverterInfo) {
-                    $scope.centralizedInverterInfo = parentObj.centralizedInverterInfo;
+                    $scope.centralizedInverterInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
                     $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
                 }
             });
         });
-    })
+    });
 
     $scope.ok = function () {
         $uibModalInstance.close({
