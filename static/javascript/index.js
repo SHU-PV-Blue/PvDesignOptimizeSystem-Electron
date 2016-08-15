@@ -2060,9 +2060,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     });
 
     function compute_chartData() {
-        var yearLoss = 1 - $scope.data.runYears * $scope.data.componentLoss / 100;
-        if (yearLoss < 0)
-            yearLoss = 0;
+        var yearLoss =  Math.pow(1 - $scope.data.componentLoss / 100, $scope.data.runYears -1);
 
         $scope.chartData1 = [
             []
@@ -2216,7 +2214,6 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     var componentLoss = efficiencyAnalysis.componentLoss;
     var lossTotal = efficiencyAnalysis.lossTotal;
     var electricity = efficiencyAnalysis.electricity;
-    var BA = _.sum(electricity);
 
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
@@ -2245,7 +2242,7 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     };
 
     function computeYearBing(year){
-        var yearLoss = 1 - year * componentLoss / 100;
+        var yearLoss =  Math.pow(1 - componentLoss / 100, year -1);
         if (yearLoss < 0)
             yearLoss = 0;
 
@@ -2254,8 +2251,10 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
             var bingrudianliang = item * (1 - lossTotal / 100) * yearLoss;
             yearBing += bingrudianliang;
         });
-        return yearBing*1000000;
+        return yearBing;
     }
+
+    var BA = computeYearBing(1) / 1000000;
 
     var ca, cd, ce, cf, cg, ch, ci;
     for (var i = 0; i < p.BB; i++) {
