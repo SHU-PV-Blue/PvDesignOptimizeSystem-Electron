@@ -3131,52 +3131,6 @@ pvModule.directive("fixedtop", function () {
     };
 });
 
-pvModule.directive('pvmap', function () {
-    return {
-        restrict: 'E',
-        replace: true,
-        templateUrl: 'tpls/diretpls/pvmap.html',
-        link: function (scope, elem, attrs) {
-            var map = new BMap.Map("mapContainer");          // 创建地图实例
-            map.enableScrollWheelZoom();
-            map.enableInertialDragging();
-            map.enableContinuousZoom();
-
-            var point = new BMap.Point(121.49, 31.22);  // 创建点坐标
-            map.centerAndZoom(point, 10);                 // 初始化地图，设置中心点坐标和地图级别
-
-            var size = new BMap.Size(10, 20);
-            map.addControl(new BMap.CityListControl({
-                anchor: BMAP_ANCHOR_TOP_LEFT,
-                offset: size
-            }));
-
-            var marker = new BMap.Marker(point);
-
-            map.addEventListener("click", function (e) {
-
-                map.removeOverlay(marker);
-                marker = new BMap.Marker(e.point);        // 创建标注
-                map.addOverlay(marker);
-
-                var lngInput = document.getElementById('lng');
-                var latInput = document.getElementById('lat');
-                lngInput.value = e.point.lng.toFixed(2);
-                latInput.value = e.point.lat.toFixed(2);
-                var evt = document.createEvent('MouseEvents');
-                evt.initEvent('change', true, true);
-                lngInput.dispatchEvent(evt);
-                latInput.dispatchEvent(evt);
-            });
-            document.getElementById('locatePoint').addEventListener('click', function (e) {
-                var lng = document.getElementById('lng').value;
-                var lat = document.getElementById('lat').value;
-                map.centerAndZoom(new BMap.Point(lng, lat), 10);
-            });
-        }
-    };
-});
-
 //路由
 pvModule.config(function ($routeProvider) {
     $routeProvider.when('/', {

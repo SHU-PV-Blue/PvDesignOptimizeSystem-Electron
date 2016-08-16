@@ -35,7 +35,7 @@ exports.addItem = function (deviceName, item) {
     saveToDiskAndReload();
 }
 
-exports.deleteItem = function(deviceName, index){
+exports.deleteItem = function (deviceName, index) {
     delete devices[deviceName].items[index];
     saveToDiskAndReload();
 }
