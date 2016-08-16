@@ -492,6 +492,20 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
             text: 'i-v 图',
             fontSize: 14,
             fontStyle: 'normal'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: '电压/V'
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: '电流/A'
+                }
+            }]
         }
     }
 
@@ -504,6 +518,20 @@ pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData
             text: 'p-v 图',
             fontSize: 14,
             fontStyle: 'normal'
+        },
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: '电压 / V'
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: '功率 / W'
+                }
+            }]
         }
     }
 
@@ -2035,7 +2063,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     var monthDays = util.CONST.monthDays;
     var userDesign = projectData.getData('userDesignInfo');
     var componentsNum = userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum;
-    
+
     for (var i = 1; i <= 12; i++) {
         var h = algorithm.getH_t(i, H[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
         $scope.chartData0[0].push(Number(h.toFixed(3)));
