@@ -37,8 +37,11 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-#database
+# database
 db
+
+# vscode
+.vscode
 
 electron-quick-start-win32-ia32
 pvsystem-win32-ia32

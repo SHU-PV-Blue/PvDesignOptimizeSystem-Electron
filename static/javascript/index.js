@@ -1124,13 +1124,6 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
             * $scope.centralizedInverterInfo.inverterNumNeeded * componentInfo['峰值功率'] / 1000;
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-centralized')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         });
-    // };
-
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertercentralized', function (data) {
             customer.getItems('centralizedInverter').map(function(item){
@@ -1143,6 +1136,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
                 $scope.items = data;
                 if (parentObj.centralizedInverterInfo) {
                     $scope.centralizedInverterInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
+                    $scope.savedInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
                     $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
                 }
             });
