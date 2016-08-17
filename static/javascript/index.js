@@ -96,27 +96,6 @@ pvModule.service('projectData', function ($rootScope, $location, $route) {
     };
 });
 
-/*
- 从数据接口获取数据服务
- */
-pvModule.service('gainData', function ($http, $q) {
-    this.getDataFromInterface = function (url, params) {
-        var defered = $q.defer();
-        var httpOpt = {
-            method: 'GET',
-            url: url
-        };
-        if (params) {
-            httpOpt.params = params;
-        }
-        $http(httpOpt).then(function (response) {
-            defered.resolve(response.data);
-        });
-
-        return defered.promise;
-    }
-});
-
 //控制器区
 /*
 项目管理控制器
@@ -366,7 +345,7 @@ pvModule.controller('basicInfoCtrl', function ($scope, $location, projectData) {
 /*
  气象信息控制器
  */
-pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData, gainData) {
+pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData) {
     $scope.meteorologyInfo = {
         type: 'db',
         monthinfos: [],
@@ -472,7 +451,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData,
 /*
  选择组件控制器
  */
-pvModule.controller('chooseComponentCtrl', function ($scope, $location, gainData, projectData) {
+pvModule.controller('chooseComponentCtrl', function ($scope, $location, projectData) {
     $scope.components = [];
     $scope.selected = '{}';
     $scope.show = {};
@@ -1077,7 +1056,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 /*
  集中式逆变器控制器
 */
-pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
+pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.centralizedInverterInfo = {
         centralizedInverter: {},
         serialNumPerBranch: 0,
@@ -1136,7 +1115,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
         var capacity = userDesignInfo.designType === 'area' ? userDesignInfo.area.totalCapacity : Number(userDesignInfo.capacity.totalCapacity);
         var res = Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
             * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率'] / 1000)));
-        console.log(res);
+        // console.log(res);
         return res;
     }
 
@@ -1185,7 +1164,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 /*
  直流汇流箱控制器
  */
-pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, parentObj, gainData) {
+pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, parentObj) {
     $scope.directCurrentInfo = {
         directCurrent: {},
         num: 0,
@@ -1250,7 +1229,7 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 /*
  直流配电柜控制器
  */
-pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstance, parentObj, gainData) {
+pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstance, parentObj) {
     $scope.directDistributionInfo = {
         directDistribution: {},
         num: 0,
@@ -1314,7 +1293,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 /*
  集中式直流电缆控制器
 */
-pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj, gainData) {
+pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstance, $window, projectData, parentObj) {
     var componentInfo = projectData.getData('componentInfo');
     var maxPowerCurrent = componentInfo['最大功率点电流'];
     var maxPowerVoltage = componentInfo['最大功率点电压'];
@@ -1426,7 +1405,7 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
 /*
  组串式直流电缆控制器
  */
-pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalInstance, $window, gainData, parentObj, projectData) {
+pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalInstance, $window, parentObj, projectData) {
 
     var componentInfo = projectData.getData('componentInfo');
     var maxPowerCurrent = componentInfo['最大功率点电流'];
@@ -1493,7 +1472,7 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
 /*
  组串式逆变器控制器
  */
-pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
+pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.groupInverterInfo = {
         groupInverter: {},
         serialNumPerBranch: 0,
@@ -1683,7 +1662,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
 /*
 低压开关柜控制器
 */
-pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
+pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.lowSwitchInfo = {
         lowSwitch: {},
         num: 0
@@ -1742,7 +1721,7 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parent
 /*
  10kv升压变压器控制器
  */
-pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj, gainData, projectData) {
+pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.transformerInfo = {
         transformer: {},
         serialNum: 1,
@@ -1804,7 +1783,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
 /*
  35kv升压变压器控制器
  */
-pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, parentObj, gainData, projectData) {
+pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, parentObj, projectData) {
     $scope.transformerInfo = {
         transformer1: {},
         transformer2: {},
@@ -1875,7 +1854,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
 /*
 高压开关柜控制器
 */
-pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $window, parentObj, gainData, projectData) {
+pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $window, parentObj, projectData) {
     $scope.highSwitchInfo = {
         highSwitch: {},
         num: 0
@@ -3199,12 +3178,3 @@ pvModule.config(function ($routeProvider) {
 
     $routeProvider.otherwise({ redirectTo: '/' });
 });
-
-// 禁止模板缓存  
-pvModule.run(function($rootScope, $templateCache) {  
-    $rootScope.$on('$routeChangeStart', function(event, next, current) {  
-        if (typeof(current) !== 'undefined'){  
-            $templateCache.remove(current.templateUrl);  
-        }  
-    });  
-});  
