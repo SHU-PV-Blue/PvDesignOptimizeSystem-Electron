@@ -3,63 +3,65 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-9">
-          <div class="row">
-            <!--<div class="col-md-2">
-              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-            </div>-->
-            <div class="col-md-10">
-              <select ng-model="selected" class="form-control">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <select ng-model="selected" class="form-control">
                 <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
               </select>
+                </div>
             </div>
-          </div>
-          <div class="row" style="margin-top: 30px">
-            <div class="col-md-12">
-              <table class="table table-bordered">
-                <tr>
-                  <th>输入路数/个</th>
-                  <th>输入电流上限/A</th>
-                  <th>直流断路器</th>
-                  <th>防雷失效监控</th>
-                  <th>监控单元</th>
-                  <th>辅助电源</th>
-                </tr>
-                <tr>
-                  <td>{{directCurrentInfo.directCurrent['输入路数']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['输入电流上限']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有直流断路器'] ? '有' : '无'}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有防雷失效监控']? '有' : '无'}} </td>
-                  <td>{{directCurrentInfo.directCurrent['有监控单元']? '有' : '无'}} </td>
-                  <td>{{directCurrentInfo.directCurrent['辅助电源']}} </td>
-                </tr>
-                <!--<tr>
-                  <th>价格下限/￥</th>
-                  <th>价格上限/￥</th>
-                </tr>
-                <tr>
-                  <td>{{directCurrentInfo.directCurrent['价格下限']}} </td>
-                  <td>{{directCurrentInfo.directCurrent['价格上限']}} </td>
-                </tr>-->
-              </table>
+            <div class="row" style="margin-top: 30px">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>输入路数/个</td>
+                            <td>输入电流上限/A</td>
+                            <td>直流断路器</td>
+                            <td>防雷失效监控</td>
+                        </tr>
+                        <tr>
+                            <td>{{directCurrentInfo.directCurrent['输入路数']}} </td>
+                            <td>{{directCurrentInfo.directCurrent['输入电流上限']}} </td>
+                            <td>{{directCurrentInfo.directCurrent['有直流断路器'] ? '有' : '无'}} </td>
+                            <td>{{directCurrentInfo.directCurrent['有防雷失效监控']? '有' : '无'}} </td>
+                        </tr>
+                        <tr>
+                            <td>监控单元</td>
+                            <td>辅助电源</td>
+                        </tr>
+                        <tr>
+                            <td>{{directCurrentInfo.directCurrent['有监控单元']? '有' : '无'}} </td>
+                            <td>{{directCurrentInfo.directCurrent['辅助电源']}} </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-                <div class="form-group">
-                    <label>汇流箱输入路数</label>
-                    <input type="text" class="form-control" ng-model="directCurrentInfo.branches">
-                </div>
-                <div class="form-group">
-                    <label>每台逆变器接入汇流箱数</label>
-                    <input type="text" class="form-control" ng-model="directCurrentInfo.numPerInverter">
-                </div>
-                <div class="form-group">
-                  <label>汇流箱总数</label>
-                  <p class="static-form-control">{{directCurrentInfo.num}}</p>
-               </div>
-            </form>
+        <div class="col-md-5">
+            <p>已选汇流箱：{{savedInfo.directCurrent['厂家'] + ' ' + savedInfo.directCurrent['型号']}}</p>
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td>保存值</td>
+                </tr>
+                <tr>
+                    <td>汇流箱输入路数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="directCurrentInfo.branches"></td>
+                    <td>{{savedInfo.branches}}</td>
+                </tr>
+                <tr>
+                    <td>每台逆变器接入汇流箱数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="directCurrentInfo.numPerInverter"></td>
+                    <td>{{savedInfo.numPerInverter}}</td>
+                </tr>
+                <tr>
+                    <td>汇流箱总数</td>
+                    <td><p class="static-form-control input-sm">{{directCurrentInfo.num}}</p></td>
+                    <td>{{savedInfo.num}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

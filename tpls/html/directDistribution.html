@@ -3,12 +3,9 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
           <div class="row">
-            <!--<div class="col-md-2">
-              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-            </div>-->
-            <div class="col-md-10">
+            <div class="col-md-12">
               <select ng-model="selected" class="form-control">
                 <option ng-repeat="item in items" value="{{item}}">{{item['公司'] + '&nbsp;&nbsp;&nbsp;' + item['型号']}} </option>
               </select>
@@ -33,21 +30,30 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-                <div class="form-group">
-                    <label>配电柜输入路数</label>
-                    <input type="text" class="form-control" ng-model="directDistributionInfo.branches">
-                </div>
-                <div class="form-group">
-                    <label>每台逆变器接入配电柜数</label>
-                    <input type="text" class="form-control" ng-model="directDistributionInfo.numPerInverter">
-                </div>
-                <div class="form-group">
-                  <label>配电柜总数</label>
-                  <p class="static-form-control">{{directDistributionInfo.num}}</p>
-               </div>
-            </form>
+        <div class="col-md-5">
+            <p>已选配电柜：{{savedInfo.directDistribution['公司'] + ' ' + savedInfo.directDistribution['型号']}}</p>
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td>保存值</td>
+                </tr>
+                <tr>
+                    <td>配电柜输入路数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="directDistributionInfo.branches"></td>
+                    <td>{{savedInfo.branches}}</td>
+                </tr>
+                <tr>
+                    <td>每台逆变器接入配电柜数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="directDistributionInfo.numPerInverter"></td>
+                    <td>{{savedInfo.numPerInverter}}</td>
+                </tr>
+                <tr>
+                    <td>配电柜总数</td>
+                    <td><p class="static-form-control input-sm" size="3">{{directDistributionInfo.num}}</p></td>
+                    <td>{{savedInfo.num}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

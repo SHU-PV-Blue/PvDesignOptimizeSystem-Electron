@@ -1187,13 +1187,6 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
         return Math.ceil(parentObj.centralizedInverterInfo.branchNumPerInverter / $scope.directCurrentInfo.branches);
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-combiner')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         })
-    // };
-
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dccombiner', function (data) {
             customer.getItems('dcCombiner').map(function(item){
@@ -1203,7 +1196,8 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
             $scope.$digest();
         });
         if (parentObj.directCurrentInfo) {
-            $scope.directCurrentInfo = parentObj.directCurrentInfo;
+            $scope.directCurrentInfo = _.cloneDeep(parentObj.directCurrentInfo);
+            $scope.savedInfo = _.cloneDeep(parentObj.directCurrentInfo);
             $scope.selected = JSON.stringify($scope.directCurrentInfo.directCurrent);
         }
     })
@@ -1252,12 +1246,6 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
         return $scope.directDistributionInfo.numPerInverter * parentObj.centralizedInverterInfo.inverterNumNeeded;
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/dc-distribution')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         })
-    // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dcdistribution', function (data) {
             customer.getItems('dcDistribution').map(function(item){
@@ -1267,7 +1255,8 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
             $scope.$digest();
         });
         if (parentObj.directDistributionInfo) {
-            $scope.directDistributionInfo = parentObj.directDistributionInfo;
+            $scope.directDistributionInfo = _.cloneDeep(parentObj.directDistributionInfo);
+            $scope.savedInfo = _.cloneDeep(parentObj.directDistributionInfo);
             $scope.selected = JSON.stringify($scope.directDistributionInfo.directDistribution);
         }
     })
@@ -1431,12 +1420,6 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
         $scope.alternatingCurrentCableInfo.loss = $scope.alternatingCurrentCableInfo.lineDrop / (maxPowerVoltage * serialNumPerBranch);
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/cable')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         })
-    // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from cable', function (data) {
             customer.getItems('cable').map(function(item){
@@ -1446,10 +1429,10 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
             $scope.$digest();
         });
         if (parentObj.alternatingCurrentCableInfo) {
-            $scope.alternatingCurrentCableInfo = parentObj.alternatingCurrentCableInfo;
+            $scope.alternatingCurrentCableInfo = _.cloneDeep(parentObj.alternatingCurrentCableInfo);
             $scope.selected = JSON.stringify($scope.alternatingCurrentCableInfo.alternatingCurrentCable);
         }
-    })
+    });
 
     $scope.ok = function () {
         $uibModalInstance.close({
@@ -1532,12 +1515,6 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
             * $scope.groupInverterInfo.inverterNumNeeded * componentInfo['峰值功率'] / 1000;
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/inverter-tandem')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         })
-    // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertertandem', function (data) {
             customer.getItems('groupInverter').map(function(item){
@@ -1550,7 +1527,8 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
             $scope.$digest();
         });
         if (parentObj.groupInverterInfo) {
-            $scope.groupInverterInfo = parentObj.groupInverterInfo;
+            $scope.groupInverterInfo = _.cloneDeep(parentObj.groupInverterInfo);
+            $scope.savedInfo = _.cloneDeep(parentObj.groupInverterInfo);
             $scope.selected = JSON.stringify($scope.groupInverterInfo.groupInverter);
         }
     })

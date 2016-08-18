@@ -3,81 +3,86 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-9">
-          <div class="row">
-            <!--<div class="col-md-2">
-              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-            </div>-->
-            <div class="col-md-10">
-              <select ng-model="selected" class="form-control">
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+                    <select ng-model="selected" class="form-control">
                 <option ng-repeat="item in items" value="{{item}}">{{item['厂家'] + '&nbsp;&nbsp;&nbsp;' + item['型号'] + '&nbsp;&nbsp;&nbsp;最大效率' + item['最大效率'] + '%'}} </option>
               </select>
+                </div>
             </div>
-          </div>
-          <div class="row" style="margin-top: 30px">
-            <div class="col-md-12">
-              <table class="table table-bordered">
-                <tr>
-                  <th>最大输入功率/W</th>
-                  <th>最大输入电压/V</th>
-                  <th>启动电压/V</th>
-                  <th>额定输入电压/V</th>
-                  <th>MPP电压下限/V</th>
-                  <th>MPP电压上限/V</th>
-                  <th>MPPT数量/个</th>
-                </tr>
-                <tr>
-                  <td>{{groupInverterInfo.groupInverter['最大输入功率']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['最大输入电压']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['启动电压']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['额定输入电压']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['MPP电压下限']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['MPP电压上限']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['MPPT数量']}} </td>
-                </tr>
-                <tr>
-                  <th>最大输入电流/A</th>
-                  <th>输入端子最大允许电流/A</th>
-                  <th>额定输出功率/W</th>
-                  <th>最大输出功率/VA</th>
-                  <th>最大输出电流/A</th>
-                  <th>最大效率/%</th>
-                </tr>
-                <tr>
-                  <td>{{groupInverterInfo.groupInverter['最大输入电流']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['输入端子最大允许电流']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['额定输出功率']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['最大输出功率']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['最大输出电流']}} </td>
-                  <td>{{groupInverterInfo.groupInverter['最大效率']}} </td>
-                </tr>
-              </table>
+            <div class="row" style="margin-top: 30px">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>最大输入功率/W</td>
+                            <td>最大输入电压/V</td>
+                            <td>启动电压/V</td>
+                            <td>额定输入电压/V</td>
+                        </tr>
+                        <tr>
+                            <td>{{groupInverterInfo.groupInverter['最大输入功率']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['最大输入电压']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['启动电压']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['额定输入电压']}} </td>
+                        </tr>
+                        <tr>
+                            <td>MPP电压下限/V</td>
+                            <td>MPP电压上限/V</td>
+                            <td>MPPT数量/个</td>
+                            <td>最大输入电流/A</td>
+                        </tr>
+                        <tr>
+                            <td>{{groupInverterInfo.groupInverter['MPP电压下限']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['MPP电压上限']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['MPPT数量']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['最大输入电流']}} </td>
+                        </tr>
+                        <tr>
+                            <td>输入端子最大允许电流/A</td>
+                            <td>额定输出功率/W</td>
+                            <td>最大输出功率/VA</td>
+                            <td>最大输出电流/A</td>
+                        </tr>
+                        <tr>
+                            <td>{{groupInverterInfo.groupInverter['输入端子最大允许电流']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['额定输出功率']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['最大输出功率']}} </td>
+                            <td>{{groupInverterInfo.groupInverter['最大输出电流']}} </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-               <div class="form-group">
-                  <label>每支路串联数</label>
-                  <input type="text" class="form-control" ng-model="groupInverterInfo.serialNumPerBranch">
-               </div>
-               <div class="2">
-                  <label>每个逆变器分配的支路数</label>
-                  <input type="text" class="form-control" ng-model="groupInverterInfo.branchNumPerInverter">
-               </div>
-               <div class="form-group">
-                  <label>容配比</label>
-                  <input type="number" class="form-control" min="1" step="0.01" ng-model="groupInverterInfo.volumeRatio">
-               </div>
-               <div class="form-group">
-                  <label>所需逆变器数量</label>
-                  <input type="text" class="form-control" ng-model="groupInverterInfo.inverterNumNeeded">
-               </div>
-               <!--<div class="form-group">
-                  <label>总安装容量</label>
-                  <p class="static-form-control">{{groupInverterInfo.totalOpacity}} kW</p>
-               </div>-->
-            </form>
+        <div class="col-md-5">
+            <p>已选逆变器：{{savedInfo.groupInverter['厂家'] + ' ' + savedInfo.groupInverter['型号']}}</p>
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td>保存值</td>
+                </tr>
+                <tr>
+                    <td>每支路串联数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="groupInverterInfo.serialNumPerBranch"></td>
+                    <td>{{savedInfo.serialNumPerBranch}}</td>
+                </tr>
+                <tr>
+                    <td>每个逆变器分配的支路数</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="groupInverterInfo.branchNumPerInverter"></td>
+                    <td>{{savedInfo.branchNumPerInverter}}</td>
+                </tr>
+                <tr>
+                    <td>容配比</td>
+                    <td><input type="number" class="form-control input-sm" size="3" min="1" max="10" step="0.01" ng-model="groupInverterInfo.volumeRatio"></td>
+                    <td>{{savedInfo.volumeRatio}}</td>
+                </tr>
+                <tr>
+                    <td>所需逆变器数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="groupInverterInfo.inverterNumNeeded"></td>
+                    <td>{{savedInfo.inverterNumNeeded}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
