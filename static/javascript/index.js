@@ -2020,9 +2020,10 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $scope.chartData0[0].push(Number(h.toFixed(3)));
     }
 
-    $scope.data.electricity = algorithm.getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
+    $scope.electricity = algorithm.getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
         return item * componentsNum;
     });
+    // console.log($scope.electricity)
 
     compute_chartData();
 
@@ -2047,13 +2048,12 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $scope.chartData2 = [];
 
         $scope.data.yearBing = 0;
-        $scope.chartData2.push($scope.data.electricity.map(function (item) {
+        $scope.chartData2.push($scope.electricity.map(function (item) {
             var bingrudianliang = item * (1 - $scope.data.lossTotal / 100) * yearLoss;
             $scope.data.yearBing += bingrudianliang;
             $scope.chartData1[0].push(Number((item - bingrudianliang).toFixed(3)));
             return Number(bingrudianliang.toFixed(3));
         }));
-        // console.log(yearBing);
     }
 
     $scope.labelsMonth = util.getLabel(12);
