@@ -2021,9 +2021,8 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     }
 
     $scope.electricity = algorithm.getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
-        return item * componentsNum;
+        return item * componentsNum * 0.9228;
     });
-    // console.log($scope.electricity)
 
     compute_chartData();
 
@@ -2060,6 +2059,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
 
     $scope.save = function () {
         projectData.setFinished("efficiencyAnalysis");
+        $scope.data.electricity = $scope.electricity;
         projectData.addOrUpdateData($scope.data, 'efficiencyAnalysisInfo');
         projectData.saveToLocal();
         $location.path('/0');
