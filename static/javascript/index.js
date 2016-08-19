@@ -406,7 +406,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
     }
 
     function getDbData() {                          //从气象数据库获取气象信息
-        dbHelper.getWeatherData(Number($scope.lat),Number($scope.lng),function(data){
+        dbHelper.getWeatherData(Number($scope.lat), Number($scope.lng), function (data) {
             console.log(data);
             _.extend($scope.meteorologyInfo.monthinfos, data);
             computeAvg();
@@ -784,7 +784,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     }
 
@@ -952,7 +952,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     }
 
@@ -991,7 +991,7 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     }
 
@@ -1126,7 +1126,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertercentralized', function (data) {
-            customer.getItems('centralizedInverter').map(function(item){
+            customer.getItems('centralizedInverter').map(function (item) {
                 data.push(item.item);
             });
             data.sort(function (a, b) {
@@ -1189,7 +1189,7 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dccombiner', function (data) {
-            customer.getItems('dcCombiner').map(function(item){
+            customer.getItems('dcCombiner').map(function (item) {
                 data.push(item.item);
             });
             $scope.items = data;
@@ -1248,7 +1248,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from dcdistribution', function (data) {
-            customer.getItems('dcDistribution').map(function(item){
+            customer.getItems('dcDistribution').map(function (item) {
                 data.push(item.item);
             });
             $scope.items = data;
@@ -1359,7 +1359,7 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from cable', function (data) {
-            customer.getItems('cable').map(function(item){
+            customer.getItems('cable').map(function (item) {
                 data.push(item.item);
             });
             $scope.items = data;
@@ -1422,7 +1422,7 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from cable', function (data) {
-            customer.getItems('cable').map(function(item){
+            customer.getItems('cable').map(function (item) {
                 data.push(item.item);
             });
             $scope.items = data;
@@ -1517,7 +1517,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from invertertandem', function (data) {
-            customer.getItems('groupInverter').map(function(item){
+            customer.getItems('groupInverter').map(function (item) {
                 data.push(item.item);
             });
             data.sort(function (a, b) {
@@ -1586,7 +1586,7 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     };
 
@@ -1665,8 +1665,8 @@ pvModule.controller('low_10_35Ctrl', function ($scope, $uibModalInstance, parent
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from switch where 类型=\'低压\'', function (data) {
-            customer.getItems('switch').map(function(item){
-                if(item.item['类型'] === '低压')
+            customer.getItems('switch').map(function (item) {
+                if (item.item['类型'] === '低压')
                     data.push(item.item);
             });
             $scope.items = data;
@@ -1849,8 +1849,8 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
     // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from switch where 类型=\'高压\'', function (data) {
-            customer.getItems('switch').map(function(item){
-                if(item.item['类型'] === '高压')
+            customer.getItems('switch').map(function (item) {
+                if (item.item['类型'] === '高压')
                     data.push(item.item);
             });
             $scope.items = data;
@@ -2034,12 +2034,12 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         compute_chartData();
     });
 
-    $scope.$watch('data.componentLoss',function(){
+    $scope.$watch('data.componentLoss', function () {
         compute_chartData();
     });
 
     function compute_chartData() {
-        var yearLoss =  Math.pow(1 - $scope.data.componentLoss / 100, $scope.data.runYears -1);
+        var yearLoss = Math.pow(1 - $scope.data.componentLoss / 100, $scope.data.runYears - 1);
 
         $scope.chartData1 = [
             []
@@ -2065,7 +2065,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $location.path('/0');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/0');
     }
 
@@ -2073,6 +2073,11 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         var temp = projectData.getData('efficiencyAnalysisInfo');
         if (temp) {
             $scope.data = _.cloneDeep(temp);
+            if (chooseInverter.type === 'centralized') {
+                $scope.data.loss[3] = Number((100 - chooseInverter.directCurrentCableInfo.totalLoss * 100).toFixed(3));
+            } else {
+                $scope.data.loss[3] = Number((100 - chooseInverter.alternatingCurrentCableInfo.loss * 100).toFixed(3));
+            }
         }
     });
 
@@ -2148,7 +2153,7 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
         $location.path('/8');
     };
 
-    $scope.back = function(){
+    $scope.back = function () {
         $location.path('/8');
     };
 
@@ -2220,8 +2225,8 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
         CV: 0
     };
 
-    function computeYearBing(year){
-        var yearLoss =  Math.pow(1 - componentLoss / 100, year -1);
+    function computeYearBing(year) {
+        var yearLoss = Math.pow(1 - componentLoss / 100, year - 1);
         if (yearLoss < 0)
             yearLoss = 0;
 

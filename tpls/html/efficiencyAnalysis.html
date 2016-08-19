@@ -7,44 +7,44 @@
                 </div>
                 <table class="table table-bordered">
                     <tr>
-                        <th>损耗因素</th>
-                        <th>效率预估值/%</th>
+                        <td><strong>损耗因素</strong></td>
+                        <td><strong>效率预估值/%</strong></td>
                     </tr>
                     <tr>
                         <td>阴影损耗</td>
-                        <td><input type="text" ng-model="data.loss[0]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[0]"></td>
                     </tr>
                     <tr>
                         <td>灰尘等遮挡损耗</td>
-                        <td><input type="text" ng-model="data.loss[1]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[1]"></td>
                     </tr>
                     <tr>
                         <td>组件温升损耗</td>
-                        <td><input type="text" ng-model="data.loss[2]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[2]"></td>
                     </tr>
                     <tr>
                         <td>直流电缆损耗</td>
-                        <td><input type="text" ng-model="data.loss[3]"></td>
+                        <td>{{data.loss[3]}}</td>
                     </tr>
                     <tr>
                         <td>组串内失配损耗</td>
-                        <td><input type="text" ng-model="data.loss[4]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[4]"></td>
                     </tr>
                     <tr>
                         <td>逆变器损耗</td>
-                        <td><input type="text" ng-model="data.loss[5]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[5]"></td>
                     </tr>
                     <tr>
                         <td>变压器损耗</td>
-                        <td><input type="text" ng-model="data.loss[6]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[6]"></td>
                     </tr>
                     <tr>
                         <td>交流电缆损耗</td>
-                        <td><input type="text" ng-model="data.loss[7]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[7]"></td>
                     </tr>
                     <tr>
                         <td>故障检修、电网等其它损耗</td>
-                        <td><input type="text" ng-model="data.loss[8]"></td>
+                        <td><input type="text" class="form-control input-sm" size="3" ng-model="data.loss[8]"></td>
                     </tr>
                 </table>
                 <div class="panel-footer">
@@ -52,8 +52,6 @@
                     总效率值：<span style="color:blue">{{100 - data.lossTotal | number : 1 }}</span> %
                 </div>
             </div>
-            <button class="btn btn-info" ng-click="back()">返回</button>
-            <button class="btn btn-primary" ng-click="save()">确定</button>
         </div>
         <div class="col-md-8">
             <div class="panel panel-default">
@@ -109,7 +107,19 @@
                     </div>
                 </div>
             </div>
-            系统年并入电网电量：{{data.yearBing | number : 0}} kWh
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <p>系统年并入电网电量：<strong>{{data.yearBing | number : 0}}</strong> kWh</p>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-info" ng-click="back()">返回</button>
+            <button class="btn btn-primary" ng-click="save()">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
