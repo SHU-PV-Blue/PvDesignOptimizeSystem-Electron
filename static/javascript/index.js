@@ -749,7 +749,7 @@ pvModule.controller('confirmAngleCtrl', function ($scope, $location, projectData
         var temp = getHData();
         $scope.data[0][0] = temp.sums;
         $scope.data[1][0] = temp.sums_g;
-        $scope.angleInfo.dip = temp.best;
+        // $scope.angleInfo.dip = temp.best;
         $scope.angleInfo.bestDipG = temp.best;
         $scope.angleInfo.bestDipH = temp.bestH;
         $scope.angleInfo.max = temp.max;
