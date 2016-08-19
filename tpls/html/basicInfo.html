@@ -4,55 +4,62 @@
             <div class="panel-heading">
                 <h3 class="panel-title">项目基本信息</h3>
             </div>
-            <div class="panel-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="control-label col-md-2">项目名称：</label>
-                        <div class="col-md-8">
-                            <input type="text" class=" form-control" ng-model="projectInfo.projectName">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">拟建地点：</label>
-                        <div class="col-md-8">
-                            <input type="text" class=" form-control" ng-model="projectInfo.projectAddress">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">建设单位：</label>
-                        <div class="col-md-8">
-                            <input type="text" class=" form-control" ng-model="projectInfo.userName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">时间：</label>
-                        <div class="col-md-8">
-                            <p class="input-group">
-                                <input type="text" class="form-control" uib-datepicker-popup ng-model="projectInfo.projectDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" />
-                                <span class="input-group-btn">
+            <div class="panel-body" style="padding:0;">
+                <div class="row">
+                    <div class="col-md-6" style="padding-top:30px;">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">项目名称：</label>
+                                <div class="col-md-7">
+                                    <input type="text" class=" form-control" ng-model="projectInfo.projectName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">拟建地点：</label>
+                                <div class="col-md-7">
+                                    <input type="text" class=" form-control" ng-model="projectInfo.projectAddress">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">建设单位：</label>
+                                <div class="col-md-7">
+                                    <input type="text" class=" form-control" ng-model="projectInfo.userName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">时间：</label>
+                                <div class="col-md-7">
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup ng-model="projectInfo.projectDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="关闭" />
+                                        <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
-                            </p>
-                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">备注：</label>
+                                <div class="col-md-7">
+                                    <textarea class="form-control" ng-model="projectInfo.remark" rows="8" style="resize:none"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">地理位置：</label>
+                                <div class="col-md-3">
+                                    <label class="control-label">经度</label>
+                                    <input type="text" class="form-control" ng-model="projectInfo.lng">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">纬度</label>
+                                    <input type="text" class="form-control" ng-model="projectInfo.lat">
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">备注：</label>
-                        <div class="col-md-8">
-                            <textarea class="form-control" ng-model="projectInfo.remark" rows="8" style="resize:none"></textarea>
-                        </div>
+                    <div class="col-md-6" style="overflow:hidden">
+                        <img src="res/images/basic.png" class="pull-right" style="height:540px;">
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">地理位置：</label>
-                        <div class="col-md-4">
-                            <label class="control-label">经度</label>
-                            <input type="text" class="form-control" ng-model="projectInfo.lng">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">纬度</label>
-                            <input type="text" class="form-control" ng-model="projectInfo.lat">
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="panel-footer" style="overflow:hidden;">
                 <button class="btn btn-primary pull-right" ng-click="save()" style="margin-left:15px">确定</button>
