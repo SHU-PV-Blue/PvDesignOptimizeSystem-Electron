@@ -1488,7 +1488,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
     }
 
     function compute_branchNumPerInverter() {
-        return Math.floor($scope.groupInverterInfo.groupInverter['最大输入功率'] / (componentInfo['峰值功率'] * $scope.groupInverterInfo.serialNumPerBranch));
+        return Math.ceil($scope.groupInverterInfo.groupInverter['最大输入功率'] / (componentInfo['峰值功率'] * $scope.groupInverterInfo.serialNumPerBranch));
     }
 
     function compute_inverterNumNeeded() {
@@ -1697,7 +1697,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
 
     $scope.$watch('transformerInfo.serialNum', function () {
         $scope.transformerInfo.num = compute_num();
-    })
+    });
 
     var chooseInverter = projectData.getData('chooseInverter');
     var inverter;
@@ -1711,22 +1711,17 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
         return inverter.inverterNumNeeded / $scope.transformerInfo.serialNum;
     }
 
-    // $scope.getData = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=10KV%E5%8F%98%E5%8E%8B%E5%99%A8')
-    //         .then(function (data) {
-    //             $scope.items = data.data;
-    //         })
-    // };
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from transformer where 类型=\'10KV变压器\'', function (data) {
             $scope.items = data;
             $scope.$digest();
         });
         if (parentObj.transformerInfo10) {
-            $scope.transformerInfo10 = parentObj.transformerInfo10;
+            $scope.transformerInfo10 = _.cloneDeep(parentObj.transformerInfo10);
+            $scope.savedInfo = _.cloneDeep(parentObj.transformerInfo10);
             $scope.selected = JSON.stringify($scope.transformerInfo10.transformer);
         }
-    })
+    });
 
     $scope.ok = function () {
         $uibModalInstance.close({

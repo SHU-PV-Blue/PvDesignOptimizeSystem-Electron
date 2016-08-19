@@ -3,12 +3,9 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
           <div class="row">
-            <!--<div class="col-md-2">
-              <button class="btn btn-primary" ng-click="getData()">获取数据</button>
-            </div>-->
-            <div class="col-md-10">
+            <div class="col-md-12">
               <select ng-model="selected" class="form-control">
                 <option ng-repeat="item in items" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}} </option>
               </select>
@@ -18,10 +15,10 @@
             <div class="col-md-12">
               <table class="table table-bordered">
                 <tr>
-                  <th>产品名</th>
-                  <th>分类</th>
-                  <th>额定容量</th>
-                  <th>类型</th>
+                  <td>产品名</td>
+                  <td>分类</td>
+                  <td>额定容量</td>
+                  <td>类型</td>
                 </tr>
                 <tr>
                   <td>{{transformerInfo.transformer['产品名']}}</td>
@@ -30,10 +27,10 @@
                   <td>{{transformerInfo.transformer['类型']}} </td>
                 </tr>
                 <tr>
-                  <th>额定电压（V）</th>
-                  <th>高压分接范围</th>
-                  <th>联结组标号</th>
-                  <th>空载损耗（W）</th>
+                  <td>额定电压（V）</td>
+                  <td>高压分接范围</td>
+                  <td>联结组标号</td>
+                  <td>空载损耗（W）</td>
                 </tr>
                 <tr>
                   <td>{{transformerInfo.transformer['额定电压']}} </td>
@@ -42,9 +39,9 @@
                   <td>{{transformerInfo.transformer['空载损耗']}} </td>
                 </tr>
                 <tr>
-                  <th>负载损耗（W）</th>
-                  <th>空载电流（%）</th>
-                  <th>短路阻抗（%）</th>
+                  <td>负载损耗（W）</td>
+                  <td>空载电流（%）</td>
+                  <td>短路阻抗（%）</td>
                 </tr>
                 <tr>
                   <td>{{transformerInfo.transformer['负载损耗']}} </td>
@@ -55,17 +52,24 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-               <div class="form-group">
-                  <label>升压变压器串联逆变器的数量</label>
-                  <input type="text" class="form-control" ng-model="transformerInfo.serialNum">
-               </div>
-               <div class="2">
-                  <label>升压变压器数量</label>
-                  <input type="text" class="form-control" ng-model="transformerInfo.num">
-               </div>
-            </form>
+        <div class="col-md-5">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td>保存值</td>
+                </tr>
+                <tr>
+                    <td>升压变压器串联逆变器的数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.serialNum"></td>
+                    <td>{{savedInfo.serialNum}}</td>
+                </tr>
+                <tr>
+                    <td>升压变压器数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.num"></td>
+                    <td>{{savedInfo.num}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

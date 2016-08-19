@@ -20,9 +20,6 @@
         <div class="col-md-9">
             <h4>一次升压</h4>
             <div class="row">
-                <!--<div class="col-md-2">
-                    <button class="btn btn-primary" ng-click="getData1()">获取数据</button>
-                </div>-->
                 <div class="col-md-12">
                     <select ng-model="selectedonce" class="form-control">
                             <option ng-repeat="item in items1" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}}</option>
@@ -87,9 +84,6 @@
         <div class="col-md-9">
             <h4>二次升压</h4>
             <div class="row">
-                <!--<div class="col-md-2">
-                    <button class="btn btn-primary" ng-click="getData2()">获取数据</button>
-                </div>-->
                 <div class="col-md-12">
                     <select ng-model="selectedtwice" class="form-control">
                             <option ng-repeat="item in items2" value="{{item}}">{{item['产品名'] + '&nbsp;&nbsp;&nbsp;' + item['额定容量'] + 'VA' + '&nbsp;&nbsp;&nbsp;' + (item['分类']==null?'' : item['分类'])}}</option>
@@ -143,11 +137,11 @@
             <form role="form">
                 <div class="form-group">
                     <label>串联逆变器的数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[0]">
+                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[1]">
                 </div>
                 <div class="2">
                     <label>升压变压器数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.num[0]">
+                    <input type="text" class="form-control" ng-model="transformerInfo.num[1]">
                 </div>
             </form>
         </div>
