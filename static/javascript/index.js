@@ -826,10 +826,6 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
 
     var componentInfo = projectData.getData('componentInfo');
 
-    function isNumber(obj) {
-        return typeof obj === 'number' && !isNaN(obj)
-    }
-
     $scope.$watch('userDesignInfo.capacity.totalCapacity', function () {
         $scope.userDesignInfo.capacity.componentsNum = Math.ceil(Number($scope.userDesignInfo.capacity.totalCapacity) * 1000 / componentInfo['峰值功率']);
     });
@@ -845,7 +841,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
     });
 
     $scope.$watch('userDesignInfo.rowsPerFixture', function () {
-        $scope.userDesignInfo.fbspace = Number(compute_fbspace());
+        $scope.fbspace = Number(compute_fbspace());
     });
 
     $scope.$watch('userDesignInfo.colsPerFixture', function () {
@@ -853,7 +849,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
     });
 
     $scope.$watch('userDesignInfo.componentDirection', function () {
-        $scope.userDesignInfo.fbspace = Number(compute_fbspace());
+        $scope.fbspace = Number(compute_fbspace());
         $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
@@ -868,17 +864,13 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
     });
 
     $scope.$watch('userDesignInfo.lrspace', function (newval) {
-        if (Number(newval)) {
-            $scope.userDesignInfo.lrspace = Number(newval);
-            $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
-        }
+        $scope.userDesignInfo.lrspace = Number(newval);
+        $scope.userDesignInfo.area.numPerRow = compute_numPerRow();
     });
 
     $scope.$watch('userDesignInfo.fbspace', function (newval) {
-        if (Number(newval)) {
-            $scope.userDesignInfo.fbspace = Number(newval);
-            $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
-        }
+        $scope.userDesignInfo.fbspace = newval;
+        $scope.userDesignInfo.area.rowsNum = compute_rowsNum();
     });
 
     $scope.$watch('userDesignInfo.area.numPerRow', function (newVal) {
@@ -960,7 +952,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         var temp = projectData.getData('userDesignInfo');
         if (temp) {
             $scope.userDesignInfo = _.cloneDeep(temp);
-            $scope.userDesignInfo.fbspace = (compute_fbspace()).toFixed(2);
+            $scope.fbspace = (compute_fbspace()).toFixed(2);
         }
     });
 });

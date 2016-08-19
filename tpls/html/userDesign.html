@@ -25,21 +25,21 @@
                     </div>
 
                     <div class="row" style="margin-top:10px">
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-5">m数：</label>
-                                    <div class="col-md-7">
+                                    <label class="control-label col-md-6">m数：</label>
+                                    <div class="col-md-6">
                                         <input type="number" class="form-control" ng-model="userDesignInfo.rowsPerFixture" min="1" value="1">
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="control-label col-md-5">n数：</label>
-                                    <div class="col-md-7">
+                                    <label class="control-label col-md-6">n数：</label>
+                                    <div class="col-md-6">
                                         <input type="number" class="form-control" ng-model="userDesignInfo.colsPerFixture" min="1" value="1">
                                     </div>
                                 </div>
@@ -47,15 +47,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-7">
                             <form class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-md-5 control-label">前后间距D(m)：</label>
+                                    <label class="col-md-6 control-label">前后间距D(m)：</label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" ng-model="userDesignInfo.fbspace">
                                     </div>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-5">
+                            <p>推荐间距： {{fbspace}}</p>
                         </div>
                     </div>
                 </div>
@@ -169,7 +172,7 @@
                 </div>
             </div>
             <button class="btn btn-info" ng-click="back()">返回</button>
-        <button class="btn btn-primary" ng-click="save()">确定</button>
+            <button class="btn btn-primary" ng-click="save()">确定</button>
         </div>
     </div>
 </div>
