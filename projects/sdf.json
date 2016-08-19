@@ -10,91 +10,91 @@
             "projectDate": "2016-08-04T16:26:36.905Z"
         },
         "meteorologyInfo": {
-            "type": "db",
+            "type": "user",
             "monthinfos": [
                 {
                     "humidity": 73.6,
-                    "H": 2.63,
+                    "H": 2.6,
                     "temperature": 4.84,
                     "wind": 6.22,
-                    "$$hashKey": "object:74"
+                    "$$hashKey": "object:358"
                 },
                 {
                     "humidity": 73.4,
                     "H": 3.09,
                     "temperature": 5.88,
                     "wind": 6.2,
-                    "$$hashKey": "object:75"
+                    "$$hashKey": "object:359"
                 },
                 {
                     "humidity": 74.9,
                     "H": 3.53,
                     "temperature": 9.03,
                     "wind": 5.68,
-                    "$$hashKey": "object:76"
+                    "$$hashKey": "object:360"
                 },
                 {
                     "humidity": 76.9,
                     "H": 4.28,
                     "temperature": 14,
                     "wind": 5.42,
-                    "$$hashKey": "object:77"
+                    "$$hashKey": "object:361"
                 },
                 {
                     "humidity": 79.7,
                     "H": 4.84,
                     "temperature": 18.4,
                     "wind": 5.01,
-                    "$$hashKey": "object:78"
+                    "$$hashKey": "object:362"
                 },
                 {
                     "humidity": 84.5,
                     "H": 4.58,
                     "temperature": 22.4,
                     "wind": 5.2,
-                    "$$hashKey": "object:79"
+                    "$$hashKey": "object:363"
                 },
                 {
                     "humidity": 87.1,
                     "H": 5.17,
                     "temperature": 25.8,
                     "wind": 5.37,
-                    "$$hashKey": "object:80"
+                    "$$hashKey": "object:364"
                 },
                 {
                     "humidity": 86.5,
                     "H": 4.78,
                     "temperature": 25.7,
                     "wind": 5.24,
-                    "$$hashKey": "object:81"
+                    "$$hashKey": "object:365"
                 },
                 {
                     "humidity": 80.7,
                     "H": 4.07,
                     "temperature": 22.6,
                     "wind": 5.51,
-                    "$$hashKey": "object:82"
+                    "$$hashKey": "object:366"
                 },
                 {
                     "humidity": 75.1,
                     "H": 3.36,
                     "temperature": 17.8,
                     "wind": 5.44,
-                    "$$hashKey": "object:83"
+                    "$$hashKey": "object:367"
                 },
                 {
                     "humidity": 73.9,
                     "H": 2.79,
                     "temperature": 12.7,
                     "wind": 5.83,
-                    "$$hashKey": "object:84"
+                    "$$hashKey": "object:368"
                 },
                 {
                     "humidity": 73.4,
                     "H": 2.58,
                     "temperature": 7.27,
                     "wind": 5.94,
-                    "$$hashKey": "object:85"
+                    "$$hashKey": "object:369"
                 }
             ],
             "monthavgs": {
@@ -128,7 +128,7 @@
             "工作温度上限": 85
         },
         "angleInfo": {
-            "dip": "2",
+            "dip": "28",
             "bestDipH": 28,
             "bestDipG": 28,
             "az": "15",

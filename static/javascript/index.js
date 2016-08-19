@@ -371,7 +371,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
             $scope.meteorologyInfo.type = 'user';
         } else {
             $scope.flag = 0;
-            getDbData();
+            getDbData('nasaweather');
         }
     };
     $scope.selectUser = function (e) {
@@ -383,6 +383,7 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
             $scope.meteorologyInfo.type = 'db';
         } else {
             $scope.flag = 1;
+            getDbData('userdata');
         }
     };
 
@@ -405,28 +406,23 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
         $scope.meteorologyInfo.monthavgs.humidity = (h / 12).toFixed(2);
     }
 
-    function getDbData() {                          //从气象数据库获取气象信息
-        dbHelper.getWeatherData(Number($scope.lat), Number($scope.lng), function (data) {
-            console.log(data);
-            _.extend($scope.meteorologyInfo.monthinfos, data);
-            computeAvg();
-            $scope.meteorologyInfo.lng = $scope.lng;
-            $scope.meteorologyInfo.lat = $scope.lat;
-            $scope.$digest();
+    function getDbData(tableName) {                          //从气象数据库获取气象信息
+        dbHelper.getWeatherData(tableName, Number($scope.lat), Number($scope.lng), function (data, isEmpty) {
+            if (!isEmpty) {
+                _.extend($scope.meteorologyInfo.monthinfos, data);
+                computeAvg();
+                $scope.meteorologyInfo.lng = $scope.lng;
+                $scope.meteorologyInfo.lat = $scope.lat;
+                $scope.$digest();
+            }
         });
-        // gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/weather', {
-        //     lon: Number($scope.lng),
-        //     lat: Number($scope.lat)
-        // }).then(function (data) {
-        //     _.extend($scope.meteorologyInfo.monthinfos, data.data);
-        //     computeAvg();
-        //     $scope.meteorologyInfo.lng = $scope.lng;
-        //     $scope.meteorologyInfo.lat = $scope.lat;
-        // });
     }
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
+        if($scope.meteorologyInfo.type === 'user'){
+            dbHelper.addOrUpdateWeatherData(Number($scope.lat), Number($scope.lng),$scope.meteorologyInfo.monthinfos);
+        }
         projectData.setFinished("meteorology");
         projectData.saveToLocal();
         $location.path('/0');
@@ -441,10 +437,10 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
         if (tempObj && $scope.lng === tempObj.lng && $scope.lat === tempObj.lat) {      //如果数据存在则赋值
             $scope.meteorologyInfo = _.cloneDeep(tempObj);
         } else {                                            //如果数据不存在，取默认值
-            getDbData();
+            getDbData('nasaweather');
         }
 
-        $scope.flag = $scope.meteorologyInfo.type == 'db' ? 0 : 1;
+        $scope.flag = $scope.meteorologyInfo.type === 'db' ? 0 : 1;
     });
 });
 
