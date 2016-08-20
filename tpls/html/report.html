@@ -8,7 +8,6 @@
                         <td>项目名称：{{data.projectInfo.projectName}}</td>
                         <td>设计时间：{{data.projectInfo.designTime | date:'yyyy-MM-dd'}}</td>
                         <td>总装机容量：{{data.projectInfo.capacity}}kW</td>
-                        <!--<td rowspan="4"><img ng-src="{{ getMapPath() }}" style="width: 100%; height: 100%"></td>-->
                     </tr>
                     <tr>
                         <td>固定安装方式</td>
@@ -87,15 +86,10 @@
                 <table class="table table-bordered">
                     <caption>第一年</caption>
                     <tr>
-                        <td>系统年总发电量：{{data.electricity.yearCapacity | number : 0}} kW</td>
+                        <td>系统年总发电量：{{data.electricity.yearCapacity | number : 0}} kWh</td>
                         <td>年总辐射量：{{data.electricity.yearHT | number : 2}} kWh/m&sup2;</td>
                         <td>系统年总综合效率：{{data.electricity.yearEfficient | number : 2}} %</td>
                     </tr>
-                    <!--<tr>
-                        <td>月发电量图</td>
-                        <td>月辐照度图</td>
-                        <td>损耗图</td>
-                    </tr>-->
                     <tr>
                         <td class="chart-data">
                             <canvas class="chart chart-line" chart-data="electricityChartData" chart-labels="labelsMonth" chart-options="options1[0]">
@@ -181,10 +175,6 @@
             <div class="col-md-11">
                 <table class="table table-bordered" style="table-layout:fixed">
                     <tr>
-                        <!--<tr>
-                            <td>债务偿还图</td>
-                            <td>投资回收期图</td>
-                        </tr>-->
                         <td class="chart-data">
                             <canvas class="chart chart-line" chart-data="debtChartData" chart-labels="labelsYear" chart-options="options2[0]">
                         </canvas>
