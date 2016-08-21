@@ -1032,6 +1032,8 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
         });
         modalInstance.result.then(function (data) {
             $scope.obj[data.name] = data.obj;
+            projectData.addOrUpdateData($scope.obj, 'chooseInverter');
+            projectData.saveToLocal();
         });
     };
 
@@ -1615,6 +1617,8 @@ pvModule.controller('selectTransformerCtrl', function ($scope, $location, $uibMo
         });
         modalInstance.result.then(function (data) {
             $scope.obj[data.name] = data.obj;
+            projectData.addOrUpdateData($scope.obj, "transformer");
+            projectData.saveToLocal();
         });
     }
 });
