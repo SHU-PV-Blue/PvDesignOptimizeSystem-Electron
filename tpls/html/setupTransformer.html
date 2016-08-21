@@ -57,17 +57,17 @@
                 <tr>
                     <td></td>
                     <td>推荐值</td>
-                    <td>保存值</td>
+                    <td ng-show="showSaved">保存值</td>
                 </tr>
                 <tr>
                     <td>升压变压器串联逆变器的数量</td>
                     <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.serialNum"></td>
-                    <td>{{savedInfo.serialNum}}</td>
+                    <td ng-show="showSaved">{{savedInfo.serialNum}}</td>
                 </tr>
                 <tr>
                     <td>升压变压器数量</td>
                     <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.num"></td>
-                    <td>{{savedInfo.num}}</td>
+                    <td ng-show="showSaved">{{savedInfo.num}}</td>
                 </tr>
             </table>
         </div>

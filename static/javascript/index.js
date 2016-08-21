@@ -1127,6 +1127,7 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
                 if (parentObj.centralizedInverterInfo) {
                     $scope.centralizedInverterInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
                     $scope.savedInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
+                    $scope.showSaved = true;
                     $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
                 }
             });
@@ -1188,6 +1189,7 @@ pvModule.controller('directCurrentCtrl', function ($scope, $uibModalInstance, pa
         if (parentObj.directCurrentInfo) {
             $scope.directCurrentInfo = _.cloneDeep(parentObj.directCurrentInfo);
             $scope.savedInfo = _.cloneDeep(parentObj.directCurrentInfo);
+            $scope.showSaved = true;
             $scope.selected = JSON.stringify($scope.directCurrentInfo.directCurrent);
         }
     })
@@ -1247,6 +1249,7 @@ pvModule.controller('directDistributionCtrl', function ($scope, $uibModalInstanc
         if (parentObj.directDistributionInfo) {
             $scope.directDistributionInfo = _.cloneDeep(parentObj.directDistributionInfo);
             $scope.savedInfo = _.cloneDeep(parentObj.directDistributionInfo);
+            $scope.showSaved = true;
             $scope.selected = JSON.stringify($scope.directDistributionInfo.directDistribution);
         }
     })
@@ -1519,6 +1522,7 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
         if (parentObj.groupInverterInfo) {
             $scope.groupInverterInfo = _.cloneDeep(parentObj.groupInverterInfo);
             $scope.savedInfo = _.cloneDeep(parentObj.groupInverterInfo);
+            $scope.showSaved = true;
             $scope.selected = JSON.stringify($scope.groupInverterInfo.groupInverter);
         }
     })
@@ -1723,6 +1727,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
         if (parentObj.transformerInfo10) {
             $scope.transformerInfo10 = _.cloneDeep(parentObj.transformerInfo10);
             $scope.savedInfo = _.cloneDeep(parentObj.transformerInfo10);
+            $scope.showSaved = true;
             $scope.selected = JSON.stringify($scope.transformerInfo10.transformer);
         }
     });

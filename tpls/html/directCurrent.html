@@ -44,22 +44,22 @@
                 <tr>
                     <td></td>
                     <td>推荐值</td>
-                    <td>保存值</td>
+                    <td ng-show="showSaved">保存值</td>
                 </tr>
                 <tr>
                     <td>汇流箱输入路数</td>
                     <td><input type="text" class="form-control input-sm" size="3" ng-model="directCurrentInfo.branches"></td>
-                    <td>{{savedInfo.branches}}</td>
+                    <td ng-show="showSaved">{{savedInfo.branches}}</td>
                 </tr>
                 <tr>
                     <td>每台逆变器接入汇流箱数</td>
                     <td><input type="text" class="form-control input-sm" size="3" ng-model="directCurrentInfo.numPerInverter"></td>
-                    <td>{{savedInfo.numPerInverter}}</td>
+                    <td ng-show="showSaved">{{savedInfo.numPerInverter}}</td>
                 </tr>
                 <tr>
                     <td>汇流箱总数</td>
                     <td><p class="static-form-control input-sm">{{directCurrentInfo.num}}</p></td>
-                    <td>{{savedInfo.num}}</td>
+                    <td ng-show="showSaved">{{savedInfo.num}}</td>
                 </tr>
             </table>
         </div>
