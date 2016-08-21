@@ -801,7 +801,7 @@ pvModule.controller('userDesignCtrl', function ($scope, $location, projectData) 
         designType: 'area',                     //capacity
         rowsPerFixture: 1,
         colsPerFixture: 1,
-        fbspace: 0,
+        fbspace: 1,
         lrspace: 0,
         area: {
             length: 0,
