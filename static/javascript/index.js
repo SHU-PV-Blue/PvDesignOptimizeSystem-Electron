@@ -1872,7 +1872,7 @@ pvModule.controller('high_10_35Ctrl', function ($scope, $uibModalInstance, $wind
 pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, projectData) {
 
     $scope.data = {
-        loss: [97.2, 90, 97, 97.8, 98, 96, 99, 99.5, 95],
+        loss: [97.2, 90, 100, 97.8, 98, 96, 99, 99.5, 95],
         componentLoss: 1,
         lossTotal: 0,
         runYears: 1,
