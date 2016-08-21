@@ -2004,7 +2004,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     }
 
     $scope.electricity = algorithm.getDataByDip(H, meteorologyInfo.lat, angleInfo.az, componentInfo['转换效率'], componentInfo['长度'], componentInfo['宽度'], T, componentInfo['最大功率温度系数'] / 100, angleInfo.dip).gs.map(function (item) {
-        return item * componentsNum * 0.9228;
+        return item * componentsNum;
     });
 
     compute_chartData();
@@ -2182,6 +2182,9 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     var lossTotal = efficiencyAnalysis.lossTotal;
     var electricity = efficiencyAnalysis.electricity;
 
+    var userDesign = projectData.getData('userDesignInfo');
+    var BA = userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity;
+    console.log(BA);
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
         CA: [],
@@ -2220,8 +2223,6 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
         });
         return yearBing;
     }
-
-    var BA = computeYearBing(1) / 1000000;
 
     var ca, cd, ce, cf, cg, ch, ci;
     for (var i = 0; i < p.BB; i++) {
@@ -2277,11 +2278,11 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
         DC: p.DC,
         DD: p.DD,
         DE: p.DE,
-        DF: p.DA * BA * 1000000,
-        DG: p.DB * BA * 1000000,
-        DH: p.DC * BA * 1000000,
-        DI: p.DD * BA * 1000000,
-        DJ: p.DE * BA * 1000000,
+        DF: p.DA * BA * 1000,
+        DG: p.DB * BA * 1000,
+        DH: p.DC * BA * 1000,
+        DI: p.DD * BA * 1000,
+        DJ: p.DE * BA * 1000,
         DK: 0,
         DL: 0,
         DM: 0,
@@ -2346,7 +2347,7 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     };
 
     $scope.data4.FA = p.FA;
-    $scope.data4.FB = p.FA * BA * 25 * 1000000;
+    $scope.data4.FB = p.FA * BA * 25 * 1000;
 
     //////////////////////////////////////////////////////////////////////////   项目直接费用预算
     $scope.data5 = {
