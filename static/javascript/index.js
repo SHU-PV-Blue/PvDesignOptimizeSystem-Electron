@@ -1726,24 +1726,30 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
     $scope.items = [];
     $scope.selected = '';
 
+    var chooseInverter = projectData.getData('chooseInverter');
+    var inverter, power;
+    if (chooseInverter.type == 'centralized') {
+        inverter = chooseInverter.centralizedInverterInfo;
+        power = inverter.centralizedInverter['额定交流输出功率'];
+    } else {
+        inverter = chooseInverter.groupInverterInfo;
+        power = inverter.groupInverter['额定输出功率'];
+    }
+
     $scope.$watch('selected', function (newVal) {
         $scope.transformerInfo.transformer = JSON.parse(newVal);
+        $scope.transformerInfo.serialNum = Math.floor(Number($scope.transformerInfo.transformer['额定容量']) / Number(power));
     });
 
     $scope.$watch('transformerInfo.serialNum', function () {
         $scope.transformerInfo.num = compute_num();
     });
 
-    var chooseInverter = projectData.getData('chooseInverter');
-    var inverter;
-    if (chooseInverter.type == 'centralized') {
-        inverter = chooseInverter.centralizedInverterInfo;
-    } else {
-        inverter = chooseInverter.groupInverterInfo;
-    }
-
     function compute_num() {
-        return inverter.inverterNumNeeded / $scope.transformerInfo.serialNum;
+        if($scope.transformerInfo.serialNum === 0){
+            return 0;
+        }
+        return Math.ceil(inverter.inverterNumNeeded / $scope.transformerInfo.serialNum);
     }
 
     $scope.$watch('$viewContentLoaded', function () {
@@ -1780,7 +1786,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
         transformer2: {},
         type: 'once',
         serialNum: [1, 1],
-        num: [0, 0]
+        num: [1, 1]
     };
 
     $scope.active = 0;
@@ -1788,31 +1794,50 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
         $scope.active = index;
     }
 
+    var chooseInverter = projectData.getData('chooseInverter');
+    var inverter, power;
+    if (chooseInverter.type == 'centralized') {
+        inverter = chooseInverter.centralizedInverterInfo;
+        power = inverter.centralizedInverter['额定交流输出功率'];
+    } else {
+        inverter = chooseInverter.groupInverterInfo;
+        power = inverter.groupInverter['额定输出功率'];
+    }
+
+    $scope.$watch('transformerInfo.serialNum', function () {
+        compute_num();
+    },true);
+
     $scope.items1 = [];
     $scope.selectedonce = '';
     $scope.$watch('selectedonce', function (newVal) {
         $scope.transformerInfo.transformer1 = JSON.parse(newVal);
+        $scope.transformerInfo.serialNum[0] = Math.floor(Number($scope.transformerInfo.transformer1['额定容量']) / Number(power));
     });
 
     $scope.items2 = [];
     $scope.selectedtwice = '';
     $scope.$watch('selectedtwice', function (newVal) {
         $scope.transformerInfo.transformer2 = JSON.parse(newVal);
+        $scope.transformerInfo.serialNum[1] = Math.floor(Number($scope.transformerInfo.transformer2['额定容量']) / Number(power));
     });
 
-    // $scope.getData1 = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(0.4-35KV)')
-    //         .then(function (data) {
-    //             $scope.items1 = data.data;
-    //         })
-    // };
-
-    // $scope.getData2 = function () {
-    //     gainData.getDataFromInterface('http://cake.wolfogre.com:8080/pv-data/transformer?type=35KV%E5%8F%98%E5%8E%8B%E5%99%A8(10-35KV)')
-    //         .then(function (data) {
-    //             $scope.items2 = data.data;
-    //         })
-    // };
+    function compute_num() {
+        var s0,s1;
+        if($scope.transformerInfo.serialNum[0] === 0){
+            s0 = 0;
+        }else{
+            s0 = Math.ceil(inverter.inverterNumNeeded / $scope.transformerInfo.serialNum[0]);
+        }
+        
+        if($scope.transformerInfo.serialNum[1] === 0){
+            s1 = 0;
+        }else{
+            s1 = Math.ceil(inverter.inverterNumNeeded / Number($scope.transformerInfo.serialNum[1]));
+        }
+        $scope.transformerInfo.num[0] = s0;
+        $scope.transformerInfo.num[1] = s1;
+    }
 
     $scope.$watch('$viewContentLoaded', function () {
         dbHelper.getData('select * from transformer where 类型=\'10KV变压器\'', function (data) {
@@ -1824,7 +1849,9 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
             $scope.$digest();
         });
         if (parentObj.transformerInfo35) {
-            $scope.transformerInfo = parentObj.transformerInfo35;
+            $scope.transformerInfo = _.cloneDeep(parentObj.transformerInfo35);
+            $scope.savedInfo = _.cloneDeep(parentObj.transformerInfo35);
+            $scope.showSaved = true;
             $scope.selectedonce = JSON.stringify($scope.transformerInfo.transformer1);
             $scope.selectedtwice = JSON.stringify($scope.transformerInfo.transformer2);
         }

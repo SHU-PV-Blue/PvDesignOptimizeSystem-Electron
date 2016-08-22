@@ -17,7 +17,7 @@
         <button class="btn btn-default" ng-click="setActive(1)" ng-disabled="transformerInfo.type == 'once'">二次升压</button>
     </div>
     <div class="row" ng-show="active == 0">
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>一次升压</h4>
             <div class="row">
                 <div class="col-md-12">
@@ -67,21 +67,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-                <div class="form-group">
-                    <label>串联逆变器的数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[0]">
-                </div>
-                <div class="2">
-                    <label>升压变压器数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.num[0]">
-                </div>
-            </form>
+        <div class="col-md-5">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td ng-show="showSaved">保存值</td>
+                </tr>
+                <tr>
+                    <td>串联逆变器的数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.serialNum[0]"></td>
+                    <td ng-show="showSaved">{{savedInfo.serialNum[0]}}</td>
+                </tr>
+                <tr>
+                    <td>升压变压器数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.num[0]"></td>
+                    <td ng-show="showSaved">{{savedInfo.num[0]}}</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="row" ng-show="active == 1">
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>二次升压</h4>
             <div class="row">
                 <div class="col-md-12">
@@ -133,17 +140,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <form role="form">
-                <div class="form-group">
-                    <label>串联逆变器的数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.serialNum[1]">
-                </div>
-                <div class="2">
-                    <label>升压变压器数量</label>
-                    <input type="text" class="form-control" ng-model="transformerInfo.num[1]">
-                </div>
-            </form>
+        <div class="col-md-5">
+            <table class="table table-bordered">
+                <tr>
+                    <td></td>
+                    <td>推荐值</td>
+                    <td ng-show="showSaved">保存值</td>
+                </tr>
+                <tr>
+                    <td>串联逆变器的数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.serialNum[1]"></td>
+                    <td ng-show="showSaved">{{savedInfo.serialNum[1]}}</td>
+                </tr>
+                <tr>
+                    <td>升压变压器数量</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="transformerInfo.num[0]"></td>
+                    <td ng-show="showSaved">{{savedInfo.num[1]}}</td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
