@@ -420,8 +420,8 @@ pvModule.controller('meteorologyCtrl', function ($scope, $location, projectData)
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.meteorologyInfo, 'meteorologyInfo');
-        if($scope.meteorologyInfo.type === 'user'){
-            dbHelper.addOrUpdateWeatherData(Number($scope.lat), Number($scope.lng),$scope.meteorologyInfo.monthinfos);
+        if ($scope.meteorologyInfo.type === 'user') {
+            dbHelper.addOrUpdateWeatherData(Number($scope.lat), Number($scope.lng), $scope.meteorologyInfo.monthinfos);
         }
         projectData.setFinished("meteorology");
         projectData.saveToLocal();
@@ -1049,6 +1049,8 @@ pvModule.controller('chooseInverterCtrl', function ($scope, $location, $uibModal
 pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.centralizedInverterInfo = {
         centralizedInverter: {},
+        lowTemperature: 0,
+        highTemperature: 0,
         serialNumPerBranch: 0,
         branchNumPerInverter: 0,
         volumeRatio: 1.05,
@@ -1080,12 +1082,22 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
         $scope.centralizedInverterInfo.totalOpacity = compute_totalOpacity() | 0;
     });
 
+    $scope.$watch('centralizedInverterInfo.lowTemperature', function () {
+        $scope.centralizedInverterInfo.serialNumPerBranch = compute_serialNumPerBranch()[1];
+    });
+
+    $scope.$watch('centralizedInverterInfo.highTemperature', function () {
+        $scope.centralizedInverterInfo.serialNumPerBranch = compute_serialNumPerBranch()[1];
+    });
+
     var componentInfo = projectData.getData('componentInfo');
+    $scope.centralizedInverterInfo.lowTemperature = componentInfo['工作温度下限'];
+    $scope.centralizedInverterInfo.highTemperature = componentInfo['工作温度上限'];
 
     function compute_serialNumPerBranch() {
-        var n1 = Math.floor($scope.centralizedInverterInfo.centralizedInverter['最大输入电压'] / (componentInfo['开路电压'] * (1 + (componentInfo['工作温度下限'] - 25) * componentInfo['开路电压温度系数'] / 100)));
-        var n2min = Math.ceil($scope.centralizedInverterInfo.centralizedInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数'] / 100)));
-        var n2max = Math.floor($scope.centralizedInverterInfo.centralizedInverter['MPP电压上限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数'] / 100)));
+        var n1 = Math.floor($scope.centralizedInverterInfo.centralizedInverter['最大输入电压'] / (componentInfo['开路电压'] * (1 + ($scope.centralizedInverterInfo.lowTemperature - 25) * componentInfo['开路电压温度系数'] / 100)));
+        var n2min = Math.ceil($scope.centralizedInverterInfo.centralizedInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + ($scope.centralizedInverterInfo.highTemperature - 25) * componentInfo['最大功率温度系数'] / 100)));
+        var n2max = Math.floor($scope.centralizedInverterInfo.centralizedInverter['MPP电压上限'] / (componentInfo['最大功率点电压'] * (1 + ($scope.centralizedInverterInfo.highTemperature - 25) * componentInfo['最大功率温度系数'] / 100)));
 
         if (n1 > n2max) {                               //返回每支路串联数范围
             return [n2min, n2max];
@@ -1105,7 +1117,6 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
         var capacity = userDesignInfo.designType === 'area' ? userDesignInfo.area.totalCapacity : Number(userDesignInfo.capacity.totalCapacity);
         var res = Math.ceil(capacity * $scope.centralizedInverterInfo.volumeRatio / ($scope.centralizedInverterInfo.serialNumPerBranch
             * $scope.centralizedInverterInfo.branchNumPerInverter * (componentInfo['峰值功率'] / 1000)));
-        // console.log(res);
         return res;
     }
 
@@ -1126,6 +1137,8 @@ pvModule.controller('centralizedInverterCtrl', function ($scope, $uibModalInstan
                 $scope.items = data;
                 if (parentObj.centralizedInverterInfo) {
                     $scope.centralizedInverterInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
+                    $scope.centralizedInverterInfo.lowTemperature = componentInfo['工作温度下限'];
+                    $scope.centralizedInverterInfo.highTemperature = componentInfo['工作温度上限'];
                     $scope.savedInfo = _.cloneDeep(parentObj.centralizedInverterInfo);
                     $scope.showSaved = true;
                     $scope.selected = JSON.stringify($scope.centralizedInverterInfo.centralizedInverter);
@@ -1445,6 +1458,8 @@ pvModule.controller('alternatingCurrentCableCtrl', function ($scope, $uibModalIn
 pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, parentObj, projectData) {
     $scope.groupInverterInfo = {
         groupInverter: {},
+        lowTemperature: 0,
+        highTemperature: 0,
         serialNumPerBranch: 0,
         branchNumPerInverter: 0,
         volumeRatio: 1.05,
@@ -1476,12 +1491,22 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
         $scope.groupInverterInfo.totalOpacity = compute_totalOpacity() | 0;
     });
 
+    $scope.$watch('groupInverterInfo.lowTemperature', function () {
+        $scope.groupInverterInfo.serialNumPerBranch = compute_serialNumPerBranch()[1];
+    });
+
+    $scope.$watch('groupInverterInfo.highTemperature', function () {
+        $scope.groupInverterInfo.serialNumPerBranch = compute_serialNumPerBranch()[1];
+    });
+
     var componentInfo = projectData.getData('componentInfo');
+    $scope.groupInverterInfo.lowTemperature = componentInfo['工作温度下限'];
+    $scope.groupInverterInfo.highTemperature = componentInfo['工作温度上限'];
 
     function compute_serialNumPerBranch() {
-        var n1 = Math.floor($scope.groupInverterInfo.groupInverter['最大输入电压'] / (componentInfo['开路电压'] * (1 + (componentInfo['工作温度下限'] - 25) * componentInfo['开路电压温度系数'] / 100)));
-        var n2min = Math.ceil($scope.groupInverterInfo.groupInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数'] / 100)));
-        var n2max = Math.floor($scope.groupInverterInfo.groupInverter['MPP电压上限'] / (componentInfo['最大功率点电压'] * (1 + (componentInfo['工作温度上限'] - 25) * componentInfo['最大功率温度系数'] / 100)));
+        var n1 = Math.floor($scope.groupInverterInfo.groupInverter['最大输入电压'] / (componentInfo['开路电压'] * (1 + ($scope.groupInverterInfo.lowTemperature - 25) * componentInfo['开路电压温度系数'] / 100)));
+        var n2min = Math.ceil($scope.groupInverterInfo.groupInverter['MPP电压下限'] / (componentInfo['最大功率点电压'] * (1 + ($scope.groupInverterInfo.highTemperature - 25) * componentInfo['最大功率温度系数'] / 100)));
+        var n2max = Math.floor($scope.groupInverterInfo.groupInverter['MPP电压上限'] / (componentInfo['最大功率点电压'] * (1 + ($scope.groupInverterInfo.highTemperature - 25) * componentInfo['最大功率温度系数'] / 100)));
 
         if (n1 > n2max) {                               //返回每支路串联数范围
             return [n2min, n2max];
@@ -1521,6 +1546,8 @@ pvModule.controller('groupInverterCtrl', function ($scope, $uibModalInstance, pa
         });
         if (parentObj.groupInverterInfo) {
             $scope.groupInverterInfo = _.cloneDeep(parentObj.groupInverterInfo);
+            $scope.groupInverterInfo.lowTemperature = componentInfo['工作温度下限'];
+            $scope.groupInverterInfo.highTemperature = componentInfo['工作温度上限'];
             $scope.savedInfo = _.cloneDeep(parentObj.groupInverterInfo);
             $scope.showSaved = true;
             $scope.selected = JSON.stringify($scope.groupInverterInfo.groupInverter);

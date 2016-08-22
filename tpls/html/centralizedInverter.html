@@ -61,6 +61,16 @@
                     <td ng-show="showSaved">保存值</td>
                 </tr>
                 <tr>
+                    <td>环境极限低温</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="centralizedInverterInfo.lowTemperature"></td>
+                    <td ng-show="showSaved">{{savedInfo.lowTemperature}}</td>
+                </tr>
+                <tr>
+                    <td>环境极限高温</td>
+                    <td><input type="text" class="form-control input-sm" size="3" ng-model="centralizedInverterInfo.highTemperature"></td>
+                    <td ng-show="showSaved">{{savedInfo.highTemperature}}</td>
+                </tr>
+                <tr>
                     <td>每支路串联数</td>
                     <td><input type="text" class="form-control input-sm" size="3" ng-model="centralizedInverterInfo.serialNumPerBranch"></td>
                     <td ng-show="showSaved">{{savedInfo.serialNumPerBranch}}</td>
