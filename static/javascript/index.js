@@ -2810,10 +2810,6 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
     var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
     var componentInfo = projectData.getData('componentInfo');
 
-    // $scope.getMapPath = function () {
-    //     return "http://api.map.baidu.com/staticimage/v2?ak=GFrzxzyQTLiDx6sxx8B4ScTLKuwPNzGi&mcode=666666&center=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&width=300&height=200&zoom=11&markers=" + meteorologyInfo.lng + "," + meteorologyInfo.lat + "&markerStyles=I,A";
-    // };
-
     $scope.data = {
         projectInfo: {
             projectName: basicInfo.projectName,
@@ -2996,7 +2992,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
     $scope.electricityChartData = [
         efficiencyAnalysis.electricity.map(function (item) {
             yearElectricity += item;
-            var temp = item * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - efficiencyAnalysis.lossTotal / 100);
+            var temp = item * (1 - efficiencyAnalysis.lossTotal / 100);
             $scope.data.electricity.yearCapacity += temp;
             return Number(temp.toFixed(2));
         })
