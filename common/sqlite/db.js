@@ -93,7 +93,6 @@ exports.addOrUpdateWeatherData = function (lat, lon, data) {
             if(err){
                 return console.log(err);
             }else if(rows.length === 0){
-                alert(0);
                 dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"irradiance", arrayToString(irradiance));
                 dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"humidity", arrayToString(humidity));
                 dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"wind", arrayToString(wind));
