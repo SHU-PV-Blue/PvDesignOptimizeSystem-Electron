@@ -1,14 +1,11 @@
 var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
 var algorithm = require('./common/algorithm');
-// var Finance = require('./common/algorithm/finance');
 var customer = require('./common/customer/customerDevice');
 var util = require('./common/util');
 var _ = require('lodash');
 
 var Finance = require('financejs');
-
-// var finance = new Finance();
 
 var remote = require('electron').remote;
 var dialog = remote.dialog;
@@ -2553,7 +2550,8 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
         les.push($scope.data.LE);
     }
 
-    $scope.data.LF = finance.NPV($scope.data.LD * 100, les);
+    les.unshift($scope.data.LD * 100);
+    $scope.data.LF = finance.NPV.apply(finance,les);
     $scope.data.LG = $scope.data.LA * 1.1;
     $scope.data.LH = Math.min($scope.data.LF, $scope.data.LG);
     $scope.data.LI = $scope.data.LH - $scope.data.LA;
@@ -2783,15 +2781,16 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
         if (i === 0) {
             values.push(pp.MK[i] + pp.MG[i] - pp.MC);
         } else {
-            values.push(pp.MK[i] + pp.MK[i] - pp.MK[i - 1]);
+            values.push(pp.MK[i] + pp.MG[i] - pp.MG[i - 1]);
         }
     }
     
     values.unshift(rate * 100);
-    $scope.data.NB = finance.NPV.apply(finance,values);//finance.NPV(rate * 100, values);
+    $scope.data.NB = finance.NPV.apply(finance,values);
     $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
-    pp.MK.unshift(pp.MJ);
-    $scope.data.NE = finance.IRR.apply(finance,pp.MK);//finance.IRR(pp.MJ, pp.MK);
+    var v2 = _.cloneDeep(pp.MK);
+    v2.unshift(pp.MJ);
+    $scope.data.NE = finance.IRR.apply(finance, v2);
     $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12]) / pp.MK[12] + 12;
     $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
 

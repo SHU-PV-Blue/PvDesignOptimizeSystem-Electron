@@ -17,7 +17,7 @@
                     <tr>
                         <td>光伏阵列</td>
                         <td>阵列前后支架间距：{{data.projectInfo.arrayfbspace | number:2}} m</td>
-                        <td>年总发电量：{{data.electricity.yearCapacity | number:2}}kWh</td>
+                        <td>年总发电量：{{data.electricity.yearCapacity | number:3}}kWh</td>
                     </tr>
                     <tr>
                         <td>经度：{{data.projectInfo.lng | number:2}}&deg;</td>
@@ -86,7 +86,7 @@
                 <table class="table table-bordered">
                     <caption>第一年</caption>
                     <tr>
-                        <td>系统年总发电量：{{data.electricity.yearCapacity | number : 0}} kWh</td>
+                        <td>系统年总发电量：{{data.electricity.yearCapacity | number : 3}} kWh</td>
                         <td>年总辐射量：{{data.electricity.yearHT | number : 2}} kWh/m&sup2;</td>
                         <td>系统年总综合效率：{{data.electricity.yearEfficient | number : 2}} %</td>
                     </tr>
