@@ -1,10 +1,14 @@
 var fs = require('fs');
 var dbHelper = require('./common/sqlite/db');
 var algorithm = require('./common/algorithm');
-var Finance = require('./common/algorithm/finance');
+// var Finance = require('./common/algorithm/finance');
 var customer = require('./common/customer/customerDevice');
 var util = require('./common/util');
 var _ = require('lodash');
+
+var Finance = require('financejs');
+
+// var finance = new Finance();
 
 var remote = require('electron').remote;
 var dialog = remote.dialog;
@@ -2782,9 +2786,12 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
             values.push(pp.MK[i] + pp.MK[i] - pp.MK[i - 1]);
         }
     }
-    $scope.data.NB = finance.NPV(rate * 100, values);
+    
+    values.unshift(rate * 100);
+    $scope.data.NB = finance.NPV.apply(finance,values);//finance.NPV(rate * 100, values);
     $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
-    $scope.data.NE = finance.IRR(pp.MJ, pp.MK);
+    pp.MK.unshift(pp.MJ);
+    $scope.data.NE = finance.IRR.apply(finance,pp.MK);//finance.IRR(pp.MJ, pp.MK);
     $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12]) / pp.MK[12] + 12;
     $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
 
