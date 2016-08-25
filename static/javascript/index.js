@@ -77,8 +77,16 @@ pvModule.service('projectData', function ($rootScope, $location, $route) {
         return this.projectInfo.projectSetting;
     };
 
-    this.setFinished = function (stepName) {
-        this.projectInfo.projectSetting.isFinished[stepName] = true;
+    this.setFinished = function (stepName, subStep) {
+        if(stepName === 'benefit' && subStep !== undefined){
+            this.projectInfo.projectSetting.isFinishedBenefit[subStep] = true;
+            this.projectInfo.projectSetting.isFinished['benefit'] = true;
+            for(var i = 0; i < 5; i++){
+                this.projectInfo.projectSetting.isFinished['benefit'] = this.projectInfo.projectSetting.isFinished['benefit'] && this.projectInfo.projectSetting.isFinishedBenefit[i];
+            }
+        }else{
+            this.projectInfo.projectSetting.isFinished[stepName] = true;
+        }
     };
 
     this.getData = function (propName) {
@@ -116,7 +124,8 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
                 efficiencyAnalysis: false,
                 benefit: false,
                 report: false
-            }
+            },
+            isFinishedBenefit : [false,false,false,false,false]
         }
     };
 
@@ -2135,12 +2144,14 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
 效益分析控制器
  */
 pvModule.controller('benefitCtrl', function ($scope, $location, projectData) {
+    $scope.isFinishedBenefit = projectData.getSetting().isFinishedBenefit;
+
     $scope.switchToUrl = function (url) {
         $location.path(url);
     };
 
     $scope.back = function () {
-        projectData.setFinished("benefit");
+        // projectData.setFinished("benefit");
         projectData.saveToLocal();
         $location.path('/0');
     }
@@ -2196,6 +2207,7 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.parameters, 'parameters');
+        projectData.setFinished('benefit',0);
         projectData.saveToLocal();
         $location.path('/8');
     };
@@ -2498,6 +2510,8 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
 
         projectData.addOrUpdateData(investmentCosts, 'investmentCosts');
 
+        projectData.setFinished('benefit',1);
+        projectData.saveToLocal();
         $location.path('/8');
     };
 });
@@ -2592,6 +2606,7 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
         };
 
         projectData.addOrUpdateData(emc, 'emc');
+        projectData.setFinished('benefit',2);
         projectData.saveToLocal();
         $location.path('/8');
     }
@@ -2747,6 +2762,8 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
 
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'profitPeriod');
+        projectData.setFinished('benefit',3);
+        projectData.saveToLocal();
         $location.path('/8');
     }
 });
@@ -2808,6 +2825,8 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
 
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'overallIndex');
+        projectData.setFinished('benefit',4);
+        projectData.saveToLocal();
         $location.path('/8');
     }
 });
