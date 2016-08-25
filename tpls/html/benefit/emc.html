@@ -10,7 +10,7 @@
                                 <td>{{data.LA | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>合同收款扣除运维收入（年）</td>
+                                <td>合同收款扣除运维收入(年)</td>
                                 <td>{{data.LB | number : 2}}</td>
                             </tr>
                             <tr>
@@ -18,7 +18,7 @@
                                 <td>{{data.LC * 100 | number : 2}}%</td>
                             </tr>
                             <tr>
-                                <td>折现率</td>
+                                <td>收入折现率</td>
                                 <td>{{data.LD * 100 | number : 2}}%</td>
                             </tr>
                             <tr>
@@ -34,7 +34,7 @@
                                 <td>{{data.LG | number : 2}}</td>
                             </tr>
                             <tr>
-                                <td>建造收入（上面两者取小值）</td>
+                                <td>建造收入</td>
                                 <td>{{data.LH | number : 2}}</td>
                             </tr>
                             <tr>
@@ -62,14 +62,6 @@
                     <div class="col-md-4">
                         <table class="table table-bordered">
                             <tr>
-                                <td>建造收入</td>
-                                <td>{{data.LH | number : 1}}</td>
-                            </tr>
-                            <tr>
-                                <td>建造毛利</td>
-                                <td>{{data.LI | number : 2}}</td>
-                            </tr>
-                            <tr>
                                 <td>租赁收入</td>
                                 <td>{{data.LS | number : 2}}</td>
                             </tr>
@@ -89,7 +81,7 @@
                     <button class="btn btn-primary" ng-click="back()">
                         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;返回
                     </button>
-                    <button class="btn btn-success pull-right" ng-click="hide=!hide">
+                    <button class="btn btn-primary pull-right" ng-click="hide=!hide">
                         查看详细 &nbsp;<span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </button>
                 </div>
@@ -125,8 +117,8 @@
                     </table>
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-success" ng-click="hide=!hide">
-                        返回 &nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
+                    <button class="btn btn-primary" ng-click="hide=!hide">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> 返回
                     </button>
                 </div>
             </div>

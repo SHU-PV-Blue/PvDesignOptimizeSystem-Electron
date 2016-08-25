@@ -2560,15 +2560,19 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
     $scope.data.LM = itc.data7.IA - $scope.data.LI + itc.data5.GH + itc.data5.GL;
     $scope.data.LN = $scope.data.LM / $scope.data.LK;
 
+    les.shift();
+    les.unshift(-$scope.data.LH);
+    var newZhexianlv = finance.IRR.apply(finance,les) / 100;
+
     for (var i = 0; i < p.BE; i++) {
         if (i == 0) {
             $scope.data.LO.push($scope.data.LE);
-            $scope.data.LP.push($scope.data.LH * $scope.data.LD);
+            $scope.data.LP.push($scope.data.LH * newZhexianlv);
             $scope.data.LQ.push($scope.data.LO[i] - $scope.data.LP[i]);
             $scope.data.LR.push($scope.data.LH - $scope.data.LQ[i]);
         } else {
             $scope.data.LO.push($scope.data.LE);
-            $scope.data.LP.push($scope.data.LR[i - 1] * $scope.data.LD);
+            $scope.data.LP.push($scope.data.LR[i - 1] * newZhexianlv);
             $scope.data.LQ.push($scope.data.LO[i] - $scope.data.LP[i]);
             $scope.data.LR.push($scope.data.LR[i - 1] - $scope.data.LQ[i]);
         }
@@ -2768,31 +2772,39 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
         NE: 0,
         NF: 0,
         NG: 0,
-        NH: p.BD / 12 + 32 / 111 + 9,
+        NH: 0,
         NI: 0
     };
 
     var finance = new Finance();
-    var rate = p.GB;
-    if (rate === 0)
-        rate = 0.07;
-    var values = [];
-    for (var i = 0; i < p.BB; i++) {
-        if (i === 0) {
-            values.push(pp.MK[i] + pp.MG[i] - pp.MC);
-        } else {
-            values.push(pp.MK[i] + pp.MG[i] - pp.MG[i - 1]);
-        }
-    }
+    // var rate = p.GB;
+    // if (rate === 0)
+    //     rate = 0.07;
+    // var values = [];
+    // for (var i = 0; i < p.BB; i++) {
+    //     if (i === 0) {
+    //         values.push(pp.MK[i] + pp.MG[i] - pp.MC);
+    //     } else {
+    //         values.push(pp.MK[i] + pp.MG[i] - pp.MG[i - 1]);
+    //     }
+    // }
     
-    values.unshift(rate * 100);
-    $scope.data.NB = finance.NPV.apply(finance,values);
-    $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
+    // values.unshift(rate * 100);
+    // $scope.data.NB = finance.NPV.apply(finance,values);
     var v2 = _.cloneDeep(pp.MK);
     v2.unshift(pp.MJ);
     $scope.data.NE = finance.IRR.apply(finance, v2);
     $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12]) / pp.MK[12] + 12;
-    $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
+    // $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
+    var NX;
+    for(NX = 0; NX < pp.MQ.length; NX++){
+        if(pp.MQ[NX] > 0) break;
+    }
+    var NY;
+    NY = pp.MQ[NX-1] / ((pp.MQ[NX - 1] - pp.MQ[NX]) / 12);
+
+    $scope.data.NH = p.BD / 12 + (p.BD * NX) / (NX * 12 + NY) + NX;
+    $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
 
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'overallIndex');
