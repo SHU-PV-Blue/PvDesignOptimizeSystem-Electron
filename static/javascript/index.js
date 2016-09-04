@@ -170,7 +170,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
         dialog.showMessageBox(remote.getCurrentWindow(), {
             type: 'warning',
             message: '确认删除项目 ' + name + '？',
-            title: 'pv',
+            title: '光伏设计软件',
             buttons: ['确认', '取消'],
             cancelId: 1
         }, function (response) {

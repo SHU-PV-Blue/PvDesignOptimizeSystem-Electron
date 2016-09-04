@@ -81,7 +81,7 @@ pvCustomer.controller('pvmoduleCtrl',function($scope,$uibModal){
         dialog.showMessageBox(null,{
             type : 'info',
             message : '确认删除？',
-            title : 'pv',
+            title : '光伏设计软件',
             buttons : ['确定','取消'],
             cancelId : 1
         },function(response){

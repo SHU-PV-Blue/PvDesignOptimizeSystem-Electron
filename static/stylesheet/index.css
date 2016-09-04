@@ -79,6 +79,7 @@ ul.project-list {
     bottom: 0;
     overflow-y: auto;
     white-space: nowrap;
+    background-color: #e6e8e9;
 }
 
 ul.project-list li span {
@@ -97,6 +98,11 @@ ul.project-list li span {
 
 #project .project-name {
     padding: 0 10px;
+}
+
+ul.project-list li{
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #f6f6f6;
 }
 
 ul.project-list li:hover {

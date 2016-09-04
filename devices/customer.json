@@ -1,6 +1,6 @@
 {
     "pvmodule": {
-        "nextIndex": 25,
+        "nextIndex": 26,
         "items": {}
     },
     "centralizedInverter": {
@@ -24,7 +24,7 @@
         "items": {}
     },
     "switch": {
-        "nextIndex": 3,
+        "nextIndex": 14,
         "items": {}
     },
     "transformer": {

@@ -34,7 +34,7 @@ ul{
     bottom: 0;
     left: 0;
     width: 200px;
-    border-right: 1px solid grey;
+    border-right: 1px solid 999;
 }
 #leftPanel li{
     height: 40px;
