@@ -24,15 +24,13 @@
     <div class="wrap">
         <div id="project" ng-controller="manageCtrl">
             <button id="goToCustomer" ng-click="goToCustomer()"><span class="glyphicon glyphicon-arrow-left"></span> 自定义设备</button>
-            <p class="current-project">当前项目： &nbsp;<b>{{currentProject}}</b></p>
-            <div class="navItem">
-                <div class="navName"><span class="glyphicon glyphicon-list"></span> 项目<span class="pull-right add-project glyphicon glyphicon-plus" ng-click="addNewProject()"></span></div>
-                <ul>
-                    <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
-                        <span class="glyphicon glyphicon-trash btn-delete-project" ng-click="deleteProject(project)"></span> <span class="project-name">{{project}}</span>
-                    </li>
-                </ul>
-            </div>
+            <p class="current-project">当前项目： &nbsp;<b title="{{currentProject}}">{{currentProject}}</b></p>
+            <div class="navName"><span class="glyphicon glyphicon-list"></span> 项目<span class="pull-right add-project glyphicon glyphicon-plus" ng-click="addNewProject()"></span></div>
+            <ul class="project-list">
+                <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
+                    <span class="glyphicon glyphicon-trash btn-delete-project" ng-click="deleteProject(project)"></span> <span class="project-name">{{project}}</span>
+                </li>
+            </ul>
         </div>
         <div class="mainbody" style="overflow-y: auto">
             <div class="container">
@@ -43,22 +41,22 @@
 </body>
 <script>
     $(document).ready(function() {
-        $(".navItem").on("mouseenter",".btn-delete-project",function() {
+        $(".project-list").on("mouseenter", ".btn-delete-project", function() {
             $(this).stop().animate({
-                "margin-left":"0px"
-            },200);
+                "margin-left": "0px"
+            }, 200);
             $(this).css({
-                color:"red",
-                background:"#fff"
+                color: "red",
+                background: "#fff"
             })
         });
-        $(".navItem").on("mouseout",".btn-delete-project",function() {
+        $(".project-list").on("mouseout", ".btn-delete-project", function() {
             $(this).stop().animate({
-                "margin-left":"-20px"
-            },200)
+                "margin-left": "-20px"
+            }, 200)
             $(this).css({
-                color:"#169fe6",
-                background:"#169fe6",
+                color: "#169fe6",
+                background: "#169fe6",
             })
         });
     });

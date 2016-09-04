@@ -1,27 +1,35 @@
-*{
+* {
     padding: 0;
     margin: 0;
 }
-html,body{
+
+html,
+body {
     height: 100%;
 }
-body{
+
+body {
     border-top: 1px solid #eee;
 }
-td input{
-    border:none;
+
+td input {
+    border: none;
     text-align: center;
     width: 100%;
 }
-td,th{
+
+td,
+th {
     text-align: center;
 }
-.wrap{
+
+.wrap {
     background: #fff;
     height: 100%;
     position: relative;
 }
-#project{
+
+#project {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -29,7 +37,8 @@ td,th{
     width: 200px;
     background: #f6f8f9;
 }
-#goToCustomer{
+
+#goToCustomer {
     border: none;
     outline: none;
     width: 100%;
@@ -38,54 +47,69 @@ td,th{
     color: #222;
     border-bottom: 1px solid #eee;
 }
-#goToCustomer:hover{
+
+#goToCustomer:hover {
     background-color: #169fe6;
     color: #fff;
 }
 
-.current-project{
+.current-project {
     padding: 10px 10px;
     border-bottom: 1px solid #eee;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-.navItem .navName{
+.navName {
     width: 200px;
     height: 30px;
     padding: 5px 10px;
     line-height: 20px;
     font-size: 1.1em;
 }
-.navItem ul{
+
+ul.project-list {
     width: 100%;
     list-style: none;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 115px;
+    bottom: 0;
+    overflow-y: auto;
+    white-space: nowrap;
 }
-.navItem ul li span{
+
+ul.project-list li span {
     display: inline-block;
     height: 30px;
     line-height: 30px;
 }
-.navItem .btn-delete-project{
+
+.project-list .btn-delete-project {
     margin-left: -20px;
     text-align: center;
     width: 30px;
     color: #169fe6;
     background-color: #169fe6;
 }
-.navItem .project-name{
+
+#project .project-name {
     padding: 0 10px;
 }
-.navItem ul li:hover{
+
+ul.project-list li:hover {
     cursor: pointer;
     background: #dfeefd;
     color: #51a7f2;
 }
-.navItem .add-project{
+
+#project .add-project {
     cursor: pointer;
 }
 
-.mainbody{
+.mainbody {
     position: absolute;
     top: 0;
     left: 200px;
@@ -94,106 +118,142 @@ td,th{
     background: #fff;
     overflow: hidden;
 }
-.mainbody>.container{
+
+.mainbody>.container {
     padding-top: 20px;
     overflow: hidden;
 }
-.y-card{
+
+.y-card {
     text-align: center;
     background-color: #f2f2f2;
     margin: 10px 10px;
     border-radius: 5px;
 }
-.y-card>.header{
-    line-height:30px;
+
+.y-card>.header {
+    line-height: 30px;
     height: 30px;
     border-bottom: 1px solid #d6d6d6;
     border-radius: 5px 5px 0 0;
 }
-.y-card>.body{
+
+.y-card>.body {
     height: 120px;
 }
-.y-card>.body:hover{
+
+.y-card>.body:hover {
     cursor: pointer;
 }
-.y-card>.footer{
+
+.y-card>.footer {
     border-top: 1px solid #d6d6d6;
     font-size: 1.2em;
     height: 40px;
-    line-height:40px;
+    line-height: 40px;
     border-radius: 0 0 2px 2px;
 }
-.op-row img{
+
+.op-row img {
     display: block;
     width: 100px;
     height: 100px;
     margin: auto;
 }
 
-.welcoming{
+.welcoming {
     text-align: center;
     height: 100%;
     width: 100%;
 }
-.welcoming img.pv-image{
+
+.welcoming img.pv-image {
     display: block;
     margin: auto;
     width: 380px;
     height: 450px;
 }
 
-.report-info td{
+.report-info td {
     text-align: left;
 }
 
-.directCurrentCable{
+.directCurrentCable {
     table-layout: fixed;
 }
-.directCurrentCable td{
+
+.directCurrentCable td {
     width: 100px;
     height: 100px;
 }
-.directCurrentCable img{
+
+.directCurrentCable img {
     width: 100%;
     height: 100%;
 }
-.directCurrentCable .arrows{
+
+.directCurrentCable .arrows {
     height: 10px;
     cursor: pointer;
 }
 
-.alternatingCurrentCable{
+.alternatingCurrentCable {
     table-layout: fixed;
 }
-.alternatingCurrentCable td{
+
+.alternatingCurrentCable td {
     width: 100px;
     height: 100px
 }
-.alternatingCurrentCable img{
-    width : 100%;
+
+.alternatingCurrentCable img {
+    width: 100%;
     height: 100%;
 }
-.alternatingCurrentCable .arrows{
+
+.alternatingCurrentCable .arrows {
     height: 10px;
     cursor: pointer;
 }
 
-#transformer img{
+#transformer img {
     width: 100%;
     height: 270px;
 }
 
-.profitPeriod-table td{
+.profitPeriod-table td {
     min-width: 100px;
 }
 
-#choose-inverter img{
+#choose-inverter img {
     width: 100%;
     height: 150px;
 }
-.benefitAnalysis img{
+
+.benefitAnalysis img {
     display: block;
     width: 70%;
     height: 150px;
     margin: auto;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: #ddd;
+    -webkit-border-radius: 0;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 50px;
+    background-color: #999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    height: 50px;
+    background-color: #9f9f9f;
+    -webkit-border-radius: 4px;
 }

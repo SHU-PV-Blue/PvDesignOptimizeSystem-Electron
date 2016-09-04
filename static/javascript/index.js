@@ -3081,7 +3081,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         }, {
             title: {
                 display: true,
-                text: '投资回收期图',
+                text: '静态资金回收期表',
                 fontSize: 16,
                 fontStyle: 'normal'
             },
