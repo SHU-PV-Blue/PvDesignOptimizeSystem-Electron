@@ -5,6 +5,9 @@
 html,body{
     height: 100%;
 }
+body{
+    border-top: 1px solid #eee;
+}
 td input{
     border:none;
     text-align: center;
@@ -26,9 +29,23 @@ td,th{
     width: 200px;
     background: #f6f8f9;
 }
+#goToCustomer{
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 35px;
+    background-color: inherit;
+    color: #222;
+    border-bottom: 1px solid #eee;
+}
+#goToCustomer:hover{
+    background-color: #169fe6;
+    color: #fff;
+}
 
 .current-project{
-    padding: 5px 10px;
+    padding: 10px 10px;
+    border-bottom: 1px solid #eee;
 }
 
 .navItem .navName{
@@ -121,8 +138,8 @@ td,th{
 .welcoming img.pv-image{
     display: block;
     margin: auto;
-    width: 280px;
-    height: 280px;
+    width: 380px;
+    height: 450px;
 }
 
 .report-info td{

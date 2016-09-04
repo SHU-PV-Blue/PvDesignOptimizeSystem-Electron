@@ -132,6 +132,10 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
     $scope.projects = [];
     $scope.currentProject = "";
 
+    $scope.goToCustomer = function(){
+        remote.getCurrentWindow().loadURL('file://' + __dirname + '/customer.html');
+    };
+
     $scope.addNewProject = function () {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -2701,7 +2705,7 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
 
     $scope.labelsYear = util.getLabel(p.BB);
 
-    $scope.series = ['债务偿还图', '投资回收期图'];
+    $scope.series = ['债务偿还图', '静态资金回收期表'];
 
     $scope.chartData1 = [
         $scope.data.MG.map(function (item) {
@@ -2740,7 +2744,7 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
     $scope.options2 = {
         title: {
             display: true,
-            text: '投资回收期图',
+            text: '静态资金回收期表',
             fontSize: 14,
             fontStyle: 'normal'
         },

@@ -6,6 +6,9 @@ html,body{
     font-size: 14px;
 	font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
+body{
+    border-top: 1px solid #eee;
+}
 a:focus{
 	outline: none;
 }
@@ -57,7 +60,7 @@ ul{
 }
 .mainbody{
     position: absolute;
-    top: 0;
+    top: 1px;
     left: 200px;
     bottom: 0;
     right: 0;

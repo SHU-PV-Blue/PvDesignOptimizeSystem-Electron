@@ -1,11 +1,16 @@
 
 var customer = require('./common/customer/customerDevice');
 var _ = require('lodash');
-var dialog = require('electron').remote.dialog;
+var remote = require('electron').remote;
+var dialog = remote.dialog;
 
 var pvCustomer = angular.module('PVCustomer', ['ui.bootstrap', 'ngRoute'],function(){});
 
 pvCustomer.controller('chooseDeviceCtrl',function($scope,$location){
+    $scope.goToProject = function(){
+        remote.getCurrentWindow().loadURL('file://' + __dirname + '/index.html');
+    };
+
     $scope.switchDevice = function(deviceName){
         $location.path('/' + deviceName);
     }

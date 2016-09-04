@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>光伏优化设计软件</title>
+    <title>光伏设计软件</title>
     <link rel="stylesheet" href="static/components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/stylesheet/customer.css">
     <link rel="stylesheet" href="static/components/font-awesome-4.6.3/css/font-awesome.min.css">
@@ -18,6 +18,7 @@
     <div class="wrap">
         <div id="leftPanel" ng-controller="chooseDeviceCtrl">
             <ul>
+                <li><a href="javascript:void(0)" ng-click="goToProject()"><span class="glyphicon glyphicon-arrow-left"></span> 返回项目</a></li>
                 <li><a class="active" href="javascript:void(0);" ng-click="switchDevice('pvmodule')">光伏组件</a></li>
                 <li><a href="javascript:void(0);" ng-click="switchDevice('centralizedInverter')">集中式逆变器</a></li>
                 <li><a href="javascript:void(0);" ng-click="switchDevice('dcCombiner')">直流汇流箱</a></li>

@@ -1,0 +1,24 @@
+{
+    "projectData": {},
+    "projectSetting": {
+        "isFinished": {
+            "basicInfo": false,
+            "meteorology": false,
+            "chooseComponent": false,
+            "confirmAngle": false,
+            "userDesign": false,
+            "chooseInverter": false,
+            "selectTransformer": false,
+            "efficiencyAnalysis": false,
+            "benefit": false,
+            "report": false
+        },
+        "isFinishedBenefit": [
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    }
+}
