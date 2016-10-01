@@ -31,7 +31,7 @@ ul{
 #leftPanel{
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 30px;
     left: 0;
     width: 200px;
     border-right: 1px solid 999;
@@ -58,11 +58,26 @@ ul{
     background: #337ab7;
     color: #fff;
 }
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 30px;
+    left: 0;
+    right: 0;
+    background-color: #eee;
+    text-align: center;
+    color: #444;
+    line-height: 30px;
+    font-size: 12px;
+    border-top: 1px solid #ddd;
+}
+
 .mainbody{
     position: absolute;
     top: 1px;
     left: 200px;
-    bottom: 0;
+    bottom: 30px;
     right: 0;
     background: #fff;
     overflow: hidden;
