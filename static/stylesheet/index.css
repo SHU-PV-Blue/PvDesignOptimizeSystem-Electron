@@ -32,7 +32,7 @@ th {
 #project {
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: 20px;
     left: 0;
     width: 200px;
     background: #f6f8f9;
@@ -115,11 +115,25 @@ ul.project-list li:hover {
     cursor: pointer;
 }
 
+.footer{
+    position: absolute;
+    bottom: 0;
+    height: 20px;
+    left: 0;
+    right: 0;
+    background-color: #eee;
+    text-align: center;
+    color: #444;
+    line-height: 20px;
+    font-size: 12px;
+    border-top: 1px solid #ddd;
+}
+
 .mainbody {
     position: absolute;
     top: 0;
     left: 200px;
-    bottom: 0;
+    bottom: 20px;
     right: 0;
     background: #fff;
     overflow: hidden;
