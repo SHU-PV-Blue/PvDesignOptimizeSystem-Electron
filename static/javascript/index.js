@@ -2883,7 +2883,7 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         projectInfo: {
             projectName: basicInfo.projectName,
             designTime: basicInfo.projectDate,
-            capacity: 0,
+            capacity: parameters.capacity,
             dip: angleInfo.dip,
             az: angleInfo.az,
             arrayArea: 0,
@@ -2987,11 +2987,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
     });
 
     if (userDesign.designType === "area") {
-        $scope.data.projectInfo.capacity = userDesign.area.totalCapacity;
+        // $scope.data.projectInfo.capacity = userDesign.area.totalCapacity;
         $scope.data.projectInfo.arrayArea = userDesign.area.totalArea;
         $scope.data.projectInfo.arrayfbspace = userDesign.fbspace;
     } else {
-        $scope.data.projectInfo.capacity = userDesign.capacity.totalCapacity;
+        // $scope.data.projectInfo.capacity = userDesign.capacity.totalCapacity;
     }
 
     $scope.options1 = [
