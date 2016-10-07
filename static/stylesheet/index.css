@@ -137,6 +137,7 @@ ul.project-list li:hover {
 #switchUser:hover{
     cursor: pointer;
     background-color: #fff;
+    color: #169fe6;
 }
 
 .mainbody {

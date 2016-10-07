@@ -2,10 +2,21 @@ var _ = require('lodash');
 var remote = require('electron').remote;
 var dialog = remote.dialog;
 var UserDao = require('./common/sqlite/db').UserDao;
+var fs = require('fs');
 
 var pvUser = angular.module('PVUser', ['ui.bootstrap', 'ngRoute'], function () { });
 
-pvUser.controller('loginCtrl', function ($scope, $location) {
+pvUser.service('CurrentUser', function ($rootScope, $location, $route) {
+    this.currentAdmin = "";
+    this.getUserName = function(){
+        return this.currentAdmin;
+    };
+    this.setUserName = function(username){
+        this.currentAdmin = username;
+    };
+});
+
+pvUser.controller('loginCtrl', function ($scope, $location, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
 
@@ -22,9 +33,15 @@ pvUser.controller('loginCtrl', function ($scope, $location) {
                 }
                 if (user.password == $scope.password) {
                     if (user.role == 0) {
+                        CurrentUser.setUserName(user.username);
                         $location.path('/admin');
                     } else {
-                        remote.getCurrentWindow().loadURL('file://' + __dirname + '/index.html');
+                        fs.writeFile(process.env.TEMP + "/pvsystem.json",JSON.stringify(user),function(err){
+                            if(err){
+                                return console.log(err);
+                            }
+                            remote.getCurrentWindow().loadURL('file://' + __dirname + '/index.html');
+                        });
                     }
                 } else {
                     $scope.errorInfo = "用户名或密码错误";
@@ -36,15 +53,16 @@ pvUser.controller('loginCtrl', function ($scope, $location) {
     $scope.errorInfo = "";
 });
 
-pvUser.controller('adminCtrl', function ($scope, $location) {
+pvUser.controller('adminCtrl', function ($scope, $location, CurrentUser) {
     $scope.users = [];
     $scope.user = {
         username : "",
         password: "",
-        role: 1
+        role: "1"
     };
 
     $scope.errorInfo = "";
+    $scope.currentAdmin = CurrentUser.getUserName();
 
     $scope.addUser = function(){
         if($scope.user.username == "" || $scope.user.password == ""){
@@ -85,7 +103,6 @@ pvUser.controller('adminCtrl', function ($scope, $location) {
             if(err){
                 return console.log(err);
             }
-            alert("删除成功");
             refresh();
         });
     };

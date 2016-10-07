@@ -12,6 +12,9 @@
     <script src="static/javascript/jquery.min.js"></script>
     <script src="static/javascript/user.js"></script>
     <style>
+        body{
+            font-family: "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei UI","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+        }
         ::-webkit-scrollbar-track-piece {
             background-color: #ddd;
             -webkit-border-radius: 0;
@@ -32,11 +35,28 @@
             background-color: #9f9f9f;
             -webkit-border-radius: 4px;
         }
+        
+        .footer {
+            position: absolute;
+            bottom: 1px;
+            height: 30px;
+            left: 0;
+            right: 0;
+            background-color: #eee;
+            text-align: center;
+            color: #444;
+            line-height: 30px;
+            font-size: 12px;
+            border-top: 1px solid #ddd;
+        }
     </style>
 </head>
 
-<body ng-app="PVUser" style="border-top: 1px solid #ddd;background-color: #eef">
+<body ng-app="PVUser" style="border-top: 1px solid #ddd;background-color: #fff">
     <ng-view></ng-view>
+    <div class="footer">
+        <span>Copyright &copy; 2016 上海宝钢节能环保技术有限公司. All Rights Reserved</span>
+    </div>
 </body>
 
 </html>

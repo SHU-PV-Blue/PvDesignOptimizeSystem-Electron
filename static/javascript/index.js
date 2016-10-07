@@ -78,13 +78,13 @@ pvModule.service('projectData', function ($rootScope, $location, $route) {
     };
 
     this.setFinished = function (stepName, subStep) {
-        if(stepName === 'benefit' && subStep !== undefined){
+        if (stepName === 'benefit' && subStep !== undefined) {
             this.projectInfo.projectSetting.isFinishedBenefit[subStep] = true;
             this.projectInfo.projectSetting.isFinished['benefit'] = true;
-            for(var i = 0; i < 5; i++){
+            for (var i = 0; i < 5; i++) {
                 this.projectInfo.projectSetting.isFinished['benefit'] = this.projectInfo.projectSetting.isFinished['benefit'] && this.projectInfo.projectSetting.isFinishedBenefit[i];
             }
-        }else{
+        } else {
             this.projectInfo.projectSetting.isFinished[stepName] = true;
         }
     };
@@ -125,14 +125,14 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
                 benefit: false,
                 report: false
             },
-            isFinishedBenefit : [false,false,false,false,false]
+            isFinishedBenefit: [false, false, false, false, false]
         }
     };
 
     $scope.projects = [];
     $scope.currentProject = "";
 
-    $scope.goToCustomer = function(){
+    $scope.goToCustomer = function () {
         remote.getCurrentWindow().loadURL('file://' + __dirname + '/customer.html');
     };
 
@@ -211,10 +211,22 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
     })
 });
 
-pvModule.controller('userSwitchCtrl',function($scope, $location){
-    $scope.goToUser = function(){
+pvModule.controller('userSwitchCtrl', function ($scope, $location) {
+    $scope.goToUser = function () {
         remote.getCurrentWindow().loadURL('file://' + __dirname + '/user.html');
     };
+
+
+    fs.readFile(process.env.TEMP + "/pvsystem.json", function(err, data) {
+        if (err){
+            return console.log(err);
+        }
+        $scope.$apply(function(){
+            $scope.currentUser = JSON.parse(data).username;
+        });
+    });
+
+    $scope.currentUser = "";
 });
 
 /*
@@ -1766,7 +1778,7 @@ pvModule.controller('up_10Ctrl', function ($scope, $uibModalInstance, parentObj,
     });
 
     function compute_num() {
-        if($scope.transformerInfo.serialNum === 0){
+        if ($scope.transformerInfo.serialNum === 0) {
             return 0;
         }
         return Math.ceil(inverter.inverterNumNeeded / $scope.transformerInfo.serialNum);
@@ -1826,7 +1838,7 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
 
     $scope.$watch('transformerInfo.serialNum', function () {
         compute_num();
-    },true);
+    }, true);
 
     $scope.items1 = [];
     $scope.selectedonce = '';
@@ -1843,16 +1855,16 @@ pvModule.controller('up_35Ctrl', function ($scope, $uibModalInstance, $window, p
     });
 
     function compute_num() {
-        var s0,s1;
-        if($scope.transformerInfo.serialNum[0] === 0){
+        var s0, s1;
+        if ($scope.transformerInfo.serialNum[0] === 0) {
             s0 = 0;
-        }else{
+        } else {
             s0 = Math.ceil(inverter.inverterNumNeeded / $scope.transformerInfo.serialNum[0]);
         }
-        
-        if($scope.transformerInfo.serialNum[1] === 0){
+
+        if ($scope.transformerInfo.serialNum[1] === 0) {
             s1 = 0;
-        }else{
+        } else {
             s1 = Math.ceil(inverter.inverterNumNeeded / Number($scope.transformerInfo.serialNum[1]));
         }
         $scope.transformerInfo.num[0] = s0;
@@ -2217,7 +2229,7 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
 
     $scope.save = function () {
         projectData.addOrUpdateData($scope.parameters, 'parameters');
-        projectData.setFinished('benefit',0);
+        projectData.setFinished('benefit', 0);
         projectData.saveToLocal();
         $location.path('/8');
     };
@@ -2520,7 +2532,7 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
 
         projectData.addOrUpdateData(investmentCosts, 'investmentCosts');
 
-        projectData.setFinished('benefit',1);
+        projectData.setFinished('benefit', 1);
         projectData.saveToLocal();
         $location.path('/8');
     };
@@ -2575,7 +2587,7 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
     }
 
     les.unshift($scope.data.LD * 100);
-    $scope.data.LF = finance.NPV.apply(finance,les);
+    $scope.data.LF = finance.NPV.apply(finance, les);
     $scope.data.LG = $scope.data.LA * 1.1;
     $scope.data.LH = Math.min($scope.data.LF, $scope.data.LG);
     $scope.data.LI = $scope.data.LH - $scope.data.LA;
@@ -2586,7 +2598,7 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
 
     les.shift();
     les.unshift(-$scope.data.LH);
-    var newZhexianlv = finance.IRR.apply(finance,les) / 100;
+    var newZhexianlv = finance.IRR.apply(finance, les) / 100;
 
     for (var i = 0; i < p.BE; i++) {
         if (i == 0) {
@@ -2616,7 +2628,7 @@ pvModule.controller('emcCtrl', function ($scope, $location, projectData) {
         };
 
         projectData.addOrUpdateData(emc, 'emc');
-        projectData.setFinished('benefit',2);
+        projectData.setFinished('benefit', 2);
         projectData.saveToLocal();
         $location.path('/8');
     }
@@ -2772,7 +2784,7 @@ pvModule.controller('profitPeriodCtrl', function ($scope, $location, projectData
 
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'profitPeriod');
-        projectData.setFinished('benefit',3);
+        projectData.setFinished('benefit', 3);
         projectData.saveToLocal();
         $location.path('/8');
     }
@@ -2815,7 +2827,7 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
     //         values.push(pp.MK[i] + pp.MG[i] - pp.MG[i - 1]);
     //     }
     // }
-    
+
     // values.unshift(rate * 100);
     // $scope.data.NB = finance.NPV.apply(finance,values);
     var v2 = _.cloneDeep(pp.MK);
@@ -2824,18 +2836,18 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
     $scope.data.NF = p.BD / 12 + (pp.MG[12] - pp.MQ[12]) / pp.MK[12] + 12;
     // $scope.data.NG = $scope.data.NF / (p.BD / 12 + p.BB);
     var NX;
-    for(NX = 0; NX < pp.MQ.length; NX++){
-        if(pp.MQ[NX] > 0) break;
+    for (NX = 0; NX < pp.MQ.length; NX++) {
+        if (pp.MQ[NX] > 0) break;
     }
     var NY;
-    NY = pp.MQ[NX-1] / ((pp.MQ[NX - 1] - pp.MQ[NX]) / 12);
+    NY = pp.MQ[NX - 1] / ((pp.MQ[NX - 1] - pp.MQ[NX]) / 12);
 
     $scope.data.NH = p.BD / 12 + (p.BD * NX) / (NX * 12 + NY) + NX;
     $scope.data.NI = $scope.data.NH / (p.BD / 12 + p.BB);
 
     $scope.back = function () {
         projectData.addOrUpdateData($scope.data, 'overallIndex');
-        projectData.setFinished('benefit',4);
+        projectData.setFinished('benefit', 4);
         projectData.saveToLocal();
         $location.path('/8');
     }
