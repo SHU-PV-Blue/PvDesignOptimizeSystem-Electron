@@ -3,7 +3,11 @@
         <div class="col-md-11">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">请填写下面的参数</h3>
+                    <span class="panel-title">请填写下面的参数</span>
+                    <div class="pull-right">
+                        自定义安装容量：<input type="text" style="color: #000" size="6" ng-model="parameters.capacity">kW
+                        <button class="btn btn-sm btn-default" ng-click="defaultCapacity()">使用默认安装容量 {{capacity}}</button>
+                        </div>
                 </div>
                 <!--<div class="panel-body">-->
                     <table class="table table-bordered">

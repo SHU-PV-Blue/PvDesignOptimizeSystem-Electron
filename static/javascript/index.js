@@ -2184,7 +2184,11 @@ pvModule.controller('benefitCtrl', function ($scope, $location, projectData) {
  */
 pvModule.controller('parametersCtrl', function ($scope, $location, projectData) {
 
+    var userDesign = projectData.getData('userDesignInfo');
+    $scope.capacity = (userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity);
+
     $scope.parameters = {
+        capacity: $scope.capacity,
         AA: 0.9575,
         AB: 0.45927,
         AC: 0.42,
@@ -2224,10 +2228,15 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
         MM: 0,
         MY: 0.0655
     };
+    console.log($scope.parameters.capacity);
+    $scope.defaultCapacity = function(){
+        $scope.parameters.capacity = $scope.capacity;
+    };
 
     $scope.parameters.BE = $scope.parameters.BB * (12 / $scope.parameters.BC);
 
     $scope.save = function () {
+        $scope.parameters.capacity = parseFloat($scope.parameters.capacity) || $scope.capacity;
         projectData.addOrUpdateData($scope.parameters, 'parameters');
         projectData.setFinished('benefit', 0);
         projectData.saveToLocal();
@@ -2281,8 +2290,9 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     var electricity = efficiencyAnalysis.electricity;
 
     var userDesign = projectData.getData('userDesignInfo');
-    var BA = userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity;
-    console.log(BA);
+    var BA = p.capacity;
+    // var BA = userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity;
+
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
     $scope.data1 = {
         CA: [],
