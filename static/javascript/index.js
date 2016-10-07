@@ -211,6 +211,12 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
     })
 });
 
+pvModule.controller('userSwitchCtrl',function($scope, $location){
+    $scope.goToUser = function(){
+        remote.getCurrentWindow().loadURL('file://' + __dirname + '/user.html');
+    };
+});
+
 /*
 添加项目弹出框控制器
  */

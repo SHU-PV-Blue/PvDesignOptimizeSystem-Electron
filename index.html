@@ -28,7 +28,7 @@
             <div class="navName"><span class="glyphicon glyphicon-list"></span> 项目<span class="pull-right add-project glyphicon glyphicon-plus" ng-click="addNewProject()"></span></div>
             <ul class="project-list">
                 <li ng-repeat="project in projects" ng-dblclick="openProject(project)">
-                    <span class="glyphicon glyphicon-trash btn-delete-project" ng-click="deleteProject(project)"></span> <span class="project-name">{{project}}</span>
+                    <span class="glyphicon glyphicon-trash btn-delete-project" ng-click="deleteProject(project)"></span> <span class="project-name" title="{{project}}">{{project}}</span>
                 </li>
             </ul>
         </div>
@@ -37,7 +37,11 @@
                 <ng-view></ng-view>
             </div>
         </div>
-        <div class="footer">
+        <div class="footer" ng-controller="userSwitchCtrl">
+            <span class="pull-left">
+                <span id="switchUser" title="切换用户" ng-click="goToUser()"><span class="glyphicon glyphicon-user"></span> 当前用户：</span>
+                <span>sdfasdf</span>
+            </span>
             <span>Copyright &copy; 2016 上海宝钢节能环保技术有限公司. All Rights Reserved</span>
         </div>
     </div>
@@ -63,35 +67,6 @@
             })
         });
     });
-
-    //some default pre init
-    var Countly = Countly || {};
-    Countly.q = Countly.q || [];
-
-    //provide countly initialization parameters
-    Countly.app_key = 'd712606be8bc53fca2dacab22396f853fe3fdd1d';
-    Countly.url = 'http://countly.wolfogre.com'; //or none for default countly cloud
-
-    Countly.q.push(['track_sessions']);
-    Countly.q.push(['track_pageview']);
-    Countly.q.push(['track_clicks']);
-    Countly.q.push(['track_errors']);
-    Countly.q.push(['track_links']);
-    Countly.q.push(['track_forms']);
-
-    //load countly script asynchronously
-    (function() {
-        var cly = document.createElement('script');
-        cly.type = 'text/javascript';
-        cly.async = true;
-        //enter url of script here
-        cly.src = 'https://cdnjs.cloudflare.com/ajax/libs/countly-sdk-web/16.2.0/countly.min.js';
-        cly.onload = function() {
-            Countly.init()
-        };
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(cly, s);
-    })();
 </script>
 
 </html>

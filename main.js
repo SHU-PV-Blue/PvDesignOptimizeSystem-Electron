@@ -34,10 +34,10 @@ app.on('ready', function () {
 	mainWindow.once('ready-to-show', () => {
 		win.show()
 	});
-	mainWindow.loadURL('file://' + __dirname + '/index.html');
+	mainWindow.loadURL('file://' + __dirname + '/user.html');
 
 	mainWindow.on('closed', function () {
 		mainWindow = null;
 	});
-    // mainWindow.webContents.toggleDevTools();
+    mainWindow.webContents.toggleDevTools();
 });

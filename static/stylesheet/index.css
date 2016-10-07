@@ -103,6 +103,7 @@ ul.project-list li span {
 ul.project-list li{
     background-color: #f0f0f0;
     border-bottom: 1px solid #f6f6f6;
+    overflow: hidden;
 }
 
 ul.project-list li:hover {
@@ -117,7 +118,7 @@ ul.project-list li:hover {
 
 .footer{
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
     height: 30px;
     left: 0;
     right: 0;
@@ -127,6 +128,15 @@ ul.project-list li:hover {
     line-height: 30px;
     font-size: 12px;
     border-top: 1px solid #ddd;
+}
+
+.footer span:first-child{
+    margin-left: 10px;
+}
+
+#switchUser:hover{
+    cursor: pointer;
+    background-color: #fff;
 }
 
 .mainbody {
@@ -263,8 +273,8 @@ ul.project-list li:hover {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 4px;
+    height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {

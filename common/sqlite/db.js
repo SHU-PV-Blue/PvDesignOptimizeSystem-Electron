@@ -2,6 +2,38 @@ var sqlite3 = require('sqlite3').verbose();
 var dbDevice = new sqlite3.Database('./db/pv.db');
 var dbWeather = new sqlite3.Database('./db/weather.db');
 
+exports.UserDao = {
+    addUser: function (user, callback) {
+        dbDevice.serialize(function () {
+            dbDevice.run("insert into user (username,password,role) values(?,?,?)", user.username,user.password,user.role, function (err) {
+                callback(err);
+            });
+        });
+    },
+    deleteUser: function (username, callback) {
+        dbDevice.serialize(function () {
+            dbDevice.run("delete from user where username=?", username, function (err) {
+                callback(err);
+            });
+        });
+    },
+    getUser: function (username, callback) {
+        dbDevice.serialize(function () {
+            dbDevice.get("select * from user where username=?", username, function (err, row) {
+                callback(err,row);
+            });
+        });
+    },
+    getUsers: function (callback) {
+        dbDevice.all("select * from user", function (err, rows) {
+            if (err) {
+                return console.log(err);
+            }
+            callback(err,rows);
+        });
+    }
+};
+
 /**
  * 执行sql语句
  * @param  {string} sql
@@ -13,7 +45,7 @@ exports.getData = function (sql, callback) {
             if (err) {
                 return console.log(err);
             }
-            callback(rows, err);
+            callback(rows);
         });
     });
 };
@@ -42,7 +74,7 @@ function arrayToString(array) {
  * @param  {number} lon 经度
  * @param  {function} callback 回调函数
  */
-exports.getWeatherData = function (tableName,lat, lon, callback) {
+exports.getWeatherData = function (tableName, lat, lon, callback) {
     lat = (Math.round(lat + 0.5) + 90) % 180 - 90 - 0.5;
     lon = (Math.round(lon + 0.5) + 180) % 360 - 180 - 0.5;
     dbWeather.serialize(function () {
@@ -89,19 +121,19 @@ exports.addOrUpdateWeatherData = function (lat, lon, data) {
     });
 
     dbWeather.serialize(function () {
-        dbWeather.all('select * from userdata where lat = ? and lon = ?',[lat,lon],function(err, rows){
-            if(err){
+        dbWeather.all('select * from userdata where lat = ? and lon = ?', [lat, lon], function (err, rows) {
+            if (err) {
                 return console.log(err);
-            }else if(rows.length === 0){
-                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"irradiance", arrayToString(irradiance));
-                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"humidity", arrayToString(humidity));
-                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"wind", arrayToString(wind));
-                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)',lat,lon,"temperature", arrayToString(temperature));
-            }else{
-                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(irradiance),"irradiance", lat,lon);
-                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(humidity),"humidity", lat,lon);
-                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(wind),"wind", lat,lon);
-                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(temperature),"temperature",lat,lon);
+            } else if (rows.length === 0) {
+                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)', lat, lon, "irradiance", arrayToString(irradiance));
+                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)', lat, lon, "humidity", arrayToString(humidity));
+                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)', lat, lon, "wind", arrayToString(wind));
+                dbWeather.run('insert into userdata (lat,lon,type,data) values(?,?,?,?)', lat, lon, "temperature", arrayToString(temperature));
+            } else {
+                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(irradiance), "irradiance", lat, lon);
+                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(humidity), "humidity", lat, lon);
+                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(wind), "wind", lat, lon);
+                dbWeather.run("UPDATE userdata SET data=? WHERE type = ? and lat=? and lon=?", arrayToString(temperature), "temperature", lat, lon);
             }
         });
     });
