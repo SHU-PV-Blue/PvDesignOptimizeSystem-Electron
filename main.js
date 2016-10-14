@@ -36,12 +36,13 @@ app.on('ready', function () {
 		win.show()
 	});
 
-    fs.stat(process.env.TEMP + "/pvsystem.json",function(err,stat){
-        if(err){
-            return mainWindow.loadURL('file://' + __dirname + '/user.html');
-        }
-        mainWindow.loadURL('file://' + __dirname + '/index.html');
-    });
+    // fs.stat(process.env.TEMP + "/pvsystem.json",function(err,stat){
+    //     if(err){
+    //         return mainWindow.loadURL('file://' + __dirname + '/user.html');
+    //     }
+    //     mainWindow.loadURL('file://' + __dirname + '/index.html');
+    // });
+    mainWindow.loadURL('file://' + __dirname + '/user.html');
 
 	mainWindow.on('closed', function () {
 		mainWindow = null;

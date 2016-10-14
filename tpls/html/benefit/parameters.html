@@ -5,8 +5,8 @@
                 <div class="panel-heading">
                     <span class="panel-title">请填写下面的参数</span>
                     <div class="pull-right">
-                        自定义安装容量：<input type="text" style="color: #000" size="6" ng-model="parameters.capacity">kW
-                        <button class="btn btn-sm btn-default" ng-click="defaultCapacity()">使用默认安装容量 {{capacity}}</button>
+                        自定义年发电量：<input type="text" style="color: #000" size="12" ng-model="parameters.yearDianLiang">kWH
+                        <button class="btn btn-sm btn-success" ng-click="defaultYearDianLiang()">使用默认年发电量 {{yearDianLiang | number:3}}</button>
                         </div>
                 </div>
                 <!--<div class="panel-body">-->
