@@ -2914,7 +2914,8 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             arrayArea: 0,
             arrayfbspace: 0,
             lat: meteorologyInfo.lat,
-            lng: meteorologyInfo.lng
+            lng: meteorologyInfo.lng,
+            designer: ""
         },
         meteorology: {
             temperature: [],
@@ -2945,6 +2946,15 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             yearProfit: profitPeriod.CT
         }
     };
+
+    fs.readFile(process.env.TEMP + "/pvsystem.json", function(err, data) {
+        if (err){
+            return console.log(err);
+        }
+        $scope.$apply(function(){
+            $scope.data.projectInfo.designer = JSON.parse(data).username;
+        });
+    });
 
     var chooseInverter = projectData.getData('chooseInverter');
     if (chooseInverter.type === 'centralized') {
