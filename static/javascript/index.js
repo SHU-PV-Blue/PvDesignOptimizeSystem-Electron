@@ -1988,12 +1988,17 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $scope.active = index;
     }
 
-    $scope.$watch('data.loss', function () {
-        var total = 0;
-        for (var i = 0; i < $scope.data.loss.length; i++) {
-            total += Number(100 - $scope.data.loss[i]);
+    function computeLossTotal(){
+        var efficient = 1;
+        for(var i = 0; i < $scope.data.loss.length; i++){
+            efficient *= Number($scope.data.loss[i] / 100);
         }
-        $scope.data.lossTotal = total;
+        efficient *= (100 - $scope.data.componentLoss) / 100;
+        $scope.data.lossTotal = (1 - efficient) * 100;
+    }
+
+    $scope.$watch('data.loss', function () {
+        computeLossTotal();
     }, true);
 
     $scope.$watch('data.totalYears', function () {
@@ -2113,6 +2118,7 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
     });
 
     $scope.$watch('data.componentLoss', function () {
+        computeLossTotal();
         compute_chartData();
     });
 
