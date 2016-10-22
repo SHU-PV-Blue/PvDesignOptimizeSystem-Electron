@@ -13,62 +13,35 @@ var dialog = remote.dialog;
 Chart.defaults.global.defaultFontFamily = "'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif";
 
 var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute'], function ($httpProvider) {
-    // Use x-www-form-urlencoded Content-Type
-    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
-
-    /**
-     * The workhorse; converts an object to x-www-form-urlencoded serialization.
-     * @param {Object} obj
-     * @return {String}
-     */
-    var param = function (obj) {
-        var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
-
-        for (name in obj) {
-            value = obj[name];
-
-            if (value instanceof Array) {
-                for (i = 0; i < value.length; ++i) {
-                    subValue = value[i];
-                    fullSubName = name + '[' + i + ']';
-                    innerObj = {};
-                    innerObj[fullSubName] = subValue;
-                    query += param(innerObj) + '&';
-                }
-            }
-            else if (value instanceof Object) {
-                for (subName in value) {
-                    subValue = value[subName];
-                    fullSubName = name + '[' + subName + ']';
-                    innerObj = {};
-                    innerObj[fullSubName] = subValue;
-                    query += param(innerObj) + '&';
-                }
-            }
-            else if (value !== undefined && value !== null)
-                query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
-        }
-
-        return query.length ? query.substr(0, query.length - 1) : query;
-    };
-
-    // Override $http service's default transformRequest
-    $httpProvider.defaults.transformRequest = [function (data) {
-        return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
-    }];
 });
 
-//服务区
+
+var PROJECT_BASE_PATH = 'projects/';
+
+/* 服务区 */
+
+//保存，删除，读取项目服务
+pvModule.service('Project',function($rootScope, $location, $route){
+    this.readProject = function(projectName){
+        return JSON.parse(fs.readFileSync(PROJECT_BASE_PATH + projectName + ".json", "utf8"));
+    };
+    this.deleteProject = function(projectName){
+        fs.unlinkSync(PROJECT_BASE_PATH + projectName + '.json');
+    };
+    this.saveProject = function(projectName, projectData){
+        fs.writeFileSync(PROJECT_BASE_PATH + projectName + ".json", JSON.stringify(projectData, null, "    "), 'utf8');
+    };
+});
+
 /*
  项目数据服务
  */
-pvModule.service('projectData', function ($rootScope, $location, $route) {
-    this.projectBasePath = "projects/";
+pvModule.service('projectData', function ($rootScope, $location, $route, Project) {
     this.projectInfo = {};
     this.projectName = "";
-    this.loadProject = function (name) {
-        this.projectInfo = JSON.parse(fs.readFileSync(this.projectBasePath + name + ".json", "utf8"));
-        this.projectName = name;
+    this.loadProject = function (projectName) {
+        this.projectInfo = Project.readProject(projectName);
+        this.projectName = projectName;
         $location.path('/0');
         $route.reload();
     };
@@ -101,7 +74,7 @@ pvModule.service('projectData', function ($rootScope, $location, $route) {
     };
 
     this.saveToLocal = function () {
-        fs.writeFileSync(this.projectBasePath + this.projectName + ".json", JSON.stringify(this.projectInfo, null, "    "), 'utf8');
+        Project.saveProject(this.projectName, this.projectInfo);
     };
 });
 
@@ -109,7 +82,7 @@ pvModule.service('projectData', function ($rootScope, $location, $route) {
 /*
 项目管理控制器
  */
-pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projectData) {
+pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projectData, Project) {
     var defaultProjectInfo = {
         projectData: {},
         projectSetting: {
@@ -150,7 +123,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
     };
 
     function refresh() {
-        fs.readdir("projects/", function (err, files) {
+        fs.readdir(PROJECT_BASE_PATH, function (err, files) {
             if (err) {
                 return;
             }
@@ -176,7 +149,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
         }, function (response) {
             if (response === 0) {
                 $scope.$apply(function () {
-                    fs.unlinkSync("projects/" + name + '.json');
+                    Project.deleteProject(name);
                     refresh();
                     if ($scope.currentProject === name) {
                         $location.path('/');
@@ -195,7 +168,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
             alert('项目已存在');
             return;
         }
-        fs.writeFileSync("projects/" + name + ".json", JSON.stringify(defaultProjectInfo, null, "    "), 'utf8');
+        Project.saveProject(name, defaultProjectInfo);
         $scope.currentProject = name;
         projectData.loadProject(name);
         refresh();
@@ -208,7 +181,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
 
     $scope.$watch('$viewContentLoaded', function () {
         refresh();
-    })
+    });
 });
 
 pvModule.controller('userSwitchCtrl', function ($scope, $location) {
@@ -2317,7 +2290,7 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     var BA = userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity;
 
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
-    $scope.data1 = {
+    $scope.data1 = { 
         CA: [],
         CD: [],
         CE: [],
