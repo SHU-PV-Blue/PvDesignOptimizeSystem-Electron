@@ -288,3 +288,20 @@ ul.project-list li:hover {
     background-color: #9f9f9f;
     -webkit-border-radius: 4px;
 }
+
+ul.parametersProjects{
+    padding: 10px 20px;
+    width: 80%;
+    margin: 0 auto;
+    max-height: 400px;
+    overflow: auto;
+}
+ul.parametersProjects > li{
+    list-style: none;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #eee;
+}
+ul.parametersProjects > li:last-child{
+    border-bottom: 1px solid #eee;
+}

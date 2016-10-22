@@ -21,15 +21,26 @@ var PROJECT_BASE_PATH = 'projects/';
 /* 服务区 */
 
 //保存，删除，读取项目服务
-pvModule.service('Project',function($rootScope, $location, $route){
-    this.readProject = function(projectName){
+pvModule.service('Project', function ($rootScope, $location, $route) {
+    this.readProject = function (projectName) {
         return JSON.parse(fs.readFileSync(PROJECT_BASE_PATH + projectName + ".json", "utf8"));
     };
-    this.deleteProject = function(projectName){
+    this.deleteProject = function (projectName) {
         fs.unlinkSync(PROJECT_BASE_PATH + projectName + '.json');
     };
-    this.saveProject = function(projectName, projectData){
+    this.saveProject = function (projectName, projectData) {
         fs.writeFileSync(PROJECT_BASE_PATH + projectName + ".json", JSON.stringify(projectData, null, "    "), 'utf8');
+    };
+    this.getAllProjectsNames = function () {
+        var files;
+        try {
+            files = fs.readdirSync(PROJECT_BASE_PATH);
+        } catch (e) {
+            return [];
+        }
+        return files.map(function (name) {
+            return name.replace('.json', '');
+        });
     };
 });
 
@@ -123,20 +134,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
     };
 
     function refresh() {
-        fs.readdir(PROJECT_BASE_PATH, function (err, files) {
-            if (err) {
-                return;
-            }
-            $scope.$apply(function () {
-                if (files.length === 0) {
-                    $location.path('/');
-                    $scope.currentProject = '';
-                }
-                $scope.projects = files.map(function (name) {
-                    return name.replace(".json", "");
-                })
-            });
-        });
+        $scope.projects = Project.getAllProjectsNames();
     };
 
     $scope.deleteProject = function (name) {
@@ -190,11 +188,11 @@ pvModule.controller('userSwitchCtrl', function ($scope, $location) {
     };
 
 
-    fs.readFile(process.env.TEMP + "/pvsystem.json", function(err, data) {
-        if (err){
+    fs.readFile(process.env.TEMP + "/pvsystem.json", function (err, data) {
+        if (err) {
             return console.log(err);
         }
-        $scope.$apply(function(){
+        $scope.$apply(function () {
             $scope.currentUser = JSON.parse(data).username;
         });
     });
@@ -1302,20 +1300,20 @@ pvModule.controller('directCurrentCableCtrl', function ($scope, $uibModalInstanc
             lineDrop: 0,
             loss: 0
         }, {
-                directCurrentCable: {},
-                maxCurrent: maxPowerCurrent * parentObj.directCurrentInfo.branches,
-                branches: 1,
-                length: 0,
-                lineDrop: 0,
-                loss: 0
-            }, {
-                directCurrentCable: {},
-                maxCurrent: 0,
-                branches: 0,
-                length: 0,
-                lineDrop: 0,
-                loss: 0
-            }],
+            directCurrentCable: {},
+            maxCurrent: maxPowerCurrent * parentObj.directCurrentInfo.branches,
+            branches: 1,
+            length: 0,
+            lineDrop: 0,
+            loss: 0
+        }, {
+            directCurrentCable: {},
+            maxCurrent: 0,
+            branches: 0,
+            length: 0,
+            lineDrop: 0,
+            loss: 0
+        }],
         totalLoss: 0
     };
 
@@ -1961,9 +1959,9 @@ pvModule.controller('efficiencyAnalysisCtrl', function ($scope, $location, proje
         $scope.active = index;
     }
 
-    function computeLossTotal(){
+    function computeLossTotal() {
         var efficient = 1;
-        for(var i = 0; i < $scope.data.loss.length; i++){
+        for (var i = 0; i < $scope.data.loss.length; i++) {
             efficient *= Number($scope.data.loss[i] / 100);
         }
         efficient *= (100 - $scope.data.componentLoss) / 100;
@@ -2161,31 +2159,57 @@ pvModule.controller('benefitCtrl', function ($scope, $location, projectData) {
 /*
  参数列表控制器
  */
-pvModule.controller('parametersCtrl', function ($scope, $location, projectData) {
+pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, projectData, Project) {
+    $scope.selectedProjects = [];
 
-    var userDesign = projectData.getData('userDesignInfo');
-    var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
-    var componentLoss = efficiencyAnalysis.componentLoss;
-    var lossTotal = efficiencyAnalysis.lossTotal;
-    var electricity = efficiencyAnalysis.electricity;
+    function computeYearBingAndBA(projectName) {
+        /*计算每个项目的并入电网电量， 然后计算总电量，还有BA */
+        /*
+        首先，加载项目，然后计算并入电网电量
+        */
 
-    function computeYearBing(year) {
-        var yearLoss = Math.pow(1 - componentLoss / 100, year - 1);
-        if (yearLoss < 0)
-            yearLoss = 0;
+        var projectData = Project.readProject(projectName).projectData;
+        var userDesign = projectData['userDesignInfo'];
+        var efficiencyAnalysis = projectData['efficiencyAnalysisInfo'];
+        if(!efficiencyAnalysis){
+            return {
+                yearBing : 0,
+                BA: 0
+            }
+        }
+        var componentLoss = efficiencyAnalysis.componentLoss;
+        var lossTotal = efficiencyAnalysis.lossTotal;
+        var electricity = efficiencyAnalysis.electricity;
 
         var yearBing = 0;
         electricity.map(function (item) {
-            var bingrudianliang = item * (1 - lossTotal / 100) * yearLoss;
+            var bingrudianliang = item * (1 - lossTotal / 100);
             yearBing += bingrudianliang;
         });
-        return Number(yearBing.toFixed(3));
+
+        return {
+            yearBing: Number(yearBing.toFixed(3)),
+            BA : userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity
+        };
     }
 
-    $scope.yearDianLiang = computeYearBing(1);
+    function computeTotalYearBingAndBA(){
+        var data;
+        $scope.parameters.totalYearBing = 0;
+        $scope.parameters.totalBA = 0;
+        for(var i = 0; i < $scope.selectedProjects.length; i++){
+            data = computeYearBingAndBA($scope.selectedProjects[i]);
+            console.log(data);
+            $scope.parameters.totalYearBing += data.yearBing;
+            $scope.parameters.totalBA += data.BA;
+        }
+        console.log($scope.parameters.totalYearBing);
+        console.log($scope.parameters.totalBA);
+    }
 
     $scope.parameters = {
-        yearDianLiang: $scope.yearDianLiang,
+        totalYearBing: 0,
+        totalBA: 0,
         AA: 0.9575,
         AB: 0.45927,
         AC: 0.42,
@@ -2225,12 +2249,31 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
         MM: 0,
         MY: 0.0655
     };
-    
-    $scope.defaultYearDianLiang = function(){
-        $scope.parameters.yearDianLiang = $scope.yearDianLiang;
-    };
 
     $scope.parameters.BE = $scope.parameters.BB * (12 / $scope.parameters.BC);
+
+    $scope.showForm = function (name) {
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'tpls/html/benefit/chooseProjects.html',
+            controller: 'parametersChooseProjectsCtrl',
+            size: 'md',
+            backdrop: false,
+            resolve: {
+                parentObj: function () {
+                    return {
+                        allProjects: Project.getAllProjectsNames(),
+                        selectedProjects: $scope.selectedProjects,
+                        thisProject: projectData.projectName
+                    };
+                }
+            }
+        });
+        modalInstance.result.then(function (data) {
+            $scope.selectedProjects = data;
+            computeTotalYearBingAndBA();
+        });
+    };
 
     $scope.save = function () {
         $scope.parameters.capacity = parseFloat($scope.parameters.capacity) || $scope.capacity;
@@ -2250,6 +2293,24 @@ pvModule.controller('parametersCtrl', function ($scope, $location, projectData) 
             $scope.parameters = _.cloneDeep(temp);
         }
     });
+});
+
+pvModule.controller('parametersChooseProjectsCtrl', function ($scope, $uibModalInstance, parentObj) {
+    $scope.allProjects = parentObj.allProjects.filter(function (name) {
+        return parentObj.selectedProjects.indexOf(name) == -1;
+    });
+    $scope.allProjects = parentObj.selectedProjects.concat($scope.allProjects);
+    $scope.selectedProjects = parentObj.selectedProjects;
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selectedProjects.filter(function (name) {
+            return name.length > 0;
+        }));
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
 });
 
 /*
@@ -2287,10 +2348,10 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     var electricity = efficiencyAnalysis.electricity;
 
     var userDesign = projectData.getData('userDesignInfo');
-    var BA = userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity;
+    var BA = p.totalBA;
 
     ///////////////////////////////////////////////////////////////////////   项目总收入预算
-    $scope.data1 = { 
+    $scope.data1 = {
         CA: [],
         CD: [],
         CE: [],
@@ -2327,11 +2388,11 @@ pvModule.controller('investmentCostsCtrl', function ($scope, $location, projectD
     //     });
     //     return yearBing;
     // }
-    var ca1 = p.yearDianLiang;
-    function computeYearBing(year){
+    var ca1 = p.totalYearBing;
+    function computeYearBing(year) {
         var yearLoss = Math.pow(1 - componentLoss / 100, year - 1);
         if (yearLoss < 0)
-           yearLoss = 0;
+            yearLoss = 0;
         return ca1 * yearLoss;
     }
 
@@ -2926,11 +2987,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
         }
     };
 
-    fs.readFile(process.env.TEMP + "/pvsystem.json", function(err, data) {
-        if (err){
+    fs.readFile(process.env.TEMP + "/pvsystem.json", function (err, data) {
+        if (err) {
             return console.log(err);
         }
-        $scope.$apply(function(){
+        $scope.$apply(function () {
             $scope.data.projectInfo.designer = JSON.parse(data).username;
         });
     });
