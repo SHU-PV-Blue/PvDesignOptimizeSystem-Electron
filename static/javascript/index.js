@@ -164,7 +164,7 @@ pvModule.controller('manageCtrl', function ($scope, $location, $uibModal, projec
         if (!fs.existsSync('projects')) {
             fs.mkdirSync('projects');
         }
-        if (fs.existsSync('projects/' + name + '.json')) {
+        if (fs.existsSync(PROJECT_BASE_PATH + name + '.json')) {
             alert('项目已存在');
             return;
         }
