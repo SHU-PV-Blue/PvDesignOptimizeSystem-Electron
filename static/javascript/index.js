@@ -12,7 +12,7 @@ var dialog = remote.dialog;
 
 Chart.defaults.global.defaultFontFamily = "'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif";
 
-var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'uiSlider', 'ngRoute'], function ($httpProvider) {
+var pvModule = angular.module('PVModule', ['chart.js', 'ui.bootstrap', 'ngRoute'], function ($httpProvider) {
 });
 
 
