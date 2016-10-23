@@ -2160,7 +2160,6 @@ pvModule.controller('benefitCtrl', function ($scope, $location, projectData) {
  参数列表控制器
  */
 pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, projectData, Project) {
-    $scope.selectedProjects = [];
 
     function computeYearBingAndBA(projectName) {
         /*计算每个项目的并入电网电量， 然后计算总电量，还有BA */
@@ -2197,19 +2196,18 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
         var data;
         $scope.parameters.totalYearBing = 0;
         $scope.parameters.totalBA = 0;
-        for(var i = 0; i < $scope.selectedProjects.length; i++){
-            data = computeYearBingAndBA($scope.selectedProjects[i]);
+        for(var i = 0; i < $scope.parameters.selectedProjects.length; i++){
+            data = computeYearBingAndBA($scope.parameters.selectedProjects[i]);
             console.log(data);
             $scope.parameters.totalYearBing += data.yearBing;
             $scope.parameters.totalBA += data.BA;
         }
-        console.log($scope.parameters.totalYearBing);
-        console.log($scope.parameters.totalBA);
     }
 
     $scope.parameters = {
         totalYearBing: 0,
         totalBA: 0,
+        selectedProjects: [projectData.projectName],
         AA: 0.9575,
         AB: 0.45927,
         AC: 0.42,
@@ -2263,14 +2261,14 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
                 parentObj: function () {
                     return {
                         allProjects: Project.getAllProjectsNames(),
-                        selectedProjects: $scope.selectedProjects,
+                        selectedProjects: $scope.parameters.selectedProjects,
                         thisProject: projectData.projectName
                     };
                 }
             }
         });
         modalInstance.result.then(function (data) {
-            $scope.selectedProjects = data;
+            $scope.parameters.selectedProjects = data;
             computeTotalYearBingAndBA();
         });
     };
@@ -2292,6 +2290,7 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
         if (temp) {
             $scope.parameters = _.cloneDeep(temp);
         }
+        computeTotalYearBingAndBA();
     });
 });
 
