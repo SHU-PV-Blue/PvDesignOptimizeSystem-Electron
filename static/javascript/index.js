@@ -2170,9 +2170,9 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
         var projectData = Project.readProject(projectName).projectData;
         var userDesign = projectData['userDesignInfo'];
         var efficiencyAnalysis = projectData['efficiencyAnalysisInfo'];
-        if(!efficiencyAnalysis){
+        if (!efficiencyAnalysis) {
             return {
-                yearBing : 0,
+                yearBing: 0,
                 BA: 0
             }
         }
@@ -2188,15 +2188,15 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
 
         return {
             yearBing: Number(yearBing.toFixed(3)),
-            BA : userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity
+            BA: userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity
         };
     }
 
-    function computeTotalYearBingAndBA(){
+    function computeTotalYearBingAndBA() {
         var data;
         $scope.parameters.totalYearBing = 0;
         $scope.parameters.totalBA = 0;
-        for(var i = 0; i < $scope.parameters.selectedProjects.length; i++){
+        for (var i = 0; i < $scope.parameters.selectedProjects.length; i++) {
             data = computeYearBingAndBA($scope.parameters.selectedProjects[i]);
             console.log(data);
             $scope.parameters.totalYearBing += data.yearBing;
@@ -2930,49 +2930,244 @@ pvModule.controller('overallIndexCtrl', function ($scope, $location, projectData
 /*
 报告控制器
  */
-pvModule.controller('reportCtrl', function ($scope, $location, $route, projectData) {
+pvModule.controller('reportCtrl', function ($scope, $location, $route, projectData, Project) {
 
-    var basicInfo = projectData.getData('basicInfo');
-    var angleInfo = projectData.getData('angleInfo');
-    var userDesign = projectData.getData("userDesignInfo");
-    var meteorologyInfo = projectData.getData('meteorologyInfo');
-    var investmentCosts = projectData.getData('investmentCosts');
-    var emc = projectData.getData('emc');
-    var profitPeriod = projectData.getData('profitPeriod');
-    var parameters = projectData.getData('parameters');
-    var efficiencyAnalysis = projectData.getData('efficiencyAnalysisInfo');
-    var componentInfo = projectData.getData('componentInfo');
+    var selectedProjects = projectData.getData('parameters').selectedProjects;
+    $scope.projects = [];
 
-    $scope.data = {
-        projectInfo: {
-            projectName: basicInfo.projectName,
-            designTime: basicInfo.projectDate,
-            capacity: 0,
-            dip: angleInfo.dip,
-            az: angleInfo.az,
-            arrayArea: 0,
-            arrayfbspace: 0,
-            lat: meteorologyInfo.lat,
-            lng: meteorologyInfo.lng,
-            designer: ""
-        },
-        meteorology: {
-            temperature: [],
-            HT: []
-        },
-        device: [{
-            name: '光伏组件',
-            model: componentInfo['型号'],
-            num: userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum,
-            price: 0,
-            sumPrice: 0
-        }],
-        electricity: {
-            yearCapacity: 0,
-            yearHT: 0,
-            yearEfficient: 0
-        },
-        profit: {
+    function getProjectReport(projectName) {
+        var projectData = Project.readProject(projectName).projectData;
+        var basicInfo = projectData['basicInfo'];
+        var angleInfo = projectData['angleInfo'];
+        var userDesign = projectData["userDesignInfo"];
+        var meteorologyInfo = projectData['meteorologyInfo'];
+        var investmentCosts = projectData['investmentCosts'];
+        var emc = projectData['emc'];
+        var profitPeriod = projectData['profitPeriod'];
+        var parameters = projectData['parameters'];
+        var efficiencyAnalysis = projectData['efficiencyAnalysisInfo'];
+        var componentInfo = projectData['componentInfo'];
+        var chooseInverter = projectData['chooseInverter'];
+
+        var projectReport = {
+            projectInfo: {
+                projectName: basicInfo.projectName,
+                designTime: basicInfo.projectDate,
+                capacity: 0,
+                dip: angleInfo.dip,
+                az: angleInfo.az,
+                arrayArea: 0,
+                arrayfbspace: 0,
+                lat: meteorologyInfo.lat,
+                lng: meteorologyInfo.lng,
+                designer: ""
+            },
+            meteorology: {
+                temperature: [],
+                HT: []
+            },
+            device: [{
+                name: '光伏组件',
+                model: componentInfo['型号'],
+                num: userDesign.designType === 'area' ? userDesign.area.componentsNum : userDesign.capacity.componentsNum,
+                price: 0,
+                sumPrice: 0
+            }],
+            electricity: {
+                yearCapacity: 0,
+                yearHT: 0,
+                yearEfficient: 0
+            }
+        };
+
+        fs.readFile(process.env.TEMP + "/pvsystem.json", function (err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            $scope.$apply(function () {
+                projectReport.projectInfo.designer = JSON.parse(data).username;
+            });
+        });
+
+        if (chooseInverter.type === 'centralized') {
+            projectReport.device.push({
+                name: '集中式逆变器',
+                model: chooseInverter.centralizedInverterInfo.centralizedInverter['型号'],
+                num: chooseInverter.centralizedInverterInfo.inverterNumNeeded,
+                price: 0,
+                sumPrice: 0
+            });
+            projectReport.device.push({
+                name: '直流汇流箱',
+                model: chooseInverter.directCurrentInfo.directCurrent['型号'],
+                num: chooseInverter.directCurrentInfo.num,
+                price: 0,
+                sumPrice: 0
+            });
+            projectReport.device.push({
+                name: '直流配电柜',
+                model: chooseInverter.directDistributionInfo.directDistribution['型号'],
+                num: chooseInverter.directDistributionInfo.num,
+                price: 0,
+                sumPrice: 0
+            });
+            for (var i = 0; i < 3; i++) {
+                var cableName;
+                if (i === 0) {
+                    cableName = '电缆:阵列->汇流箱';
+                } else if (i === 1) {
+                    cableName = '电缆:汇流箱->配电柜';
+                } else {
+                    cableName = '电缆:配电柜->逆变器';
+                }
+
+                projectReport.device.push({
+                    name: cableName,
+                    model: chooseInverter.directCurrentCableInfo.cables[i].directCurrentCable['型号'],
+                    num: chooseInverter.directCurrentCableInfo.cables[i].length,
+                    price: 0,
+                    sumPrice: 0
+                });
+            }
+        } else {
+            projectReport.device.push({
+                name: '组串式逆变器',
+                model: chooseInverter.groupInverterInfo.groupInverter['型号'],
+                num: chooseInverter.groupInverterInfo.inverterNumNeeded,
+                price: 0,
+                sumPrice: 0
+            });
+            projectReport.device.push({
+                name: '电缆:阵列->逆变器',
+                model: chooseInverter.alternatingCurrentCableInfo.alternatingCurrentCable['型号'],
+                num: chooseInverter.alternatingCurrentCableInfo.length,
+                price: 0,
+                sumPrice: 0
+            });
+        }
+
+        //todo: 高压侧设备
+
+        meteorologyInfo.monthinfos.forEach(function (monthinfo) {
+            projectReport.meteorology.temperature.push(monthinfo.temperature);
+            projectReport.meteorology.HT.push(monthinfo.H);
+        });
+
+        if (userDesign.designType === "area") {
+            projectReport.projectInfo.capacity = userDesign.area.totalCapacity;
+            projectReport.projectInfo.arrayArea = userDesign.area.totalArea;
+            projectReport.projectInfo.arrayfbspace = userDesign.fbspace;
+        } else {
+            projectReport.projectInfo.capacity = userDesign.capacity.totalCapacity;
+        }
+
+        projectReport.options1 = [
+            {
+                title: {
+                    display: true,
+                    text: '月发电量图',
+                    fontSize: 14,
+                    fontStyle: 'normal'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '月份'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '电量 kWh'
+                        }
+                    }]
+                }
+            }, {
+                title: {
+                    display: true,
+                    text: '月辐照度图',
+                    fontSize: 14,
+                    fontStyle: 'normal'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '月份'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '辐照度 kWh/m^2'
+                        }
+                    }]
+                }
+            }, {
+                title: {
+                    display: true,
+                    text: '损耗图',
+                    fontSize: 14,
+                    fontStyle: 'normal'
+                },
+                elements: {
+                    arc: {
+                        borderWidth: 1
+                    }
+                }
+            }
+        ];
+
+        projectReport.labelsMonth = util.getLabel(12);
+        projectReport.labelsYear = util.getLabel(parameters.BB);
+        projectReport.lossLabel = ['阴影损耗', '灰尘等遮挡损耗', '组件温升损耗', '直流电缆损耗', '组串内失配损耗', '逆变器损耗', '变压器损耗', '交流电缆损耗', '故障检修、电网等其它损耗', '发电量'];
+
+        var yearElectricity = 0;
+
+        projectReport.electricityChartData = [
+            efficiencyAnalysis.electricity.map(function (item) {
+                yearElectricity += item;
+                var temp = item * (1 - efficiencyAnalysis.lossTotal / 100);
+                projectReport.electricity.yearCapacity += temp;
+                return Number(temp.toFixed(2));
+            })
+        ];
+        projectReport.HChartData = [
+            []
+        ];
+
+        var monthDays = util.CONST.monthDays;
+        for (var i = 1; i <= 12; i++) {
+            var temp = algorithm.getH_t(i, projectReport.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
+            projectReport.electricity.yearHT += temp;
+            projectReport.HChartData[0].push(temp.toFixed(2));
+        }
+
+        projectReport.lossChartData = efficiencyAnalysis.loss.map(function (loss) {
+            return Number((yearElectricity * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - loss / 100)).toFixed(0));
+        });
+        projectReport.lossChartData.push(Number(projectReport.electricity.yearCapacity.toFixed(0)));
+
+        projectReport.electricity.yearEfficient = 100 - efficiencyAnalysis.lossTotal;
+
+        return projectReport;
+    }
+
+    for (var i = 0; i < selectedProjects.length; i++) {
+        var projectReport = getProjectReport(selectedProjects[i]);
+        $scope.projects.push(projectReport);
+    }
+
+    //-----------------------------------------------------------------------------------//
+
+    function getBenefitReport() {
+        var investmentCosts = projectData.getData('investmentCosts');
+        var emc = projectData.getData('emc');
+        var profitPeriod = projectData.getData('profitPeriod');
+        var parameters = projectData.getData('parameters');
+
+        var benefitReport = {
             totalCost: investmentCosts.data2.DQ,
             designCost: investmentCosts.data2.DG,
             deviceCost: investmentCosts.data2.DF,
@@ -2983,238 +3178,74 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             buildPeriod: parameters.BD,
             profitPeriod: parameters.BB,
             yearProfit: profitPeriod.CT
-        }
-    };
+        };
 
-    fs.readFile(process.env.TEMP + "/pvsystem.json", function (err, data) {
-        if (err) {
-            return console.log(err);
-        }
-        $scope.$apply(function () {
-            $scope.data.projectInfo.designer = JSON.parse(data).username;
-        });
-    });
-
-    var chooseInverter = projectData.getData('chooseInverter');
-    if (chooseInverter.type === 'centralized') {
-        $scope.data.device.push({
-            name: '集中式逆变器',
-            model: chooseInverter.centralizedInverterInfo.centralizedInverter['型号'],
-            num: chooseInverter.centralizedInverterInfo.inverterNumNeeded,
-            price: 0,
-            sumPrice: 0
-        });
-        $scope.data.device.push({
-            name: '直流汇流箱',
-            model: chooseInverter.directCurrentInfo.directCurrent['型号'],
-            num: chooseInverter.directCurrentInfo.num,
-            price: 0,
-            sumPrice: 0
-        });
-        $scope.data.device.push({
-            name: '直流配电柜',
-            model: chooseInverter.directDistributionInfo.directDistribution['型号'],
-            num: chooseInverter.directDistributionInfo.num,
-            price: 0,
-            sumPrice: 0
-        });
-        for (var i = 0; i < 3; i++) {
-            var cableName;
-            if (i === 0) {
-                cableName = '电缆:阵列->汇流箱';
-            } else if (i === 1) {
-                cableName = '电缆:汇流箱->配电柜';
-            } else {
-                cableName = '电缆:配电柜->逆变器';
-            }
-
-            $scope.data.device.push({
-                name: cableName,
-                model: chooseInverter.directCurrentCableInfo.cables[i].directCurrentCable['型号'],
-                num: chooseInverter.directCurrentCableInfo.cables[i].length,
-                price: 0,
-                sumPrice: 0
-            });
-        }
-    } else {
-        $scope.data.device.push({
-            name: '组串式逆变器',
-            model: chooseInverter.groupInverterInfo.groupInverter['型号'],
-            num: chooseInverter.groupInverterInfo.inverterNumNeeded,
-            price: 0,
-            sumPrice: 0
-        });
-        $scope.data.device.push({
-            name: '电缆:阵列->逆变器',
-            model: chooseInverter.alternatingCurrentCableInfo.alternatingCurrentCable['型号'],
-            num: chooseInverter.alternatingCurrentCableInfo.length,
-            price: 0,
-            sumPrice: 0
-        });
-    }
-
-    //todo: 高压侧设备
-
-    meteorologyInfo.monthinfos.forEach(function (monthinfo) {
-        $scope.data.meteorology.temperature.push(monthinfo.temperature);
-        $scope.data.meteorology.HT.push(monthinfo.H);
-    });
-
-    if (userDesign.designType === "area") {
-        $scope.data.projectInfo.capacity = userDesign.area.totalCapacity;
-        $scope.data.projectInfo.arrayArea = userDesign.area.totalArea;
-        $scope.data.projectInfo.arrayfbspace = userDesign.fbspace;
-    } else {
-        $scope.data.projectInfo.capacity = userDesign.capacity.totalCapacity;
-    }
-
-    $scope.options1 = [
-        {
-            title: {
-                display: true,
-                text: '月发电量图',
-                fontSize: 14,
-                fontStyle: 'normal'
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '月份'
-                    }
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '电量 kWh'
-                    }
-                }]
-            }
-        }, {
-            title: {
-                display: true,
-                text: '月辐照度图',
-                fontSize: 14,
-                fontStyle: 'normal'
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '月份'
-                    }
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '辐照度 kWh/m^2'
-                    }
-                }]
-            }
-        }, {
-            title: {
-                display: true,
-                text: '损耗图',
-                fontSize: 14,
-                fontStyle: 'normal'
-            },
-            elements: {
-                arc: {
-                    borderWidth: 1
+        benefitReport.options2 = [
+            {
+                title: {
+                    display: true,
+                    text: '债务偿还图',
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '年'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '万元'
+                        }
+                    }]
+                }
+            }, {
+                title: {
+                    display: true,
+                    text: '静态资金回收期表',
+                    fontSize: 16,
+                    fontStyle: 'normal'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '年'
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '万元'
+                        }
+                    }]
                 }
             }
-        }
-    ];
+        ]
 
-    $scope.labelsMonth = util.getLabel(12);
-    $scope.labelsYear = util.getLabel(parameters.BB);
-    $scope.lossLabel = ['阴影损耗', '灰尘等遮挡损耗', '组件温升损耗', '直流电缆损耗', '组串内失配损耗', '逆变器损耗', '变压器损耗', '交流电缆损耗', '故障检修、电网等其它损耗', '发电量'];
+        benefitReport.debtChartData = [
+            profitPeriod.MG.map(function (item) {
+                return Number((item / 10000).toFixed(1));
+            })
+        ];
 
-    var yearElectricity = 0;
+        benefitReport.investChartData = [
+            profitPeriod.MQ.map(function (item) {
+                return Number((item / 10000).toFixed(1));
+            })
+        ];
 
-    $scope.electricityChartData = [
-        efficiencyAnalysis.electricity.map(function (item) {
-            yearElectricity += item;
-            var temp = item * (1 - efficiencyAnalysis.lossTotal / 100);
-            $scope.data.electricity.yearCapacity += temp;
-            return Number(temp.toFixed(2));
-        })
-    ];
-    $scope.HChartData = [
-        []
-    ];
+        benefitReport.labelsYear = util.getLabel(parameters.BB);
 
-    var monthDays = util.CONST.monthDays;
-    for (var i = 1; i <= 12; i++) {
-        var temp = algorithm.getH_t(i, $scope.data.meteorology.HT[i - 1] * 1000, meteorologyInfo.lat, angleInfo.dip, angleInfo.az) * monthDays[i - 1];
-        $scope.data.electricity.yearHT += temp;
-        $scope.HChartData[0].push(temp.toFixed(2));
+        return benefitReport;
     }
 
-    $scope.lossChartData = efficiencyAnalysis.loss.map(function (loss) {
-        return Number((yearElectricity * (1 - efficiencyAnalysis.componentLoss / 100) * (1 - loss / 100)).toFixed(0));
-    });
-    $scope.lossChartData.push(Number($scope.data.electricity.yearCapacity.toFixed(0)));
+    $scope.benefitReport = getBenefitReport();
 
-    $scope.data.electricity.yearEfficient = 100 - efficiencyAnalysis.lossTotal;
-
-    $scope.options2 = [
-        {
-            title: {
-                display: true,
-                text: '债务偿还图',
-                fontSize: 16,
-                fontStyle: 'normal'
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '年'
-                    }
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '万元'
-                    }
-                }]
-            }
-        }, {
-            title: {
-                display: true,
-                text: '静态资金回收期表',
-                fontSize: 16,
-                fontStyle: 'normal'
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '年'
-                    }
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '万元'
-                    }
-                }]
-            }
-        }
-    ]
-
-    $scope.debtChartData = [
-        profitPeriod.MG.map(function (item) {
-            return Number((item / 10000).toFixed(1));
-        })
-    ];
-
-    $scope.investChartData = [
-        profitPeriod.MQ.map(function (item) {
-            return Number((item / 10000).toFixed(1));
-        })
-    ];
+    //-----------------------------------------------------------------------------------//
 
     $scope.gereratePdf = function () {
 
@@ -3232,15 +3263,22 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
             var printDiv = document.getElementById('divPrint');
             var charts = document.getElementsByClassName('chart');
 
-            for (var i = 0; i < charts.length; i++) {
-                // var chart = charts[i].lastChild;
-                var img = charts[i].toDataURL("image/png");
+            while(charts[0]){
+                var img = charts[0].toDataURL("image/png", 1.0);
                 var imgNode = document.createElement('img');
                 imgNode.src = img;
-                var parentNode = charts[i].parentNode;
-                // parentNode.innerHTML = '';
+                var parentNode = charts[0].parentNode;
+                parentNode.removeChild(charts[0]);
                 parentNode.appendChild(imgNode);
             }
+
+            // for (var i = 0; i < charts.length; i++) {
+            //     var img = charts[i].toDataURL("image/png", 1.0);
+            //     var imgNode = document.createElement('img');
+            //     imgNode.src = img;
+            //     var parentNode = charts[i].parentNode;
+            //     parentNode.appendChild(imgNode);
+            // }
 
             document.getElementById('divPrint').style.padding = "60px";
             fs.writeFileSync('report.html', document.getElementsByTagName('html')[0].outerHTML.replace(document.body.innerHTML, document.getElementById('divPrint').outerHTML));

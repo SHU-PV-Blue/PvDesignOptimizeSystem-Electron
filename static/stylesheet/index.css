@@ -295,13 +295,14 @@ ul.parametersProjects{
     margin: 0 auto;
     max-height: 400px;
     overflow: auto;
+    border: 1px solid #2277da;
 }
 ul.parametersProjects > li{
     list-style: none;
     height: 40px;
     line-height: 40px;
-    border-top: 1px solid #eee;
+    border-bottom: 1px solid #169fe6;
 }
 ul.parametersProjects > li:last-child{
-    border-bottom: 1px solid #eee;
+    border-bottom: none;
 }
