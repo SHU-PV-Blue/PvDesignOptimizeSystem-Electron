@@ -3272,15 +3272,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
                 parentNode.appendChild(imgNode);
             }
 
-            // for (var i = 0; i < charts.length; i++) {
-            //     var img = charts[i].toDataURL("image/png", 1.0);
-            //     var imgNode = document.createElement('img');
-            //     imgNode.src = img;
-            //     var parentNode = charts[i].parentNode;
-            //     parentNode.appendChild(imgNode);
-            // }
+            var hrs = document.getElementsByTagName('hr');
+            while(hrs[0]){
+                hrs[0].parentNode.removeChild(hrs[0]);
+            }
 
-            document.getElementById('divPrint').style.padding = "60px";
             fs.writeFileSync('report.html', document.getElementsByTagName('html')[0].outerHTML.replace(document.body.innerHTML, document.getElementById('divPrint').outerHTML));
 
             $route.reload();

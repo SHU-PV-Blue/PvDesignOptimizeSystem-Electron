@@ -1,0 +1,17 @@
+<div class="modal-header">
+	<h4 class="modal-title">选择项目</h4>
+</div>
+<div class="modal-body">
+	<ul class="parametersProjects">
+		<li ng-repeat="project in allProjects">
+			<label>
+                    <input type="checkbox" ng-model="$parent.selectedProjects[$index]" ng-true-value="'{{project}}'" ng-false-value="''" >
+                    {{project}}
+                </label>
+		</li>
+	</ul>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" type="button" ng-click="ok()">完成</button>
+	<button class="btn btn-warning" type="button" ng-click="cancel()">取消</button>
+</div>

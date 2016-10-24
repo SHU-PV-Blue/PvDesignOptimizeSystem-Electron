@@ -1,7 +1,7 @@
 <div ng-controller="reportCtrl">
 	<div id="divPrint">
-		<div class="project" ng-repeat="project in projects">
-			<div class="row">
+		<div class="project" style="page-break-after:always;" ng-repeat="project in projects">
+			<div class="row" style="padding-top: 40px;">
 				<div class="col-md-11">
 					<table class="report-info table table-bordered" style="width:100%;table-layout:fixed">
 						<caption>基本信息</caption>
@@ -108,10 +108,10 @@
 					</table>
 				</div>
 			</div>
-			<div class="row" style="border-top: 6px dotted #169fe6"></div>
+            <hr style="border:none;border-top: 3px dotted blue">
 		</div>
 		<div class="benefit">
-			<div class="row">
+			<div class="row" style="padding-top: 40px;">
 				<div class="col-md-11">
 					<table class="table table-bordered">
 						<caption>综合经济效益表</caption>
