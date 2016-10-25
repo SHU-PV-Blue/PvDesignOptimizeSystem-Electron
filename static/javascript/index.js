@@ -2188,7 +2188,7 @@ pvModule.controller('parametersCtrl', function ($scope, $location, $uibModal, pr
 
         return {
             yearBing: Number(yearBing.toFixed(3)),
-            BA: userDesign.designType === 'area' ? userDesign.area.totalCapacity : userDesign.capacity.totalCapacity
+            BA: userDesign.designType === 'area' ? Number(userDesign.area.totalCapacity) : Number(userDesign.capacity.totalCapacity)
         };
     }
 
