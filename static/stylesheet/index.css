@@ -306,3 +306,10 @@ ul.parametersProjects > li{
 ul.parametersProjects > li:last-child{
     border-bottom: none;
 }
+
+div.page{
+    page-break-after: always;
+    page-break-inside: avoid;
+    position: relative;
+    padding: 0 20px;
+}

@@ -5,7 +5,7 @@
                 <div class="panel-heading">
                     <span class="panel-title">请填写下面的参数</span>
                     <button class="btn btn-success btn-sm" ng-click="showForm()">选择项目</button>
-                    <span class="pull-right">总装机容量：{{parameters.totalBA}} kW | 第一年发电量：{{parameters.totalYearBing}} kWH</span>
+                    <span class="pull-right">总装机容量：{{parameters.totalBA}} kW | 第一年发电量：{{parameters.totalYearBing | number:2}} kWH</span>
                 </div>
                 <!--<div class="panel-body">-->
                     <table class="table table-bordered">

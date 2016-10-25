@@ -1,8 +1,8 @@
 <div ng-controller="reportCtrl">
 	<div id="divPrint">
-		<div class="project" style="page-break-after:always;" ng-repeat="project in projects">
-			<div class="row" style="padding-top: 40px;">
-				<div class="col-md-11">
+		<div class="page" ng-repeat="project in projects">
+			<div class="row">
+				<div class="col-md-12">
 					<table class="report-info table table-bordered" style="width:100%;table-layout:fixed">
 						<caption>基本信息</caption>
 						<tr>
@@ -30,7 +30,7 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-11">
+				<div class="col-md-12">
 					<table class="table table-bordered">
 						<caption>气象数据</caption>
 						<tr>
@@ -61,7 +61,7 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-11">
+				<div class="col-md-12">
 					<table class="table table-bordered">
 						<caption>设备表</caption>
 						<tr>
@@ -83,7 +83,7 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-11">
+				<div class="col-md-12">
 					<table class="table table-bordered">
 						<caption>第一年</caption>
 						<tr>
@@ -110,9 +110,9 @@
 			</div>
             <hr style="border:none;border-top: 3px dotted blue">
 		</div>
-		<div class="benefit">
+		<div class="benefit page">
 			<div class="row" style="padding-top: 40px;">
-				<div class="col-md-11">
+				<div class="col-md-12">
 					<table class="table table-bordered">
 						<caption>综合经济效益表</caption>
 						<tr>
@@ -175,7 +175,7 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-11">
+				<div class="col-md-12">
 					<table class="table table-bordered" style="table-layout:fixed">
 						<tr>
 							<td class="chart-data">

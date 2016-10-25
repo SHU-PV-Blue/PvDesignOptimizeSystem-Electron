@@ -3277,8 +3277,11 @@ pvModule.controller('reportCtrl', function ($scope, $location, $route, projectDa
                 hrs[0].parentNode.removeChild(hrs[0]);
             }
 
-            fs.writeFileSync('report.html', document.getElementsByTagName('html')[0].outerHTML.replace(document.body.innerHTML, document.getElementById('divPrint').outerHTML));
+            document.body.style.border = "none";
 
+            fs.writeFileSync('report.html', document.getElementsByTagName('html')[0].outerHTML.replace(document.body.innerHTML, document.getElementById('divPrint').innerHTML));
+
+            document.body.style.borderTop = "1px solid #eee";
             $route.reload();
             var process = require("child_process");
             process.exec('phantomjs.exe run.js ' + savePath, function (err, stdout, stderr) {
